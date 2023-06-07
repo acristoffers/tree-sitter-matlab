@@ -1,0 +1,296 @@
+================================================================================
+Binary Expressions
+================================================================================
+
+1 + 2;
+1 .+ 2;
+1 - 2;
+1 .- 2;
+1 * 2;
+1 .* 2;
+1 / 2;
+1 ./ 2;
+1 \ 2;
+1 .\ 2;
+1 ^ 2;
+1 .^ 2;
+1 | 2;
+1 & 2;
+
+a + b;
+a .+ b;
+a - b;
+a .- b;
+a * b;
+a .* b;
+a / b;
+a ./ b;
+a \ b;
+a .\ b;
+a ^ b;
+a .^ b;
+a | b;
+a & b;
+
+a & b | c & d;
+a & (b | c) & d;
+
+2 * a + b;
+-2 * a + b;
+
+-2 * (a + b);
+
+"a" + "b"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (binary_operator
+    (number)
+    (number))
+  (binary_operator
+    (number)
+    (number))
+  (binary_operator
+    (number)
+    (number))
+  (binary_operator
+    (number)
+    (number))
+  (binary_operator
+    (number)
+    (number))
+  (binary_operator
+    (number)
+    (number))
+  (binary_operator
+    (number)
+    (number))
+  (binary_operator
+    (number)
+    (number))
+  (binary_operator
+    (number)
+    (number))
+  (binary_operator
+    (number)
+    (number))
+  (binary_operator
+    (number)
+    (number))
+  (binary_operator
+    (number)
+    (number))
+  (binary_operator
+    (number)
+    (number))
+  (binary_operator
+    (number)
+    (number))
+  (binary_operator
+    (identifier)
+    (identifier))
+  (binary_operator
+    (identifier)
+    (identifier))
+  (binary_operator
+    (identifier)
+    (identifier))
+  (binary_operator
+    (identifier)
+    (identifier))
+  (binary_operator
+    (identifier)
+    (identifier))
+  (binary_operator
+    (identifier)
+    (identifier))
+  (binary_operator
+    (identifier)
+    (identifier))
+  (binary_operator
+    (identifier)
+    (identifier))
+  (binary_operator
+    (identifier)
+    (identifier))
+  (binary_operator
+    (identifier)
+    (identifier))
+  (binary_operator
+    (identifier)
+    (identifier))
+  (binary_operator
+    (identifier)
+    (identifier))
+  (binary_operator
+    (identifier)
+    (identifier))
+  (binary_operator
+    (identifier)
+    (identifier))
+  (binary_operator
+    (binary_operator
+      (identifier)
+      (identifier))
+    (binary_operator
+      (identifier)
+      (identifier)))
+  (binary_operator
+    (binary_operator
+      (identifier)
+      (parenthesized_expression
+        (binary_operator
+          (identifier)
+          (identifier))))
+    (identifier))
+  (binary_operator
+    (binary_operator
+      (number)
+      (identifier))
+    (identifier))
+  (binary_operator
+    (binary_operator
+      (number)
+      (identifier))
+    (identifier))
+  (binary_operator
+    (number)
+    (parenthesized_expression
+      (binary_operator
+        (identifier)
+        (identifier))))
+  (binary_operator
+    (string)
+    (string)))
+
+================================================================================
+Binary Expressions
+================================================================================
+
+a && b
+a || b
+a && b || c && d
+a || b && c || d
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (boolean_operator
+    (identifier)
+    (identifier))
+  (boolean_operator
+    (identifier)
+    (identifier))
+  (boolean_operator
+    (boolean_operator
+      (identifier)
+      (identifier))
+    (boolean_operator
+      (identifier)
+      (identifier)))
+  (boolean_operator
+    (boolean_operator
+      (identifier)
+      (boolean_operator
+        (identifier)
+        (identifier)))
+    (identifier)))
+
+================================================================================
+Unary Expressions
+================================================================================
+
+~a
++a
+-a
+-1
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (unary_operator
+    (identifier))
+  (unary_operator
+    (identifier))
+  (unary_operator
+    (identifier))
+  (number))
+
+================================================================================
+Comparison Expressions
+================================================================================
+
+a == b
+a ~= b
+a < b
+a <= b
+a > b
+a >= b
+
+a + b == -c
+a + b == -1
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (comparison_operator
+    (identifier)
+    (identifier))
+  (comparison_operator
+    (identifier)
+    (identifier))
+  (comparison_operator
+    (identifier)
+    (identifier))
+  (comparison_operator
+    (identifier)
+    (identifier))
+  (comparison_operator
+    (identifier)
+    (identifier))
+  (comparison_operator
+    (identifier)
+    (identifier))
+  (comparison_operator
+    (binary_operator
+      (identifier)
+      (identifier))
+    (unary_operator
+      (identifier)))
+  (comparison_operator
+    (binary_operator
+      (identifier)
+      (identifier))
+    (number)))
+
+================================================================================
+Postfix Expressions
+================================================================================
+
+A'
+A.'
+
+A' + 'string'
+
+~A'
+A'^2
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (postfix_operator
+    (identifier))
+  (postfix_operator
+    (identifier))
+  (binary_operator
+    (postfix_operator
+      (identifier))
+    (string))
+  (unary_operator
+    (postfix_operator
+      (identifier)))
+  (binary_operator
+    (postfix_operator
+      (identifier))
+    (number)))

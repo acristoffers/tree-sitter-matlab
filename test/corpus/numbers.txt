@@ -1,0 +1,198 @@
+================================================================================
+Numbers
+================================================================================
+
+1
+13
+1e3
+1e+3
+1e-3
+1E3
+1E+3
+1E-3
+1.5
+1.5e3
+1.5e+3
+1.5e-3
+1.5E3
+1.5E+3
+1.5E-3
+1i
+1.5i
+1.5e3i
+1.5e+3i
+1.5e-3i
+1.5E3i
+1.5E+3i
+1.5E-3i
+1j
+1.5j
+1.5e3j
+1.5e+3j
+1.5e-3j
+1.5E3j
+1.5E+3j
+1.5E-3j
++1
++13
++1e3
++1e+3
++1e-3
++1E3
++1E+3
++1E-3
++1.5
++1.5e3
++1.5e+3
++1.5e-3
++1.5E3
++1.5E+3
++1.5E-3
++1i
++1.5i
++1.5e3i
++1.5e+3i
++1.5e-3i
++1.5E3i
++1.5E+3i
++1.5E-3i
++1j
++1.5j
++1.5e3j
++1.5e+3j
++1.5e-3j
++1.5E3j
++1.5E+3j
++1.5E-3j
+-1
+-13
+-1e3
+-1e+3
+-1e-3
+-1E3
+-1E+3
+-1E-3
+-1.5
+-1.5e3
+-1.5e+3
+-1.5e-3
+-1.5E3
+-1.5E+3
+-1.5E-3
+-1i
+-1.5i
+-1.5e3i
+-1.5e+3i
+-1.5e-3i
+-1.5E3i
+-1.5E+3i
+-1.5E-3i
+-1j
+-1.5j
+-1.5e3j
+-1.5e+3j
+-1.5e-3j
+-1.5E3j
+-1.5E+3j
+-1.5E-3j
+0xDEADBEEF42
+0b1010
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number)
+  (number))

@@ -1,0 +1,20 @@
+================================================================================
+Strings
+================================================================================
+
+'Single quoted string'
+"Double quoted string"
+'Single quoted with another '' inside it'
+"Double quoted with another "" inside it"
+"This should be a string and % not a comment"
+"This string cannot contain 5 3 2 numbers"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (string)
+  (string)
+  (string)
+  (string)
+  (string)
+  (string))

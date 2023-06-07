@@ -1,0 +1,33 @@
+================================================================================
+Comments
+================================================================================
+
+1 % a comment
+
+%{
+A proper
+  multiline
+    % comment
+%}
+
+%{
+% A proper
+% multiline
+% comment
+%}
+
+% An improper
+% multiline
+% comment
+
+"This should be a string and % not a comment"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (number)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (string))
