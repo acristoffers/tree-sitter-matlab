@@ -16,6 +16,10 @@
             "named": true
           },
           {
+            "type": "cell_definition",
+            "named": true
+          },
+          {
             "type": "comparison_operator",
             "named": true
           },
@@ -124,6 +128,10 @@
             "named": true
           },
           {
+            "type": "cell_definition",
+            "named": true
+          },
+          {
             "type": "comparison_operator",
             "named": true
           },
@@ -173,6 +181,10 @@
           },
           {
             "type": "boolean_operator",
+            "named": true
+          },
+          {
+            "type": "cell_definition",
             "named": true
           },
           {
@@ -236,6 +248,10 @@
             "named": true
           },
           {
+            "type": "cell_definition",
+            "named": true
+          },
+          {
             "type": "comparison_operator",
             "named": true
           },
@@ -269,6 +285,21 @@
           }
         ]
       }
+    }
+  },
+  {
+    "type": "cell_definition",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "row",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -319,6 +350,10 @@
           "named": true
         },
         {
+          "type": "cell_definition",
+          "named": true
+        },
+        {
           "type": "comparison_operator",
           "named": true
         },
@@ -362,43 +397,7 @@
       "required": false,
       "types": [
         {
-          "type": "binary_operator",
-          "named": true
-        },
-        {
-          "type": "boolean_operator",
-          "named": true
-        },
-        {
-          "type": "comparison_operator",
-          "named": true
-        },
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "matrix_definition",
-          "named": true
-        },
-        {
-          "type": "number",
-          "named": true
-        },
-        {
-          "type": "parenthesized_expression",
-          "named": true
-        },
-        {
-          "type": "postfix_operator",
-          "named": true
-        },
-        {
-          "type": "string",
-          "named": true
-        },
-        {
-          "type": "unary_operator",
+          "type": "row",
           "named": true
         }
       ]
@@ -423,6 +422,10 @@
         },
         {
           "type": "boolean_operator",
+          "named": true
+        },
+        {
+          "type": "cell_definition",
           "named": true
         },
         {
@@ -477,6 +480,10 @@
             "named": true
           },
           {
+            "type": "cell_definition",
+            "named": true
+          },
+          {
             "type": "comparison_operator",
             "named": true
           },
@@ -527,6 +534,62 @@
     }
   },
   {
+    "type": "row",
+    "named": true,
+    "fields": {
+      "argument": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "binary_operator",
+            "named": true
+          },
+          {
+            "type": "boolean_operator",
+            "named": true
+          },
+          {
+            "type": "cell_definition",
+            "named": true
+          },
+          {
+            "type": "comparison_operator",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "matrix_definition",
+            "named": true
+          },
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "postfix_operator",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          },
+          {
+            "type": "unary_operator",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "source_file",
     "named": true,
     "fields": {
@@ -551,6 +614,10 @@
         },
         {
           "type": "boolean_operator",
+          "named": true
+        },
+        {
+          "type": "cell_definition",
           "named": true
         },
         {
@@ -607,6 +674,10 @@
           },
           {
             "type": "boolean_operator",
+            "named": true
+          },
+          {
+            "type": "cell_definition",
             "named": true
           },
           {
@@ -792,11 +863,19 @@
     "named": true
   },
   {
+    "type": "{",
+    "named": false
+  },
+  {
     "type": "|",
     "named": false
   },
   {
     "type": "||",
+    "named": false
+  },
+  {
+    "type": "}",
     "named": false
   },
   {

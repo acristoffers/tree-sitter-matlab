@@ -1,50 +1,48 @@
 ================================================================================
-Matrix
+Cell
 ================================================================================
 
-[1 2; 3 4]
-[1, 2; 3, 4]
-[1, 2; 3 4]
+{1 2; 3 4}
+{1, 2; 3, 4}
+{1, 2; 3 4}
 
-[x1 x2 x3 x4]
+{x1 x2 x3 x4}
 
-[x1; x2; x3; x4]
+{x1; x2; x3; x4}
 
-[A-L*C [L B]; I 0]
-
-[1 2; 3 4]' * [4; -5]
+{A-L*C {L B}; I 0}
 
 --------------------------------------------------------------------------------
 
 (source_file
-  (matrix_definition
+  (cell_definition
     (row
       (number)
       (number))
     (row
       (number)
       (number)))
-  (matrix_definition
+  (cell_definition
     (row
       (number)
       (number))
     (row
       (number)
       (number)))
-  (matrix_definition
+  (cell_definition
     (row
       (number)
       (number))
     (row
       (number)
       (number)))
-  (matrix_definition
+  (cell_definition
     (row
       (identifier)
       (identifier)
       (identifier)
       (identifier)))
-  (matrix_definition
+  (cell_definition
     (row
       (identifier))
     (row
@@ -53,31 +51,17 @@ Matrix
       (identifier))
     (row
       (identifier)))
-  (matrix_definition
+  (cell_definition
     (row
       (binary_operator
         (identifier)
         (binary_operator
           (identifier)
           (identifier)))
-      (matrix_definition
+      (cell_definition
         (row
           (identifier)
           (identifier))))
     (row
       (identifier)
-      (number)))
-  (binary_operator
-    (postfix_operator
-      (matrix_definition
-        (row
-          (number)
-          (number))
-        (row
-          (number)
-          (number))))
-    (matrix_definition
-      (row
-        (number))
-      (row
-        (number)))))
+      (number))))

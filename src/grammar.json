@@ -346,22 +346,6 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "matrix_definition"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "identifier"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "number"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "string"
-        },
-        {
-          "type": "SYMBOL",
           "name": "binary_operator"
         },
         {
@@ -370,11 +354,27 @@
         },
         {
           "type": "SYMBOL",
+          "name": "cell_definition"
+        },
+        {
+          "type": "SYMBOL",
           "name": "comparison_operator"
         },
         {
           "type": "SYMBOL",
-          "name": "unary_operator"
+          "name": "identifier"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "matrix_definition"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "number"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "parenthesized_expression"
         },
         {
           "type": "SYMBOL",
@@ -382,7 +382,11 @@
         },
         {
           "type": "SYMBOL",
-          "name": "parenthesized_expression"
+          "name": "string"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "unary_operator"
         }
       ]
     },
@@ -1110,6 +1114,59 @@
         }
       ]
     },
+    "_expression_sequence": {
+      "type": "REPEAT1",
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "FIELD",
+            "name": "argument",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_expression"
+            }
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "STRING",
+                "value": ","
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "row": {
+      "type": "PREC_RIGHT",
+      "value": 0,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "_expression_sequence"
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "STRING",
+                "value": ";"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          }
+        ]
+      }
+    },
     "matrix_definition": {
       "type": "SEQ",
       "members": [
@@ -1120,39 +1177,33 @@
         {
           "type": "REPEAT",
           "content": {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "_expression"
-              },
-              {
-                "type": "CHOICE",
-                "members": [
-                  {
-                    "type": "CHOICE",
-                    "members": [
-                      {
-                        "type": "STRING",
-                        "value": ","
-                      },
-                      {
-                        "type": "STRING",
-                        "value": ";"
-                      }
-                    ]
-                  },
-                  {
-                    "type": "BLANK"
-                  }
-                ]
-              }
-            ]
+            "type": "SYMBOL",
+            "name": "row"
           }
         },
         {
           "type": "STRING",
           "value": "]"
+        }
+      ]
+    },
+    "cell_definition": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "{"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "row"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "}"
         }
       ]
     }

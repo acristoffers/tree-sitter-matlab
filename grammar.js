@@ -109,18 +109,20 @@ module.exports = grammar({
         )
       ),
 
+
     _expression: ($) =>
       choice(
-        $.matrix_definition,
-        $.identifier,
-        $.number,
-        $.string,
         $.binary_operator,
         $.boolean_operator,
+        $.cell_definition,
         $.comparison_operator,
-        $.unary_operator,
+        $.identifier,
+        $.matrix_definition,
+        $.number,
+        $.parenthesized_expression,
         $.postfix_operator,
-        $.parenthesized_expression
+        $.string,
+        $.unary_operator
       ),
 
     parenthesized_expression: ($) => seq('(', $._expression, ')'),
@@ -212,7 +214,10 @@ module.exports = grammar({
     string: ($) =>
       choice(seq('"', /([^"]|(""))*/, '"'), seq("'", /([^']|(''))*/, "'")),
 
-    matrix_definition: ($) =>
-      seq('[', repeat(seq($._expression, optional(choice(',', ';')))), ']'),
+    _expression_sequence: ($) =>
+      repeat1(seq(field('argument', $._expression), optional(','))),
+    row: ($) => prec.right(seq($._expression_sequence, optional(';'))),
+    matrix_definition: ($) => seq('[', repeat($.row), ']'),
+    cell_definition: ($) => seq('{', repeat($.row), '}'),
   },
 })
