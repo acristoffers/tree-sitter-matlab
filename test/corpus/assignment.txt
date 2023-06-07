@@ -1,0 +1,60 @@
+================================================================================
+Assignment
+================================================================================
+
+a = 1
+b = 2;
+c = "a string"
+d = [1 2; 3 4] * 2
+[a b c d] = function
+[a,b,c,d] = function
+
+[a ~ c d] = function
+[a,b,~,d] = function
+--------------------------------------------------------------------------------
+
+(source_file
+  (assignment
+    (identifier)
+    (number))
+  (assignment
+    (identifier)
+    (number))
+  (assignment
+    (identifier)
+    (string))
+  (assignment
+    (identifier)
+    (binary_operator
+      (matrix_definition
+        (row
+          (number)
+          (number))
+        (row
+          (number)
+          (number)))
+      (number)))
+  (assignment
+    (identifier)
+    (identifier)
+    (identifier)
+    (identifier)
+    (identifier))
+  (assignment
+    (identifier)
+    (identifier)
+    (identifier)
+    (identifier)
+    (identifier))
+  (assignment
+    (identifier)
+    (ignored_argument)
+    (identifier)
+    (identifier)
+    (identifier))
+  (assignment
+    (identifier)
+    (identifier)
+    (ignored_argument)
+    (identifier)
+    (identifier)))

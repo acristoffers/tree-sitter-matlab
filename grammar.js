@@ -27,12 +27,13 @@ module.exports = grammar({
   name: 'matlab',
   extras: ($) => [/\n/, /\s/, $.comment],
   externals: ($) => [$.comment],
+  conflicts: ($) => [[$._expression, $.assignment]],
   word: ($) => $.identifier,
   rules: {
     source_file: ($) =>
       repeat(
         seq(
-          choice(field('comment', $.comment), $._expression),
+          choice(field('comment', $.comment), $._expression, $._statement),
           optional($._end_of_line)
         )
       ),
@@ -109,6 +110,7 @@ module.exports = grammar({
         )
       ),
 
+    _statement: ($) => choice($.assignment),
 
     _expression: ($) =>
       choice(
@@ -219,5 +221,31 @@ module.exports = grammar({
     row: ($) => prec.right(seq($._expression_sequence, optional(';'))),
     matrix_definition: ($) => seq('[', repeat($.row), ']'),
     cell_definition: ($) => seq('{', repeat($.row), '}'),
+
+    ignored_argument: ($) => '~',
+
+    assignment: ($) =>
+      choice(
+        seq(
+          field('variable', $.identifier),
+          '=',
+          field('value', $._expression)
+        ),
+        seq(
+          '[',
+          field(
+            'variable',
+            repeat1(
+              seq(
+                field('argument', choice($.identifier, $.ignored_argument)),
+                optional(',')
+              )
+            )
+          ),
+          ']',
+          '=',
+          field('value', $._expression)
+        )
+      ),
   },
 })
