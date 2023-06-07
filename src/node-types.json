@@ -38,6 +38,10 @@
             "named": true
           },
           {
+            "type": "function_call",
+            "named": true
+          },
+          {
             "type": "identifier",
             "named": true
           },
@@ -109,6 +113,10 @@
           },
           {
             "type": "comparison_operator",
+            "named": true
+          },
+          {
+            "type": "function_call",
             "named": true
           },
           {
@@ -224,6 +232,10 @@
             "named": true
           },
           {
+            "type": "function_call",
+            "named": true
+          },
+          {
             "type": "identifier",
             "named": true
           },
@@ -277,6 +289,10 @@
           },
           {
             "type": "comparison_operator",
+            "named": true
+          },
+          {
+            "type": "function_call",
             "named": true
           },
           {
@@ -341,6 +357,10 @@
           },
           {
             "type": "comparison_operator",
+            "named": true
+          },
+          {
+            "type": "function_call",
             "named": true
           },
           {
@@ -446,6 +466,10 @@
           "named": true
         },
         {
+          "type": "function_call",
+          "named": true
+        },
+        {
           "type": "identifier",
           "named": true
         },
@@ -471,6 +495,144 @@
         },
         {
           "type": "unary_operator",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "function_call",
+    "named": true,
+    "fields": {
+      "argument": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "binary_operator",
+            "named": true
+          },
+          {
+            "type": "boolean_operator",
+            "named": true
+          },
+          {
+            "type": "cell_definition",
+            "named": true
+          },
+          {
+            "type": "comparison_operator",
+            "named": true
+          },
+          {
+            "type": "function_call",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "matrix_definition",
+            "named": true
+          },
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "postfix_operator",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          },
+          {
+            "type": "unary_operator",
+            "named": true
+          }
+        ]
+      },
+      "arguments": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": ",",
+            "named": false
+          },
+          {
+            "type": "binary_operator",
+            "named": true
+          },
+          {
+            "type": "boolean_operator",
+            "named": true
+          },
+          {
+            "type": "cell_definition",
+            "named": true
+          },
+          {
+            "type": "comparison_operator",
+            "named": true
+          },
+          {
+            "type": "function_call",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "matrix_definition",
+            "named": true
+          },
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "postfix_operator",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          },
+          {
+            "type": "unary_operator",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "func_call_paren",
           "named": true
         }
       ]
@@ -526,6 +688,10 @@
           "named": true
         },
         {
+          "type": "function_call",
+          "named": true
+        },
+        {
           "type": "identifier",
           "named": true
         },
@@ -578,6 +744,10 @@
           },
           {
             "type": "comparison_operator",
+            "named": true
+          },
+          {
+            "type": "function_call",
             "named": true
           },
           {
@@ -648,6 +818,10 @@
           },
           {
             "type": "comparison_operator",
+            "named": true
+          },
+          {
+            "type": "function_call",
             "named": true
           },
           {
@@ -722,6 +896,10 @@
           "named": true
         },
         {
+          "type": "function_call",
+          "named": true
+        },
+        {
           "type": "identifier",
           "named": true
         },
@@ -779,6 +957,10 @@
           },
           {
             "type": "comparison_operator",
+            "named": true
+          },
+          {
+            "type": "function_call",
             "named": true
           },
           {
@@ -957,6 +1139,10 @@
   },
   {
     "type": "comment",
+    "named": true
+  },
+  {
+    "type": "func_call_paren",
     "named": true
   },
   {

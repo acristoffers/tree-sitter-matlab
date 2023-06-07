@@ -1,0 +1,43 @@
+================================================================================
+Function call
+================================================================================
+
+add(1,2)
+inv(A)
+rnd()
+
+expm(eye(3)) * magic(3)
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_call
+    (identifier)
+    (func_call_paren)
+    (number)
+    (number)
+    (func_call_paren))
+  (function_call
+    (identifier)
+    (func_call_paren)
+    (identifier)
+    (func_call_paren))
+  (function_call
+    (identifier)
+    (func_call_paren)
+    (func_call_paren))
+  (binary_operator
+    (function_call
+      (identifier)
+      (func_call_paren)
+      (function_call
+        (identifier)
+        (func_call_paren)
+        (number)
+        (func_call_paren))
+      (func_call_paren))
+    (function_call
+      (identifier)
+      (func_call_paren)
+      (number)
+      (func_call_paren))))
