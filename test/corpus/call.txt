@@ -72,13 +72,6 @@ cvx_begin sdp % quiet
     subject to
 cvx_end
 
-cmd % comment
-cmd arg1 % comment
-cmd ... comment
-    arg1
-cmd arg1 ... comment
-    arg2
-
 --------------------------------------------------------------------------------
 
 (source_file
@@ -107,7 +100,6 @@ cmd arg1 ... comment
   (command
     (command_name)
     (command_argument)
-    (command_argument)
     (comment))
   (command
     (command_name)
@@ -126,19 +118,31 @@ cmd arg1 ... comment
     (command_name)
     (command_argument))
   (command
-    (command_name))
+    (command_name)))
+
+================================================================================
+Command call with line comment/continuation
+================================================================================
+
+cmd % comment
+cmd arg1 % comment
+cmd ... comment
+    arg1
+cmd arg1 ... comment
+    arg2
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (command
+    (command_name)
+    (comment))
   (command
     (command_name)
     (command_argument)
     (comment))
   (command
     (command_name)
-    (command_argument)
-    (command_argument)
-    (comment))
-  (command
-    (command_name)
-    (command_argument)
     (comment)
     (command_argument))
   (command

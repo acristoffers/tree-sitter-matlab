@@ -309,6 +309,7 @@ bool scan_command_argument(TSLexer* lexer)
 
     bool nesting = false;
     char nesting_char = 0;
+    bool consumed = false;
 
     while (!lexer->eof(lexer)) {
         if ((is_eol(lexer->lookahead) || lexer->lookahead == ' ') && !nesting || nesting && nesting_char != '\'' && lexer->lookahead == ';') {
@@ -328,10 +329,16 @@ bool scan_command_argument(TSLexer* lexer)
 
         // Line comment, finish.
         if (lexer->lookahead == '%' && nesting_char != '\'') {
-            lexer->mark_end(lexer);
-            lexer->result_symbol = COMMAND_ARGUMENT;
             is_inside_command = false;
-            return true;
+            if (consumed) {
+                lexer->mark_end(lexer);
+                lexer->result_symbol = COMMAND_ARGUMENT;
+                return true;
+            } else {
+                // At this point we actually know it will return true,
+                // so is_inside_command will be saved.
+                return scan_comment(lexer);
+            }
         }
 
         // Line continuation
@@ -342,11 +349,20 @@ bool scan_command_argument(TSLexer* lexer)
             if (lexer->lookahead == '.') {
                 consume(lexer);
                 if (lexer->lookahead == '.') {
-                    line_continuation = true;
+                    if (consumed) {
+                        line_continuation = true;
+                    } else {
+                        consume_comment_line(lexer);
+                        lexer->mark_end(lexer);
+                        lexer->result_symbol = COMMENT;
+                    }
                     return true;
                 }
+                consumed = true;
                 continue;
             }
+            consumed = true;
+            continue;
         }
 
         for (int i = 0; i < sizeof(nesting_open); i++) {
@@ -366,6 +382,7 @@ bool scan_command_argument(TSLexer* lexer)
         }
 
         consume(lexer);
+        consumed = true;
     }
 
     return false;
