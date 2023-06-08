@@ -121,7 +121,8 @@ module.exports = grammar({
         $.unary_operator
       ),
 
-    parenthesized_expression: ($) => seq('(', $._expression, ')'),
+    parenthesized_expression: ($) =>
+      prec(PREC.parenthesized_expression, seq('(', $._expression, ')')),
 
     binary_operator: ($) => {
       const table = [
