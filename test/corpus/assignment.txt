@@ -11,6 +11,9 @@ d = [1 2; 3 4] * 2
 
 [a ~ c d] = function
 [a,b,~,d] = function
+
+A(1) = B
+
 --------------------------------------------------------------------------------
 
 (source_file
@@ -57,4 +60,11 @@ d = [1 2; 3 4] * 2
     (identifier)
     (ignored_argument)
     (identifier)
+    (identifier))
+  (assignment
+    (function_call
+      (identifier)
+      (func_call_paren)
+      (number)
+      (func_call_paren))
     (identifier)))

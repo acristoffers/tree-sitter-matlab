@@ -80,6 +80,10 @@
             "named": false
           },
           {
+            "type": "function_call",
+            "named": true
+          },
+          {
             "type": "identifier",
             "named": true
           },
