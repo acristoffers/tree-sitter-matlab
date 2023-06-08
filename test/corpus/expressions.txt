@@ -42,6 +42,8 @@ a & (b | c) & d;
 
 "a" + "b"
 
+?inputParse
+
 --------------------------------------------------------------------------------
 
 (source_file
@@ -162,7 +164,9 @@ a & (b | c) & d;
         (identifier))))
   (binary_operator
     (string)
-    (string)))
+    (string))
+  (unary_operator
+    (identifier)))
 
 ================================================================================
 Binary Expressions

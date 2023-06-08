@@ -160,7 +160,7 @@ module.exports = grammar({
       prec(
         PREC.unary,
         seq(
-          field('operator', choice('+', '-', '~')),
+          field('operator', choice('+', '-', '~', '?')),
           field('argument', $._expression)
         )
       ),
