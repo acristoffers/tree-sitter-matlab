@@ -14,6 +14,12 @@ Matrix
 
 [1 2; 3 4]' * [4; -5]
 
+[1 2
+ 3 4]
+
+[A- L*C [L B]
+ I     0]
+
 --------------------------------------------------------------------------------
 
 (source_file
@@ -80,4 +86,25 @@ Matrix
       (row
         (number))
       (row
-        (number)))))
+        (number))))
+  (matrix_definition
+    (row
+      (number)
+      (number))
+    (row
+      (number)
+      (number)))
+  (matrix_definition
+    (row
+      (binary_operator
+        (identifier)
+        (binary_operator
+          (identifier)
+          (identifier)))
+      (matrix_definition
+        (row
+          (identifier)
+          (identifier))))
+    (row
+      (identifier)
+      (number))))

@@ -213,7 +213,10 @@ module.exports = grammar({
 
     _expression_sequence: ($) =>
       repeat1(seq(field('argument', $._expression), optional(','))),
-    row: ($) => prec.right(seq($._expression_sequence, optional(';'))),
+    row: ($) =>
+      prec.right(
+        seq($._expression_sequence, optional(choice(';', '\n', '\r')))
+      ),
     matrix_definition: ($) => seq('[', repeat($.row), ']'),
     cell_definition: ($) => seq('{', repeat($.row), '}'),
 
