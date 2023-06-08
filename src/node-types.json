@@ -415,6 +415,42 @@
     }
   },
   {
+    "type": "command",
+    "named": true,
+    "fields": {
+      "argument": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "command_argument",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "command_name",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "comment",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "comparison_operator",
     "named": true,
     "fields": {
@@ -896,6 +932,10 @@
           "named": true
         },
         {
+          "type": "command",
+          "named": true
+        },
+        {
           "type": "comparison_operator",
           "named": true
         },
@@ -1148,6 +1188,14 @@
   {
     "type": "^",
     "named": false
+  },
+  {
+    "type": "command_argument",
+    "named": true
+  },
+  {
+    "type": "command_name",
+    "named": true
   },
   {
     "type": "comment",

@@ -19,14 +19,19 @@ const PREC = {
 module.exports = grammar({
   name: 'matlab',
   extras: ($) => [/\n/, /\s/, $.comment],
-  externals: ($) => [$.comment],
+  externals: ($) => [
+    $.comment,
+    $.command_name,
+    $.command_argument,
+    $.error_sentinel,
+  ],
   conflicts: ($) => [[$._expression, $.assignment]],
   word: ($) => $.identifier,
   rules: {
     source_file: ($) =>
       repeat(
         seq(
-          choice(field('comment', $.comment), $._expression, $._statement),
+          choice(field('comment', $.comment), $._statement, $._expression),
           optional($._end_of_line)
         )
       ),
@@ -103,7 +108,7 @@ module.exports = grammar({
         )
       ),
 
-    _statement: ($) => choice($.assignment),
+    _statement: ($) => choice($.assignment, $.command),
 
     _expression: ($) =>
       choice(
@@ -267,5 +272,13 @@ module.exports = grammar({
       ),
     function_call: ($) =>
       prec.right(PREC.call, seq(field('name', $.identifier), $._args)),
+
+    command: ($) =>
+      prec.right(
+        seq(
+          field('name', $.command_name),
+          repeat(choice(field('argument', $.command_argument), $.comment))
+        )
+      ),
   },
 })

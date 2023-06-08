@@ -20,11 +20,11 @@
               },
               {
                 "type": "SYMBOL",
-                "name": "_expression"
+                "name": "_statement"
               },
               {
                 "type": "SYMBOL",
-                "name": "_statement"
+                "name": "_expression"
               }
             ]
           },
@@ -351,6 +351,10 @@
         {
           "type": "SYMBOL",
           "name": "assignment"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "command"
         }
       ]
     },
@@ -1470,6 +1474,43 @@
           }
         ]
       }
+    },
+    "command": {
+      "type": "PREC_RIGHT",
+      "value": 0,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "FIELD",
+            "name": "name",
+            "content": {
+              "type": "SYMBOL",
+              "name": "command_name"
+            }
+          },
+          {
+            "type": "REPEAT",
+            "content": {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "FIELD",
+                  "name": "argument",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "command_argument"
+                  }
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "comment"
+                }
+              ]
+            }
+          }
+        ]
+      }
     }
   },
   "extras": [
@@ -1497,6 +1538,18 @@
     {
       "type": "SYMBOL",
       "name": "comment"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "command_name"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "command_argument"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "error_sentinel"
     }
   ],
   "inline": [],

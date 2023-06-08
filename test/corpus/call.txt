@@ -8,6 +8,8 @@ rnd()
 
 expm(eye(3)) * magic(3)
 
+eig (A)
+
 --------------------------------------------------------------------------------
 
 (source_file
@@ -40,4 +42,107 @@ expm(eye(3)) * magic(3)
       (identifier)
       (func_call_paren)
       (number)
-      (func_call_paren))))
+      (func_call_paren)))
+  (function_call
+    (identifier)
+    (func_call_paren)
+    (identifier)
+    (func_call_paren)))
+
+================================================================================
+Command call
+================================================================================
+
+pwd
+pwd,
+pwd;
+
+disp !
+disp ! ;
+disp !s;
+
+cd ../something
+disp some text
+
+cvx_begin sdp % quiet
+    cvx_solver Mosek
+    variable P(n, n) semidefinite
+    variable Y(n, p, 4)
+    variable K(n, p, 4)
+    subject to
+cvx_end
+
+cmd % comment
+cmd arg1 % comment
+cmd ... comment
+    arg1
+cmd arg1 ... comment
+    arg2
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (command
+    (command_name))
+  (command
+    (command_name))
+  (command
+    (command_name))
+  (command
+    (command_name)
+    (command_argument))
+  (command
+    (command_name)
+    (command_argument))
+  (command
+    (command_name)
+    (command_argument))
+  (command
+    (command_name)
+    (command_argument))
+  (command
+    (command_name)
+    (command_argument)
+    (command_argument))
+  (command
+    (command_name)
+    (command_argument)
+    (command_argument)
+    (comment))
+  (command
+    (command_name)
+    (command_argument))
+  (command
+    (command_name)
+    (command_argument)
+    (command_argument))
+  (command
+    (command_name)
+    (command_argument))
+  (command
+    (command_name)
+    (command_argument))
+  (command
+    (command_name)
+    (command_argument))
+  (command
+    (command_name))
+  (command
+    (command_name)
+    (command_argument)
+    (comment))
+  (command
+    (command_name)
+    (command_argument)
+    (command_argument)
+    (comment))
+  (command
+    (command_name)
+    (command_argument)
+    (comment)
+    (command_argument))
+  (command
+    (command_name)
+    (command_argument)
+    (comment)
+    (command_argument)))
