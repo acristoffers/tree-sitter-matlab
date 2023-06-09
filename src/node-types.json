@@ -26,6 +26,10 @@
             "named": true
           },
           {
+            "type": "boolean",
+            "named": true
+          },
+          {
             "type": "boolean_operator",
             "named": true
           },
@@ -109,6 +113,10 @@
         "types": [
           {
             "type": "binary_operator",
+            "named": true
+          },
+          {
+            "type": "boolean",
             "named": true
           },
           {
@@ -232,6 +240,10 @@
             "named": true
           },
           {
+            "type": "boolean",
+            "named": true
+          },
+          {
             "type": "boolean_operator",
             "named": true
           },
@@ -311,6 +323,10 @@
           "named": true
         },
         {
+          "type": "boolean",
+          "named": true
+        },
+        {
           "type": "boolean_operator",
           "named": true
         },
@@ -378,6 +394,11 @@
     }
   },
   {
+    "type": "boolean",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "boolean_operator",
     "named": true,
     "fields": {
@@ -387,6 +408,10 @@
         "types": [
           {
             "type": "binary_operator",
+            "named": true
+          },
+          {
+            "type": "boolean",
             "named": true
           },
           {
@@ -459,6 +484,10 @@
         "types": [
           {
             "type": "binary_operator",
+            "named": true
+          },
+          {
+            "type": "boolean",
             "named": true
           },
           {
@@ -608,6 +637,10 @@
           "named": true
         },
         {
+          "type": "boolean",
+          "named": true
+        },
+        {
           "type": "boolean_operator",
           "named": true
         },
@@ -668,6 +701,10 @@
       "types": [
         {
           "type": "binary_operator",
+          "named": true
+        },
+        {
+          "type": "boolean",
           "named": true
         },
         {
@@ -842,6 +879,10 @@
             "named": true
           },
           {
+            "type": "boolean",
+            "named": true
+          },
+          {
             "type": "boolean_operator",
             "named": true
           },
@@ -901,6 +942,10 @@
           },
           {
             "type": "binary_operator",
+            "named": true
+          },
+          {
+            "type": "boolean",
             "named": true
           },
           {
@@ -1035,6 +1080,10 @@
           "named": true
         },
         {
+          "type": "boolean",
+          "named": true
+        },
+        {
           "type": "boolean_operator",
           "named": true
         },
@@ -1118,6 +1167,10 @@
           "named": true
         },
         {
+          "type": "boolean",
+          "named": true
+        },
+        {
           "type": "boolean_operator",
           "named": true
         },
@@ -1178,6 +1231,10 @@
         "types": [
           {
             "type": "binary_operator",
+            "named": true
+          },
+          {
+            "type": "boolean",
             "named": true
           },
           {
@@ -1282,6 +1339,10 @@
             "named": true
           },
           {
+            "type": "boolean",
+            "named": true
+          },
+          {
             "type": "boolean_operator",
             "named": true
           },
@@ -1358,6 +1419,10 @@
         },
         {
           "type": "binary_operator",
+          "named": true
+        },
+        {
+          "type": "boolean",
           "named": true
         },
         {
@@ -1442,6 +1507,10 @@
         "types": [
           {
             "type": "binary_operator",
+            "named": true
+          },
+          {
+            "type": "boolean",
             "named": true
           },
           {
@@ -1701,6 +1770,10 @@
     "named": false
   },
   {
+    "type": "false",
+    "named": false
+  },
+  {
     "type": "func_call_paren",
     "named": true
   },
@@ -1711,6 +1784,10 @@
   {
     "type": "keyword",
     "named": true
+  },
+  {
+    "type": "true",
+    "named": false
   },
   {
     "type": "{",

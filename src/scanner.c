@@ -20,6 +20,7 @@ static const char* keywords[] = {
     "else",
     "elseif",
     "end",
+    "false",
     "for",
     "function",
     "global",
@@ -30,6 +31,7 @@ static const char* keywords[] = {
     "return",
     "spmd",
     "switch",
+    "true",
     "try",
     "while",
 };

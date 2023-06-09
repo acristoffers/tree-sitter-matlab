@@ -71,6 +71,8 @@ module.exports = grammar({
       ),
     _postfix_operator: ($) => choice("'", ".'"),
 
+    boolean: ($) => choice('true', 'false'),
+
     number: ($) =>
       choice(
         $._integer,
@@ -124,6 +126,7 @@ module.exports = grammar({
     _expression: ($) =>
       choice(
         $.binary_operator,
+        $.boolean,
         $.boolean_operator,
         $.cell_definition,
         $.comparison_operator,

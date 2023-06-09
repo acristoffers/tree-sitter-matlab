@@ -208,6 +208,19 @@
         }
       ]
     },
+    "boolean": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "true"
+        },
+        {
+          "type": "STRING",
+          "value": "false"
+        }
+      ]
+    },
     "number": {
       "type": "CHOICE",
       "members": [
@@ -384,6 +397,10 @@
         {
           "type": "SYMBOL",
           "name": "binary_operator"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "boolean"
         },
         {
           "type": "SYMBOL",
