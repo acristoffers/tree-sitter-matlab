@@ -113,7 +113,13 @@ module.exports = grammar({
       ),
 
     _statement: ($) =>
-      choice($.assignment, $.command, $.if_statement, $.for_statement),
+      choice(
+        $.assignment,
+        $.command,
+        $.if_statement,
+        $.for_statement,
+        $.while_statement
+      ),
 
     _expression: ($) =>
       choice(
@@ -309,7 +315,7 @@ module.exports = grammar({
     if_statement: ($) =>
       seq(
         alias('if', $.keyword),
-        alias($._expression, $.condition),
+        field('argument', alias($._expression, $.condition)),
         $._end_of_line,
         optional($.block),
         optional($.elseif_statement),
@@ -341,6 +347,15 @@ module.exports = grammar({
           optional($.block),
           $.end
         )
+      ),
+
+    while_statement: ($) =>
+      seq(
+        alias('while', $.keyword),
+        field('argument', alias($._expression, $.condition)),
+        $._end_of_line,
+        optional($.block),
+        $.end
       ),
   },
 })
