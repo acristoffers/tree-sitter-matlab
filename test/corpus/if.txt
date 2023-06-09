@@ -41,14 +41,14 @@ end
     (keyword)
     (condition
       (identifier))
-    (end))
+    (keyword))
   (if_statement
     (keyword)
     (condition
       (identifier))
     (block
       (number))
-    (end))
+    (keyword))
   (if_statement
     (keyword)
     (condition
@@ -59,7 +59,7 @@ end
       (keyword)
       (condition
         (identifier)))
-    (end))
+    (keyword))
   (if_statement
     (keyword)
     (condition
@@ -72,7 +72,7 @@ end
         (identifier))
       (block
         (number)))
-    (end))
+    (keyword))
   (if_statement
     (keyword)
     (condition
@@ -83,7 +83,7 @@ end
       (keyword)
       (block
         (number)))
-    (end))
+    (keyword))
   (if_statement
     (keyword)
     (condition
@@ -100,4 +100,4 @@ end
       (keyword)
       (block
         (number)))
-    (end)))
+    (keyword)))

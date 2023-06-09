@@ -17,4 +17,4 @@ end
         (identifier)))
     (block
       (number))
-    (end)))
+    (keyword)))

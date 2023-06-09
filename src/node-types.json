@@ -383,6 +383,10 @@
           "named": true
         },
         {
+          "type": "switch_statement",
+          "named": true
+        },
+        {
           "type": "unary_operator",
           "named": true
         },
@@ -801,22 +805,6 @@
     }
   },
   {
-    "type": "end",
-    "named": true,
-    "fields": {
-      "end": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "end",
-            "named": false
-          }
-        ]
-      }
-    }
-  },
-  {
     "type": "for_statement",
     "named": true,
     "fields": {
@@ -845,6 +833,16 @@
             "named": true
           }
         ]
+      },
+      "end": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "keyword",
+            "named": true
+          }
+        ]
       }
     },
     "children": {
@@ -853,10 +851,6 @@
       "types": [
         {
           "type": "block",
-          "named": true
-        },
-        {
-          "type": "end",
           "named": true
         },
         {
@@ -1033,6 +1027,16 @@
             "named": true
           }
         ]
+      },
+      "end": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "keyword",
+            "named": true
+          }
+        ]
       }
     },
     "children": {
@@ -1049,10 +1053,6 @@
         },
         {
           "type": "elseif_statement",
-          "named": true
-        },
-        {
-          "type": "end",
           "named": true
         },
         {
@@ -1482,6 +1482,10 @@
           "named": true
         },
         {
+          "type": "switch_statement",
+          "named": true
+        },
+        {
           "type": "unary_operator",
           "named": true
         },
@@ -1496,6 +1500,50 @@
     "type": "string",
     "named": true,
     "fields": {}
+  },
+  {
+    "type": "switch_statement",
+    "named": true,
+    "fields": {
+      "argument": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "condition",
+            "named": true
+          }
+        ]
+      },
+      "end": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "keyword",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "block",
+          "named": true
+        },
+        {
+          "type": "condition",
+          "named": true
+        },
+        {
+          "type": "keyword",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "unary_operator",
@@ -1600,6 +1648,16 @@
             "named": true
           }
         ]
+      },
+      "end": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "keyword",
+            "named": true
+          }
+        ]
       }
     },
     "children": {
@@ -1608,10 +1666,6 @@
       "types": [
         {
           "type": "block",
-          "named": true
-        },
-        {
-          "type": "end",
           "named": true
         },
         {
@@ -1764,10 +1818,6 @@
   {
     "type": "comment",
     "named": true
-  },
-  {
-    "type": "end",
-    "named": false
   },
   {
     "type": "false",

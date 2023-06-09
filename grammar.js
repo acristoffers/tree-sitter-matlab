@@ -118,8 +118,9 @@ module.exports = grammar({
       choice(
         $.assignment,
         $.command,
-        $.if_statement,
         $.for_statement,
+        $.if_statement,
+        $.switch_statement,
         $.while_statement
       ),
 
@@ -305,7 +306,7 @@ module.exports = grammar({
         optional(seq(':', $._range_element))
       ),
 
-    end: ($) => field('end', 'end'),
+    _end: ($) => field('end', alias('end', $.keyword)),
 
     elseif_statement: ($) =>
       seq(
@@ -323,7 +324,7 @@ module.exports = grammar({
         optional($.block),
         optional($.elseif_statement),
         optional($.else_statement),
-        $.end
+        $._end
       ),
 
     iterator: ($) => seq($.identifier, '=', $._expression),
@@ -334,7 +335,7 @@ module.exports = grammar({
           field('argument', $.iterator),
           $._end_of_line,
           optional($.block),
-          $.end
+          $._end
         ),
         seq(
           alias('parfor', $.keyword),
@@ -348,7 +349,7 @@ module.exports = grammar({
           ')',
           $._end_of_line,
           optional($.block),
-          $.end
+          $._end
         )
       ),
 
@@ -358,7 +359,23 @@ module.exports = grammar({
         field('argument', alias($._expression, $.condition)),
         $._end_of_line,
         optional($.block),
-        $.end
+        $._end
+      ),
+
+    switch_statement: ($) =>
+      seq(
+        alias('switch', $.keyword),
+        field('argument', alias($._expression, $.condition)),
+        repeat(
+          seq(
+            alias('case', $.keyword),
+            // MATLAB says it should be a `switch_expr`, but then accepts any expression
+            alias($._expression, $.condition),
+            optional($.block)
+          )
+        ),
+        optional(seq(alias('otherwise', $.keyword), optional($.block))),
+        $._end
       ),
   },
 })

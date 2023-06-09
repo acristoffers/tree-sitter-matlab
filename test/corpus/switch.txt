@@ -1,0 +1,64 @@
+================================================================================
+Boolean
+================================================================================
+
+switch lower(method)
+  case {'linear','bilinear'}
+    disp('Method is linear')
+  case 'cubic'
+    disp('Method is cubic')
+  case 'nearest'
+    disp('Method is nearest')
+  otherwise
+    disp('Unknown method.')
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (switch_statement
+    (keyword)
+    (condition
+      (function_call
+        (identifier)
+        (func_call_paren)
+        (identifier)
+        (func_call_paren)))
+    (keyword)
+    (condition
+      (cell_definition
+        (row
+          (string)
+          (string))))
+    (block
+      (function_call
+        (identifier)
+        (func_call_paren)
+        (string)
+        (func_call_paren)))
+    (keyword)
+    (condition
+      (string))
+    (block
+      (function_call
+        (identifier)
+        (func_call_paren)
+        (string)
+        (func_call_paren)))
+    (keyword)
+    (condition
+      (string))
+    (block
+      (function_call
+        (identifier)
+        (func_call_paren)
+        (string)
+        (func_call_paren)))
+    (keyword)
+    (block
+      (function_call
+        (identifier)
+        (func_call_paren)
+        (string)
+        (func_call_paren)))
+    (keyword)))
