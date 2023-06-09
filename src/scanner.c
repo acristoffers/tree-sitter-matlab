@@ -39,6 +39,12 @@ is_eol(const char c)
 }
 
 static inline bool
+iswspace_matlab(const char c)
+{
+    return iswspace(c) && c != '\n' && c != '\r';
+}
+
+static inline bool
 is_identifier(const char c, const bool start)
 {
     const bool alpha = isalpha(c);
@@ -149,7 +155,7 @@ bool scan_command(TSLexer* lexer)
     // Special case: shell escape
     if (lexer->lookahead == '!') {
         consume(lexer);
-        while (lexer->lookahead == ' ') {
+        while (iswspace_matlab(lexer->lookahead)) {
             consume(lexer);
         }
         while (lexer->lookahead != ' ' && lexer->lookahead != '\n' && !lexer->eof(lexer)) {
@@ -157,7 +163,7 @@ bool scan_command(TSLexer* lexer)
         }
         lexer->mark_end(lexer);
         lexer->result_symbol = COMMAND_NAME;
-        while (lexer->lookahead == ' ') {
+        while (iswspace_matlab(lexer->lookahead)) {
             skip(lexer);
         }
         is_inside_command = lexer->lookahead != '\n';
@@ -242,7 +248,7 @@ bool scan_command(TSLexer* lexer)
             return true;
         }
 
-        if (second == ' ') {
+        if (iswspace_matlab(second)) {
             // If it is a space, then it depends on what we have, since
             // `disp + ;` is a valid command but `disp + 2;` isn't.
             const char operators[] = {
@@ -270,7 +276,7 @@ bool scan_command(TSLexer* lexer)
             // are no further arguments.
             if (is_invalid) {
                 skip(lexer);
-                while (lexer->lookahead == ' ') {
+                while (iswspace_matlab(lexer->lookahead)) {
                     skip(lexer);
                 }
                 is_inside_command = is_eol(lexer->lookahead);
@@ -327,7 +333,7 @@ bool scan_command_argument(TSLexer* lexer)
         }
         lexer->mark_end(lexer);
         lexer->result_symbol = COMMAND_ARGUMENT;
-        while (lexer->lookahead == ' ') {
+        while (iswspace_matlab(lexer->lookahead)) {
             skip(lexer);
         }
         if (lexer->lookahead == '\n') {
@@ -345,11 +351,11 @@ bool scan_command_argument(TSLexer* lexer)
     bool consumed = false;
 
     while (!lexer->eof(lexer)) {
-        if ((is_eol(lexer->lookahead) || lexer->lookahead == ' ') && !nesting || nesting && nesting_char != '\'' && lexer->lookahead == ';') {
+        if ((is_eol(lexer->lookahead) || iswspace_matlab(lexer->lookahead)) && !nesting || nesting && nesting_char != '\'' && lexer->lookahead == ';') {
             lexer->mark_end(lexer);
             lexer->result_symbol = COMMAND_ARGUMENT;
 
-            while (lexer->lookahead == ' ') {
+            while (iswspace_matlab(lexer->lookahead)) {
                 skip(lexer);
             }
 
