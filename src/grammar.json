@@ -464,6 +464,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "struct"
+        },
+        {
+          "type": "SYMBOL",
           "name": "unary_operator"
         }
       ]
@@ -1320,8 +1324,21 @@
               "type": "FIELD",
               "name": "variable",
               "content": {
-                "type": "SYMBOL",
-                "name": "identifier"
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "identifier"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "function_call"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "struct"
+                  }
+                ]
               }
             },
             {
@@ -1366,6 +1383,14 @@
                           {
                             "type": "SYMBOL",
                             "name": "ignored_argument"
+                          },
+                          {
+                            "type": "SYMBOL",
+                            "name": "struct"
+                          },
+                          {
+                            "type": "SYMBOL",
+                            "name": "function_call"
                           }
                         ]
                       }
@@ -1389,31 +1414,6 @@
             {
               "type": "STRING",
               "value": "]"
-            },
-            {
-              "type": "STRING",
-              "value": "="
-            },
-            {
-              "type": "FIELD",
-              "name": "value",
-              "content": {
-                "type": "SYMBOL",
-                "name": "_expression"
-              }
-            }
-          ]
-        },
-        {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "FIELD",
-              "name": "variable",
-              "content": {
-                "type": "SYMBOL",
-                "name": "function_call"
-              }
             },
             {
               "type": "STRING",
@@ -2222,6 +2222,53 @@
         {
           "type": "SYMBOL",
           "name": "_end"
+        }
+      ]
+    },
+    "_struct_element": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "function_call"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "identifier"
+        }
+      ]
+    },
+    "struct": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "REPEAT1",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "_struct_element"
+              },
+              {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "STRING",
+                    "value": "."
+                  },
+                  {
+                    "type": "STRING",
+                    "value": ".?"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_struct_element"
         }
       ]
     }

@@ -8,11 +8,19 @@
         "required": false,
         "types": [
           {
+            "type": "function_call",
+            "named": true
+          },
+          {
             "type": "identifier",
             "named": true
           },
           {
             "type": "ignored_argument",
+            "named": true
+          },
+          {
+            "type": "struct",
             "named": true
           }
         ]
@@ -74,6 +82,10 @@
             "named": true
           },
           {
+            "type": "struct",
+            "named": true
+          },
+          {
             "type": "unary_operator",
             "named": true
           }
@@ -97,6 +109,10 @@
           },
           {
             "type": "ignored_argument",
+            "named": true
+          },
+          {
+            "type": "struct",
             "named": true
           }
         ]
@@ -161,6 +177,10 @@
           },
           {
             "type": "string",
+            "named": true
+          },
+          {
+            "type": "struct",
             "named": true
           },
           {
@@ -285,6 +305,10 @@
           },
           {
             "type": "string",
+            "named": true
+          },
+          {
+            "type": "struct",
             "named": true
           },
           {
@@ -413,6 +437,10 @@
           "named": true
         },
         {
+          "type": "struct",
+          "named": true
+        },
+        {
           "type": "switch_statement",
           "named": true
         },
@@ -493,6 +521,10 @@
             "named": true
           },
           {
+            "type": "struct",
+            "named": true
+          },
+          {
             "type": "unary_operator",
             "named": true
           }
@@ -566,6 +598,10 @@
           },
           {
             "type": "string",
+            "named": true
+          },
+          {
+            "type": "struct",
             "named": true
           },
           {
@@ -719,6 +755,10 @@
           "named": true
         },
         {
+          "type": "struct",
+          "named": true
+        },
+        {
           "type": "unary_operator",
           "named": true
         }
@@ -783,6 +823,10 @@
         },
         {
           "type": "string",
+          "named": true
+        },
+        {
+          "type": "struct",
           "named": true
         },
         {
@@ -985,6 +1029,10 @@
             "named": true
           },
           {
+            "type": "struct",
+            "named": true
+          },
+          {
             "type": "unary_operator",
             "named": true
           }
@@ -1052,6 +1100,10 @@
           },
           {
             "type": "string",
+            "named": true
+          },
+          {
+            "type": "struct",
             "named": true
           },
           {
@@ -1202,6 +1254,10 @@
           "named": true
         },
         {
+          "type": "struct",
+          "named": true
+        },
+        {
           "type": "unary_operator",
           "named": true
         }
@@ -1289,6 +1345,10 @@
           "named": true
         },
         {
+          "type": "struct",
+          "named": true
+        },
+        {
           "type": "unary_operator",
           "named": true
         }
@@ -1353,6 +1413,10 @@
           },
           {
             "type": "string",
+            "named": true
+          },
+          {
+            "type": "struct",
             "named": true
           },
           {
@@ -1458,6 +1522,10 @@
           },
           {
             "type": "string",
+            "named": true
+          },
+          {
+            "type": "struct",
             "named": true
           },
           {
@@ -1586,6 +1654,10 @@
           "named": true
         },
         {
+          "type": "struct",
+          "named": true
+        },
+        {
           "type": "switch_statement",
           "named": true
         },
@@ -1609,6 +1681,25 @@
     "type": "string",
     "named": true,
     "fields": {}
+  },
+  {
+    "type": "struct",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "function_call",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "switch_statement",
@@ -1741,6 +1832,10 @@
             "named": true
           },
           {
+            "type": "struct",
+            "named": true
+          },
+          {
             "type": "unary_operator",
             "named": true
           }
@@ -1865,6 +1960,10 @@
     "named": false
   },
   {
+    "type": ".",
+    "named": false
+  },
+  {
     "type": ".'",
     "named": false
   },
@@ -1882,6 +1981,10 @@
   },
   {
     "type": "./",
+    "named": false
+  },
+  {
+    "type": ".?",
     "named": false
   },
   {

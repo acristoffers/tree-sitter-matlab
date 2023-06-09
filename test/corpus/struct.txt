@@ -1,0 +1,92 @@
+================================================================================
+Struct
+================================================================================
+
+a.b
+a(1).b
+a{1}.b
+a.b(1)
+a.b{1}
+a(1).b(1)
+a{1}.b(1)
+a(1).b{1}
+a{1}.b{1}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (struct
+    (identifier)
+    (identifier))
+  (struct
+    (function_call
+      (identifier)
+      (func_call_paren)
+      (number)
+      (func_call_paren))
+    (identifier))
+  (struct
+    (function_call
+      (identifier)
+      (func_call_paren)
+      (number)
+      (func_call_paren))
+    (identifier))
+  (struct
+    (identifier)
+    (function_call
+      (identifier)
+      (func_call_paren)
+      (number)
+      (func_call_paren)))
+  (struct
+    (identifier)
+    (function_call
+      (identifier)
+      (func_call_paren)
+      (number)
+      (func_call_paren)))
+  (struct
+    (function_call
+      (identifier)
+      (func_call_paren)
+      (number)
+      (func_call_paren))
+    (function_call
+      (identifier)
+      (func_call_paren)
+      (number)
+      (func_call_paren)))
+  (struct
+    (function_call
+      (identifier)
+      (func_call_paren)
+      (number)
+      (func_call_paren))
+    (function_call
+      (identifier)
+      (func_call_paren)
+      (number)
+      (func_call_paren)))
+  (struct
+    (function_call
+      (identifier)
+      (func_call_paren)
+      (number)
+      (func_call_paren))
+    (function_call
+      (identifier)
+      (func_call_paren)
+      (number)
+      (func_call_paren)))
+  (struct
+    (function_call
+      (identifier)
+      (func_call_paren)
+      (number)
+      (func_call_paren))
+    (function_call
+      (identifier)
+      (func_call_paren)
+      (number)
+      (func_call_paren))))

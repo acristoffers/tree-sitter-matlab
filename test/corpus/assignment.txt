@@ -14,6 +14,11 @@ d = [1 2; 3 4] * 2
 
 A(1) = B
 
+a{1}.b      = 3
+[a.a a.b]   = meshgrid(1:2, 1:2);
+[a(1) a(2)] = meshgrid(1:1, 1:1);
+[a{1} a{2}] = meshgrid(1:2, 1:2);
+
 --------------------------------------------------------------------------------
 
 (source_file
@@ -67,4 +72,72 @@ A(1) = B
       (func_call_paren)
       (number)
       (func_call_paren))
-    (identifier)))
+    (identifier))
+  (assignment
+    (struct
+      (function_call
+        (identifier)
+        (func_call_paren)
+        (number)
+        (func_call_paren))
+      (identifier))
+    (number))
+  (assignment
+    (struct
+      (identifier)
+      (identifier))
+    (struct
+      (identifier)
+      (identifier))
+    (function_call
+      (identifier)
+      (func_call_paren)
+      (range
+        (number)
+        (number))
+      (range
+        (number)
+        (number))
+      (func_call_paren)))
+  (assignment
+    (function_call
+      (identifier)
+      (func_call_paren)
+      (number)
+      (func_call_paren))
+    (function_call
+      (identifier)
+      (func_call_paren)
+      (number)
+      (func_call_paren))
+    (function_call
+      (identifier)
+      (func_call_paren)
+      (range
+        (number)
+        (number))
+      (range
+        (number)
+        (number))
+      (func_call_paren)))
+  (assignment
+    (function_call
+      (identifier)
+      (func_call_paren)
+      (number)
+      (func_call_paren))
+    (function_call
+      (identifier)
+      (func_call_paren)
+      (number)
+      (func_call_paren))
+    (function_call
+      (identifier)
+      (func_call_paren)
+      (range
+        (number)
+        (number))
+      (range
+        (number)
+        (number))
+      (func_call_paren))))
