@@ -1,6 +1,6 @@
+#include "tree_sitter/parser.h"
 #include <ctype.h>
 #include <stdio.h>
-#include <tree_sitter/parser.h>
 #include <wctype.h>
 
 enum TokenType {
@@ -76,28 +76,31 @@ void tree_sitter_matlab_external_scanner_destroy(void* payload)
 
 bool is_inside_command = false;
 bool line_continuation = false;
+bool is_shell_scape = false;
 
 unsigned
 tree_sitter_matlab_external_scanner_serialize(void* payload, char* buffer)
 {
     buffer[0] = is_inside_command;
     buffer[1] = line_continuation;
-    return 2;
+    buffer[2] = is_shell_scape;
+    return 3;
 }
 
 void tree_sitter_matlab_external_scanner_deserialize(void* payload,
     const char* buffer,
     unsigned length)
 {
-    if (length >= 2) {
+    if (length >= 3) {
         is_inside_command = buffer[0];
         line_continuation = buffer[1];
+        is_shell_scape = buffer[2];
     }
 }
 
-bool consume_comment_line(TSLexer* lexer)
+void consume_comment_line(TSLexer* lexer)
 {
-    while (lexer->lookahead != '\n') {
+    while (lexer->lookahead != '\n' && !lexer->eof(lexer)) {
         consume(lexer);
     }
 }
@@ -146,10 +149,19 @@ bool scan_command(TSLexer* lexer)
     // Special case: shell escape
     if (lexer->lookahead == '!') {
         consume(lexer);
-        skip_whitespaces(lexer);
-        consume_identifier(lexer);
+        while (lexer->lookahead == ' ') {
+            consume(lexer);
+        }
+        while (lexer->lookahead != ' ' && lexer->lookahead != '\n' && !lexer->eof(lexer)) {
+            consume(lexer);
+        }
         lexer->mark_end(lexer);
         lexer->result_symbol = COMMAND_NAME;
+        while (lexer->lookahead == ' ') {
+            skip(lexer);
+        }
+        is_inside_command = lexer->lookahead != '\n';
+        is_shell_scape = is_inside_command;
         return true;
     }
 
@@ -193,9 +205,6 @@ bool scan_command(TSLexer* lexer)
         return true;
     }
 
-    // From now on, if it is a command, it has arguments.
-    is_inside_command = true;
-
     // The first char of the first argument cannot be /=()/
     if (lexer->lookahead == '=' || lexer->lookahead == '(' || lexer->lookahead == ')') {
         return false;
@@ -203,17 +212,20 @@ bool scan_command(TSLexer* lexer)
 
     // If it is a single quote, it is a command.
     if (lexer->lookahead == '\'') {
+        is_inside_command = true;
         return true;
     }
 
     // If it is an identifier char, then it's a command
     if (is_identifier(lexer->lookahead, true)) {
+        is_inside_command = true;
         return true;
     }
 
     // If it is a char greater than 0xC0, then I assume it's a valide UTF-8
     // char, and this is a command.
     if (lexer->lookahead >= 0xC0) {
+        is_inside_command = true;
         return true;
     }
 
@@ -226,6 +238,7 @@ bool scan_command(TSLexer* lexer)
 
         // If it's the end-of-line, then it's a command.
         if (is_eol(second)) {
+            is_inside_command = true;
             return true;
         }
 
@@ -260,10 +273,12 @@ bool scan_command(TSLexer* lexer)
                 while (lexer->lookahead == ' ') {
                     skip(lexer);
                 }
-                return is_eol(lexer->lookahead);
+                is_inside_command = is_eol(lexer->lookahead);
+                return is_inside_command;
             }
 
             // If it's not an operator, then this is a command.
+            is_inside_command = true;
             return true;
         }
 
@@ -272,6 +287,7 @@ bool scan_command(TSLexer* lexer)
         skip(lexer);
 
         if (lexer->lookahead != ' ') {
+            is_inside_command = true;
             return true;
         }
 
@@ -296,6 +312,7 @@ bool scan_command(TSLexer* lexer)
             }
         }
 
+        is_inside_command = true;
         return true;
     }
 
@@ -304,6 +321,22 @@ bool scan_command(TSLexer* lexer)
 
 bool scan_command_argument(TSLexer* lexer)
 {
+    if (is_shell_scape) {
+        while (lexer->lookahead != ' ' && lexer->lookahead != '\n' && !lexer->eof(lexer)) {
+            consume(lexer);
+        }
+        lexer->mark_end(lexer);
+        lexer->result_symbol = COMMAND_ARGUMENT;
+        while (lexer->lookahead == ' ') {
+            skip(lexer);
+        }
+        if (lexer->lookahead == '\n') {
+            is_inside_command = false;
+            is_shell_scape = false;
+        }
+        return true;
+    }
+
     const char nesting_open[] = { '\'', '(', '{', '[' };
     const char nesting_close[] = { '\'', ')', '}', ']' };
 
@@ -400,6 +433,7 @@ bool tree_sitter_matlab_external_scanner_scan(void* payload,
 
     if (valid_symbols[COMMAND_NAME] && !is_inside_command) {
         is_inside_command = false;
+        is_shell_scape = false;
         return scan_command(lexer);
     }
 

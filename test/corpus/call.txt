@@ -150,3 +150,28 @@ cmd arg1 ... comment
     (command_argument)
     (comment)
     (command_argument)))
+
+================================================================================
+Shell escape
+================================================================================
+
+!ls
+! ls
+!cd somewhere new
+! echo (something here
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (command
+    (command_name))
+  (command
+    (command_name))
+  (command
+    (command_name)
+    (command_argument)
+    (command_argument))
+  (command
+    (command_name)
+    (command_argument)
+    (command_argument)))
