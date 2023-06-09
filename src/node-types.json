@@ -778,7 +778,34 @@
   {
     "type": "for_statement",
     "named": true,
-    "fields": {},
+    "fields": {
+      "argument": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "function_call",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "iterator",
+            "named": true
+          },
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": true,
@@ -789,10 +816,6 @@
         },
         {
           "type": "end",
-          "named": true
-        },
-        {
-          "type": "iterator",
           "named": true
         },
         {

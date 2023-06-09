@@ -319,12 +319,28 @@ module.exports = grammar({
 
     iterator: ($) => seq($.identifier, '=', $._expression),
     for_statement: ($) =>
-      seq(
-        alias(choice('for', 'parfor'), $.keyword),
-        $.iterator,
-        $._end_of_line,
-        optional($.block),
-        $.end
+      choice(
+        seq(
+          alias(choice('for', 'parfor'), $.keyword),
+          field('argument', $.iterator),
+          $._end_of_line,
+          optional($.block),
+          $.end
+        ),
+        seq(
+          alias('parfor', $.keyword),
+          '(',
+          field('argument', $.iterator),
+          ',',
+          field(
+            'argument',
+            choice($.number, $.identifier, $.function_call, $.string)
+          ),
+          ')',
+          $._end_of_line,
+          optional($.block),
+          $.end
+        )
       ),
   },
 })

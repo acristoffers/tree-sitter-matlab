@@ -106,3 +106,88 @@ for E = eye(N), do_some_task(E), end
         (identifier)
         (func_call_paren)))
     (end)))
+
+================================================================================
+ParFor Statement
+================================================================================
+
+parfor i = 1:3
+    1
+end
+
+parfor (i = 1:3, 1)
+    1
+end
+
+parfor (i = 1:3, option())
+    1
+end
+
+parfor (i = 1:3, cluster)
+    1
+end
+
+parfor (i = 1:3, 'cluster')
+    1
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (for_statement
+    (keyword)
+    (iterator
+      (identifier)
+      (range
+        (number)
+        (number)))
+    (block
+      (number))
+    (end))
+  (for_statement
+    (keyword)
+    (iterator
+      (identifier)
+      (range
+        (number)
+        (number)))
+    (number)
+    (block
+      (number))
+    (end))
+  (for_statement
+    (keyword)
+    (iterator
+      (identifier)
+      (range
+        (number)
+        (number)))
+    (function_call
+      (identifier)
+      (func_call_paren)
+      (func_call_paren))
+    (block
+      (number))
+    (end))
+  (for_statement
+    (keyword)
+    (iterator
+      (identifier)
+      (range
+        (number)
+        (number)))
+    (identifier)
+    (block
+      (number))
+    (end))
+  (for_statement
+    (keyword)
+    (iterator
+      (identifier)
+      (range
+        (number)
+        (number)))
+    (string)
+    (block
+      (number))
+    (end)))
