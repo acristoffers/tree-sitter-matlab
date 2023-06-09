@@ -1,6 +1,7 @@
 #include "tree_sitter/parser.h"
 #include <ctype.h>
 #include <stdio.h>
+#include <string.h>
 #include <wctype.h>
 
 enum TokenType {
@@ -8,6 +9,29 @@ enum TokenType {
     COMMAND_NAME,
     COMMAND_ARGUMENT,
     ERROR_SENTINEL
+};
+
+static const char* keywords[] = {
+    "break",
+    "case",
+    "catch",
+    "classdef",
+    "continue",
+    "else",
+    "elseif",
+    "end",
+    "for",
+    "function",
+    "global",
+    "if",
+    "otherwise",
+    "parfor",
+    "persistent",
+    "return",
+    "spmd",
+    "switch",
+    "try",
+    "while",
 };
 
 static inline void
@@ -54,13 +78,22 @@ is_identifier(const char c, const bool start)
     return alpha || numeric || especial;
 }
 
-static inline void
+static inline char*
 consume_identifier(TSLexer* lexer)
 {
-    is_identifier(lexer->lookahead, true);
-    while (is_identifier(lexer->lookahead, false)) {
+    char* identifier = calloc(256, sizeof(char));
+    size_t i = 0;
+    if (is_identifier(lexer->lookahead, true)) {
+        identifier[i] = lexer->lookahead;
         consume(lexer);
+        while (is_identifier(lexer->lookahead, false)) {
+            identifier[++i] = lexer->lookahead;
+            consume(lexer);
+        }
+        return identifier;
     }
+    free(identifier);
+    return NULL;
 }
 
 static inline void
@@ -175,7 +208,15 @@ bool scan_command(TSLexer* lexer)
         return false;
     }
 
-    consume_identifier(lexer);
+    char* identifier = consume_identifier(lexer);
+    if (identifier != NULL) {
+        for (int i = 0; i < 20; i++) {
+            if (strcmp(keywords[i], identifier) == 0) {
+                return false;
+            }
+        }
+        free(identifier);
+    }
 
     // First case: found an end-of-line already, so this is a command for sure.
     // example:

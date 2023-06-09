@@ -1,0 +1,92 @@
+================================================================================
+If Statement
+================================================================================
+
+if something
+end
+
+if something
+    1
+end
+
+if something
+    1
+elseif other
+end
+
+if something
+    1
+elseif other
+    2
+end
+
+if something
+    1
+else
+    2
+end
+
+if something
+    1
+elseif other
+    2
+else
+    3
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (if_statement
+    (condition
+      (identifier))
+    (end))
+  (if_statement
+    (condition
+      (identifier))
+    (block
+      (number))
+    (end))
+  (if_statement
+    (condition
+      (identifier))
+    (block
+      (number))
+    (elseif_statement
+      (condition
+        (identifier)))
+    (end))
+  (if_statement
+    (condition
+      (identifier))
+    (block
+      (number))
+    (elseif_statement
+      (condition
+        (identifier))
+      (block
+        (number)))
+    (end))
+  (if_statement
+    (condition
+      (identifier))
+    (block
+      (number))
+    (else_statement
+      (block
+        (number)))
+    (end))
+  (if_statement
+    (condition
+      (identifier))
+    (block
+      (number))
+    (elseif_statement
+      (condition
+        (identifier))
+      (block
+        (number)))
+    (else_statement
+      (block
+        (number)))
+    (end)))

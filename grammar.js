@@ -28,13 +28,17 @@ module.exports = grammar({
   conflicts: ($) => [[$._expression, $.assignment]],
   word: ($) => $.identifier,
   rules: {
-    source_file: ($) =>
-      repeat(
+    source_file: ($) => $._block,
+
+    _block: ($) =>
+      repeat1(
         seq(
           choice(field('comment', $.comment), $._statement, $._expression),
           optional($._end_of_line)
         )
       ),
+    block: ($) => $._block,
+
     identifier: ($) => /[a-zA-Z_][a-zA-Z0-9_]*/,
 
     _end_of_line: ($) => choice(';', '\n', '\r', ','),
@@ -108,7 +112,7 @@ module.exports = grammar({
         )
       ),
 
-    _statement: ($) => choice($.assignment, $.command),
+    _statement: ($) => choice($.assignment, $.command, $.if_statement),
 
     _expression: ($) =>
       choice(
@@ -282,6 +286,7 @@ module.exports = grammar({
         )
       ),
 
+    _range_element: ($) => choice($.identifier, $.number, $.function_call),
     range: ($) =>
       seq(
         $._range_element,
@@ -290,6 +295,19 @@ module.exports = grammar({
         optional(seq(':', $._range_element))
       ),
 
-    _range_element: ($) => choice($.identifier, $.number, $.function_call),
+    end: ($) => field('end', 'end'),
+
+    elseif_statement: ($) =>
+      seq('elseif', alias($._expression, $.condition), optional($.block)),
+    else_statement: ($) => seq('else', optional($.block)),
+    if_statement: ($) =>
+      seq(
+        'if',
+        alias($._expression, $.condition),
+        optional($.block),
+        optional($.elseif_statement),
+        optional($.else_statement),
+        $.end
+      ),
   },
 })
