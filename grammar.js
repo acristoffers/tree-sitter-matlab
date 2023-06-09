@@ -278,16 +278,32 @@ module.exports = grammar({
         )
       ),
 
+    spread_operator: ($) => ':',
+
     _function_arguments: ($) =>
       seq(
-        field('argument', $._expression),
-        optional(repeat(seq(',', field('argument', $._expression))))
+        field('argument', choice($.spread_operator, $._expression)),
+        optional(
+          repeat(
+            seq(
+              ',',
+              field('argument', choice($.spread_operator, $._expression))
+            )
+          )
+        )
       ),
     _args: ($) =>
-      seq(
-        alias('(', $.func_call_paren),
-        field('arguments', optional($._function_arguments)),
-        alias(')', $.func_call_paren)
+      choice(
+        seq(
+          alias('(', $.func_call_paren),
+          field('arguments', optional($._function_arguments)),
+          alias(')', $.func_call_paren)
+        ),
+        seq(
+          alias('{', $.func_call_paren),
+          field('arguments', optional($._function_arguments)),
+          alias('}', $.func_call_paren)
+        )
       ),
     function_call: ($) =>
       prec.right(PREC.call, seq(field('name', $.identifier), $._args)),

@@ -1,0 +1,53 @@
+================================================================================
+Indexing
+================================================================================
+
+A(1)
+A(1, 2)
+A(1:2, :)
+
+A{1}
+A{1, 2}
+A{1:2, :}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_call
+    (identifier)
+    (func_call_paren)
+    (number)
+    (func_call_paren))
+  (function_call
+    (identifier)
+    (func_call_paren)
+    (number)
+    (number)
+    (func_call_paren))
+  (function_call
+    (identifier)
+    (func_call_paren)
+    (range
+      (number)
+      (number))
+    (spread_operator)
+    (func_call_paren))
+  (function_call
+    (identifier)
+    (func_call_paren)
+    (number)
+    (func_call_paren))
+  (function_call
+    (identifier)
+    (func_call_paren)
+    (number)
+    (number)
+    (func_call_paren))
+  (function_call
+    (identifier)
+    (func_call_paren)
+    (range
+      (number)
+      (number))
+    (spread_operator)
+    (func_call_paren)))

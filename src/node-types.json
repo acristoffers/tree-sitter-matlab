@@ -977,6 +977,10 @@
             "named": true
           },
           {
+            "type": "spread_operator",
+            "named": true
+          },
+          {
             "type": "string",
             "named": true
           },
@@ -1040,6 +1044,10 @@
           },
           {
             "type": "range",
+            "named": true
+          },
+          {
+            "type": "spread_operator",
             "named": true
           },
           {
@@ -1591,6 +1599,11 @@
         }
       ]
     }
+  },
+  {
+    "type": "spread_operator",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "string",

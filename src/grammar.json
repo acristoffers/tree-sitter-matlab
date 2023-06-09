@@ -1431,6 +1431,10 @@
         }
       ]
     },
+    "spread_operator": {
+      "type": "STRING",
+      "value": ":"
+    },
     "_function_arguments": {
       "type": "SEQ",
       "members": [
@@ -1438,8 +1442,17 @@
           "type": "FIELD",
           "name": "argument",
           "content": {
-            "type": "SYMBOL",
-            "name": "_expression"
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "spread_operator"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "_expression"
+              }
+            ]
           }
         },
         {
@@ -1458,8 +1471,17 @@
                     "type": "FIELD",
                     "name": "argument",
                     "content": {
-                      "type": "SYMBOL",
-                      "name": "_expression"
+                      "type": "CHOICE",
+                      "members": [
+                        {
+                          "type": "SYMBOL",
+                          "name": "spread_operator"
+                        },
+                        {
+                          "type": "SYMBOL",
+                          "name": "_expression"
+                        }
+                      ]
                     }
                   }
                 ]
@@ -1473,41 +1495,85 @@
       ]
     },
     "_args": {
-      "type": "SEQ",
+      "type": "CHOICE",
       "members": [
         {
-          "type": "ALIAS",
-          "content": {
-            "type": "STRING",
-            "value": "("
-          },
-          "named": true,
-          "value": "func_call_paren"
-        },
-        {
-          "type": "FIELD",
-          "name": "arguments",
-          "content": {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "_function_arguments"
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "STRING",
+                "value": "("
               },
-              {
-                "type": "BLANK"
+              "named": true,
+              "value": "func_call_paren"
+            },
+            {
+              "type": "FIELD",
+              "name": "arguments",
+              "content": {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "_function_arguments"
+                  },
+                  {
+                    "type": "BLANK"
+                  }
+                ]
               }
-            ]
-          }
+            },
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "STRING",
+                "value": ")"
+              },
+              "named": true,
+              "value": "func_call_paren"
+            }
+          ]
         },
         {
-          "type": "ALIAS",
-          "content": {
-            "type": "STRING",
-            "value": ")"
-          },
-          "named": true,
-          "value": "func_call_paren"
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "STRING",
+                "value": "{"
+              },
+              "named": true,
+              "value": "func_call_paren"
+            },
+            {
+              "type": "FIELD",
+              "name": "arguments",
+              "content": {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "_function_arguments"
+                  },
+                  {
+                    "type": "BLANK"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "STRING",
+                "value": "}"
+              },
+              "named": true,
+              "value": "func_call_paren"
+            }
+          ]
         }
       ]
     },
