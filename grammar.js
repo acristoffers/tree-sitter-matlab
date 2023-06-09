@@ -116,6 +116,9 @@ module.exports = grammar({
 
     _statement: ($) =>
       choice(
+        $._break_statement,
+        $._continue_statement,
+        $._return_statement,
         $.assignment,
         $.command,
         $.for_statement,
@@ -307,18 +310,22 @@ module.exports = grammar({
       ),
 
     _end: ($) => field('end', alias('end', $.keyword)),
+    _return_statement: ($) => field('return', alias('return', $.keyword)),
+    _continue_statement: ($) => field('continue', alias('continue', $.keyword)),
+    _break_statement: ($) => field('break', alias('break', $.keyword)),
 
     elseif_statement: ($) =>
       seq(
-        alias('elseif', $.keyword),
+        field('elseif', alias('elseif', $.keyword)),
         alias($._expression, $.condition),
         $._end_of_line,
         optional($.block)
       ),
-    else_statement: ($) => seq(alias('else', $.keyword), optional($.block)),
+    else_statement: ($) =>
+      seq(field('else', alias('else', $.keyword)), optional($.block)),
     if_statement: ($) =>
       seq(
-        alias('if', $.keyword),
+        field('if', alias('if', $.keyword)),
         field('argument', alias($._expression, $.condition)),
         $._end_of_line,
         optional($.block),
@@ -331,14 +338,17 @@ module.exports = grammar({
     for_statement: ($) =>
       choice(
         seq(
-          alias(choice('for', 'parfor'), $.keyword),
+          choice(
+            field('for', alias('for', $.keyword)),
+            field('parfor', alias('parfor', $.keyword))
+          ),
           field('argument', $.iterator),
           $._end_of_line,
           optional($.block),
           $._end
         ),
         seq(
-          alias('parfor', $.keyword),
+          field('parfor', alias('parfor', $.keyword)),
           '(',
           field('argument', $.iterator),
           ',',
@@ -355,7 +365,7 @@ module.exports = grammar({
 
     while_statement: ($) =>
       seq(
-        alias('while', $.keyword),
+        field('while', alias('while', $.keyword)),
         field('argument', alias($._expression, $.condition)),
         $._end_of_line,
         optional($.block),
@@ -364,17 +374,22 @@ module.exports = grammar({
 
     switch_statement: ($) =>
       seq(
-        alias('switch', $.keyword),
+        field('switch', alias('switch', $.keyword)),
         field('argument', alias($._expression, $.condition)),
         repeat(
           seq(
-            alias('case', $.keyword),
+            field('case', alias('case', $.keyword)),
             // MATLAB says it should be a `switch_expr`, but then accepts any expression
             alias($._expression, $.condition),
             optional($.block)
           )
         ),
-        optional(seq(alias('otherwise', $.keyword), optional($.block))),
+        optional(
+          seq(
+            field('otherwise', alias('otherwise', $.keyword)),
+            optional($.block)
+          )
+        ),
         $._end
       ),
   },

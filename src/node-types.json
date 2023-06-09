@@ -299,12 +299,42 @@
     "type": "block",
     "named": true,
     "fields": {
+      "break": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "keyword",
+            "named": true
+          }
+        ]
+      },
       "comment": {
         "multiple": true,
         "required": false,
         "types": [
           {
             "type": "comment",
+            "named": true
+          }
+        ]
+      },
+      "continue": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "keyword",
+            "named": true
+          }
+        ]
+      },
+      "return": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "keyword",
             "named": true
           }
         ]
@@ -765,17 +795,24 @@
   {
     "type": "else_statement",
     "named": true,
-    "fields": {},
+    "fields": {
+      "else": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "keyword",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
-      "multiple": true,
-      "required": true,
+      "multiple": false,
+      "required": false,
       "types": [
         {
           "type": "block",
-          "named": true
-        },
-        {
-          "type": "keyword",
           "named": true
         }
       ]
@@ -784,7 +821,18 @@
   {
     "type": "elseif_statement",
     "named": true,
-    "fields": {},
+    "fields": {
+      "elseif": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "keyword",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": true,
@@ -795,10 +843,6 @@
         },
         {
           "type": "condition",
-          "named": true
-        },
-        {
-          "type": "keyword",
           "named": true
         }
       ]
@@ -843,18 +887,34 @@
             "named": true
           }
         ]
+      },
+      "for": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "keyword",
+            "named": true
+          }
+        ]
+      },
+      "parfor": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "keyword",
+            "named": true
+          }
+        ]
       }
     },
     "children": {
-      "multiple": true,
-      "required": true,
+      "multiple": false,
+      "required": false,
       "types": [
         {
           "type": "block",
-          "named": true
-        },
-        {
-          "type": "keyword",
           "named": true
         }
       ]
@@ -1037,11 +1097,21 @@
             "named": true
           }
         ]
+      },
+      "if": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "keyword",
+            "named": true
+          }
+        ]
       }
     },
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "block",
@@ -1053,10 +1123,6 @@
         },
         {
           "type": "elseif_statement",
-          "named": true
-        },
-        {
-          "type": "keyword",
           "named": true
         }
       ]
@@ -1398,12 +1464,42 @@
     "type": "source_file",
     "named": true,
     "fields": {
+      "break": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "keyword",
+            "named": true
+          }
+        ]
+      },
       "comment": {
         "multiple": true,
         "required": false,
         "types": [
           {
             "type": "comment",
+            "named": true
+          }
+        ]
+      },
+      "continue": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "keyword",
+            "named": true
+          }
+        ]
+      },
+      "return": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "keyword",
             "named": true
           }
         ]
@@ -1515,7 +1611,37 @@
           }
         ]
       },
+      "case": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "keyword",
+            "named": true
+          }
+        ]
+      },
       "end": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "keyword",
+            "named": true
+          }
+        ]
+      },
+      "otherwise": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "keyword",
+            "named": true
+          }
+        ]
+      },
+      "switch": {
         "multiple": false,
         "required": true,
         "types": [
@@ -1528,7 +1654,7 @@
     },
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "block",
@@ -1536,10 +1662,6 @@
         },
         {
           "type": "condition",
-          "named": true
-        },
-        {
-          "type": "keyword",
           "named": true
         }
       ]
@@ -1658,18 +1780,24 @@
             "named": true
           }
         ]
+      },
+      "while": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "keyword",
+            "named": true
+          }
+        ]
       }
     },
     "children": {
-      "multiple": true,
-      "required": true,
+      "multiple": false,
+      "required": false,
       "types": [
         {
           "type": "block",
-          "named": true
-        },
-        {
-          "type": "keyword",
           "named": true
         }
       ]

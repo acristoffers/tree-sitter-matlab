@@ -31,7 +31,7 @@ if something
 elseif other
     2
 else
-    3
+    return
 end
 
 --------------------------------------------------------------------------------
@@ -99,5 +99,5 @@ end
     (else_statement
       (keyword)
       (block
-        (number)))
+        (keyword)))
     (keyword)))

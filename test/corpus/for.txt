@@ -13,6 +13,7 @@ for R = 1:N
     for C = 1:N
         A(R,C) = 1/(R+C-1);
     end
+    break
 end
 
 for S = 1.0: -0.1: 0.0, do_some_task(S), end
@@ -73,7 +74,8 @@ for E = eye(N), do_some_task(E), end
                     (identifier)
                     (identifier))
                   (number))))))
-        (keyword)))
+        (keyword))
+      (keyword))
     (keyword))
   (for_statement
     (keyword)
