@@ -163,8 +163,12 @@ a & (b | c) & d;
         (identifier)
         (identifier))))
   (binary_operator
-    (string)
-    (string))
+    (string
+      (string_open)
+      (string_close))
+    (string
+      (string_open)
+      (string_close)))
   (unary_operator
     (identifier)))
 
@@ -290,7 +294,9 @@ A'^2
   (binary_operator
     (postfix_operator
       (identifier))
-    (string))
+    (string
+      (string_open)
+      (string_close)))
   (unary_operator
     (postfix_operator
       (identifier)))

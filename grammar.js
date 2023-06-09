@@ -23,6 +23,11 @@ module.exports = grammar({
     $.comment,
     $.command_name,
     $.command_argument,
+    $.string_open,
+    $.string_close,
+    $.formatting_sequence,
+    $.escape_sequence,
+    $._string_text,
     $.error_sentinel,
   ],
   conflicts: ($) => [[$._expression, $.assignment]],
@@ -233,8 +238,60 @@ module.exports = grammar({
         )
       ),
 
+    // Right now the scanner can identify and properly tag escape sequences and
+    // formatting options inside strings, however I cannot enable it for single
+    // quote strings because it conflicts with the transpose postfix operator.
+    // The best solution would be to use the commented version below, but it
+    // depends on tree-sitter to offer some function which allows to not have
+    // extras inside a rule, as it is wrongly matching the comment right now.
     string: ($) =>
-      choice(seq('"', /([^"]|(""))*/, '"'), seq("'", /([^']|(''))*/, "'")),
+      choice(
+        seq(
+          $.string_open,
+          seq(
+            repeat(
+              choice($.formatting_sequence, $.escape_sequence, $._string_text)
+            )
+          ),
+          $.string_close
+        ),
+        seq(
+          alias("'", $.string_open),
+          /([^']|(''))*/,
+          alias("'", $.string_close)
+        )
+      ),
+    // escape_sequence: ($) =>
+    //   token.immediate(
+    //     seq('\\', choice(/x[a-fA-F\d]+/, /[0-7]+/, /[abfnrtv\\]/))
+    //   ),
+    // formatting_sequence: ($) =>
+    //   token.immediate(
+    //     seq('%', choice('%', /\d*[-+ 0#]?\d*(\.\d+)?[bt]?[cdeEfgGosuxX]/))
+    //   ),
+    // string: ($) =>
+    //   choice(
+    //     seq(
+    //       alias('"', $.string_start),
+    //       alias(
+    //         repeat(
+    //           choice(/([^"]|(""))/, $.escape_sequence, $.formatting_sequence)
+    //         ),
+    //         $.string_content
+    //       ),
+    //       alias('"', $.string_end)
+    //     ),
+    //     seq(
+    //       alias("'", $.string_start),
+    //       alias(
+    //         repeat(
+    //           choice(/([^']|(''))/, $.escape_sequence, $.formatting_sequence)
+    //         ),
+    //         $.string_content
+    //       ),
+    //       alias("'", $.string_end)
+    //     )
+    //   ),
 
     _expression_sequence: ($) =>
       repeat1(seq(field('argument', $._expression), optional(','))),
@@ -281,7 +338,7 @@ module.exports = grammar({
           ']',
           '=',
           field('value', $._expression)
-        ),
+        )
       ),
 
     spread_operator: ($) => ':',

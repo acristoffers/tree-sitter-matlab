@@ -12,9 +12,55 @@ Strings
 --------------------------------------------------------------------------------
 
 (source_file
-  (string)
-  (string)
-  (string)
-  (string)
-  (string)
-  (string))
+  (string
+    (string_open)
+    (string_close))
+  (string
+    (string_open)
+    (string_close))
+  (string
+    (string_open)
+    (string_close))
+  (string
+    (string_open)
+    (string_close))
+  (string
+    (string_open)
+    (formatting_sequence)
+    (string_close))
+  (string
+    (string_open)
+    (string_close)))
+
+================================================================================
+String Formatting and Escaping
+================================================================================
+
+"This %% is a floating number with an f after it %3#4.2bff"
+"It also supports hex \xdeadbeef"
+"And octal \1234"
+"This\tis\na\\escaped\tstring"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (string
+    (string_open)
+    (formatting_sequence)
+    (formatting_sequence)
+    (string_close))
+  (string
+    (string_open)
+    (escape_sequence)
+    (string_close))
+  (string
+    (string_open)
+    (escape_sequence)
+    (string_close))
+  (string
+    (string_open)
+    (escape_sequence)
+    (escape_sequence)
+    (escape_sequence)
+    (escape_sequence)
+    (string_close)))

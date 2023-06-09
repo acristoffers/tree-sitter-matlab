@@ -28,37 +28,53 @@ end
     (condition
       (cell_definition
         (row
-          (string)
-          (string))))
+          (string
+            (string_open)
+            (string_close))
+          (string
+            (string_open)
+            (string_close)))))
     (block
       (function_call
         (identifier)
         (func_call_paren)
-        (string)
+        (string
+          (string_open)
+          (string_close))
         (func_call_paren)))
     (keyword)
     (condition
-      (string))
+      (string
+        (string_open)
+        (string_close)))
     (block
       (function_call
         (identifier)
         (func_call_paren)
-        (string)
+        (string
+          (string_open)
+          (string_close))
         (func_call_paren)))
     (keyword)
     (condition
-      (string))
+      (string
+        (string_open)
+        (string_close)))
     (block
       (function_call
         (identifier)
         (func_call_paren)
-        (string)
+        (string
+          (string_open)
+          (string_close))
         (func_call_paren)))
     (keyword)
     (block
       (function_call
         (identifier)
         (func_call_paren)
-        (string)
+        (string
+          (string_open)
+          (string_close))
         (func_call_paren)))
     (keyword)))

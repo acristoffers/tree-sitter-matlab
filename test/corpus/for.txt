@@ -189,7 +189,9 @@ end
       (range
         (number)
         (number)))
-    (string)
+    (string
+      (string_open)
+      (string_close))
     (block
       (number))
     (keyword)))

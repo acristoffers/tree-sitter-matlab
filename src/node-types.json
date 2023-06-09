@@ -1680,7 +1680,29 @@
   {
     "type": "string",
     "named": true,
-    "fields": {}
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "escape_sequence",
+          "named": true
+        },
+        {
+          "type": "formatting_sequence",
+          "named": true
+        },
+        {
+          "type": "string_close",
+          "named": true
+        },
+        {
+          "type": "string_open",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "struct",
@@ -1920,10 +1942,6 @@
     "named": false
   },
   {
-    "type": "\"",
-    "named": false
-  },
-  {
     "type": "&",
     "named": false
   },
@@ -2064,8 +2082,16 @@
     "named": true
   },
   {
+    "type": "escape_sequence",
+    "named": true
+  },
+  {
     "type": "false",
     "named": false
+  },
+  {
+    "type": "formatting_sequence",
+    "named": true
   },
   {
     "type": "func_call_paren",
@@ -2077,6 +2103,14 @@
   },
   {
     "type": "keyword",
+    "named": true
+  },
+  {
+    "type": "string_close",
+    "named": true
+  },
+  {
+    "type": "string_open",
     "named": true
   },
   {

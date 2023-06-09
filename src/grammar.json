@@ -1172,16 +1172,37 @@
           "type": "SEQ",
           "members": [
             {
-              "type": "STRING",
-              "value": "\""
+              "type": "SYMBOL",
+              "name": "string_open"
             },
             {
-              "type": "PATTERN",
-              "value": "([^\"]|(\"\"))*"
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "REPEAT",
+                  "content": {
+                    "type": "CHOICE",
+                    "members": [
+                      {
+                        "type": "SYMBOL",
+                        "name": "formatting_sequence"
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "escape_sequence"
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "_string_text"
+                      }
+                    ]
+                  }
+                }
+              ]
             },
             {
-              "type": "STRING",
-              "value": "\""
+              "type": "SYMBOL",
+              "name": "string_close"
             }
           ]
         },
@@ -1189,16 +1210,26 @@
           "type": "SEQ",
           "members": [
             {
-              "type": "STRING",
-              "value": "'"
+              "type": "ALIAS",
+              "content": {
+                "type": "STRING",
+                "value": "'"
+              },
+              "named": true,
+              "value": "string_open"
             },
             {
               "type": "PATTERN",
               "value": "([^']|(''))*"
             },
             {
-              "type": "STRING",
-              "value": "'"
+              "type": "ALIAS",
+              "content": {
+                "type": "STRING",
+                "value": "'"
+              },
+              "named": true,
+              "value": "string_close"
             }
           ]
         }
@@ -2306,6 +2337,26 @@
     {
       "type": "SYMBOL",
       "name": "command_argument"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "string_open"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "string_close"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "formatting_sequence"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "escape_sequence"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "_string_text"
     },
     {
       "type": "SYMBOL",

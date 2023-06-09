@@ -30,4 +30,7 @@ A proper
   (comment)
   (comment)
   (comment)
-  (string))
+  (string
+    (string_open)
+    (formatting_sequence)
+    (string_close)))

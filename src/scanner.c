@@ -8,6 +8,11 @@ enum TokenType {
     COMMENT,
     COMMAND_NAME,
     COMMAND_ARGUMENT,
+    STRING_OPEN,
+    STRING_CLOSE,
+    FORMATTING_SEQUENCE,
+    ESCAPE_SEQUENCE,
+    STRING_TEXT,
     ERROR_SENTINEL
 };
 
@@ -118,6 +123,7 @@ void tree_sitter_matlab_external_scanner_destroy(void* payload)
 bool is_inside_command = false;
 bool line_continuation = false;
 bool is_shell_scape = false;
+char string_delimiter = 0;
 
 unsigned
 tree_sitter_matlab_external_scanner_serialize(void* payload, char* buffer)
@@ -125,17 +131,19 @@ tree_sitter_matlab_external_scanner_serialize(void* payload, char* buffer)
     buffer[0] = is_inside_command;
     buffer[1] = line_continuation;
     buffer[2] = is_shell_scape;
-    return 3;
+    buffer[3] = string_delimiter;
+    return 4;
 }
 
 void tree_sitter_matlab_external_scanner_deserialize(void* payload,
     const char* buffer,
     unsigned length)
 {
-    if (length >= 3) {
+    if (length >= 4) {
         is_inside_command = buffer[0];
         line_continuation = buffer[1];
         is_shell_scape = buffer[2];
+        string_delimiter = buffer[3];
     }
 }
 
@@ -470,24 +478,184 @@ bool scan_command_argument(TSLexer* lexer)
     return false;
 }
 
+bool scan_string_open(TSLexer* lexer)
+{
+    if (lexer->lookahead == '"') {
+        string_delimiter = lexer->lookahead;
+        consume(lexer);
+        lexer->mark_end(lexer);
+        lexer->result_symbol = STRING_OPEN;
+        return true;
+    }
+
+    return false;
+}
+
+bool scan_string_close(TSLexer* lexer)
+{
+    if (lexer->lookahead == string_delimiter) {
+        consume(lexer);
+        string_delimiter = 0;
+        lexer->mark_end(lexer);
+        lexer->result_symbol = STRING_CLOSE;
+        return true;
+    }
+
+    if (lexer->lookahead == '%') {
+        consume(lexer);
+
+        if (lexer->lookahead == '%') {
+            consume(lexer);
+            lexer->mark_end(lexer);
+            lexer->result_symbol = FORMATTING_SEQUENCE;
+            return true;
+        }
+
+        const char* valid_tokens = "1234567890.-+ #btcdeEfgGosuxX";
+        const char* end_tokens = "cdeEfgGosuxX";
+        while (!lexer->eof(lexer) && lexer->lookahead != '\n' && lexer->lookahead != '\r') {
+            bool is_valid = false;
+            for (int i = 0; i < 29; i++) {
+                if (valid_tokens[i] == lexer->lookahead) {
+                    is_valid = true;
+                    break;
+                }
+            }
+
+            if (!is_valid) {
+                lexer->mark_end(lexer);
+                lexer->result_symbol = FORMATTING_SEQUENCE;
+                return true;
+            }
+
+            for (int i = 0; i < 12; i++) {
+                if (end_tokens[i] == lexer->lookahead) {
+                    consume(lexer);
+                    lexer->mark_end(lexer);
+                    lexer->result_symbol = FORMATTING_SEQUENCE;
+                    return true;
+                }
+            }
+
+            consume(lexer);
+        }
+
+        string_delimiter = 0;
+        return false;
+    }
+
+    if (lexer->lookahead == '\\') {
+        consume(lexer);
+
+        if (lexer->lookahead == 'x') {
+            consume(lexer);
+            while (!lexer->eof(lexer)) {
+                const char* hexa_chars = "1234567890abcdefABCDEF";
+                bool is_valid = false;
+                for (int i = 0; i < 22; i++) {
+                    if (hexa_chars[i] == lexer->lookahead) {
+                        is_valid = true;
+                        break;
+                    }
+                }
+
+                if (!is_valid) {
+                    lexer->mark_end(lexer);
+                    lexer->result_symbol = ESCAPE_SEQUENCE;
+                    return true;
+                }
+
+                consume(lexer);
+            }
+        }
+
+        if (lexer->lookahead >= '0' && lexer->lookahead <= '7') {
+            while (lexer->lookahead >= '0' && lexer->lookahead <= '7' && !lexer->eof(lexer)) {
+                consume(lexer);
+            }
+
+            lexer->mark_end(lexer);
+            lexer->result_symbol = ESCAPE_SEQUENCE;
+            return true;
+        }
+
+        const char* escapes = "abfnrtv\\";
+        bool is_valid = false;
+        for (int i = 0; i < 8; i++) {
+            if (escapes[i] == lexer->lookahead) {
+                is_valid = true;
+                break;
+            }
+        }
+
+        if (is_valid) {
+            consume(lexer);
+            lexer->mark_end(lexer);
+            lexer->result_symbol = ESCAPE_SEQUENCE;
+            return true;
+        }
+
+        string_delimiter = 0;
+        return false;
+    }
+
+    while (lexer->lookahead != '\n' && lexer->lookahead != '\r' && !lexer->eof(lexer)) {
+        // In MATLAB '' and "" are valid inside their own kind: 'It''s ok' "He said ""it's ok"""
+        if (lexer->lookahead == string_delimiter) {
+            lexer->mark_end(lexer);
+            lexer->result_symbol = STRING_TEXT;
+            consume(lexer);
+            if (lexer->lookahead != string_delimiter) {
+                return true;
+            }
+            consume(lexer);
+            continue;
+        }
+
+        // The scanner will be called again, and this time we will match in the if
+        // before this while.
+        if (lexer->lookahead == '%' || lexer->lookahead == '\\') {
+            lexer->mark_end(lexer);
+            lexer->result_symbol = STRING_TEXT;
+            return true;
+        }
+
+        consume(lexer);
+    }
+
+    string_delimiter = 0;
+    return false;
+}
+
 bool tree_sitter_matlab_external_scanner_scan(void* payload,
     TSLexer* lexer,
     const bool* valid_symbols)
 {
     skip_whitespaces(lexer);
 
-    if ((line_continuation || !is_inside_command) && valid_symbols[COMMENT] && (lexer->lookahead == '%' || lexer->lookahead == '.')) {
-        return scan_comment(lexer);
-    }
+    if (string_delimiter == 0) {
+        if ((line_continuation || !is_inside_command) && valid_symbols[COMMENT] && (lexer->lookahead == '%' || lexer->lookahead == '.')) {
+            return scan_comment(lexer);
+        }
 
-    if (valid_symbols[COMMAND_NAME] && !is_inside_command) {
-        is_inside_command = false;
-        is_shell_scape = false;
-        return scan_command(lexer);
-    }
+        if (valid_symbols[STRING_OPEN] && (lexer->lookahead == '\'' || lexer->lookahead == '"')) {
+            return scan_string_open(lexer);
+        }
 
-    if (valid_symbols[COMMAND_ARGUMENT] && is_inside_command) {
-        return scan_command_argument(lexer);
+        if (valid_symbols[COMMAND_NAME] && !is_inside_command) {
+            is_inside_command = false;
+            is_shell_scape = false;
+            return scan_command(lexer);
+        }
+
+        if (valid_symbols[COMMAND_ARGUMENT] && is_inside_command) {
+            return scan_command_argument(lexer);
+        }
+
+    } else {
+        if (valid_symbols[STRING_CLOSE] || valid_symbols[FORMATTING_SEQUENCE] || valid_symbols[ESCAPE_SEQUENCE]) {
+            return scan_string_close(lexer);
+        }
     }
 
     return false;

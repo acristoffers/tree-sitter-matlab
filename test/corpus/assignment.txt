@@ -30,7 +30,9 @@ a{1}.b      = 3
     (number))
   (assignment
     (identifier)
-    (string))
+    (string
+      (string_open)
+      (string_close)))
   (assignment
     (identifier)
     (binary_operator
