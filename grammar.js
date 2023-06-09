@@ -122,6 +122,7 @@ module.exports = grammar({
         $.number,
         $.parenthesized_expression,
         $.postfix_operator,
+        $.range,
         $.string,
         $.unary_operator
       ),
@@ -280,5 +281,15 @@ module.exports = grammar({
           repeat(choice(field('argument', $.command_argument), $.comment))
         )
       ),
+
+    range: ($) =>
+      seq(
+        $._range_element,
+        ':',
+        $._range_element,
+        optional(seq(':', $._range_element))
+      ),
+
+    _range_element: ($) => choice($.identifier, $.number, $.function_call),
   },
 })

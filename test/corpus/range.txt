@@ -1,0 +1,48 @@
+================================================================================
+Range
+================================================================================
+
+1:10
+1:2:3
+-1:1e-3:1
+a:b:c
+a:rand()
+a():b():c()
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (range
+    (number)
+    (number))
+  (range
+    (number)
+    (number)
+    (number))
+  (range
+    (number)
+    (number)
+    (number))
+  (range
+    (identifier)
+    (identifier)
+    (identifier))
+  (range
+    (identifier)
+    (function_call
+      (identifier)
+      (func_call_paren)
+      (func_call_paren)))
+  (range
+    (function_call
+      (identifier)
+      (func_call_paren)
+      (func_call_paren))
+    (function_call
+      (identifier)
+      (func_call_paren)
+      (func_call_paren))
+    (function_call
+      (identifier)
+      (func_call_paren)
+      (func_call_paren))))
