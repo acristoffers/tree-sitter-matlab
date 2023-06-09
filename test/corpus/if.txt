@@ -38,55 +38,66 @@ end
 
 (source_file
   (if_statement
+    (keyword)
     (condition
       (identifier))
     (end))
   (if_statement
+    (keyword)
     (condition
       (identifier))
     (block
       (number))
     (end))
   (if_statement
+    (keyword)
     (condition
       (identifier))
     (block
       (number))
     (elseif_statement
+      (keyword)
       (condition
         (identifier)))
     (end))
   (if_statement
+    (keyword)
     (condition
       (identifier))
     (block
       (number))
     (elseif_statement
+      (keyword)
       (condition
         (identifier))
       (block
         (number)))
     (end))
   (if_statement
+    (keyword)
     (condition
       (identifier))
     (block
       (number))
     (else_statement
+      (keyword)
       (block
         (number)))
     (end))
   (if_statement
+    (keyword)
     (condition
       (identifier))
     (block
       (number))
     (elseif_statement
+      (keyword)
       (condition
         (identifier))
       (block
         (number)))
     (else_statement
+      (keyword)
       (block
         (number)))
     (end)))

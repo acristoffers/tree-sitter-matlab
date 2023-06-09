@@ -327,6 +327,10 @@
           "named": true
         },
         {
+          "type": "for_statement",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -718,11 +722,15 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
-      "required": false,
+      "multiple": true,
+      "required": true,
       "types": [
         {
           "type": "block",
+          "named": true
+        },
+        {
+          "type": "keyword",
           "named": true
         }
       ]
@@ -743,6 +751,10 @@
         {
           "type": "condition",
           "named": true
+        },
+        {
+          "type": "keyword",
+          "named": true
         }
       ]
     }
@@ -761,6 +773,33 @@
           }
         ]
       }
+    }
+  },
+  {
+    "type": "for_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "block",
+          "named": true
+        },
+        {
+          "type": "end",
+          "named": true
+        },
+        {
+          "type": "iterator",
+          "named": true
+        },
+        {
+          "type": "keyword",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -936,6 +975,10 @@
         {
           "type": "end",
           "named": true
+        },
+        {
+          "type": "keyword",
+          "named": true
         }
       ]
     }
@@ -944,6 +987,69 @@
     "type": "ignored_argument",
     "named": true,
     "fields": {}
+  },
+  {
+    "type": "iterator",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "binary_operator",
+          "named": true
+        },
+        {
+          "type": "boolean_operator",
+          "named": true
+        },
+        {
+          "type": "cell_definition",
+          "named": true
+        },
+        {
+          "type": "comparison_operator",
+          "named": true
+        },
+        {
+          "type": "function_call",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "matrix_definition",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "postfix_operator",
+          "named": true
+        },
+        {
+          "type": "range",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "unary_operator",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "matrix_definition",
@@ -1237,6 +1343,10 @@
           "named": true
         },
         {
+          "type": "for_statement",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -1515,14 +1625,6 @@
     "named": true
   },
   {
-    "type": "else",
-    "named": false
-  },
-  {
-    "type": "elseif",
-    "named": false
-  },
-  {
     "type": "end",
     "named": false
   },
@@ -1535,8 +1637,8 @@
     "named": true
   },
   {
-    "type": "if",
-    "named": false
+    "type": "keyword",
+    "named": true
   },
   {
     "type": "{",

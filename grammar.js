@@ -112,7 +112,8 @@ module.exports = grammar({
         )
       ),
 
-    _statement: ($) => choice($.assignment, $.command, $.if_statement),
+    _statement: ($) =>
+      choice($.assignment, $.command, $.if_statement, $.for_statement),
 
     _expression: ($) =>
       choice(
@@ -298,15 +299,31 @@ module.exports = grammar({
     end: ($) => field('end', 'end'),
 
     elseif_statement: ($) =>
-      seq('elseif', alias($._expression, $.condition), optional($.block)),
-    else_statement: ($) => seq('else', optional($.block)),
+      seq(
+        alias('elseif', $.keyword),
+        alias($._expression, $.condition),
+        $._end_of_line,
+        optional($.block)
+      ),
+    else_statement: ($) => seq(alias('else', $.keyword), optional($.block)),
     if_statement: ($) =>
       seq(
-        'if',
+        alias('if', $.keyword),
         alias($._expression, $.condition),
+        $._end_of_line,
         optional($.block),
         optional($.elseif_statement),
         optional($.else_statement),
+        $.end
+      ),
+
+    iterator: ($) => seq($.identifier, '=', $._expression),
+    for_statement: ($) =>
+      seq(
+        alias(choice('for', 'parfor'), $.keyword),
+        $.iterator,
+        $._end_of_line,
+        optional($.block),
         $.end
       ),
   },

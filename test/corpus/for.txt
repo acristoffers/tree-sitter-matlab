@@ -1,0 +1,108 @@
+================================================================================
+For Statement
+================================================================================
+
+for a = 1:2
+end
+
+for b = eye(3)
+    4
+end
+
+for R = 1:N
+    for C = 1:N
+        A(R,C) = 1/(R+C-1);
+    end
+end
+
+for S = 1.0: -0.1: 0.0, do_some_task(S), end
+
+for E = eye(N), do_some_task(E), end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (for_statement
+    (keyword)
+    (iterator
+      (identifier)
+      (range
+        (number)
+        (number)))
+    (end))
+  (for_statement
+    (keyword)
+    (iterator
+      (identifier)
+      (function_call
+        (identifier)
+        (func_call_paren)
+        (number)
+        (func_call_paren)))
+    (block
+      (number))
+    (end))
+  (for_statement
+    (keyword)
+    (iterator
+      (identifier)
+      (range
+        (number)
+        (identifier)))
+    (block
+      (for_statement
+        (keyword)
+        (iterator
+          (identifier)
+          (range
+            (number)
+            (identifier)))
+        (block
+          (assignment
+            (function_call
+              (identifier)
+              (func_call_paren)
+              (identifier)
+              (identifier)
+              (func_call_paren))
+            (binary_operator
+              (number)
+              (parenthesized_expression
+                (binary_operator
+                  (binary_operator
+                    (identifier)
+                    (identifier))
+                  (number))))))
+        (end)))
+    (end))
+  (for_statement
+    (keyword)
+    (iterator
+      (identifier)
+      (range
+        (number)
+        (number)
+        (number)))
+    (block
+      (function_call
+        (identifier)
+        (func_call_paren)
+        (identifier)
+        (func_call_paren)))
+    (end))
+  (for_statement
+    (keyword)
+    (iterator
+      (identifier)
+      (function_call
+        (identifier)
+        (func_call_paren)
+        (identifier)
+        (func_call_paren)))
+    (block
+      (function_call
+        (identifier)
+        (func_call_paren)
+        (identifier)
+        (func_call_paren)))
+    (end)))
