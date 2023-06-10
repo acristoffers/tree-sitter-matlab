@@ -8,12 +8,8 @@ Strings: Single Quoted
 --------------------------------------------------------------------------------
 
 (source_file
-  (string
-    (string_open)
-    (string_close))
-  (string
-    (string_open)
-    (string_close)))
+  (string)
+  (string))
 
 ================================================================================
 Stings: Double Quoted

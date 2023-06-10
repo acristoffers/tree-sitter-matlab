@@ -29,9 +29,7 @@ end
       (identifier)
       (number)
       (identifier)
-      (string
-        (string_open)
-        (string_close)))
+      (string))
     (identifier)
     (keyword)))
 

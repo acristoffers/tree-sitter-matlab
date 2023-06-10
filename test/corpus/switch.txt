@@ -24,16 +24,12 @@ end
         (func_call_paren)))
     (keyword)
     (condition
-      (string
-        (string_open)
-        (string_close)))
+      (string))
     (block
       (function_call
         (identifier)
         (func_call_paren)
-        (string
-          (string_open)
-          (string_close))
+        (string)
         (func_call_paren)))
     (keyword)
     (condition
@@ -42,18 +38,14 @@ end
       (function_call
         (identifier)
         (func_call_paren)
-        (string
-          (string_open)
-          (string_close))
+        (string)
         (func_call_paren)))
     (keyword)
     (block
       (function_call
         (identifier)
         (func_call_paren)
-        (string
-          (string_open)
-          (string_close))
+        (string)
         (func_call_paren)))
     (keyword)))
 
@@ -83,27 +75,19 @@ end
     (condition
       (cell_definition
         (row
-          (string
-            (string_open)
-            (string_close))
-          (string
-            (string_open)
-            (string_close)))))
+          (string)
+          (string))))
     (block
       (function_call
         (identifier)
         (func_call_paren)
-        (string
-          (string_open)
-          (string_close))
+        (string)
         (func_call_paren)))
     (keyword)
     (block
       (function_call
         (identifier)
         (func_call_paren)
-        (string
-          (string_open)
-          (string_close))
+        (string)
         (func_call_paren)))
     (keyword)))
