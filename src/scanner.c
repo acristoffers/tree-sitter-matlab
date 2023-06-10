@@ -183,10 +183,16 @@ bool scan_comment(TSLexer* lexer)
     } else if (percent || line_continuation) {
         consume_comment_line(lexer);
 
+        if (line_continuation) {
+            consume(lexer);
+        }
+
         lexer->mark_end(lexer);
         lexer->result_symbol = COMMENT;
 
-        consume(lexer);
+        if (!line_continuation) {
+            consume(lexer);
+        }
 
         // Merges consecutive comments into one token, unless they are
         // separated by a newline.
