@@ -1,0 +1,54 @@
+================================================================================
+Try Statement: With Capture
+================================================================================
+
+try
+    disp ok
+catch me
+    disp 'not ok'
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (try_statement
+    (keyword)
+    (block
+      (command
+        (command_name)
+        (command_argument)))
+    (keyword)
+    (captured_exception)
+    (block
+      (command
+        (command_name)
+        (command_argument)
+        (command_argument)))
+    (keyword)))
+
+================================================================================
+Try Statement: Without Capture
+================================================================================
+
+try
+    disp ok
+catch
+    disp 'not ok'
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (try_statement
+    (keyword)
+    (block
+      (command
+        (command_name)
+        (command_argument)))
+    (keyword)
+    (block
+      (command
+        (command_name)
+        (command_argument)
+        (command_argument)))
+    (keyword)))

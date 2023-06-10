@@ -226,7 +226,7 @@ bool scan_command(TSLexer* lexer)
 
     char* identifier = consume_identifier(lexer);
     if (identifier != NULL) {
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 22; i++) {
             if (strcmp(keywords[i], identifier) == 0) {
                 free(identifier);
                 return false;

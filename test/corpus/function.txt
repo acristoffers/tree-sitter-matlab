@@ -18,14 +18,16 @@ end
     (identifier)
     (block
       (number))
-    (end_function))
+    (end_function
+      (keyword)))
   (function_definition
     (keyword)
     (identifier)
     (function_arguments)
     (block
       (number))
-    (end_function)))
+    (end_function
+      (keyword))))
 
 ================================================================================
 Function Declaration: Args, No Output
@@ -45,7 +47,8 @@ end
       (identifier))
     (block
       (number))
-    (end_function)))
+    (end_function
+      (keyword))))
 
 ================================================================================
 Function Declaration: No Args, Simple Output
@@ -65,7 +68,8 @@ end
     (identifier)
     (block
       (number))
-    (end_function)))
+    (end_function
+      (keyword))))
 
 ================================================================================
 Function Declaration: No Args, Multiple Outputs
@@ -87,7 +91,8 @@ end
     (identifier)
     (block
       (number))
-    (end_function)))
+    (end_function
+      (keyword))))
 
 ================================================================================
 Function Declaration: Args, Multiple Outputs
@@ -112,7 +117,8 @@ end
       (identifier))
     (block
       (number))
-    (end_function)))
+    (end_function
+      (keyword))))
 
 ================================================================================
 Function Declaration: After Script
@@ -138,4 +144,5 @@ end
     (identifier)
     (block
       (number))
-    (end_function)))
+    (end_function
+      (keyword))))

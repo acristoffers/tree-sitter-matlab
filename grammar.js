@@ -99,6 +99,7 @@ module.exports = grammar({
         $.if_statement,
         $.persistent_operator,
         $.switch_statement,
+        $.try_statement,
         $.while_statement
       ),
 
@@ -572,7 +573,8 @@ module.exports = grammar({
         field('arguments', repeat(field('argument', $.identifier)))
       ),
 
-    end_function: ($) => choice('end', 'endfunction'),
+    end_function: ($) =>
+      field('end', alias(choice('end', 'endfunction'), $.keyword)),
     function_output: ($) =>
       seq(field('output', choice($.identifier, $.multioutput_variable)), '='),
     function_arguments: ($) =>
@@ -586,6 +588,18 @@ module.exports = grammar({
         $._end_of_line,
         $.block,
         optional($.end_function)
+      ),
+
+    try_statement: ($) =>
+      seq(
+        alias('try', $.keyword),
+        $._end_of_line,
+        $.block,
+        alias('catch', $.keyword),
+        optional(alias($.identifier, $.captured_exception)),
+        $._end_of_line,
+        $.block,
+        $._end
       ),
   },
 })
