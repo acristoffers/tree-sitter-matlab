@@ -99,6 +99,7 @@ A = "Some " + ... multiline concatenation
     (identifier)
     (binary_operator
       (number)
+      (operator)
       (comment)
       (number)))
   (assignment
@@ -117,6 +118,7 @@ A = "Some " + ... multiline concatenation
       (string
         (string_open)
         (string_close))
+      (operator)
       (comment)
       (string
         (string_open)

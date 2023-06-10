@@ -15,10 +15,12 @@ d = 1.5;
   (assignment
     (identifier)
     (unary_operator
+      (operator)
       (number)))
   (assignment
     (identifier)
     (unary_operator
+      (operator)
       (number)))
   (assignment
     (identifier)

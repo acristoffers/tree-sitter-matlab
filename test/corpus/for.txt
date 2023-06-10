@@ -73,6 +73,7 @@ for E = eye(N), do_some_task(E), end
       (range
         (number)
         (unary_operator
+          (operator)
           (number))
         (number)))
     (block

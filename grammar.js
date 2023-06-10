@@ -175,7 +175,7 @@ module.exports = grammar({
             precedence,
             seq(
               field('left', $._binary_expression),
-              field('operator', operator),
+              alias(operator, $.operator),
               field('right', $._binary_expression)
             )
           )
@@ -187,7 +187,7 @@ module.exports = grammar({
       prec(
         PREC.unary,
         seq(
-          field('operator', choice('+', '-')),
+          alias(choice('+', '-'), $.operator),
           field(
             'argument',
             choice(
@@ -211,7 +211,7 @@ module.exports = grammar({
       prec(
         PREC.not,
         seq(
-          '~',
+          alias('~', $.operator),
           choice(
             $.boolean,
             $.function_call,
@@ -227,15 +227,15 @@ module.exports = grammar({
         )
       ),
 
-    metaclass_operator: ($) => seq('?', $.identifier),
-    handle_operator: ($) => seq('@', $.identifier),
+    metaclass_operator: ($) => seq(alias('?', $.operator), $.identifier),
+    handle_operator: ($) => seq(alias('@', $.operator), $.identifier),
 
     comparison_operator: ($) =>
       prec.left(
         PREC.compare,
         seq(
           $._expression,
-          field('operators', choice('<', '<=', '==', '~=', '>=', '>')),
+          alias(choice('<', '<=', '==', '~=', '>=', '>'), $.operator),
           $._expression
         )
       ),
@@ -246,7 +246,7 @@ module.exports = grammar({
           PREC.and,
           seq(
             field('left', $._expression),
-            field('operator', '&&'),
+            alias('&&', $.operator),
             field('right', $._expression)
           )
         ),
@@ -254,7 +254,7 @@ module.exports = grammar({
           PREC.or,
           seq(
             field('left', $._expression),
-            field('operator', '||'),
+            alias('||', $.operator),
             field('right', $._expression)
           )
         )
@@ -281,7 +281,7 @@ module.exports = grammar({
               $.unary_operator
             )
           ),
-          field('operator', choice(".'", "'"))
+          alias(choice(".'", "'"), $.operator)
         )
       ),
 

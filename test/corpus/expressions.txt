@@ -12,15 +12,19 @@ Binary Expressions: Simple Expressions
 (source_file
   (binary_operator
     (number)
+    (operator)
     (number))
   (binary_operator
     (number)
+    (operator)
     (number))
   (binary_operator
     (number)
+    (operator)
     (number))
   (binary_operator
     (number)
+    (operator)
     (number)))
 
 ================================================================================
@@ -40,34 +44,47 @@ Binary Expressions: Associativity
   (binary_operator
     (binary_operator
       (number)
+      (operator)
       (identifier))
+    (operator)
     (identifier))
   (binary_operator
     (number)
+    (operator)
     (parenthesized_expression
       (binary_operator
         (identifier)
+        (operator)
         (identifier))))
   (binary_operator
     (binary_operator
       (unary_operator
+        (operator)
         (number))
+      (operator)
       (identifier))
+    (operator)
     (identifier))
   (binary_operator
     (binary_operator
       (identifier)
+      (operator)
       (number))
+    (operator)
     (number))
   (binary_operator
     (binary_operator
       (identifier)
+      (operator)
       (number))
+    (operator)
     (number))
   (binary_operator
     (number)
+    (operator)
     (binary_operator
       (identifier)
+      (operator)
       (number))))
 
 ================================================================================
@@ -82,9 +99,11 @@ a || b
 (source_file
   (boolean_operator
     (identifier)
+    (operator)
     (identifier))
   (boolean_operator
     (identifier)
+    (operator)
     (identifier)))
 
 ================================================================================
@@ -100,16 +119,22 @@ a || b && c || d
   (boolean_operator
     (boolean_operator
       (identifier)
+      (operator)
       (identifier))
+    (operator)
     (boolean_operator
       (identifier)
+      (operator)
       (identifier)))
   (boolean_operator
     (boolean_operator
       (identifier)
+      (operator)
       (boolean_operator
         (identifier)
+        (operator)
         (identifier)))
+    (operator)
     (identifier)))
 
 ================================================================================
@@ -125,13 +150,18 @@ Unary Expressions: Simple
 
 (source_file
   (not_operator
+    (operator)
     (identifier))
   (unary_operator
+    (operator)
     (identifier))
   (unary_operator
+    (operator)
     (identifier))
   (unary_operator
+    (operator)
     (unary_operator
+      (operator)
       (identifier))))
 
 ================================================================================
@@ -147,12 +177,15 @@ a <= b
 (source_file
   (comparison_operator
     (identifier)
+    (operator)
     (identifier))
   (comparison_operator
     (identifier)
+    (operator)
     (identifier))
   (comparison_operator
     (identifier)
+    (operator)
     (identifier)))
 
 ================================================================================
@@ -168,15 +201,21 @@ a + b == c && d
   (comparison_operator
     (binary_operator
       (identifier)
+      (operator)
       (identifier))
+    (operator)
     (unary_operator
+      (operator)
       (identifier)))
   (boolean_operator
     (comparison_operator
       (binary_operator
         (identifier)
+        (operator)
         (identifier))
+      (operator)
       (identifier))
+    (operator)
     (identifier)))
 
 ================================================================================
@@ -190,9 +229,11 @@ A.'
 
 (source_file
   (postfix_operator
-    (identifier))
+    (identifier)
+    (operator))
   (postfix_operator
-    (identifier)))
+    (identifier)
+    (operator)))
 
 ================================================================================
 Postfix Expressions: Composition
@@ -207,16 +248,24 @@ A^2'
 
 (source_file
   (not_operator
+    (operator)
     (postfix_operator
-      (identifier)))
+      (identifier)
+      (operator)))
   (unary_operator
+    (operator)
     (postfix_operator
-      (identifier)))
+      (identifier)
+      (operator)))
   (binary_operator
     (postfix_operator
-      (identifier))
+      (identifier)
+      (operator))
+    (operator)
     (number))
   (binary_operator
     (identifier)
+    (operator)
     (postfix_operator
-      (number))))
+      (number)
+      (operator))))

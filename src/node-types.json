@@ -397,68 +397,6 @@
           }
         ]
       },
-      "operator": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "&",
-            "named": false
-          },
-          {
-            "type": "*",
-            "named": false
-          },
-          {
-            "type": "+",
-            "named": false
-          },
-          {
-            "type": "-",
-            "named": false
-          },
-          {
-            "type": ".*",
-            "named": false
-          },
-          {
-            "type": ".+",
-            "named": false
-          },
-          {
-            "type": ".-",
-            "named": false
-          },
-          {
-            "type": "./",
-            "named": false
-          },
-          {
-            "type": ".\\",
-            "named": false
-          },
-          {
-            "type": ".^",
-            "named": false
-          },
-          {
-            "type": "/",
-            "named": false
-          },
-          {
-            "type": "\\",
-            "named": false
-          },
-          {
-            "type": "^",
-            "named": false
-          },
-          {
-            "type": "|",
-            "named": false
-          }
-        ]
-      },
       "right": {
         "multiple": false,
         "required": true,
@@ -525,6 +463,16 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "operator",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -780,20 +728,6 @@
           }
         ]
       },
-      "operator": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "&&",
-            "named": false
-          },
-          {
-            "type": "||",
-            "named": false
-          }
-        ]
-      },
       "right": {
         "multiple": false,
         "required": true,
@@ -876,6 +810,16 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "operator",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -1011,38 +955,7 @@
   {
     "type": "comparison_operator",
     "named": true,
-    "fields": {
-      "operators": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "<",
-            "named": false
-          },
-          {
-            "type": "<=",
-            "named": false
-          },
-          {
-            "type": "==",
-            "named": false
-          },
-          {
-            "type": ">",
-            "named": false
-          },
-          {
-            "type": ">=",
-            "named": false
-          },
-          {
-            "type": "~=",
-            "named": false
-          }
-        ]
-      }
-    },
+    "fields": {},
     "children": {
       "multiple": true,
       "required": true,
@@ -1097,6 +1010,10 @@
         },
         {
           "type": "number",
+          "named": true
+        },
+        {
+          "type": "operator",
           "named": true
         },
         {
@@ -2115,11 +2032,15 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
         {
           "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "operator",
           "named": true
         }
       ]
@@ -2389,11 +2310,15 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
         {
           "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "operator",
           "named": true
         }
       ]
@@ -2496,7 +2421,7 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
         {
@@ -2521,6 +2446,10 @@
         },
         {
           "type": "number",
+          "named": true
+        },
+        {
+          "type": "operator",
           "named": true
         },
         {
@@ -2712,21 +2641,17 @@
             "named": true
           }
         ]
-      },
-      "operator": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "'",
-            "named": false
-          },
-          {
-            "type": ".'",
-            "named": false
-          }
-        ]
       }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "operator",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -3338,21 +3263,17 @@
             "named": true
           }
         ]
-      },
-      "operator": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "+",
-            "named": false
-          },
-          {
-            "type": "-",
-            "named": false
-          }
-        ]
       }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "operator",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -3473,14 +3394,6 @@
     "named": false
   },
   {
-    "type": ".+",
-    "named": false
-  },
-  {
-    "type": ".-",
-    "named": false
-  },
-  {
     "type": "./",
     "named": false
   },
@@ -3530,10 +3443,6 @@
   },
   {
     "type": ">=",
-    "named": false
-  },
-  {
-    "type": "?",
     "named": false
   },
   {
@@ -3602,6 +3511,10 @@
   },
   {
     "type": "number",
+    "named": true
+  },
+  {
+    "type": "operator",
     "named": true
   },
   {

@@ -135,6 +135,7 @@ end
 (source_file
   (binary_operator
     (number)
+    (operator)
     (function_call
       (identifier)
       (func_call_paren)

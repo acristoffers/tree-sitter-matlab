@@ -62,8 +62,10 @@ Matrix: Concatenation
     (row
       (binary_operator
         (identifier)
+        (operator)
         (binary_operator
           (identifier)
+          (operator)
           (identifier)))
       (matrix_definition
         (row
@@ -76,8 +78,10 @@ Matrix: Concatenation
     (row
       (binary_operator
         (identifier)
+        (operator)
         (binary_operator
           (identifier)
+          (operator)
           (identifier)))
       (matrix_definition
         (row

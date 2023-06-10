@@ -40,24 +40,30 @@ Range: Negative Numbers
 (source_file
   (range
     (unary_operator
+      (operator)
       (number))
     (number))
   (range
     (number)
     (unary_operator
+      (operator)
       (number))
     (number))
   (range
     (number)
     (unary_operator
+      (operator)
       (number))
     (unary_operator
+      (operator)
       (number)))
   (range
     (number)
     (unary_operator
+      (operator)
       (number))
     (unary_operator
+      (operator)
       (number))))
 
 ================================================================================
@@ -91,20 +97,25 @@ a:+b:~c'
 (source_file
   (range
     (postfix_operator
+      (identifier)
+      (operator))
+    (identifier))
+  (range
+    (identifier)
+    (unary_operator
+      (operator)
       (identifier))
     (identifier))
   (range
     (identifier)
     (unary_operator
-      (identifier))
-    (identifier))
-  (range
-    (identifier)
-    (unary_operator
+      (operator)
       (identifier))
     (not_operator
+      (operator)
       (postfix_operator
-        (identifier)))))
+        (identifier)
+        (operator)))))
 
 ================================================================================
 Range: Binary Operators
@@ -121,16 +132,19 @@ a:1-b:c
     (identifier)
     (binary_operator
       (identifier)
+      (operator)
       (number)))
   (range
     (identifier)
     (binary_operator
       (number)
+      (operator)
       (identifier))
     (identifier))
   (range
     (binary_operator
       (number)
+      (operator)
       (number))
     (number)))
 
@@ -150,6 +164,7 @@ a:(1:2):c
     (parenthesized_expression
       (binary_operator
         (identifier)
+        (operator)
         (number))))
   (range
     (identifier)
@@ -162,6 +177,7 @@ a:(1:2):c
     (parenthesized_expression
       (binary_operator
         (number)
+        (operator)
         (number)))
     (number)))
 
