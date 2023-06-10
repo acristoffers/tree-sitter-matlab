@@ -666,12 +666,24 @@ module.exports = grammar({
         repeat($.property),
         $._end
       ),
+    function_signature: ($) =>
+      seq(
+        optional($.function_output),
+        field('function_name', $.identifier),
+        optional($.function_arguments),
+        $._end_of_line
+      ),
     methods: ($) =>
       seq(
         alias('methods', $.keyword),
         optional($.attributes),
         $._end_of_line,
-        repeat(alias($._function_definition_with_end, $.function_definition)),
+        repeat(
+          choice(
+            $.function_signature,
+            alias($._function_definition_with_end, $.function_definition)
+          )
+        ),
         $._end
       ),
     events: ($) =>

@@ -2055,6 +2055,36 @@
     }
   },
   {
+    "type": "function_signature",
+    "named": true,
+    "fields": {
+      "function_name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "function_arguments",
+          "named": true
+        },
+        {
+          "type": "function_output",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "global_operator",
     "named": true,
     "fields": {
@@ -2394,6 +2424,10 @@
         },
         {
           "type": "function_definition",
+          "named": true
+        },
+        {
+          "type": "function_signature",
           "named": true
         },
         {

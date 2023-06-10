@@ -356,3 +356,33 @@ end
       (identifier)
       (keyword))
     (keyword)))
+
+================================================================================
+Class Definition: External Methods
+================================================================================
+
+classdef Class
+    methods
+        output = func(a)
+        func2
+    end
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (class_definition
+    (keyword)
+    (identifier)
+    (methods
+      (keyword)
+      (function_signature
+        (function_output
+          (identifier))
+        (identifier)
+        (function_arguments
+          (identifier)))
+      (function_signature
+        (identifier))
+      (keyword))
+    (keyword)))
