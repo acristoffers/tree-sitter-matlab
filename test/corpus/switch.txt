@@ -1,14 +1,69 @@
 ================================================================================
-Boolean
+Switch: Simple
 ================================================================================
 
 switch lower(method)
-  case {'linear','bilinear'}
-    disp('Method is linear')
   case 'cubic'
     disp('Method is cubic')
-  case 'nearest'
+  case 5
     disp('Method is nearest')
+  otherwise
+    disp('Unknown method.')
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (switch_statement
+    (keyword)
+    (condition
+      (function_call
+        (identifier)
+        (func_call_paren)
+        (identifier)
+        (func_call_paren)))
+    (keyword)
+    (condition
+      (string
+        (string_open)
+        (string_close)))
+    (block
+      (function_call
+        (identifier)
+        (func_call_paren)
+        (string
+          (string_open)
+          (string_close))
+        (func_call_paren)))
+    (keyword)
+    (condition
+      (number))
+    (block
+      (function_call
+        (identifier)
+        (func_call_paren)
+        (string
+          (string_open)
+          (string_close))
+        (func_call_paren)))
+    (keyword)
+    (block
+      (function_call
+        (identifier)
+        (func_call_paren)
+        (string
+          (string_open)
+          (string_close))
+        (func_call_paren)))
+    (keyword)))
+
+================================================================================
+Switch: Multiple Matches
+================================================================================
+
+switch lower(method)
+  case {'linear', 'bilinear'}
+    disp('Method is linear')
   otherwise
     disp('Unknown method.')
 end
@@ -34,32 +89,6 @@ end
           (string
             (string_open)
             (string_close)))))
-    (block
-      (function_call
-        (identifier)
-        (func_call_paren)
-        (string
-          (string_open)
-          (string_close))
-        (func_call_paren)))
-    (keyword)
-    (condition
-      (string
-        (string_open)
-        (string_close)))
-    (block
-      (function_call
-        (identifier)
-        (func_call_paren)
-        (string
-          (string_open)
-          (string_close))
-        (func_call_paren)))
-    (keyword)
-    (condition
-      (string
-        (string_open)
-        (string_close)))
     (block
       (function_call
         (identifier)

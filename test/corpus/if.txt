@@ -1,37 +1,9 @@
 ================================================================================
-If Statement
+If Statement: Simple
 ================================================================================
 
 if something
-end
-
-if something
     1
-end
-
-if something
-    1
-elseif other
-end
-
-if something
-    1
-elseif other
-    2
-end
-
-if something
-    1
-else
-    2
-end
-
-if something
-    1
-elseif other
-    2
-else
-    return
 end
 
 --------------------------------------------------------------------------------
@@ -41,25 +13,31 @@ end
     (keyword)
     (condition
       (identifier))
-    (keyword))
-  (if_statement
-    (keyword)
-    (condition
-      (identifier))
     (block
       (number))
-    (keyword))
-  (if_statement
-    (keyword)
-    (condition
-      (identifier))
-    (block
-      (number))
-    (elseif_statement
-      (keyword)
-      (condition
-        (identifier)))
-    (keyword))
+    (keyword)))
+
+================================================================================
+If Statement: Else If
+================================================================================
+
+if something
+    1
+elseif other
+    2
+end
+
+if something
+    1
+elseif other
+    2
+elseif again
+    3
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
   (if_statement
     (keyword)
     (condition
@@ -79,17 +57,74 @@ end
       (identifier))
     (block
       (number))
-    (else_statement
+    (elseif_statement
       (keyword)
+      (condition
+        (identifier))
       (block
         (number)))
-    (keyword))
+    (elseif_statement
+      (keyword)
+      (condition
+        (identifier))
+      (block
+        (number)))
+    (keyword)))
+
+================================================================================
+If Statement: Else
+================================================================================
+
+if something
+    1
+else
+    2
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
   (if_statement
     (keyword)
     (condition
       (identifier))
     (block
       (number))
+    (else_statement
+      (keyword)
+      (block
+        (number)))
+    (keyword)))
+
+================================================================================
+If Statement: Complete
+================================================================================
+
+if something
+    1
+elseif other
+    2
+elseif again
+    3
+else
+    return
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (if_statement
+    (keyword)
+    (condition
+      (identifier))
+    (block
+      (number))
+    (elseif_statement
+      (keyword)
+      (condition
+        (identifier))
+      (block
+        (number)))
     (elseif_statement
       (keyword)
       (condition

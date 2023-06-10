@@ -1,16 +1,31 @@
 ================================================================================
-Struct
+Struct: Simple Initialization
+================================================================================
+
+a.b = 1
+a.b.c = 1
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (assignment
+    (struct
+      (identifier)
+      (identifier))
+    (number))
+  (assignment
+    (struct
+      (identifier)
+      (identifier)
+      (identifier))
+    (number)))
+
+================================================================================
+Struct: Simple Access
 ================================================================================
 
 a.b
-a(1).b
-a{1}.b
-a.b(1)
-a.b{1}
-a(1).b(1)
-a{1}.b(1)
-a(1).b{1}
-a{1}.b{1}
+a.b.c
 
 --------------------------------------------------------------------------------
 
@@ -19,12 +34,50 @@ a{1}.b{1}
     (identifier)
     (identifier))
   (struct
-    (function_call
-      (identifier)
-      (func_call_paren)
-      (number)
-      (func_call_paren))
-    (identifier))
+    (identifier)
+    (identifier)
+    (identifier)))
+
+================================================================================
+Struct: Indexed Initialization
+================================================================================
+
+a(1).b = 1
+a{1}.b = 1
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (assignment
+    (struct
+      (function_call
+        (identifier)
+        (func_call_paren)
+        (number)
+        (func_call_paren))
+      (identifier))
+    (number))
+  (assignment
+    (struct
+      (function_call
+        (identifier)
+        (func_call_paren)
+        (number)
+        (func_call_paren))
+      (identifier))
+    (number)))
+
+================================================================================
+Struct: Indexed Access
+================================================================================
+
+a(1).b
+a.b{1}
+a{1}.b(1)
+
+--------------------------------------------------------------------------------
+
+(source_file
   (struct
     (function_call
       (identifier)
@@ -34,46 +87,6 @@ a{1}.b{1}
     (identifier))
   (struct
     (identifier)
-    (function_call
-      (identifier)
-      (func_call_paren)
-      (number)
-      (func_call_paren)))
-  (struct
-    (identifier)
-    (function_call
-      (identifier)
-      (func_call_paren)
-      (number)
-      (func_call_paren)))
-  (struct
-    (function_call
-      (identifier)
-      (func_call_paren)
-      (number)
-      (func_call_paren))
-    (function_call
-      (identifier)
-      (func_call_paren)
-      (number)
-      (func_call_paren)))
-  (struct
-    (function_call
-      (identifier)
-      (func_call_paren)
-      (number)
-      (func_call_paren))
-    (function_call
-      (identifier)
-      (func_call_paren)
-      (number)
-      (func_call_paren)))
-  (struct
-    (function_call
-      (identifier)
-      (func_call_paren)
-      (number)
-      (func_call_paren))
     (function_call
       (identifier)
       (func_call_paren)

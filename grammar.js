@@ -11,9 +11,9 @@ const PREC = {
   plus: 18,
   times: 19,
   unary: 20,
-  power: 21,
-  call: 22,
-  postfix: 23,
+  postfix: 21,
+  power: 22,
+  call: 23,
 }
 
 module.exports = grammar({
@@ -28,19 +28,22 @@ module.exports = grammar({
     $.formatting_sequence,
     $.escape_sequence,
     $._string_text,
+    $._multivar_open,
     $.error_sentinel,
   ],
-  conflicts: ($) => [[$._expression, $.assignment]],
+  conflicts: ($) => [
+    [$._expression, $._range_element],
+    [$._expression, $._binary_expression],
+    [$._range_element, $._binary_expression],
+    [$.range],
+  ],
   word: ($) => $.identifier,
   rules: {
     source_file: ($) => $._block,
 
     _block: ($) =>
       repeat1(
-        seq(
-          choice(field('comment', $.comment), $._statement, $._expression),
-          optional($._end_of_line)
-        )
+        seq(choice($.comment, $._statement, $._expression), $._end_of_line)
       ),
     block: ($) => $._block,
 
@@ -78,46 +81,7 @@ module.exports = grammar({
 
     boolean: ($) => choice('true', 'false'),
 
-    number: ($) =>
-      choice(
-        $._integer,
-        $._float,
-        $._float_alt,
-        $._bin_number,
-        $._hex_number,
-        $._sci_number,
-        $._complex_number
-      ),
-    _integer: ($) => /[+-]?\d+/,
-    _float: ($) => /[+-]?\d+\.\d*/,
-    _float_alt: ($) => /[+-]?\.\d+/,
-    _bin_number: ($) => /0[bB][0-1]+/,
-    _hex_number: ($) => /0[xX][\dA-Fa-f]+/,
-    // token does no accept $. so we have to inline
-    _sci_number: ($) =>
-      token(
-        seq(
-          choice(/[+-]?\d+/, /[+-]?\d+\.\d*/, /[+-]?\.\d+/),
-          /[eE][+-]?/,
-          /\d+/
-        )
-      ),
-    _complex_number: ($) =>
-      token(
-        seq(
-          choice(
-            /[+-]?\d+/,
-            /[+-]?\d+\.\d*/,
-            /[+-]?\.\d+/,
-            seq(
-              choice(/[+-]?\d+/, /[+-]?\d+\.\d*/, /[+-]?\.\d+/),
-              /[eE][+-]?/,
-              /\d+/
-            )
-          ),
-          /[ij]/
-        )
-      ),
+    number: ($) => /(\d+|\d+\.\d*|\.\d+)([eE][+-]?\d+)?[ij]?/,
 
     _statement: ($) =>
       choice(
@@ -148,12 +112,32 @@ module.exports = grammar({
         $.range,
         $.string,
         $.struct,
-        $.unary_operator
+        $.unary_operator,
+        $.metaclass_operator,
+        $.not_operator
       ),
 
     parenthesized_expression: ($) =>
       prec(PREC.parenthesized_expression, seq('(', $._expression, ')')),
 
+    _binary_expression: ($) =>
+      choice(
+        $.binary_operator,
+        $.boolean,
+        $.boolean_operator,
+        $.cell_definition,
+        $.comparison_operator,
+        $.function_call,
+        $.identifier,
+        $.matrix_definition,
+        $.not_operator,
+        $.number,
+        $.parenthesized_expression,
+        $.postfix_operator,
+        $.string,
+        $.struct,
+        $.unary_operator
+      ),
     binary_operator: ($) => {
       const table = [
         [prec.left, '+', PREC.plus],
@@ -177,9 +161,9 @@ module.exports = grammar({
           fn(
             precedence,
             seq(
-              field('left', $._expression),
+              field('left', $._binary_expression),
               field('operator', operator),
-              field('right', $._expression)
+              field('right', $._binary_expression)
             )
           )
         )
@@ -190,22 +174,55 @@ module.exports = grammar({
       prec(
         PREC.unary,
         seq(
-          field('operator', choice('+', '-', '~', '?')),
-          field('argument', $._expression)
+          field('operator', choice('+', '-')),
+          field(
+            'argument',
+            choice(
+              $.boolean,
+              $.cell_definition,
+              $.function_call,
+              $.identifier,
+              $.matrix_definition,
+              $.not_operator,
+              $.number,
+              $.parenthesized_expression,
+              $.postfix_operator,
+              $.struct,
+              $.unary_operator
+            )
+          )
         )
       ),
+
+    not_operator: ($) =>
+      prec(
+        PREC.not,
+        seq(
+          '~',
+          choice(
+            $.boolean,
+            $.function_call,
+            $.identifier,
+            $.matrix_definition,
+            $.not_operator,
+            $.number,
+            $.parenthesized_expression,
+            $.postfix_operator,
+            $.struct,
+            $.unary_operator
+          )
+        )
+      ),
+
+    metaclass_operator: ($) => seq('?', $.identifier),
 
     comparison_operator: ($) =>
       prec.left(
         PREC.compare,
         seq(
           $._expression,
-          repeat1(
-            seq(
-              field('operators', choice('<', '<=', '==', '~=', '>=', '>')),
-              $._expression
-            )
-          )
+          field('operators', choice('<', '<=', '==', '~=', '>=', '>')),
+          $._expression
         )
       ),
 
@@ -233,7 +250,23 @@ module.exports = grammar({
       prec(
         PREC.postfix,
         seq(
-          field('argument', $._expression),
+          field(
+            'argument',
+            choice(
+              $.binary_operator,
+              $.boolean,
+              $.cell_definition,
+              $.function_call,
+              $.identifier,
+              $.matrix_definition,
+              $.number,
+              $.parenthesized_expression,
+              $.postfix_operator,
+              $.string,
+              $.struct,
+              $.unary_operator
+            )
+          ),
           field('operator', choice(".'", "'"))
         )
       ),
@@ -304,42 +337,43 @@ module.exports = grammar({
 
     ignored_argument: ($) => '~',
 
-    assignment: ($) =>
-      choice(
-        // A = B
-        // A(1) = B
-        // A{1} = B
-        // A.b = B
-        seq(
-          field('variable', choice($.identifier, $.function_call, $.struct)),
-          '=',
-          field('value', $._expression)
-        ),
-        // [A, B, ~] = C
-        seq(
-          '[',
-          field(
-            'variable',
-            repeat1(
-              seq(
-                field(
-                  'argument',
-                  choice(
-                    $.identifier,
-                    $.ignored_argument,
-                    $.struct,
-                    $.function_call
-                  )
-                ),
-                optional(',')
-              )
-            )
-          ),
-          ']',
-          '=',
-          field('value', $._expression)
-        )
+    // A = B
+    // A(1) = B
+    // A{1} = B
+    // A.b = B
+    _variable_assignment: ($) =>
+      seq(
+        field('variable', choice($.identifier, $.function_call, $.struct)),
+        '=',
+        field('value', $._expression)
       ),
+    // [A, B, ~] = C
+    multioutput_variable: ($) =>
+      seq(
+        $._multivar_open,
+        field(
+          'variable',
+          repeat1(
+            seq(
+              field(
+                'argument',
+                choice(
+                  $.identifier,
+                  $.ignored_argument,
+                  $.struct,
+                  $.function_call
+                )
+              ),
+              optional(',')
+            )
+          )
+        ),
+        ']'
+      ),
+    _multioutput_assignment: ($) =>
+      seq($.multioutput_variable, '=', field('value', $._expression)),
+    assignment: ($) =>
+      prec.right(choice($._variable_assignment, $._multioutput_assignment)),
 
     spread_operator: ($) => ':',
 
@@ -379,13 +413,30 @@ module.exports = grammar({
         )
       ),
 
-    _range_element: ($) => choice($.identifier, $.number, $.function_call),
+    // Unary operators cannot bind stronger in this case, lest the world falls apart.
+    _range_element: ($) =>
+      choice(
+        prec.dynamic(1, $.binary_operator),
+        $.boolean,
+        $.function_call,
+        $.identifier,
+        $.matrix_definition,
+        $.not_operator,
+        $.number,
+        $.parenthesized_expression,
+        $.postfix_operator,
+        $.struct,
+        prec.dynamic(-1, $.unary_operator)
+      ),
     range: ($) =>
-      seq(
-        $._range_element,
-        ':',
-        $._range_element,
-        optional(seq(':', $._range_element))
+      prec.right(
+        PREC.postfix,
+        seq(
+          $._range_element,
+          ':',
+          $._range_element,
+          optional(seq(':', $._range_element))
+        )
       ),
 
     _end: ($) => field('end', alias('end', $.keyword)),
@@ -408,7 +459,7 @@ module.exports = grammar({
         field('argument', alias($._expression, $.condition)),
         $._end_of_line,
         optional($.block),
-        optional($.elseif_statement),
+        repeat($.elseif_statement),
         optional($.else_statement),
         $._end
       ),

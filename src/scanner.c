@@ -13,6 +13,7 @@ enum TokenType {
     FORMATTING_SEQUENCE,
     ESCAPE_SEQUENCE,
     STRING_TEXT,
+    MULTIVAR_OPEN,
     ERROR_SENTINEL
 };
 
@@ -180,9 +181,14 @@ bool scan_comment(TSLexer* lexer)
         lexer->mark_end(lexer);
         lexer->result_symbol = COMMENT;
 
+        consume(lexer);
+
         // Merges consecutive comments into one token, unless they are
         // separated by a newline.
-        consume(lexer);
+        while (!lexer->eof(lexer) && (lexer->lookahead == ' ' || lexer->lookahead == '\t')) {
+            consume(lexer);
+        }
+
         if (lexer->lookahead == '%') {
             return scan_comment(lexer);
         }
@@ -627,6 +633,33 @@ bool scan_string_close(TSLexer* lexer)
     return false;
 }
 
+bool scan_multivar_open(TSLexer* lexer)
+{
+    consume(lexer);
+    lexer->mark_end(lexer);
+    lexer->result_symbol = MULTIVAR_OPEN;
+
+    while (!lexer->eof(lexer) && lexer->lookahead != ']' && lexer->lookahead != '\n' && lexer->lookahead != '\r') {
+        skip(lexer);
+    }
+
+    if (lexer->lookahead != ']') {
+        return false;
+    }
+
+    skip(lexer);
+
+    while (!lexer->eof(lexer) && iswspace_matlab(lexer->lookahead)) {
+        skip(lexer);
+    }
+
+    if (lexer->lookahead == '=') {
+        return true;
+    }
+
+    return false;
+}
+
 bool tree_sitter_matlab_external_scanner_scan(void* payload,
     TSLexer* lexer,
     const bool* valid_symbols)
@@ -642,6 +675,10 @@ bool tree_sitter_matlab_external_scanner_scan(void* payload,
             return scan_string_open(lexer);
         }
 
+        if (valid_symbols[MULTIVAR_OPEN] && !is_inside_command && !line_continuation && lexer->lookahead == '[') {
+            return scan_multivar_open(lexer);
+        }
+
         if (valid_symbols[COMMAND_NAME] && !is_inside_command) {
             is_inside_command = false;
             is_shell_scape = false;
@@ -651,7 +688,6 @@ bool tree_sitter_matlab_external_scanner_scan(void* payload,
         if (valid_symbols[COMMAND_ARGUMENT] && is_inside_command) {
             return scan_command_argument(lexer);
         }
-
     } else {
         if (valid_symbols[STRING_CLOSE] || valid_symbols[FORMATTING_SEQUENCE] || valid_symbols[ESCAPE_SEQUENCE]) {
             return scan_string_close(lexer);

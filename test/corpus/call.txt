@@ -1,13 +1,22 @@
 ================================================================================
-Function call
+Function Call: No arguments
 ================================================================================
 
-add(1,2)
-inv(A)
 rnd()
 
-expm(eye(3)) * magic(3)
+--------------------------------------------------------------------------------
 
+(source_file
+  (function_call
+    (identifier)
+    (func_call_paren)
+    (func_call_paren)))
+
+================================================================================
+Function Call: With Arguments
+================================================================================
+
+add(1, 2)
 eig (A)
 
 --------------------------------------------------------------------------------
@@ -23,46 +32,90 @@ eig (A)
     (identifier)
     (func_call_paren)
     (identifier)
-    (func_call_paren))
-  (function_call
-    (identifier)
-    (func_call_paren)
-    (func_call_paren))
-  (binary_operator
-    (function_call
-      (identifier)
-      (func_call_paren)
-      (function_call
-        (identifier)
-        (func_call_paren)
-        (number)
-        (func_call_paren))
-      (func_call_paren))
-    (function_call
-      (identifier)
-      (func_call_paren)
-      (number)
-      (func_call_paren)))
-  (function_call
-    (identifier)
-    (func_call_paren)
-    (identifier)
     (func_call_paren)))
 
 ================================================================================
-Command call
+Function Call: Indexing With Spread
+================================================================================
+
+A(:)
+A(1, :)
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_call
+    (identifier)
+    (func_call_paren)
+    (spread_operator)
+    (func_call_paren))
+  (function_call
+    (identifier)
+    (func_call_paren)
+    (number)
+    (spread_operator)
+    (func_call_paren)))
+
+================================================================================
+Command Call: No Arguments
 ================================================================================
 
 pwd
 pwd,
 pwd;
 
+--------------------------------------------------------------------------------
+
+(source_file
+  (command
+    (command_name))
+  (command
+    (command_name))
+  (command
+    (command_name)))
+
+================================================================================
+Command Call: Bang
+================================================================================
+
 disp !
 disp ! ;
 disp !s;
 
+--------------------------------------------------------------------------------
+
+(source_file
+  (command
+    (command_name)
+    (command_argument))
+  (command
+    (command_name)
+    (command_argument))
+  (command
+    (command_name)
+    (command_argument)))
+
+================================================================================
+Command Call: With Arguments
+================================================================================
+
 cd ../something
 disp some text
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (command
+    (command_name)
+    (command_argument))
+  (command
+    (command_name)
+    (command_argument)
+    (command_argument)))
+
+================================================================================
+Command Call: CVX
+================================================================================
 
 cvx_begin sdp % quiet
     cvx_solver Mosek
@@ -75,28 +128,6 @@ cvx_end
 --------------------------------------------------------------------------------
 
 (source_file
-  (command
-    (command_name))
-  (command
-    (command_name))
-  (command
-    (command_name))
-  (command
-    (command_name)
-    (command_argument))
-  (command
-    (command_name)
-    (command_argument))
-  (command
-    (command_name)
-    (command_argument))
-  (command
-    (command_name)
-    (command_argument))
-  (command
-    (command_name)
-    (command_argument)
-    (command_argument))
   (command
     (command_name)
     (command_argument)
@@ -121,15 +152,11 @@ cvx_end
     (command_name)))
 
 ================================================================================
-Command call with line comment/continuation
+Command Call: Comment
 ================================================================================
 
 cmd % comment
 cmd arg1 % comment
-cmd ... comment
-    arg1
-cmd arg1 ... comment
-    arg2
 
 --------------------------------------------------------------------------------
 
@@ -140,7 +167,20 @@ cmd arg1 ... comment
   (command
     (command_name)
     (command_argument)
-    (comment))
+    (comment)))
+
+================================================================================
+Command Call: Line Continuation
+================================================================================
+
+cmd ... comment
+    arg1
+cmd arg1 ... comment
+    arg2
+
+--------------------------------------------------------------------------------
+
+(source_file
   (command
     (command_name)
     (comment)
@@ -152,13 +192,11 @@ cmd arg1 ... comment
     (command_argument)))
 
 ================================================================================
-Shell escape
+Command Call: Shell Escape Without Arguments
 ================================================================================
 
 !ls
 ! ls
-!cd somewhere new
-! echo (something here
 
 --------------------------------------------------------------------------------
 
@@ -166,7 +204,18 @@ Shell escape
   (command
     (command_name))
   (command
-    (command_name))
+    (command_name)))
+
+================================================================================
+Command Call: Shell Escape With Arguments
+================================================================================
+
+!cd somewhere new
+! echo (something here
+
+--------------------------------------------------------------------------------
+
+(source_file
   (command
     (command_name)
     (command_argument)

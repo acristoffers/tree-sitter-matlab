@@ -1,48 +1,11 @@
 ================================================================================
-Binary Expressions
+Binary Expressions: Simple Expressions
 ================================================================================
 
-1 + 2;
-1 .+ 2;
-1 - 2;
-1 .- 2;
-1 * 2;
-1 .* 2;
-1 / 2;
-1 ./ 2;
-1 \ 2;
-1 .\ 2;
-1 ^ 2;
-1 .^ 2;
-1 | 2;
-1 & 2;
-
-a + b;
-a .+ b;
-a - b;
-a .- b;
-a * b;
-a .* b;
-a / b;
-a ./ b;
-a \ b;
-a .\ b;
-a ^ b;
-a .^ b;
-a | b;
-a & b;
-
-a & b | c & d;
-a & (b | c) & d;
-
-2 * a + b;
--2 * a + b;
-
--2 * (a + b);
-
-"a" + "b"
-
-?inputParse
+1 + 2
+1+2
+1 +2
+1+ 2
 
 --------------------------------------------------------------------------------
 
@@ -58,99 +21,22 @@ a & (b | c) & d;
     (number))
   (binary_operator
     (number)
-    (number))
-  (binary_operator
-    (number)
-    (number))
-  (binary_operator
-    (number)
-    (number))
-  (binary_operator
-    (number)
-    (number))
-  (binary_operator
-    (number)
-    (number))
-  (binary_operator
-    (number)
-    (number))
-  (binary_operator
-    (number)
-    (number))
-  (binary_operator
-    (number)
-    (number))
-  (binary_operator
-    (number)
-    (number))
-  (binary_operator
-    (number)
-    (number))
-  (binary_operator
-    (number)
-    (number))
-  (binary_operator
-    (identifier)
-    (identifier))
-  (binary_operator
-    (identifier)
-    (identifier))
-  (binary_operator
-    (identifier)
-    (identifier))
-  (binary_operator
-    (identifier)
-    (identifier))
-  (binary_operator
-    (identifier)
-    (identifier))
-  (binary_operator
-    (identifier)
-    (identifier))
-  (binary_operator
-    (identifier)
-    (identifier))
-  (binary_operator
-    (identifier)
-    (identifier))
-  (binary_operator
-    (identifier)
-    (identifier))
-  (binary_operator
-    (identifier)
-    (identifier))
-  (binary_operator
-    (identifier)
-    (identifier))
-  (binary_operator
-    (identifier)
-    (identifier))
-  (binary_operator
-    (identifier)
-    (identifier))
-  (binary_operator
-    (identifier)
-    (identifier))
-  (binary_operator
-    (binary_operator
-      (identifier)
-      (identifier))
-    (binary_operator
-      (identifier)
-      (identifier)))
-  (binary_operator
-    (binary_operator
-      (identifier)
-      (parenthesized_expression
-        (binary_operator
-          (identifier)
-          (identifier))))
-    (identifier))
-  (binary_operator
-    (binary_operator
-      (number)
-      (identifier))
-    (identifier))
+    (number)))
+
+================================================================================
+Binary Expressions: Associativity
+================================================================================
+
+ 2 * a + b;
+ 2 * (a + b);
+-2 * a + b;
+ a ^ 2 + 3
+ a ^ 2 * 3
+ 2 * x ^ 3
+
+--------------------------------------------------------------------------------
+
+(source_file
   (binary_operator
     (binary_operator
       (number)
@@ -163,23 +49,33 @@ a & (b | c) & d;
         (identifier)
         (identifier))))
   (binary_operator
-    (string
-      (string_open)
-      (string_close))
-    (string
-      (string_open)
-      (string_close)))
-  (unary_operator
-    (identifier)))
+    (binary_operator
+      (unary_operator
+        (number))
+      (identifier))
+    (identifier))
+  (binary_operator
+    (binary_operator
+      (identifier)
+      (number))
+    (number))
+  (binary_operator
+    (binary_operator
+      (identifier)
+      (number))
+    (number))
+  (binary_operator
+    (number)
+    (binary_operator
+      (identifier)
+      (number))))
 
 ================================================================================
-Binary Expressions
+Boolean Expressions: Simple Expressions
 ================================================================================
 
 a && b
 a || b
-a && b || c && d
-a || b && c || d
 
 --------------------------------------------------------------------------------
 
@@ -189,7 +85,18 @@ a || b && c || d
     (identifier))
   (boolean_operator
     (identifier)
-    (identifier))
+    (identifier)))
+
+================================================================================
+Boolean Expressions: Associativity
+================================================================================
+
+a && b || c && d
+a || b && c || d
+
+--------------------------------------------------------------------------------
+
+(source_file
   (boolean_operator
     (boolean_operator
       (identifier)
@@ -206,38 +113,34 @@ a || b && c || d
     (identifier)))
 
 ================================================================================
-Unary Expressions
+Unary Expressions: Simple
 ================================================================================
 
 ~a
 +a
 -a
--1
++-a
 
 --------------------------------------------------------------------------------
 
 (source_file
-  (unary_operator
+  (not_operator
     (identifier))
   (unary_operator
     (identifier))
   (unary_operator
     (identifier))
-  (number))
+  (unary_operator
+    (unary_operator
+      (identifier))))
 
 ================================================================================
-Comparison Expressions
+Comparison Expressions: Simple Expressions
 ================================================================================
 
 a == b
-a ~= b
 a < b
 a <= b
-a > b
-a >= b
-
-a + b == -c
-a + b == -1
 
 --------------------------------------------------------------------------------
 
@@ -250,39 +153,38 @@ a + b == -1
     (identifier))
   (comparison_operator
     (identifier)
-    (identifier))
-  (comparison_operator
-    (identifier)
-    (identifier))
-  (comparison_operator
-    (identifier)
-    (identifier))
-  (comparison_operator
-    (identifier)
-    (identifier))
+    (identifier)))
+
+================================================================================
+Comparison Expressions: Composition
+================================================================================
+
+a + b == -c
+a + b == c && d
+
+--------------------------------------------------------------------------------
+
+(source_file
   (comparison_operator
     (binary_operator
       (identifier)
       (identifier))
     (unary_operator
       (identifier)))
-  (comparison_operator
-    (binary_operator
-      (identifier)
+  (boolean_operator
+    (comparison_operator
+      (binary_operator
+        (identifier)
+        (identifier))
       (identifier))
-    (number)))
+    (identifier)))
 
 ================================================================================
-Postfix Expressions
+Postfix Expressions: Simple Expressions
 ================================================================================
 
 A'
 A.'
-
-A' + 'string'
-
-~A'
-A'^2
 
 --------------------------------------------------------------------------------
 
@@ -290,17 +192,31 @@ A'^2
   (postfix_operator
     (identifier))
   (postfix_operator
-    (identifier))
-  (binary_operator
+    (identifier)))
+
+================================================================================
+Postfix Expressions: Composition
+================================================================================
+
+~A'
+-A'
+A'^2
+A^2'
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (not_operator
     (postfix_operator
-      (identifier))
-    (string
-      (string_open)
-      (string_close)))
+      (identifier)))
   (unary_operator
     (postfix_operator
       (identifier)))
   (binary_operator
     (postfix_operator
       (identifier))
-    (number)))
+    (number))
+  (binary_operator
+    (identifier)
+    (postfix_operator
+      (number))))

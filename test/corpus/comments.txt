@@ -1,8 +1,23 @@
 ================================================================================
-Comments
+Comment: End Of Line
 ================================================================================
 
-1 % a comment
+1 % after a line comment, nothing else matters;% 'fda' ...
+a = 1 % a comment
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (number)
+  (comment)
+  (assignment
+    (identifier)
+    (number))
+  (comment))
+
+================================================================================
+Comment: Multiline
+================================================================================
 
 %{
 A proper
@@ -16,21 +31,93 @@ A proper
 % comment
 %}
 
+--------------------------------------------------------------------------------
+
+(source_file
+  (comment)
+  (comment))
+
+================================================================================
+Comment: Group Of Comments As Single Comment
+================================================================================
+
 % An improper
 % multiline
 % comment
+% grouped together
 
-"This should be a string and % not a comment"
+% again
+        % but now
+        % indented
 
 --------------------------------------------------------------------------------
 
 (source_file
-  (number)
   (comment)
+  (comment))
+
+================================================================================
+Comment: Comment Before Statement
+================================================================================
+
+% do something
+a = b
+%
+a(1)
+
+--------------------------------------------------------------------------------
+
+(source_file
   (comment)
+  (assignment
+    (identifier)
+    (identifier))
   (comment)
-  (comment)
-  (string
-    (string_open)
-    (formatting_sequence)
-    (string_close)))
+  (function_call
+    (identifier)
+    (func_call_paren)
+    (number)
+    (func_call_paren)))
+
+================================================================================
+Comment: Line Continuation
+================================================================================
+
+A = 1 + ... a comment
+    2
+
+A = [a b; ... not really necessary
+     c d]
+
+A = "Some " + ... multiline concatenation
+    "string"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (assignment
+    (identifier)
+    (binary_operator
+      (number)
+      (comment)
+      (number)))
+  (assignment
+    (identifier)
+    (matrix_definition
+      (row
+        (identifier)
+        (identifier))
+      (comment)
+      (row
+        (identifier)
+        (identifier))))
+  (assignment
+    (identifier)
+    (binary_operator
+      (string
+        (string_open)
+        (string_close))
+      (comment)
+      (string
+        (string_open)
+        (string_close)))))

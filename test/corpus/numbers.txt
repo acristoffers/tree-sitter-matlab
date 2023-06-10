@@ -1,102 +1,123 @@
 ================================================================================
-Numbers
+Number: Positive Integers
 ================================================================================
 
 1
-13
+10
+100
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (number)
+  (number)
+  (number))
+
+================================================================================
+Number: Negative Integers
+================================================================================
+
+ -1
+ -10
+ -100
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (unary_operator
+    (number))
+  (unary_operator
+    (number))
+  (unary_operator
+    (number)))
+
+================================================================================
+Number: Positive Float
+================================================================================
+
+1.1
+10.10
+.42
+42.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (number)
+  (number)
+  (number)
+  (number))
+
+================================================================================
+Number: Negative Float
+================================================================================
+
+-1.1
+-10.10
+-.42
+-42.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (unary_operator
+    (number))
+  (unary_operator
+    (number))
+  (unary_operator
+    (number))
+  (unary_operator
+    (number)))
+
+================================================================================
+Number: Positive Scientific Notation
+================================================================================
+
 1e3
-1e+3
 1e-3
-1E3
-1E+3
-1E-3
-1.5
-1.5e3
-1.5e+3
-1.5e-3
-1.5E3
-1.5E+3
-1.5E-3
-1i
-1.5i
-1.5e3i
-1.5e+3i
-1.5e-3i
-1.5E3i
-1.5E+3i
-1.5E-3i
-1j
-1.5j
-1.5e3j
-1.5e+3j
-1.5e-3j
-1.5E3j
-1.5E+3j
-1.5E-3j
-+1
-+13
-+1e3
-+1e+3
-+1e-3
-+1E3
-+1E+3
-+1E-3
-+1.5
-+1.5e3
-+1.5e+3
-+1.5e-3
-+1.5E3
-+1.5E+3
-+1.5E-3
-+1i
-+1.5i
-+1.5e3i
-+1.5e+3i
-+1.5e-3i
-+1.5E3i
-+1.5E+3i
-+1.5E-3i
-+1j
-+1.5j
-+1.5e3j
-+1.5e+3j
-+1.5e-3j
-+1.5E3j
-+1.5E+3j
-+1.5E-3j
--1
--13
+1.e3
+.1e3
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (number)
+  (number)
+  (number)
+  (number))
+
+================================================================================
+Number: Negative Scientific Notation
+================================================================================
+
 -1e3
--1e+3
 -1e-3
--1E3
--1E+3
--1E-3
--1.5
--1.5e3
--1.5e+3
--1.5e-3
--1.5E3
--1.5E+3
--1.5E-3
--1i
--1.5i
--1.5e3i
--1.5e+3i
--1.5e-3i
--1.5E3i
--1.5E+3i
--1.5E-3i
--1j
--1.5j
--1.5e3j
--1.5e+3j
--1.5e-3j
--1.5E3j
--1.5E+3j
--1.5E-3j
-0xDEADBEEF42
-0b1010
+-1.e3
+-.1e3
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (unary_operator
+    (number))
+  (unary_operator
+    (number))
+  (unary_operator
+    (number))
+  (unary_operator
+    (number)))
+
+================================================================================
+Number: Positive Complex Number
+================================================================================
+
+1i
+1j
+1.i
+1.1j
+.1j
+1e3j
+1e-3j
 
 --------------------------------------------------------------------------------
 
@@ -107,92 +128,34 @@ Numbers
   (number)
   (number)
   (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
-  (number)
   (number))
+
+================================================================================
+Number: Negative Complex Number
+================================================================================
+
+-1i
+-1j
+-1.i
+-1.1j
+-.1j
+-1e3j
+-1e-3j
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (unary_operator
+    (number))
+  (unary_operator
+    (number))
+  (unary_operator
+    (number))
+  (unary_operator
+    (number))
+  (unary_operator
+    (number))
+  (unary_operator
+    (number))
+  (unary_operator
+    (number)))

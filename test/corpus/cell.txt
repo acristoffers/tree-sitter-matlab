@@ -1,16 +1,32 @@
 ================================================================================
-Cell
+Cell: Simple
+================================================================================
+
+{1 2 3 4}
+{1,2,3,4}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (cell_definition
+    (row
+      (number)
+      (number)
+      (number)
+      (number)))
+  (cell_definition
+    (row
+      (number)
+      (number)
+      (number)
+      (number))))
+
+================================================================================
+Cell: Multidimensional
 ================================================================================
 
 {1 2; 3 4}
-{1, 2; 3, 4}
-{1, 2; 3 4}
-
-{x1 x2 x3 x4}
-
-{x1; x2; x3; x4}
-
-{A-L*C, {L B}; I 0}
+{{1 2} {3 4}; {5 6} {7}}
 
 --------------------------------------------------------------------------------
 
@@ -24,44 +40,19 @@ Cell
       (number)))
   (cell_definition
     (row
-      (number)
-      (number))
-    (row
-      (number)
-      (number)))
-  (cell_definition
-    (row
-      (number)
-      (number))
-    (row
-      (number)
-      (number)))
-  (cell_definition
-    (row
-      (identifier)
-      (identifier)
-      (identifier)
-      (identifier)))
-  (cell_definition
-    (row
-      (identifier))
-    (row
-      (identifier))
-    (row
-      (identifier))
-    (row
-      (identifier)))
-  (cell_definition
-    (row
-      (binary_operator
-        (identifier)
-        (binary_operator
-          (identifier)
-          (identifier)))
       (cell_definition
         (row
-          (identifier)
-          (identifier))))
+          (number)
+          (number)))
+      (cell_definition
+        (row
+          (number)
+          (number))))
     (row
-      (identifier)
-      (number))))
+      (cell_definition
+        (row
+          (number)
+          (number)))
+      (cell_definition
+        (row
+          (number))))))

@@ -1,23 +1,10 @@
 ================================================================================
-Assignment
+Assignment: To Variable
 ================================================================================
 
 a = 1
-b = 2;
-c = "a string"
-d = [1 2; 3 4] * 2
-[a b c d] = function
-[a,b,c,d] = function
-
-[a ~ c d] = function
-[a,b,~,d] = function
-
-A(1) = B
-
-a{1}.b      = 3
-[a.a a.b]   = meshgrid(1:2, 1:2);
-[a(1) a(2)] = meshgrid(1:1, 1:1);
-[a{1} a{2}] = meshgrid(1:2, 1:2);
+b = -1, c = +1;
+d = 1.5;
 
 --------------------------------------------------------------------------------
 
@@ -27,47 +14,55 @@ a{1}.b      = 3
     (number))
   (assignment
     (identifier)
-    (number))
-  (assignment
-    (identifier)
-    (string
-      (string_open)
-      (string_close)))
-  (assignment
-    (identifier)
-    (binary_operator
-      (matrix_definition
-        (row
-          (number)
-          (number))
-        (row
-          (number)
-          (number)))
+    (unary_operator
       (number)))
   (assignment
     (identifier)
-    (identifier)
-    (identifier)
-    (identifier)
-    (identifier))
+    (unary_operator
+      (number)))
   (assignment
     (identifier)
-    (identifier)
-    (identifier)
-    (identifier)
-    (identifier))
+    (number)))
+
+================================================================================
+Assignment: Multiple Output
+================================================================================
+
+[~ T X] = lsim()
+[~,T,X] = lsim()
+
+--------------------------------------------------------------------------------
+
+(source_file
   (assignment
-    (identifier)
-    (ignored_argument)
-    (identifier)
-    (identifier)
-    (identifier))
+    (multioutput_variable
+      (ignored_argument)
+      (identifier)
+      (identifier))
+    (function_call
+      (identifier)
+      (func_call_paren)
+      (func_call_paren)))
   (assignment
-    (identifier)
-    (identifier)
-    (ignored_argument)
-    (identifier)
-    (identifier))
+    (multioutput_variable
+      (ignored_argument)
+      (identifier)
+      (identifier))
+    (function_call
+      (identifier)
+      (func_call_paren)
+      (func_call_paren))))
+
+================================================================================
+Assignment: Indexing
+================================================================================
+
+A(1) = B
+A{1} = B
+
+--------------------------------------------------------------------------------
+
+(source_file
   (assignment
     (function_call
       (identifier)
@@ -75,6 +70,30 @@ a{1}.b      = 3
       (number)
       (func_call_paren))
     (identifier))
+  (assignment
+    (function_call
+      (identifier)
+      (func_call_paren)
+      (number)
+      (func_call_paren))
+    (identifier)))
+
+================================================================================
+Assignment: Struct
+================================================================================
+
+a.b = 1
+a{1}.b = 3
+a.b(2) = 4
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (assignment
+    (struct
+      (identifier)
+      (identifier))
+    (number))
   (assignment
     (struct
       (function_call
@@ -87,59 +106,83 @@ a{1}.b      = 3
   (assignment
     (struct
       (identifier)
-      (identifier))
-    (struct
-      (identifier)
-      (identifier))
-    (function_call
-      (identifier)
-      (func_call_paren)
-      (range
+      (function_call
+        (identifier)
+        (func_call_paren)
         (number)
-        (number))
-      (range
-        (number)
-        (number))
-      (func_call_paren)))
+        (func_call_paren)))
+    (number)))
+
+================================================================================
+Assignment: Multiple Output With Struct
+================================================================================
+
+[a.a a.b] = meshgrid
+[a.a(1) a(2).b] = meshgrid
+
+--------------------------------------------------------------------------------
+
+(source_file
   (assignment
-    (function_call
-      (identifier)
-      (func_call_paren)
-      (number)
-      (func_call_paren))
-    (function_call
-      (identifier)
-      (func_call_paren)
-      (number)
-      (func_call_paren))
-    (function_call
-      (identifier)
-      (func_call_paren)
-      (range
-        (number)
-        (number))
-      (range
-        (number)
-        (number))
-      (func_call_paren)))
+    (multioutput_variable
+      (struct
+        (identifier)
+        (identifier))
+      (struct
+        (identifier)
+        (identifier)))
+    (identifier))
   (assignment
-    (function_call
-      (identifier)
-      (func_call_paren)
-      (number)
-      (func_call_paren))
-    (function_call
-      (identifier)
-      (func_call_paren)
-      (number)
-      (func_call_paren))
-    (function_call
-      (identifier)
-      (func_call_paren)
-      (range
+    (multioutput_variable
+      (struct
+        (identifier)
+        (function_call
+          (identifier)
+          (func_call_paren)
+          (number)
+          (func_call_paren)))
+      (struct
+        (function_call
+          (identifier)
+          (func_call_paren)
+          (number)
+          (func_call_paren))
+        (identifier)))
+    (identifier)))
+
+================================================================================
+Assignment: Multiple Output With Indexing
+================================================================================
+
+[a(1) a(2)] = meshgrid;
+[a{1} a{2}] = meshgrid;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (assignment
+    (multioutput_variable
+      (function_call
+        (identifier)
+        (func_call_paren)
         (number)
-        (number))
-      (range
+        (func_call_paren))
+      (function_call
+        (identifier)
+        (func_call_paren)
         (number)
-        (number))
-      (func_call_paren))))
+        (func_call_paren)))
+    (identifier))
+  (assignment
+    (multioutput_variable
+      (function_call
+        (identifier)
+        (func_call_paren)
+        (number)
+        (func_call_paren))
+      (function_call
+        (identifier)
+        (func_call_paren)
+        (number)
+        (func_call_paren)))
+    (identifier)))

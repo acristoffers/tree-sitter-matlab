@@ -1,14 +1,9 @@
 ================================================================================
-Indexing
+Matrix Indexing: Simple
 ================================================================================
 
 A(1)
 A(1, 2)
-A(1:2, :)
-
-A{1}
-A{1, 2}
-A{1:2, :}
 
 --------------------------------------------------------------------------------
 
@@ -23,31 +18,70 @@ A{1:2, :}
     (func_call_paren)
     (number)
     (number)
-    (func_call_paren))
+    (func_call_paren)))
+
+================================================================================
+Matrix Indexing: Spread Operator
+================================================================================
+
+A(:)
+A(1, :)
+
+--------------------------------------------------------------------------------
+
+(source_file
   (function_call
     (identifier)
     (func_call_paren)
-    (range
-      (number)
-      (number))
     (spread_operator)
     (func_call_paren))
   (function_call
     (identifier)
     (func_call_paren)
     (number)
+    (spread_operator)
+    (func_call_paren)))
+
+================================================================================
+Cell Indexing: Simple
+================================================================================
+
+A{1}
+A{1, 2}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_call
+    (identifier)
+    (func_call_paren)
+    (number)
     (func_call_paren))
   (function_call
     (identifier)
     (func_call_paren)
     (number)
     (number)
+    (func_call_paren)))
+
+================================================================================
+Cell Indexing: Spread Operator
+================================================================================
+
+A{:}
+A{1, :}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_call
+    (identifier)
+    (func_call_paren)
+    (spread_operator)
     (func_call_paren))
   (function_call
     (identifier)
     (func_call_paren)
-    (range
-      (number)
-      (number))
+    (number)
     (spread_operator)
     (func_call_paren)))

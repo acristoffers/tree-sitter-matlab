@@ -1,13 +1,9 @@
 ================================================================================
-Strings
+Strings: Single Quoted
 ================================================================================
 
 'Single quoted string'
-"Double quoted string"
 'Single quoted with another '' inside it'
-"Double quoted with another "" inside it"
-"This should be a string and % not a comment"
-"This string cannot contain 5 3 2 numbers"
 
 --------------------------------------------------------------------------------
 
@@ -17,26 +13,58 @@ Strings
     (string_close))
   (string
     (string_open)
-    (string_close))
+    (string_close)))
+
+================================================================================
+Stings: Double Quoted
+================================================================================
+
+"Double quoted string"
+"Double quoted with another "" inside it"
+
+--------------------------------------------------------------------------------
+
+(source_file
   (string
     (string_open)
-    (string_close))
-  (string
-    (string_open)
-    (string_close))
-  (string
-    (string_open)
-    (formatting_sequence)
     (string_close))
   (string
     (string_open)
     (string_close)))
 
 ================================================================================
-String Formatting and Escaping
+Strings: Percent Symbol
+================================================================================
+
+"This should be a string and % not a comment"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (string
+    (string_open)
+    (formatting_sequence)
+    (string_close)))
+
+================================================================================
+Strings: Formatting
 ================================================================================
 
 "This %% is a floating number with an f after it %3#4.2bff"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (string
+    (string_open)
+    (formatting_sequence)
+    (formatting_sequence)
+    (string_close)))
+
+================================================================================
+Strings: Escaping
+================================================================================
+
 "It also supports hex \xdeadbeef"
 "And octal \1234"
 "This\tis\na\\escaped\tstring"
@@ -44,11 +72,6 @@ String Formatting and Escaping
 --------------------------------------------------------------------------------
 
 (source_file
-  (string
-    (string_open)
-    (formatting_sequence)
-    (formatting_sequence)
-    (string_close))
   (string
     (string_open)
     (escape_sequence)

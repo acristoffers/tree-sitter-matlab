@@ -1,24 +1,32 @@
 ================================================================================
-Matrix
+Matrix: Simple
 ================================================================================
 
-[1 2; 3 4]
+[1 2 3 4]
+[1,2,3,4]
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (matrix_definition
+    (row
+      (number)
+      (number)
+      (number)
+      (number)))
+  (matrix_definition
+    (row
+      (number)
+      (number)
+      (number)
+      (number))))
+
+================================================================================
+Matrix: Multidimensional
+================================================================================
+
 [1, 2; 3, 4]
 [1, 2; 3 4]
-
-[x1 x2 x3 x4]
-
-[x1; x2; x3; x4]
-
-[A-L*C [L B]; I 0]
-
-[1 2; 3 4]' * [4; -5]
-
-[1 2
- 3 4]
-
-[A- L*C [L B]
- I     0]
 
 --------------------------------------------------------------------------------
 
@@ -36,29 +44,20 @@ Matrix
       (number))
     (row
       (number)
-      (number)))
-  (matrix_definition
-    (row
-      (number)
-      (number))
-    (row
-      (number)
-      (number)))
-  (matrix_definition
-    (row
-      (identifier)
-      (identifier)
-      (identifier)
-      (identifier)))
-  (matrix_definition
-    (row
-      (identifier))
-    (row
-      (identifier))
-    (row
-      (identifier))
-    (row
-      (identifier)))
+      (number))))
+
+================================================================================
+Matrix: Concatenation
+================================================================================
+
+[A-L*C [L B]; I 0]
+
+[A- L*C [L B]
+ I      0    ]
+
+--------------------------------------------------------------------------------
+
+(source_file
   (matrix_definition
     (row
       (binary_operator
@@ -73,27 +72,6 @@ Matrix
     (row
       (identifier)
       (number)))
-  (binary_operator
-    (postfix_operator
-      (matrix_definition
-        (row
-          (number)
-          (number))
-        (row
-          (number)
-          (number))))
-    (matrix_definition
-      (row
-        (number))
-      (row
-        (number))))
-  (matrix_definition
-    (row
-      (number)
-      (number))
-    (row
-      (number)
-      (number)))
   (matrix_definition
     (row
       (binary_operator
@@ -107,4 +85,22 @@ Matrix
           (identifier))))
     (row
       (identifier)
+      (number))))
+
+================================================================================
+Matrix: Multiline
+================================================================================
+
+[1 2
+ 3 4]
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (matrix_definition
+    (row
+      (number)
+      (number))
+    (row
+      (number)
       (number))))

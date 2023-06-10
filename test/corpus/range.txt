@@ -1,13 +1,11 @@
 ================================================================================
-Range
+Range: Positive Numbers
 ================================================================================
 
-1:10
+1:2
 1:2:3
--1:1e-3:1
-a:b:c
-a:rand()
-a():b():c()
+1:0.1:2
+0:1e-3:1
 
 --------------------------------------------------------------------------------
 
@@ -24,15 +22,181 @@ a():b():c()
     (number)
     (number))
   (range
-    (identifier)
+    (number)
+    (number)
+    (number)))
+
+================================================================================
+Range: Negative Numbers
+================================================================================
+
+-1:1
+1:-.1:0
+10:-1:-10
+1:-1e-3:-1
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (range
+    (unary_operator
+      (number))
+    (number))
+  (range
+    (number)
+    (unary_operator
+      (number))
+    (number))
+  (range
+    (number)
+    (unary_operator
+      (number))
+    (unary_operator
+      (number)))
+  (range
+    (number)
+    (unary_operator
+      (number))
+    (unary_operator
+      (number))))
+
+================================================================================
+Range: Variables
+================================================================================
+
+a:b
+a:b:c
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (range
     (identifier)
     (identifier))
   (range
     (identifier)
+    (identifier)
+    (identifier)))
+
+================================================================================
+Range: Postfix and Unary Operators
+================================================================================
+
+a':b
+a:-b:c
+a:+b:~c'
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (range
+    (postfix_operator
+      (identifier))
+    (identifier))
+  (range
+    (identifier)
+    (unary_operator
+      (identifier))
+    (identifier))
+  (range
+    (identifier)
+    (unary_operator
+      (identifier))
+    (not_operator
+      (postfix_operator
+        (identifier)))))
+
+================================================================================
+Range: Binary Operators
+================================================================================
+
+a:b+2
+a:1-b:c
+1+2:10
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (range
+    (identifier)
+    (binary_operator
+      (identifier)
+      (number)))
+  (range
+    (identifier)
+    (binary_operator
+      (number)
+      (identifier))
+    (identifier))
+  (range
+    (binary_operator
+      (number)
+      (number))
+    (number)))
+
+================================================================================
+Range: Parenthesized Expressions
+================================================================================
+
+a:(b+2)
+a:(1:2):c
+(1+2):10
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (range
+    (identifier)
+    (parenthesized_expression
+      (binary_operator
+        (identifier)
+        (number))))
+  (range
+    (identifier)
+    (parenthesized_expression
+      (range
+        (number)
+        (number)))
+    (identifier))
+  (range
+    (parenthesized_expression
+      (binary_operator
+        (number)
+        (number)))
+    (number)))
+
+================================================================================
+Range: Boolean
+================================================================================
+
+a:true:b
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (range
+    (identifier)
+    (boolean)
+    (identifier)))
+
+================================================================================
+Range: Function call
+================================================================================
+
+1:a(1):2
+b():a(1):c()
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (range
+    (number)
     (function_call
       (identifier)
       (func_call_paren)
-      (func_call_paren)))
+      (number)
+      (func_call_paren))
+    (number))
   (range
     (function_call
       (identifier)
@@ -41,8 +205,69 @@ a():b():c()
     (function_call
       (identifier)
       (func_call_paren)
+      (number)
       (func_call_paren))
     (function_call
       (identifier)
       (func_call_paren)
       (func_call_paren))))
+
+================================================================================
+Range: Matrix Definition
+================================================================================
+
+1:[1 2]:3
+[1 2]:3
+1:[1 2]
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (range
+    (number)
+    (matrix_definition
+      (row
+        (number)
+        (number)))
+    (number))
+  (range
+    (matrix_definition
+      (row
+        (number)
+        (number)))
+    (number))
+  (range
+    (number)
+    (matrix_definition
+      (row
+        (number)
+        (number)))))
+
+================================================================================
+Range: Struct
+================================================================================
+
+a.b.c:d.e
+a.b:c.d:e.f
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (range
+    (struct
+      (identifier)
+      (identifier)
+      (identifier))
+    (struct
+      (identifier)
+      (identifier)))
+  (range
+    (struct
+      (identifier)
+      (identifier))
+    (struct
+      (identifier)
+      (identifier))
+    (struct
+      (identifier)
+      (identifier))))

@@ -1,24 +1,10 @@
 ================================================================================
-For Statement
+For Statement: Simple
 ================================================================================
 
-for a = 1:2
+for i = 1:10
+    1
 end
-
-for b = eye(3)
-    4
-end
-
-for R = 1:N
-    for C = 1:N
-        A(R,C) = 1/(R+C-1);
-    end
-    break
-end
-
-for S = 1.0: -0.1: 0.0, do_some_task(S), end
-
-for E = eye(N), do_some_task(E), end
 
 --------------------------------------------------------------------------------
 
@@ -30,19 +16,24 @@ for E = eye(N), do_some_task(E), end
       (range
         (number)
         (number)))
-    (keyword))
-  (for_statement
-    (keyword)
-    (iterator
-      (identifier)
-      (function_call
-        (identifier)
-        (func_call_paren)
-        (number)
-        (func_call_paren)))
     (block
       (number))
-    (keyword))
+    (keyword)))
+
+================================================================================
+For Statement: Nested
+================================================================================
+
+for R = 1:N
+    for C = 1:N
+        continue
+    end
+    break
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
   (for_statement
     (keyword)
     (iterator
@@ -59,31 +50,30 @@ for E = eye(N), do_some_task(E), end
             (number)
             (identifier)))
         (block
-          (assignment
-            (function_call
-              (identifier)
-              (func_call_paren)
-              (identifier)
-              (identifier)
-              (func_call_paren))
-            (binary_operator
-              (number)
-              (parenthesized_expression
-                (binary_operator
-                  (binary_operator
-                    (identifier)
-                    (identifier))
-                  (number))))))
+          (keyword))
         (keyword))
       (keyword))
-    (keyword))
+    (keyword)))
+
+================================================================================
+For Statement: Single Line
+================================================================================
+
+for S = 1.0: -0.1: 0.0, do_some_task(S), end
+
+for E = eye(N), do_some_task(E), end
+
+--------------------------------------------------------------------------------
+
+(source_file
   (for_statement
     (keyword)
     (iterator
       (identifier)
       (range
         (number)
-        (number)
+        (unary_operator
+          (number))
         (number)))
     (block
       (function_call
@@ -110,12 +100,30 @@ for E = eye(N), do_some_task(E), end
     (keyword)))
 
 ================================================================================
-ParFor Statement
+ParFor Statement: Simple
 ================================================================================
 
 parfor i = 1:3
     1
 end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (for_statement
+    (keyword)
+    (iterator
+      (identifier)
+      (range
+        (number)
+        (number)))
+    (block
+      (number))
+    (keyword)))
+
+================================================================================
+ParFor Statement: Options
+================================================================================
 
 parfor (i = 1:3, 1)
     1
@@ -136,16 +144,6 @@ end
 --------------------------------------------------------------------------------
 
 (source_file
-  (for_statement
-    (keyword)
-    (iterator
-      (identifier)
-      (range
-        (number)
-        (number)))
-    (block
-      (number))
-    (keyword))
   (for_statement
     (keyword)
     (iterator

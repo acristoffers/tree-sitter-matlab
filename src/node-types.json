@@ -3,28 +3,6 @@
     "type": "assignment",
     "named": true,
     "fields": {
-      "argument": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "function_call",
-            "named": true
-          },
-          {
-            "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "ignored_argument",
-            "named": true
-          },
-          {
-            "type": "struct",
-            "named": true
-          }
-        ]
-      },
       "value": {
         "multiple": false,
         "required": true,
@@ -62,6 +40,14 @@
             "named": true
           },
           {
+            "type": "metaclass_operator",
+            "named": true
+          },
+          {
+            "type": "not_operator",
+            "named": true
+          },
+          {
             "type": "number",
             "named": true
           },
@@ -92,13 +78,9 @@
         ]
       },
       "variable": {
-        "multiple": true,
-        "required": true,
+        "multiple": false,
+        "required": false,
         "types": [
-          {
-            "type": ",",
-            "named": false
-          },
           {
             "type": "function_call",
             "named": true
@@ -108,15 +90,21 @@
             "named": true
           },
           {
-            "type": "ignored_argument",
-            "named": true
-          },
-          {
             "type": "struct",
             "named": true
           }
         ]
       }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "multioutput_variable",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -160,6 +148,10 @@
             "named": true
           },
           {
+            "type": "not_operator",
+            "named": true
+          },
+          {
             "type": "number",
             "named": true
           },
@@ -169,10 +161,6 @@
           },
           {
             "type": "postfix_operator",
-            "named": true
-          },
-          {
-            "type": "range",
             "named": true
           },
           {
@@ -288,6 +276,10 @@
             "named": true
           },
           {
+            "type": "not_operator",
+            "named": true
+          },
+          {
             "type": "number",
             "named": true
           },
@@ -297,10 +289,6 @@
           },
           {
             "type": "postfix_operator",
-            "named": true
-          },
-          {
-            "type": "range",
             "named": true
           },
           {
@@ -329,16 +317,6 @@
         "types": [
           {
             "type": "keyword",
-            "named": true
-          }
-        ]
-      },
-      "comment": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "comment",
             "named": true
           }
         ]
@@ -393,6 +371,10 @@
           "named": true
         },
         {
+          "type": "comment",
+          "named": true
+        },
+        {
           "type": "comparison_operator",
           "named": true
         },
@@ -414,6 +396,14 @@
         },
         {
           "type": "matrix_definition",
+          "named": true
+        },
+        {
+          "type": "metaclass_operator",
+          "named": true
+        },
+        {
+          "type": "not_operator",
           "named": true
         },
         {
@@ -501,6 +491,14 @@
             "named": true
           },
           {
+            "type": "metaclass_operator",
+            "named": true
+          },
+          {
+            "type": "not_operator",
+            "named": true
+          },
+          {
             "type": "number",
             "named": true
           },
@@ -578,6 +576,14 @@
           },
           {
             "type": "matrix_definition",
+            "named": true
+          },
+          {
+            "type": "metaclass_operator",
+            "named": true
+          },
+          {
+            "type": "not_operator",
             "named": true
           },
           {
@@ -668,7 +674,7 @@
     "named": true,
     "fields": {
       "operators": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
           {
@@ -732,6 +738,14 @@
         },
         {
           "type": "matrix_definition",
+          "named": true
+        },
+        {
+          "type": "metaclass_operator",
+          "named": true
+        },
+        {
+          "type": "not_operator",
           "named": true
         },
         {
@@ -803,6 +817,14 @@
         },
         {
           "type": "matrix_definition",
+          "named": true
+        },
+        {
+          "type": "metaclass_operator",
+          "named": true
+        },
+        {
+          "type": "not_operator",
           "named": true
         },
         {
@@ -1005,6 +1027,14 @@
             "named": true
           },
           {
+            "type": "metaclass_operator",
+            "named": true
+          },
+          {
+            "type": "not_operator",
+            "named": true
+          },
+          {
             "type": "number",
             "named": true
           },
@@ -1076,6 +1106,14 @@
           },
           {
             "type": "matrix_definition",
+            "named": true
+          },
+          {
+            "type": "metaclass_operator",
+            "named": true
+          },
+          {
+            "type": "not_operator",
             "named": true
           },
           {
@@ -1234,6 +1272,14 @@
           "named": true
         },
         {
+          "type": "metaclass_operator",
+          "named": true
+        },
+        {
+          "type": "not_operator",
+          "named": true
+        },
+        {
           "type": "number",
           "named": true
         },
@@ -1280,9 +1326,124 @@
     }
   },
   {
-    "type": "number",
+    "type": "metaclass_operator",
     "named": true,
-    "fields": {}
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "multioutput_variable",
+    "named": true,
+    "fields": {
+      "argument": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "function_call",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "ignored_argument",
+            "named": true
+          },
+          {
+            "type": "struct",
+            "named": true
+          }
+        ]
+      },
+      "variable": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": ",",
+            "named": false
+          },
+          {
+            "type": "function_call",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "ignored_argument",
+            "named": true
+          },
+          {
+            "type": "struct",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "not_operator",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "boolean",
+          "named": true
+        },
+        {
+          "type": "function_call",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "matrix_definition",
+          "named": true
+        },
+        {
+          "type": "not_operator",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "postfix_operator",
+          "named": true
+        },
+        {
+          "type": "struct",
+          "named": true
+        },
+        {
+          "type": "unary_operator",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "parenthesized_expression",
@@ -1322,6 +1483,14 @@
         },
         {
           "type": "matrix_definition",
+          "named": true
+        },
+        {
+          "type": "metaclass_operator",
+          "named": true
+        },
+        {
+          "type": "not_operator",
           "named": true
         },
         {
@@ -1372,15 +1541,7 @@
             "named": true
           },
           {
-            "type": "boolean_operator",
-            "named": true
-          },
-          {
             "type": "cell_definition",
-            "named": true
-          },
-          {
-            "type": "comparison_operator",
             "named": true
           },
           {
@@ -1405,10 +1566,6 @@
           },
           {
             "type": "postfix_operator",
-            "named": true
-          },
-          {
-            "type": "range",
             "named": true
           },
           {
@@ -1450,6 +1607,14 @@
       "required": true,
       "types": [
         {
+          "type": "binary_operator",
+          "named": true
+        },
+        {
+          "type": "boolean",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -1458,7 +1623,31 @@
           "named": true
         },
         {
+          "type": "matrix_definition",
+          "named": true
+        },
+        {
+          "type": "not_operator",
+          "named": true
+        },
+        {
           "type": "number",
+          "named": true
+        },
+        {
+          "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "postfix_operator",
+          "named": true
+        },
+        {
+          "type": "struct",
+          "named": true
+        },
+        {
+          "type": "unary_operator",
           "named": true
         }
       ]
@@ -1505,6 +1694,14 @@
             "named": true
           },
           {
+            "type": "metaclass_operator",
+            "named": true
+          },
+          {
+            "type": "not_operator",
+            "named": true
+          },
+          {
             "type": "number",
             "named": true
           },
@@ -1546,16 +1743,6 @@
         "types": [
           {
             "type": "keyword",
-            "named": true
-          }
-        ]
-      },
-      "comment": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "comment",
             "named": true
           }
         ]
@@ -1610,6 +1797,10 @@
           "named": true
         },
         {
+          "type": "comment",
+          "named": true
+        },
+        {
           "type": "comparison_operator",
           "named": true
         },
@@ -1631,6 +1822,14 @@
         },
         {
           "type": "matrix_definition",
+          "named": true
+        },
+        {
+          "type": "metaclass_operator",
+          "named": true
+        },
+        {
+          "type": "not_operator",
           "named": true
         },
         {
@@ -1802,23 +2001,11 @@
         "required": true,
         "types": [
           {
-            "type": "binary_operator",
-            "named": true
-          },
-          {
             "type": "boolean",
             "named": true
           },
           {
-            "type": "boolean_operator",
-            "named": true
-          },
-          {
             "type": "cell_definition",
-            "named": true
-          },
-          {
-            "type": "comparison_operator",
             "named": true
           },
           {
@@ -1834,6 +2021,10 @@
             "named": true
           },
           {
+            "type": "not_operator",
+            "named": true
+          },
+          {
             "type": "number",
             "named": true
           },
@@ -1843,14 +2034,6 @@
           },
           {
             "type": "postfix_operator",
-            "named": true
-          },
-          {
-            "type": "range",
-            "named": true
-          },
-          {
-            "type": "string",
             "named": true
           },
           {
@@ -1873,14 +2056,6 @@
           },
           {
             "type": "-",
-            "named": false
-          },
-          {
-            "type": "?",
-            "named": false
-          },
-          {
-            "type": "~",
             "named": false
           }
         ]
@@ -2103,6 +2278,10 @@
   },
   {
     "type": "keyword",
+    "named": true
+  },
+  {
+    "type": "number",
     "named": true
   },
   {
