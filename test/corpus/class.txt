@@ -330,3 +330,29 @@ end
           (number)))
       (keyword))
     (keyword)))
+
+================================================================================
+Class Definition: Events
+================================================================================
+
+classdef ToggleButton < handle
+   events
+      ToggledState
+      Quitting
+   end
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (class_definition
+    (keyword)
+    (identifier)
+    (superclasses
+      (identifier))
+    (events
+      (keyword)
+      (identifier)
+      (identifier)
+      (keyword))
+    (keyword)))
