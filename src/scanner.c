@@ -18,6 +18,7 @@ enum TokenType {
 };
 
 static const char* keywords[] = {
+    "arguments",
     "break",
     "case",
     "catch",
@@ -26,14 +27,18 @@ static const char* keywords[] = {
     "else",
     "elseif",
     "end",
+    "enumeration",
+    "events",
     "false",
     "for",
     "function",
     "global",
     "if",
+    "methods",
     "otherwise",
     "parfor",
     "persistent",
+    "properties",
     "return",
     "spmd",
     "switch",
@@ -226,7 +231,7 @@ bool scan_command(TSLexer* lexer)
 
     char* identifier = consume_identifier(lexer);
     if (identifier != NULL) {
-        for (int i = 0; i < 22; i++) {
+        for (int i = 0; i < 27; i++) {
             if (strcmp(keywords[i], identifier) == 0) {
                 free(identifier);
                 return false;

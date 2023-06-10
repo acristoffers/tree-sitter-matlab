@@ -32,10 +32,13 @@ module.exports = grammar({
     $.error_sentinel,
   ],
   conflicts: ($) => [
-    [$._expression, $._range_element],
     [$._expression, $._binary_expression],
+    [$._expression, $._range_element],
     [$._range_element, $._binary_expression],
     [$.range],
+    [$._expression, $.dimmensions],
+    [$._expression, $.validation_functions],
+    [$._function_arguments, $.dimmensions],
   ],
   word: ($) => $.identifier,
   rules: {
@@ -93,6 +96,7 @@ module.exports = grammar({
         $._continue_statement,
         $._return_statement,
         $.assignment,
+        $.class_definition,
         $.command,
         $.for_statement,
         $.global_operator,
@@ -573,6 +577,22 @@ module.exports = grammar({
         field('arguments', repeat(field('argument', $.identifier)))
       ),
 
+    _argument_attributes: ($) =>
+      seq(
+        '(',
+        field('argument', $.identifier),
+        repeat(seq(',', field('argument', $.identifier))),
+        ')'
+      ),
+    arguments: ($) =>
+      seq(
+        alias('arguments', $.keyword),
+        optional(alias($._argument_attributes, $.attributes)),
+        $._end_of_line,
+        repeat($.property),
+        $._end
+      ),
+
     end_function: ($) =>
       field('end', alias(choice('end', 'endfunction'), $.keyword)),
     function_output: ($) =>
@@ -586,8 +606,126 @@ module.exports = grammar({
         field('function_name', $.identifier),
         optional($.function_arguments),
         $._end_of_line,
+        repeat($.arguments),
         $.block,
         optional($.end_function)
+      ),
+    _function_definition_with_end: ($) =>
+      seq(
+        alias('function', $.keyword),
+        optional($.function_output),
+        field('function_name', $.identifier),
+        optional($.function_arguments),
+        $._end_of_line,
+        repeat($.arguments),
+        $.block,
+        $.end_function
+      ),
+
+    attributes: ($) =>
+      seq(
+        '(',
+        field('argument', seq($.identifier, '=', $._expression)),
+        repeat(
+          seq(',', field('argument', seq($.identifier, '=', $._expression)))
+        ),
+        ')'
+      ),
+    superclasses: ($) =>
+      seq(
+        '<',
+        field('argument', $.identifier),
+        repeat(seq('&', field('argument', $.identifier)))
+      ),
+    dimmensions: ($) =>
+      seq(
+        '(',
+        choice($.number, $.spread_operator),
+        repeat(seq(',', choice($.number, $.spread_operator))),
+        ')'
+      ),
+    validation_functions: ($) =>
+      seq('{', $.identifier, repeat(seq(',', $.identifier)), '}'),
+    default_value: ($) => seq('=', field('argument', $._expression)),
+    property: ($) =>
+      seq(
+        field('argument', seq($.identifier, repeat(seq('.', $.identifier)))),
+        optional(field('argument', $.dimmensions)),
+        optional(
+          field('argument', alias(choice($.identifier, $.struct), $.class))
+        ),
+        optional(field('argument', $.validation_functions)),
+        optional($.default_value),
+        $._end_of_line
+      ),
+    properties: ($) =>
+      seq(
+        alias('properties', $.keyword),
+        optional($.attributes),
+        $._end_of_line,
+        repeat($.property),
+        $._end
+      ),
+    methods: ($) =>
+      seq(
+        alias('methods', $.keyword),
+        optional($.attributes),
+        $._end_of_line,
+        repeat(alias($._function_definition_with_end, $.function_definition)),
+        $._end
+      ),
+    events: ($) =>
+      seq(
+        alias('events', $.keyword),
+        optional($.attributes),
+        $._end_of_line,
+        repeat(seq(field('argument', $.identifier), $._end_of_line)),
+        $._end
+      ),
+    _enum_value: ($) =>
+      choice(
+        $.boolean,
+        $.cell_definition,
+        $.function_call,
+        $.identifier,
+        $.matrix_definition,
+        $.not_operator,
+        $.number,
+        $.postfix_operator,
+        $.struct,
+        $.unary_operator
+      ),
+    enum: ($) =>
+      seq(
+        field('argument', $.identifier),
+        optional(
+          seq(
+            '(',
+            field('argument', alias($._enum_value, $.default_value)),
+            repeat(
+              seq(',', field('argument', alias($._enum_value, $.default_value)))
+            ),
+            ')'
+          )
+        )
+      ),
+    enumeration: ($) =>
+      seq(
+        alias('enumeration', $.keyword),
+        optional($.attributes),
+        $._end_of_line,
+        repeat(seq($.enum, $._end_of_line)),
+        $._end
+      ),
+    class_definition: ($) =>
+      seq(
+        alias('classdef', $.keyword),
+        optional($.attributes),
+        field('class_name', $.identifier),
+        optional($.superclasses),
+        $._end_of_line,
+        repeat(choice($.properties, $.methods, $.events, $.enumeration)),
+        $._end
       ),
 
     try_statement: ($) =>
