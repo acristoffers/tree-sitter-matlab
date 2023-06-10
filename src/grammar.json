@@ -1337,34 +1337,13 @@
           ]
         },
         {
-          "type": "IMMEDIATE_TOKEN",
-          "content": {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "ALIAS",
-                "content": {
-                  "type": "STRING",
-                  "value": "'"
-                },
-                "named": true,
-                "value": "string_open"
-              },
-              {
-                "type": "PATTERN",
-                "value": "([^']|(''))*"
-              },
-              {
-                "type": "ALIAS",
-                "content": {
-                  "type": "STRING",
-                  "value": "'"
-                },
-                "named": true,
-                "value": "string_close"
-              }
-            ]
-          }
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "PATTERN",
+              "value": "'([^']|(''))*'"
+            }
+          ]
         }
       ]
     },
