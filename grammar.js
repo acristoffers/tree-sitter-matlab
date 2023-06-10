@@ -39,7 +39,11 @@ module.exports = grammar({
   ],
   word: ($) => $.identifier,
   rules: {
-    source_file: ($) => $._block,
+    source_file: ($) =>
+      choice(
+        seq($._block, repeat($.function_definition)),
+        repeat1($.function_definition)
+      ),
 
     _block: ($) =>
       repeat1(
@@ -91,7 +95,9 @@ module.exports = grammar({
         $.assignment,
         $.command,
         $.for_statement,
+        $.global_operator,
         $.if_statement,
+        $.persistent_operator,
         $.switch_statement,
         $.while_statement
       ),
@@ -552,6 +558,34 @@ module.exports = grammar({
         field('arguments', alias(optional($._lambda_arguments), $.arguments)),
         ')',
         $._expression
+      ),
+
+    global_operator: ($) =>
+      seq(
+        'global',
+        field('arguments', repeat(field('argument', $.identifier)))
+      ),
+
+    persistent_operator: ($) =>
+      seq(
+        'persistent',
+        field('arguments', repeat(field('argument', $.identifier)))
+      ),
+
+    end_function: ($) => choice('end', 'endfunction'),
+    function_output: ($) =>
+      seq(field('output', choice($.identifier, $.multioutput_variable)), '='),
+    function_arguments: ($) =>
+      seq('(', field('arguments', optional($._lambda_arguments)), ')'),
+    function_definition: ($) =>
+      seq(
+        alias('function', $.keyword),
+        optional($.function_output),
+        field('function_name', $.identifier),
+        optional($.function_arguments),
+        $._end_of_line,
+        $.block,
+        optional($.end_function)
       ),
   },
 })

@@ -228,6 +228,7 @@ bool scan_command(TSLexer* lexer)
     if (identifier != NULL) {
         for (int i = 0; i < 20; i++) {
             if (strcmp(keywords[i], identifier) == 0) {
+                free(identifier);
                 return false;
             }
         }

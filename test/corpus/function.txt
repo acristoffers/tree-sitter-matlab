@@ -1,0 +1,141 @@
+================================================================================
+Function Declaration: No Args, No Output
+================================================================================
+
+function a
+    1
+end
+
+function a()
+    1
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (keyword)
+    (identifier)
+    (block
+      (number))
+    (end_function))
+  (function_definition
+    (keyword)
+    (identifier)
+    (function_arguments)
+    (block
+      (number))
+    (end_function)))
+
+================================================================================
+Function Declaration: Args, No Output
+================================================================================
+
+function a(a)
+    1
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (keyword)
+    (identifier)
+    (function_arguments
+      (identifier))
+    (block
+      (number))
+    (end_function)))
+
+================================================================================
+Function Declaration: No Args, Simple Output
+================================================================================
+
+function a = b
+    1
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (keyword)
+    (function_output
+      (identifier))
+    (identifier)
+    (block
+      (number))
+    (end_function)))
+
+================================================================================
+Function Declaration: No Args, Multiple Outputs
+================================================================================
+
+function [a,b] = c
+    1
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (keyword)
+    (function_output
+      (multioutput_variable
+        (identifier)
+        (identifier)))
+    (identifier)
+    (block
+      (number))
+    (end_function)))
+
+================================================================================
+Function Declaration: Args, Multiple Outputs
+================================================================================
+
+function [a, b] = c(a, b)
+    1
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (keyword)
+    (function_output
+      (multioutput_variable
+        (identifier)
+        (identifier)))
+    (identifier)
+    (function_arguments
+      (identifier)
+      (identifier))
+    (block
+      (number))
+    (end_function)))
+
+================================================================================
+Function Declaration: After Script
+================================================================================
+
+1 + a()
+
+function a
+    2
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (binary_operator
+    (number)
+    (function_call
+      (identifier)
+      (func_call_paren)
+      (func_call_paren)))
+  (function_definition
+    (keyword)
+    (identifier)
+    (block
+      (number))
+    (end_function)))
