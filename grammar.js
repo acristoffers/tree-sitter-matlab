@@ -104,17 +104,19 @@ module.exports = grammar({
         $.cell_definition,
         $.comparison_operator,
         $.function_call,
+        $.handle_operator,
         $.identifier,
+        $.lambda,
         $.matrix_definition,
+        $.metaclass_operator,
+        $.not_operator,
         $.number,
         $.parenthesized_expression,
         $.postfix_operator,
         $.range,
         $.string,
         $.struct,
-        $.unary_operator,
-        $.metaclass_operator,
-        $.not_operator
+        $.unary_operator
       ),
 
     parenthesized_expression: ($) =>
@@ -215,6 +217,7 @@ module.exports = grammar({
       ),
 
     metaclass_operator: ($) => seq('?', $.identifier),
+    handle_operator: ($) => seq('@', $.identifier),
 
     comparison_operator: ($) =>
       prec.left(
@@ -528,6 +531,27 @@ module.exports = grammar({
       seq(
         repeat1(seq($._struct_element, choice('.', '.?'))),
         $._struct_element
+      ),
+
+    _lambda_arguments: ($) =>
+      seq(
+        field('argument', choice($.ignored_argument, $._expression)),
+        optional(
+          repeat(
+            seq(
+              ',',
+              field('argument', choice($.ignored_argument, $._expression))
+            )
+          )
+        )
+      ),
+    lambda: ($) =>
+      seq(
+        '@',
+        '(',
+        field('arguments', alias(optional($._lambda_arguments), $.arguments)),
+        ')',
+        $._expression
       ),
   },
 })
