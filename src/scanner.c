@@ -117,6 +117,14 @@ skip_whitespaces(TSLexer* lexer)
     }
 }
 
+static inline void
+consume_whitespaces(TSLexer* lexer)
+{
+    while (iswspace(lexer->lookahead)) {
+        consume(lexer);
+    }
+}
+
 void* tree_sitter_matlab_external_scanner_create()
 {
     return NULL;
@@ -170,7 +178,7 @@ bool scan_comment(TSLexer* lexer)
         while (!lexer->eof(lexer)) {
             consume_comment_line(lexer);
             consume(lexer);
-            skip_whitespaces(lexer);
+            consume_whitespaces(lexer);
 
             if (consume_char('%', lexer) && consume_char('}', lexer)) {
                 lexer->result_symbol = COMMENT;
@@ -224,7 +232,7 @@ bool scan_command(TSLexer* lexer)
         lexer->result_symbol = COMMAND_NAME;
         lexer->mark_end(lexer);
         while (iswspace_matlab(lexer->lookahead)) {
-            skip(lexer);
+            consume(lexer);
         }
         is_inside_command = lexer->lookahead != '\n';
         is_shell_scape = is_inside_command;
@@ -270,7 +278,7 @@ bool scan_command(TSLexer* lexer)
     // this point on.
     lexer->result_symbol = COMMAND_NAME;
     lexer->mark_end(lexer);
-    skip_whitespaces(lexer);
+    consume_whitespaces(lexer);
 
     // Check for end-of-line again, since it may be that the user just put a
     // space at the end, like `pwd ;`
@@ -306,7 +314,7 @@ bool scan_command(TSLexer* lexer)
     if (ispunct(lexer->lookahead)) {
         // In this case, we advance and look at what comes next too.
         const char first = lexer->lookahead;
-        skip(lexer);
+        consume(lexer);
         const char second = lexer->lookahead;
 
         // If it's the end-of-line, then it's a command.
@@ -342,9 +350,9 @@ bool scan_command(TSLexer* lexer)
             // If it is an operator, this can only be a command if there
             // are no further arguments.
             if (is_invalid) {
-                skip(lexer);
+                consume(lexer);
                 while (iswspace_matlab(lexer->lookahead)) {
-                    skip(lexer);
+                    consume(lexer);
                 }
                 is_inside_command = is_eol(lexer->lookahead);
                 return is_inside_command;
@@ -357,7 +365,7 @@ bool scan_command(TSLexer* lexer)
 
         // Now we check for the rest of the operators.
         // Since they have 2 digits, it matters if the next is a space.
-        skip(lexer);
+        consume(lexer);
 
         if (lexer->lookahead != ' ') {
             is_inside_command = true;
@@ -401,7 +409,7 @@ bool scan_command_argument(TSLexer* lexer)
         lexer->result_symbol = COMMAND_ARGUMENT;
         lexer->mark_end(lexer);
         while (iswspace_matlab(lexer->lookahead)) {
-            skip(lexer);
+            consume(lexer);
         }
         if (lexer->lookahead == '\n') {
             is_inside_command = false;
@@ -423,7 +431,7 @@ bool scan_command_argument(TSLexer* lexer)
             lexer->mark_end(lexer);
 
             while (iswspace_matlab(lexer->lookahead)) {
-                skip(lexer);
+                consume(lexer);
             }
 
             if (is_eol(lexer->lookahead)) {
@@ -650,17 +658,17 @@ bool scan_multivar_open(TSLexer* lexer)
     lexer->mark_end(lexer);
 
     while (!lexer->eof(lexer) && lexer->lookahead != ']' && lexer->lookahead != '\n' && lexer->lookahead != '\r') {
-        skip(lexer);
+        consume(lexer);
     }
 
     if (lexer->lookahead != ']') {
         return false;
     }
 
-    skip(lexer);
+    consume(lexer);
 
     while (!lexer->eof(lexer) && iswspace_matlab(lexer->lookahead)) {
-        skip(lexer);
+        consume(lexer);
     }
 
     if (lexer->lookahead == '=') {
