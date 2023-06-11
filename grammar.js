@@ -403,12 +403,18 @@ module.exports = grammar({
       choice(
         seq(
           alias('(', $.func_call_paren),
-          field('arguments', optional($._function_arguments)),
+          field(
+            'arguments',
+            alias(optional($._function_arguments), $.arguments)
+          ),
           alias(')', $.func_call_paren)
         ),
         seq(
           alias('{', $.func_call_paren),
-          field('arguments', optional($._function_arguments)),
+          field(
+            'arguments',
+            alias(optional($._function_arguments), $.arguments)
+          ),
           alias('}', $.func_call_paren)
         )
       ),
@@ -554,7 +560,7 @@ module.exports = grammar({
         '(',
         field('arguments', alias(optional($._lambda_arguments), $.arguments)),
         ')',
-        $._expression
+        field('expression', $._expression)
       ),
 
     global_operator: ($) =>
