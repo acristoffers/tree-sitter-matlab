@@ -2952,7 +2952,9 @@ static bool ts_lex(TSLexer *lexer, TSStateId state) {
       END_STATE();
     case 3:
       if (lookahead == '\'') ADVANCE(49);
-      if (lookahead != 0) ADVANCE(3);
+      if (lookahead != 0 &&
+          lookahead != '\n' &&
+          lookahead != '\r') ADVANCE(3);
       END_STATE();
     case 4:
       if (lookahead == '=') ADVANCE(22);
@@ -3098,7 +3100,9 @@ static bool ts_lex(TSLexer *lexer, TSStateId state) {
     case 37:
       ACCEPT_TOKEN(anon_sym_SQUOTE);
       if (lookahead == '\'') ADVANCE(49);
-      if (lookahead != 0) ADVANCE(3);
+      if (lookahead != 0 &&
+          lookahead != '\n' &&
+          lookahead != '\r') ADVANCE(3);
       END_STATE();
     case 38:
       ACCEPT_TOKEN(anon_sym_DOT_SQUOTE);

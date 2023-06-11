@@ -302,7 +302,7 @@ module.exports = grammar({
           ),
           $.string_close
         ),
-        seq(/'([^']|(''))*'/)
+        seq(/'([^'\n\r]|(''))*'/)
       ),
     // escape_sequence: ($) =>
     //   token.immediate(
