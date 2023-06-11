@@ -72,8 +72,9 @@ end
     (properties
       (keyword)
       (property
-        (identifier)
-        (dimmensions
+        (property_name
+          (identifier))
+        (dimensions
           (number)
           (spread_operator))
         (class)
@@ -86,10 +87,12 @@ end
               (number)
               (number)))))
       (property
-        (identifier)
+        (property_name
+          (identifier))
         (class))
       (property
-        (identifier)
+        (property_name
+          (identifier))
         (validation_functions
           (identifier)
           (identifier))
@@ -189,15 +192,17 @@ end
           (attributes
             (identifier))
           (property
-            (identifier)
-            (dimmensions
+            (property_name
+              (identifier))
+            (dimensions
               (number)
               (number))
             (class))
           (property
-            (identifier)
-            (identifier)
-            (dimmensions
+            (property_name
+              (identifier)
+              (identifier))
+            (dimensions
               (number)
               (number))
             (validation_functions

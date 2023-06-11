@@ -22,31 +22,34 @@ end
         (func_call_paren)
         (identifier)
         (func_call_paren)))
-    (keyword)
-    (condition
-      (string))
-    (block
-      (function_call
-        (identifier)
-        (func_call_paren)
-        (string)
-        (func_call_paren)))
-    (keyword)
-    (condition
-      (number))
-    (block
-      (function_call
-        (identifier)
-        (func_call_paren)
-        (string)
-        (func_call_paren)))
-    (keyword)
-    (block
-      (function_call
-        (identifier)
-        (func_call_paren)
-        (string)
-        (func_call_paren)))
+    (case
+      (keyword)
+      (condition
+        (string))
+      (block
+        (function_call
+          (identifier)
+          (func_call_paren)
+          (string)
+          (func_call_paren))))
+    (case
+      (keyword)
+      (condition
+        (number))
+      (block
+        (function_call
+          (identifier)
+          (func_call_paren)
+          (string)
+          (func_call_paren))))
+    (otherwise
+      (keyword)
+      (block
+        (function_call
+          (identifier)
+          (func_call_paren)
+          (string)
+          (func_call_paren))))
     (keyword)))
 
 ================================================================================
@@ -71,23 +74,25 @@ end
         (func_call_paren)
         (identifier)
         (func_call_paren)))
-    (keyword)
-    (condition
-      (cell_definition
-        (row
+    (case
+      (keyword)
+      (condition
+        (cell_definition
+          (row
+            (string)
+            (string))))
+      (block
+        (function_call
+          (identifier)
+          (func_call_paren)
           (string)
-          (string))))
-    (block
-      (function_call
-        (identifier)
-        (func_call_paren)
-        (string)
-        (func_call_paren)))
-    (keyword)
-    (block
-      (function_call
-        (identifier)
-        (func_call_paren)
-        (string)
-        (func_call_paren)))
+          (func_call_paren))))
+    (otherwise
+      (keyword)
+      (block
+        (function_call
+          (identifier)
+          (func_call_paren)
+          (string)
+          (func_call_paren))))
     (keyword)))

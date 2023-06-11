@@ -8,83 +8,11 @@
         "required": false,
         "types": [
           {
-            "type": "binary_operator",
-            "named": true
-          },
-          {
-            "type": "boolean",
-            "named": true
-          },
-          {
-            "type": "boolean_operator",
-            "named": true
-          },
-          {
-            "type": "cell_definition",
-            "named": true
-          },
-          {
-            "type": "comparison_operator",
-            "named": true
-          },
-          {
-            "type": "function_call",
-            "named": true
-          },
-          {
-            "type": "handle_operator",
-            "named": true
-          },
-          {
             "type": "identifier",
             "named": true
           },
           {
             "type": "ignored_argument",
-            "named": true
-          },
-          {
-            "type": "lambda",
-            "named": true
-          },
-          {
-            "type": "matrix_definition",
-            "named": true
-          },
-          {
-            "type": "metaclass_operator",
-            "named": true
-          },
-          {
-            "type": "not_operator",
-            "named": true
-          },
-          {
-            "type": "number",
-            "named": true
-          },
-          {
-            "type": "parenthesized_expression",
-            "named": true
-          },
-          {
-            "type": "postfix_operator",
-            "named": true
-          },
-          {
-            "type": "range",
-            "named": true
-          },
-          {
-            "type": "string",
-            "named": true
-          },
-          {
-            "type": "struct",
-            "named": true
-          },
-          {
-            "type": "unary_operator",
             "named": true
           }
         ]
@@ -823,6 +751,36 @@
     }
   },
   {
+    "type": "case",
+    "named": true,
+    "fields": {
+      "case": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "keyword",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "block",
+          "named": true
+        },
+        {
+          "type": "condition",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "cell_definition",
     "named": true,
     "fields": {},
@@ -870,6 +828,16 @@
           }
         ]
       },
+      "classdef": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "keyword",
+            "named": true
+          }
+        ]
+      },
       "end": {
         "multiple": false,
         "required": true,
@@ -883,7 +851,7 @@
     },
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "attributes",
@@ -895,10 +863,6 @@
         },
         {
           "type": "events",
-          "named": true
-        },
-        {
-          "type": "keyword",
           "named": true
         },
         {
@@ -1265,7 +1229,7 @@
     }
   },
   {
-    "type": "dimmensions",
+    "type": "dimensions",
     "named": true,
     "fields": {},
     "children": {
@@ -1388,11 +1352,21 @@
             "named": true
           }
         ]
+      },
+      "enumeration": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "keyword",
+            "named": true
+          }
+        ]
       }
     },
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "attributes",
@@ -1400,10 +1374,6 @@
         },
         {
           "type": "enum",
-          "named": true
-        },
-        {
-          "type": "keyword",
           "named": true
         }
       ]
@@ -1432,18 +1402,24 @@
             "named": true
           }
         ]
+      },
+      "events": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "keyword",
+            "named": true
+          }
+        ]
       }
     },
     "children": {
-      "multiple": true,
-      "required": true,
+      "multiple": false,
+      "required": false,
       "types": [
         {
           "type": "attributes",
-          "named": true
-        },
-        {
-          "type": "keyword",
           "named": true
         }
       ]
@@ -1530,83 +1506,11 @@
         "required": false,
         "types": [
           {
-            "type": "binary_operator",
-            "named": true
-          },
-          {
-            "type": "boolean",
-            "named": true
-          },
-          {
-            "type": "boolean_operator",
-            "named": true
-          },
-          {
-            "type": "cell_definition",
-            "named": true
-          },
-          {
-            "type": "comparison_operator",
-            "named": true
-          },
-          {
-            "type": "function_call",
-            "named": true
-          },
-          {
-            "type": "handle_operator",
-            "named": true
-          },
-          {
             "type": "identifier",
             "named": true
           },
           {
             "type": "ignored_argument",
-            "named": true
-          },
-          {
-            "type": "lambda",
-            "named": true
-          },
-          {
-            "type": "matrix_definition",
-            "named": true
-          },
-          {
-            "type": "metaclass_operator",
-            "named": true
-          },
-          {
-            "type": "not_operator",
-            "named": true
-          },
-          {
-            "type": "number",
-            "named": true
-          },
-          {
-            "type": "parenthesized_expression",
-            "named": true
-          },
-          {
-            "type": "postfix_operator",
-            "named": true
-          },
-          {
-            "type": "range",
-            "named": true
-          },
-          {
-            "type": "string",
-            "named": true
-          },
-          {
-            "type": "struct",
-            "named": true
-          },
-          {
-            "type": "unary_operator",
             "named": true
           }
         ]
@@ -1620,83 +1524,11 @@
             "named": false
           },
           {
-            "type": "binary_operator",
-            "named": true
-          },
-          {
-            "type": "boolean",
-            "named": true
-          },
-          {
-            "type": "boolean_operator",
-            "named": true
-          },
-          {
-            "type": "cell_definition",
-            "named": true
-          },
-          {
-            "type": "comparison_operator",
-            "named": true
-          },
-          {
-            "type": "function_call",
-            "named": true
-          },
-          {
-            "type": "handle_operator",
-            "named": true
-          },
-          {
             "type": "identifier",
             "named": true
           },
           {
             "type": "ignored_argument",
-            "named": true
-          },
-          {
-            "type": "lambda",
-            "named": true
-          },
-          {
-            "type": "matrix_definition",
-            "named": true
-          },
-          {
-            "type": "metaclass_operator",
-            "named": true
-          },
-          {
-            "type": "not_operator",
-            "named": true
-          },
-          {
-            "type": "number",
-            "named": true
-          },
-          {
-            "type": "parenthesized_expression",
-            "named": true
-          },
-          {
-            "type": "postfix_operator",
-            "named": true
-          },
-          {
-            "type": "range",
-            "named": true
-          },
-          {
-            "type": "string",
-            "named": true
-          },
-          {
-            "type": "struct",
-            "named": true
-          },
-          {
-            "type": "unary_operator",
             "named": true
           }
         ]
@@ -2025,6 +1857,16 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "keyword",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -2208,7 +2050,7 @@
       }
     },
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
         {
@@ -2261,6 +2103,10 @@
         },
         {
           "type": "number",
+          "named": true
+        },
+        {
+          "type": "operator",
           "named": true
         },
         {
@@ -2337,11 +2183,21 @@
             "named": true
           }
         ]
+      },
+      "methods": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "keyword",
+            "named": true
+          }
+        ]
       }
     },
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "attributes",
@@ -2353,10 +2209,6 @@
         },
         {
           "type": "function_signature",
-          "named": true
-        },
-        {
-          "type": "keyword",
           "named": true
         }
       ]
@@ -2466,6 +2318,32 @@
         },
         {
           "type": "unary_operator",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "otherwise",
+    "named": true,
+    "fields": {
+      "otherwise": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "keyword",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "block",
           "named": true
         }
       ]
@@ -2582,6 +2460,16 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "keyword",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -2667,18 +2555,24 @@
             "named": true
           }
         ]
+      },
+      "properties": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "keyword",
+            "named": true
+          }
+        ]
       }
     },
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "attributes",
-          "named": true
-        },
-        {
-          "type": "keyword",
           "named": true
         },
         {
@@ -2697,19 +2591,15 @@
         "required": true,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "class",
             "named": true
           },
           {
-            "type": "dimmensions",
+            "type": "dimensions",
             "named": true
           },
           {
-            "type": "identifier",
+            "type": "property_name",
             "named": true
           },
           {
@@ -2725,6 +2615,21 @@
       "types": [
         {
           "type": "default_value",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "property_name",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
           "named": true
         }
       ]
@@ -3120,29 +3025,9 @@
           }
         ]
       },
-      "case": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "keyword",
-            "named": true
-          }
-        ]
-      },
       "end": {
         "multiple": false,
         "required": true,
-        "types": [
-          {
-            "type": "keyword",
-            "named": true
-          }
-        ]
-      },
-      "otherwise": {
-        "multiple": false,
-        "required": false,
         "types": [
           {
             "type": "keyword",
@@ -3166,11 +3051,11 @@
       "required": false,
       "types": [
         {
-          "type": "block",
+          "type": "case",
           "named": true
         },
         {
-          "type": "condition",
+          "type": "otherwise",
           "named": true
         }
       ]
@@ -3180,7 +3065,27 @@
     "type": "try_statement",
     "named": true,
     "fields": {
+      "catch": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "keyword",
+            "named": true
+          }
+        ]
+      },
       "end": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "keyword",
+            "named": true
+          }
+        ]
+      },
+      "try": {
         "multiple": false,
         "required": true,
         "types": [
@@ -3201,10 +3106,6 @@
         },
         {
           "type": "captured_exception",
-          "named": true
-        },
-        {
-          "type": "keyword",
           "named": true
         }
       ]
@@ -3446,10 +3347,6 @@
     "named": false
   },
   {
-    "type": "@",
-    "named": false
-  },
-  {
     "type": "[",
     "named": false
   },
@@ -3498,10 +3395,6 @@
     "named": true
   },
   {
-    "type": "global",
-    "named": false
-  },
-  {
     "type": "identifier",
     "named": true
   },
@@ -3516,10 +3409,6 @@
   {
     "type": "operator",
     "named": true
-  },
-  {
-    "type": "persistent",
-    "named": false
   },
   {
     "type": "string_close",

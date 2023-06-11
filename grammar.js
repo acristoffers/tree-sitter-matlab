@@ -36,9 +36,9 @@ module.exports = grammar({
     [$._expression, $._range_element],
     [$._range_element, $._binary_expression],
     [$.range],
-    [$._expression, $.dimmensions],
+    [$._expression, $.dimensions],
     [$._expression, $.validation_functions],
-    [$._function_arguments, $.dimmensions],
+    [$._function_arguments, $.dimensions],
   ],
   word: ($) => $.identifier,
   rules: {
@@ -512,24 +512,21 @@ module.exports = grammar({
         $._end
       ),
 
+    case: ($) =>
+      seq(
+        field('case', alias('case', $.keyword)),
+        // MATLAB says it should be a `switch_expr`, but then accepts any expression
+        alias($._expression, $.condition),
+        optional($.block)
+      ),
+    otherwise: ($) =>
+      seq(field('otherwise', alias('otherwise', $.keyword)), optional($.block)),
     switch_statement: ($) =>
       seq(
         field('switch', alias('switch', $.keyword)),
         field('argument', alias($._expression, $.condition)),
-        repeat(
-          seq(
-            field('case', alias('case', $.keyword)),
-            // MATLAB says it should be a `switch_expr`, but then accepts any expression
-            alias($._expression, $.condition),
-            optional($.block)
-          )
-        ),
-        optional(
-          seq(
-            field('otherwise', alias('otherwise', $.keyword)),
-            optional($.block)
-          )
-        ),
+        repeat($.case),
+        optional($.otherwise),
         $._end
       ),
 
@@ -542,19 +539,19 @@ module.exports = grammar({
 
     _lambda_arguments: ($) =>
       seq(
-        field('argument', choice($.ignored_argument, $._expression)),
+        field('argument', choice($.ignored_argument, $.identifier)),
         optional(
           repeat(
             seq(
               ',',
-              field('argument', choice($.ignored_argument, $._expression))
+              field('argument', choice($.ignored_argument, $.identifier))
             )
           )
         )
       ),
     lambda: ($) =>
       seq(
-        '@',
+        alias('@', $.operator),
         '(',
         field('arguments', alias(optional($._lambda_arguments), $.arguments)),
         ')',
@@ -563,13 +560,13 @@ module.exports = grammar({
 
     global_operator: ($) =>
       seq(
-        'global',
+        alias('global', $.keyword),
         field('arguments', repeat(field('argument', $.identifier)))
       ),
 
     persistent_operator: ($) =>
       seq(
-        'persistent',
+        alias('persistent', $.keyword),
         field('arguments', repeat(field('argument', $.identifier)))
       ),
 
@@ -633,7 +630,7 @@ module.exports = grammar({
         field('argument', $.identifier),
         repeat(seq('&', field('argument', $.identifier)))
       ),
-    dimmensions: ($) =>
+    dimensions: ($) =>
       seq(
         '(',
         choice($.number, $.spread_operator),
@@ -643,10 +640,11 @@ module.exports = grammar({
     validation_functions: ($) =>
       seq('{', $.identifier, repeat(seq(',', $.identifier)), '}'),
     default_value: ($) => seq('=', field('argument', $._expression)),
+    property_name: ($) => seq($.identifier, repeat(seq('.', $.identifier))),
     property: ($) =>
       seq(
-        field('argument', seq($.identifier, repeat(seq('.', $.identifier)))),
-        optional(field('argument', $.dimmensions)),
+        field('argument', $.property_name),
+        optional(field('argument', $.dimensions)),
         optional(
           field('argument', alias(choice($.identifier, $.struct), $.class))
         ),
@@ -656,7 +654,7 @@ module.exports = grammar({
       ),
     properties: ($) =>
       seq(
-        alias('properties', $.keyword),
+        field('properties', alias('properties', $.keyword)),
         optional($.attributes),
         $._end_of_line,
         repeat($.property),
@@ -671,7 +669,7 @@ module.exports = grammar({
       ),
     methods: ($) =>
       seq(
-        alias('methods', $.keyword),
+        field('methods', alias('methods', $.keyword)),
         optional($.attributes),
         $._end_of_line,
         repeat(
@@ -684,7 +682,7 @@ module.exports = grammar({
       ),
     events: ($) =>
       seq(
-        alias('events', $.keyword),
+        field('events', alias('events', $.keyword)),
         optional($.attributes),
         $._end_of_line,
         repeat(seq(field('argument', $.identifier), $._end_of_line)),
@@ -719,7 +717,7 @@ module.exports = grammar({
       ),
     enumeration: ($) =>
       seq(
-        alias('enumeration', $.keyword),
+        field('enumeration', alias('enumeration', $.keyword)),
         optional($.attributes),
         $._end_of_line,
         repeat(seq($.enum, $._end_of_line)),
@@ -727,7 +725,7 @@ module.exports = grammar({
       ),
     class_definition: ($) =>
       seq(
-        alias('classdef', $.keyword),
+        field('classdef', alias('classdef', $.keyword)),
         optional($.attributes),
         field('class_name', $.identifier),
         optional($.superclasses),
@@ -738,10 +736,10 @@ module.exports = grammar({
 
     try_statement: ($) =>
       seq(
-        alias('try', $.keyword),
+        field('try', alias('try', $.keyword)),
         $._end_of_line,
         $.block,
-        alias('catch', $.keyword),
+        field('catch', alias('catch', $.keyword)),
         optional(alias($.identifier, $.captured_exception)),
         $._end_of_line,
         $.block,
