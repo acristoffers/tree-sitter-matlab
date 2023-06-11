@@ -25,13 +25,15 @@ eig (A)
   (function_call
     (identifier)
     (func_call_paren)
-    (number)
-    (number)
+    (arguments
+      (number)
+      (number))
     (func_call_paren))
   (function_call
     (identifier)
     (func_call_paren)
-    (identifier)
+    (arguments
+      (identifier))
     (func_call_paren)))
 
 ================================================================================
@@ -47,13 +49,15 @@ A(1, :)
   (function_call
     (identifier)
     (func_call_paren)
-    (spread_operator)
+    (arguments
+      (spread_operator))
     (func_call_paren))
   (function_call
     (identifier)
     (func_call_paren)
-    (number)
-    (spread_operator)
+    (arguments
+      (number)
+      (spread_operator))
     (func_call_paren)))
 
 ================================================================================

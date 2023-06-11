@@ -80,7 +80,8 @@ for E = eye(N), do_some_task(E), end
       (function_call
         (identifier)
         (func_call_paren)
-        (identifier)
+        (arguments
+          (identifier))
         (func_call_paren)))
     (keyword))
   (for_statement
@@ -90,13 +91,15 @@ for E = eye(N), do_some_task(E), end
       (function_call
         (identifier)
         (func_call_paren)
-        (identifier)
+        (arguments
+          (identifier))
         (func_call_paren)))
     (block
       (function_call
         (identifier)
         (func_call_paren)
-        (identifier)
+        (arguments
+          (identifier))
         (func_call_paren)))
     (keyword)))
 

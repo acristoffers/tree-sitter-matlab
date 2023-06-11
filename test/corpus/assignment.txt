@@ -69,14 +69,16 @@ A{1} = B
     (function_call
       (identifier)
       (func_call_paren)
-      (number)
+      (arguments
+        (number))
       (func_call_paren))
     (identifier))
   (assignment
     (function_call
       (identifier)
       (func_call_paren)
-      (number)
+      (arguments
+        (number))
       (func_call_paren))
     (identifier)))
 
@@ -101,7 +103,8 @@ a.b(2) = 4
       (function_call
         (identifier)
         (func_call_paren)
-        (number)
+        (arguments
+          (number))
         (func_call_paren))
       (identifier))
     (number))
@@ -111,7 +114,8 @@ a.b(2) = 4
       (function_call
         (identifier)
         (func_call_paren)
-        (number)
+        (arguments
+          (number))
         (func_call_paren)))
     (number)))
 
@@ -141,13 +145,15 @@ Assignment: Multiple Output With Struct
         (function_call
           (identifier)
           (func_call_paren)
-          (number)
+          (arguments
+            (number))
           (func_call_paren)))
       (struct
         (function_call
           (identifier)
           (func_call_paren)
-          (number)
+          (arguments
+            (number))
           (func_call_paren))
         (identifier)))
     (identifier)))
@@ -167,12 +173,14 @@ Assignment: Multiple Output With Indexing
       (function_call
         (identifier)
         (func_call_paren)
-        (number)
+        (arguments
+          (number))
         (func_call_paren))
       (function_call
         (identifier)
         (func_call_paren)
-        (number)
+        (arguments
+          (number))
         (func_call_paren)))
     (identifier))
   (assignment
@@ -180,11 +188,13 @@ Assignment: Multiple Output With Indexing
       (function_call
         (identifier)
         (func_call_paren)
-        (number)
+        (arguments
+          (number))
         (func_call_paren))
       (function_call
         (identifier)
         (func_call_paren)
-        (number)
+        (arguments
+          (number))
         (func_call_paren)))
     (identifier)))

@@ -210,7 +210,8 @@ b():a(1):c()
     (function_call
       (identifier)
       (func_call_paren)
-      (number)
+      (arguments
+        (number))
       (func_call_paren))
     (number))
   (range
@@ -221,7 +222,8 @@ b():a(1):c()
     (function_call
       (identifier)
       (func_call_paren)
-      (number)
+      (arguments
+        (number))
       (func_call_paren))
     (function_call
       (identifier)

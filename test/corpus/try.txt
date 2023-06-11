@@ -22,7 +22,6 @@ end
     (block
       (command
         (command_name)
-        (command_argument)
         (command_argument)))
     (keyword)))
 
@@ -49,6 +48,5 @@ end
     (block
       (command
         (command_name)
-        (command_argument)
         (command_argument)))
     (keyword)))

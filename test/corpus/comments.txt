@@ -76,7 +76,8 @@ a(1)
   (function_call
     (identifier)
     (func_call_paren)
-    (number)
+    (arguments
+      (number))
     (func_call_paren)))
 
 ================================================================================

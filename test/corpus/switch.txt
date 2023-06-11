@@ -20,7 +20,8 @@ end
       (function_call
         (identifier)
         (func_call_paren)
-        (identifier)
+        (arguments
+          (identifier))
         (func_call_paren)))
     (case
       (keyword)
@@ -30,7 +31,8 @@ end
         (function_call
           (identifier)
           (func_call_paren)
-          (string)
+          (arguments
+            (string))
           (func_call_paren))))
     (case
       (keyword)
@@ -40,7 +42,8 @@ end
         (function_call
           (identifier)
           (func_call_paren)
-          (string)
+          (arguments
+            (string))
           (func_call_paren))))
     (otherwise
       (keyword)
@@ -48,7 +51,8 @@ end
         (function_call
           (identifier)
           (func_call_paren)
-          (string)
+          (arguments
+            (string))
           (func_call_paren))))
     (keyword)))
 
@@ -72,7 +76,8 @@ end
       (function_call
         (identifier)
         (func_call_paren)
-        (identifier)
+        (arguments
+          (identifier))
         (func_call_paren)))
     (case
       (keyword)
@@ -85,7 +90,8 @@ end
         (function_call
           (identifier)
           (func_call_paren)
-          (string)
+          (arguments
+            (string))
           (func_call_paren))))
     (otherwise
       (keyword)
@@ -93,6 +99,7 @@ end
         (function_call
           (identifier)
           (func_call_paren)
-          (string)
+          (arguments
+            (string))
           (func_call_paren))))
     (keyword)))
