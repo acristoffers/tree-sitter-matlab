@@ -42,7 +42,7 @@
  (#make-range! "parameter.outer" @parameter.inner @_end))
 
 (command) @call.outer
-(command (command_argument) @parameter.inner)
+(command (command_argument) @parameter.inner @parameter.outer)
 (command
   (command_argument) @_start (command_argument)* @_end .
   (#make-range! "call.inner" @_start @_end))
@@ -102,3 +102,11 @@
 
 (number) @number.inner
 (_ return: (keyword) @return.inner @return.outer)
+(comment) @comment.outer
+
+(matrix_definition (row) @parameter.outer)
+(row (_) @parameter.inner)
+
+(matrix_definition (row) @parameter.outer)
+(cell_definition (row) @parameter.outer)
+(row (_) @parameter.inner)
