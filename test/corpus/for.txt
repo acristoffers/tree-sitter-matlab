@@ -152,7 +152,8 @@ end
       (range
         (number)
         (number)))
-    (number)
+    (parfor_options
+      (number))
     (block
       (number))
     (keyword))
@@ -163,10 +164,11 @@ end
       (range
         (number)
         (number)))
-    (function_call
-      (identifier)
-      (func_call_paren)
-      (func_call_paren))
+    (parfor_options
+      (function_call
+        (identifier)
+        (func_call_paren)
+        (func_call_paren)))
     (block
       (number))
     (keyword))
@@ -177,7 +179,8 @@ end
       (range
         (number)
         (number)))
-    (identifier)
+    (parfor_options
+      (identifier))
     (block
       (number))
     (keyword))
@@ -188,7 +191,8 @@ end
       (range
         (number)
         (number)))
-    (string)
+    (parfor_options
+      (string))
     (block
       (number))
     (keyword)))

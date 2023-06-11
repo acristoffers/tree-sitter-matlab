@@ -475,6 +475,8 @@ module.exports = grammar({
       ),
 
     iterator: ($) => seq($.identifier, '=', $._expression),
+    parfor_options: ($) =>
+      choice($.number, $.identifier, $.function_call, $.string),
     for_statement: ($) =>
       choice(
         seq(
@@ -492,10 +494,7 @@ module.exports = grammar({
           '(',
           field('argument', $.iterator),
           ',',
-          field(
-            'argument',
-            choice($.number, $.identifier, $.function_call, $.string)
-          ),
+          field('argument', $.parfor_options),
           ')',
           $._end_of_line,
           optional($.block),
