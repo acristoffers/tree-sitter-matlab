@@ -483,7 +483,7 @@ bool scan_command_argument(TSLexer* lexer)
             if (lexer->lookahead == nesting_open[i] && !nesting) {
                 nesting = true;
                 nesting_char = lexer->lookahead;
-                break;
+                goto CONTINUE_FOR;
             }
         }
 
@@ -495,6 +495,7 @@ bool scan_command_argument(TSLexer* lexer)
             }
         }
 
+    CONTINUE_FOR:
         consume(lexer);
         consumed = true;
     }
