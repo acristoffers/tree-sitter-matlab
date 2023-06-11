@@ -1622,6 +1622,16 @@
             "named": true
           }
         ]
+      },
+      "superclass": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "superclass",
+            "named": true
+          }
+        ]
       }
     },
     "children": {
@@ -3278,6 +3288,10 @@
     "named": false
   },
   {
+    "type": "@",
+    "named": false
+  },
+  {
     "type": "[",
     "named": false
   },
@@ -3347,6 +3361,10 @@
   },
   {
     "type": "string_open",
+    "named": true
+  },
+  {
+    "type": "superclass",
     "named": true
   },
   {

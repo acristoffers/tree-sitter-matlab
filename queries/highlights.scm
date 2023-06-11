@@ -86,7 +86,8 @@
    (identifier) @field])
 
 (function_call
-  name: (identifier) @function)
+  name: (identifier) @function
+  ("@" @operator (superclass) @type)?)
 
 (command
   (command_name) @function

@@ -419,7 +419,18 @@ module.exports = grammar({
         )
       ),
     function_call: ($) =>
-      prec.right(PREC.call, seq(field('name', $.identifier), $._args)),
+      prec.right(
+        PREC.call,
+        seq(
+          seq(
+            field('name', $.identifier),
+            optional(
+              seq('@', field('superclass', alias($.identifier, $.superclass)))
+            )
+          ),
+          $._args
+        )
+      ),
 
     command: ($) =>
       prec.right(
