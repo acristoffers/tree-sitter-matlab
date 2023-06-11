@@ -156,8 +156,7 @@
    try: (keyword) @exception
    catch: (keyword) @exception
    (captured_exception) @variable
-   end: (keyword) @exception
-)
+   end: (keyword) @exception)
 
 (class_definition
   classdef: (keyword) @keyword.function
