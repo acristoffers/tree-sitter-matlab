@@ -1,6 +1,6 @@
 {
   "name": "tree-sitter-matlab",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "MATLAB tree-sitter parser",
   "main": "bindings/node",
   "author": "Álan Crístoffer e Sousa",
