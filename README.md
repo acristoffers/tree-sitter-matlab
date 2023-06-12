@@ -66,8 +66,12 @@ cp matlab.so $STRAIGHT/build-$VERSION/tree-sitter-langs/bin
 cp queries/*               $STRAIGHT/repos/tree-sitter-langs/queries/matlab/
 cp queries/*               $STRAIGHT/build-$VERSION/tree-sitter-langs/queries/matlab/
 cp queries/*               $STRAIGHT/repos/elisp-tree-sitter/langs/queries/matlab
-cp queries/textobjects.scm $STRAIGHT/repos/evil-textobj-tree-sitter/queries/matlab
-cp queries/textobjects.scm $STRAIGHT/build-$VERSION/evil-textobj-tree-sitter/queries/matlab
+cp queries/emacs-textobjects.scm $STRAIGHT/repos/evil-textobj-tree-sitter/queries/matlab/textobjects.scm
+cp queries/emacs-textobjects.scm $STRAIGHT/build-$VERSION/evil-textobj-tree-sitter/queries/matlab/textobjects.scm
+
+mv $STRAIGHT/repos/tree-sitter-langs/queries/matlab/emacs-highlights.scm $STRAIGHT/repos/tree-sitter-langs/queries/matlab/highlights.scm
+mv $STRAIGHT/build-$VERSION/tree-sitter-langs/queries/matlab/emacs-highlights.scm $STRAIGHT/build-$VERSION/tree-sitter-langs/queries/matlab/highlights.scm
+mv $STRAIGHT/repos/elisp-tree-sitter/langs/queries/matlab/emacs-highlights.scm $STRAIGHT/repos/elisp-tree-sitter/langs/queries/matlab/highlights.scm
 ```
 
 - packages.el
