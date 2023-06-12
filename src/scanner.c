@@ -91,22 +91,24 @@ is_identifier(const char c, const bool start)
     return alpha || numeric || especial;
 }
 
-static inline char*
-consume_identifier(TSLexer* lexer)
+static inline void
+consume_identifier(TSLexer* lexer, char* buffer)
 {
-    char* identifier = calloc(256, sizeof(char));
     size_t i = 0;
     if (is_identifier(lexer->lookahead, true)) {
-        identifier[i] = lexer->lookahead;
+        buffer[i] = lexer->lookahead;
         consume(lexer);
         while (is_identifier(lexer->lookahead, false)) {
-            identifier[++i] = lexer->lookahead;
+            if (i == 255) {
+                buffer[0] = 0;
+                return;
+            }
+            buffer[++i] = lexer->lookahead;
             consume(lexer);
         }
-        return identifier;
+        return;
     }
-    free(identifier);
-    return NULL;
+    buffer[0] = 0;
 }
 
 static inline void
@@ -243,15 +245,14 @@ bool scan_command(TSLexer* lexer)
         return false;
     }
 
-    char* identifier = consume_identifier(lexer);
-    if (identifier != NULL) {
+    char buffer[256] = { 0 };
+    consume_identifier(lexer, buffer);
+    if (buffer[0] != 0) {
         for (int i = 0; i < 27; i++) {
-            if (strcmp(keywords[i], identifier) == 0) {
-                free(identifier);
+            if (strcmp(keywords[i], buffer) == 0) {
                 return false;
             }
         }
-        free(identifier);
     }
 
     // First case: found an end-of-line already, so this is a command for sure.
