@@ -86,11 +86,11 @@
    (identifier) @field])
 
 (function_call
-  name: (identifier) @function
+  name: (identifier) @function.call
   ("@" @operator (superclass) @type)?)
 
 (command
-  (command_name) @function
+  (command_name) @function.call
   (command_argument)* @text.literal)
 
 (spread_operator) @constant
@@ -204,16 +204,13 @@
 
 (keyword) @keyword
 
-(string) @string
-(string) @spell
+(string) @string @spell
 (formatting_sequence) @string.special
 (escape_sequence) @string.escape
 
 (number) @number
 (boolean) @constant.builtin
-(comment) @comment
-(comment) @spell
+(comment) @comment @spell
 
 [";" "," "." ":"] @punctuation.delimiter
-
 ["(" ")" "[" "]" "{" "}" ] @punctuation.bracket
