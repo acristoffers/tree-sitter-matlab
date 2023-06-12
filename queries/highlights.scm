@@ -166,8 +166,9 @@
 (escape_sequence) @string.escape
 
 (number) @number
-(boolean) @constant.builtin
+(boolean) @boolean
 (comment) @comment @spell
+(ERROR) @error
 
 [";" "," "." ":"] @punctuation.delimiter
 ["(" ")" "[" "]" "{" "}" ] @punctuation.bracket
