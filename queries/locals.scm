@@ -1,45 +1,42 @@
 (function_definition
   (function_output
-    [(identifier) @local.definition
-     (multioutput_variable
-       (identifier) @local.definition
-       ("," (identifier) @local.definition))])?
+    [(identifier) @definition.var
+                  (multioutput_variable
+                    (identifier) @definition.var
+                    ("," (identifier) @definition.var))])?
+  function_name: (identifier) @definition.function
   (function_arguments
-    (identifier)* @local.definition
-    ("," (identifier) @local.definition)*)?) @local.scope
+    (identifier)* @definition.parameter
+    ("," (identifier) @definition.parameter)*)?) @scope
 
 (assignment
-  variable: (_) @local.definition)
+  variable: (_) @definition.var)
 (assignment
   (multioutput_variable
-    (_) @local.definition))
+    (_) @definition.var))
 
-(unary_operator (identifier) @local.reference)
-(binary_operator (identifier) @local.reference)
-(comparison_operator (identifier) @local.reference)
-(boolean_operator (identifier) @local.reference)
-(postfix_operator (identifier) @local.reference)
-(not_operator (identifier) @local.reference)
-(metaclass_operator (identifier) @local.reference)
-(handle_operator (identifier) @local.reference)
+(unary_operator (identifier) @reference)
+(binary_operator (identifier) @reference)
+(comparison_operator (identifier) @reference)
+(boolean_operator (identifier) @reference)
+(postfix_operator (identifier) @reference)
+(not_operator (identifier) @reference)
+(metaclass_operator (identifier) @reference)
+(handle_operator (identifier) @reference)
 
 (function_call
-    name: (identifier) @local.reference)
+    name: (identifier) @reference)
 
 (struct . [(function_call
-             name: (identifier) @local.reference)
-           (identifier) @local.reference])
+             name: (identifier) @reference)
+           (identifier) @reference])
 
-(struct . [(function_call
-             name: (identifier) @local.definition)
-           (identifier) @local.definition])
-
-(range (identifier) @local.reference)
-(condition (identifier) @local.reference)
-(iterator . (identifier) @local.definition)
-(iterator (identifier) @local.reference)
-(parfor_options (identifier) @local.reference)
-(lambda (arguments (identifier) @local.definition))
-(global_operator (identifier) @local.definition)
-(persistent_operator (identifier) @local.definition)
-(catch (captured_exception) @local.definition)
+(range (identifier) @reference)
+(condition (identifier) @reference)
+(iterator . (identifier) @definition.var)
+(iterator (identifier) @reference)
+(parfor_options (identifier) @reference)
+(lambda (arguments (identifier) @definition.parameter))
+(global_operator (identifier) @definition.var)
+(persistent_operator (identifier) @definition.var)
+(catch (captured_exception) @definition.var)
