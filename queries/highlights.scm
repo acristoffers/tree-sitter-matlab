@@ -124,19 +124,19 @@
   end: (keyword) @keyword.function)
 
 (enumeration
-  enumeration: (keyword) @structure
+  enumeration: (keyword) @keyword
   (enum
     argument: (identifier) @constant)
-  end: (keyword) @structure)
+  end: (keyword) @keyword)
 
 (events
-  events: (keyword) @structure
+  events: (keyword) @keyword
   (identifier) @constant
-  end: (keyword) @structure)
+  end: (keyword) @keyword)
 
 (methods
-  methods: (keyword) @structure
-  end: (keyword) @structure)
+  methods: (keyword) @keyword
+  end: (keyword) @keyword)
 
 (function_signature
   (function_output)?
@@ -144,8 +144,8 @@
   (function_arguments)?)
 
 (properties
-  properties: (keyword) @structure
-  end: (keyword) @structure)
+  properties: (keyword) @keyword
+  end: (keyword) @keyword)
 
 (property
   (property_name) @constant
