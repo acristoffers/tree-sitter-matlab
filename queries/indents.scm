@@ -23,10 +23,13 @@
  ] @indent.branch
 
 ((matrix_definition (row) @indent.align)
- (#set! indent.open_delimiter "["))
+ (#set! indent.open_delimiter "[")
+ (#set! indent.close_delimiter "]"))
 ((cell_definition (row) @indent.align)
- (#set! indent.open_delimiter "{"))
+ (#set! indent.open_delimiter "{")
+ (#set! indent.close_delimiter "}"))
 ((parenthesized_expression) @indent.align
- (#set! indent.open_delimiter "("))
+ (#set! indent.open_delimiter "(")
+ (#set! indent.close_delimiter ")"))
 
 (comment) @indent.auto
