@@ -86,10 +86,10 @@
 
 (try_statement
   (block) @conditional.inner) @conditional.outer
-(try_statement
+(catch
   (captured_exception) @parameter.inner @parameter.outer)
-(try_statement
-  (block) @conditional.inner . )
+(catch
+  (block) @conditional.inner)
 
 (class_definition) @class.outer
 

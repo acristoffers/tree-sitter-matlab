@@ -109,9 +109,10 @@
 
 (try_statement
    try: (keyword) @exception
-   catch: (keyword) @exception
-   (captured_exception) @variable
    end: (keyword) @exception)
+(catch
+   catch: (keyword) @exception
+   (captured_exception) @variable)
 
 (class_definition
   classdef: (keyword) @keyword.function
@@ -156,6 +157,8 @@
 (attributes
   (identifier) @constant)
 
+((keyword) @keyword.return
+  (#eq? @keyword.return "return"))
 (keyword) @keyword
 
 (string) @string @spell

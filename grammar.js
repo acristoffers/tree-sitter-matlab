@@ -750,15 +750,19 @@ module.exports = grammar({
         $._end
       ),
 
+    catch: ($) =>
+      seq(
+        field('catch', alias('catch', $.keyword)),
+        optional(alias($.identifier, $.captured_exception)),
+        $._end_of_line,
+        optional($.block)
+      ),
     try_statement: ($) =>
       seq(
         field('try', alias('try', $.keyword)),
         $._end_of_line,
-        $.block,
-        field('catch', alias('catch', $.keyword)),
-        optional(alias($.identifier, $.captured_exception)),
-        $._end_of_line,
-        $.block,
+        optional($.block),
+        optional($.catch),
         $._end
       ),
   },

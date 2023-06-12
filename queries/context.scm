@@ -35,6 +35,7 @@
 (try_statement
   try: (keyword)
   (block (_) @context.end) @context
-  catch: (keyword)
-  (block (_) @context.end) @context
   end: (keyword))
+(catch
+  catch: (keyword)
+  (block (_) @context.end) @context)

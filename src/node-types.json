@@ -857,6 +857,36 @@
     }
   },
   {
+    "type": "catch",
+    "named": true,
+    "fields": {
+      "catch": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "keyword",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "block",
+          "named": true
+        },
+        {
+          "type": "captured_exception",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "cell_definition",
     "named": true,
     "fields": {},
@@ -3006,16 +3036,6 @@
     "type": "try_statement",
     "named": true,
     "fields": {
-      "catch": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "keyword",
-            "named": true
-          }
-        ]
-      },
       "end": {
         "multiple": false,
         "required": true,
@@ -3039,14 +3059,14 @@
     },
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "block",
           "named": true
         },
         {
-          "type": "captured_exception",
+          "type": "catch",
           "named": true
         }
       ]

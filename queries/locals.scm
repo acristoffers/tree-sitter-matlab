@@ -42,4 +42,4 @@
 (lambda (arguments (identifier) @local.definition))
 (global_operator (identifier) @local.definition)
 (persistent_operator (identifier) @local.definition)
-(try_statement (captured_exception) @local.definition)
+(catch (captured_exception) @local.definition)

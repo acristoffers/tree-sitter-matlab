@@ -17,12 +17,13 @@ end
       (command
         (command_name)
         (command_argument)))
-    (keyword)
-    (captured_exception)
-    (block
-      (command
-        (command_name)
-        (command_argument)))
+    (catch
+      (keyword)
+      (captured_exception)
+      (block
+        (command
+          (command_name)
+          (command_argument))))
     (keyword)))
 
 ================================================================================
@@ -44,9 +45,10 @@ end
       (command
         (command_name)
         (command_argument)))
-    (keyword)
-    (block
-      (command
-        (command_name)
-        (command_argument)))
+    (catch
+      (keyword)
+      (block
+        (command
+          (command_name)
+          (command_argument))))
     (keyword)))
