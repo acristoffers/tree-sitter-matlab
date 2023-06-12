@@ -110,3 +110,10 @@
 (matrix_definition (row) @parameter.outer)
 (cell_definition (row) @parameter.outer)
 (row (_) @parameter.inner)
+
+(assignment
+  variable: (_) @assignment.lhs
+  (_) @assignment.rhs) @assignment.outer
+(assignment
+  (multioutput_variable) @assignment.lhs
+  (_) @assignment.rhs) @assignment.outer
