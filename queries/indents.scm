@@ -15,12 +15,11 @@
  (properties)
  ] @indent.begin
 
-[(elseif_statement)
- (else_statement)
- (case)
- (otherwise)
- (catch)
- ] @indent.branch
+(elseif_statement elseif: (keyword) @indent.branch)
+(else_statement else: (keyword) @indent.branch)
+(case case: (keyword) @indent.branch)
+(otherwise otherwise: (keyword) @indent.branch)
+(catch catch: (keyword) @indent.branch)
 
 ((matrix_definition (row) @indent.align)
  (#set! indent.open_delimiter "[")
