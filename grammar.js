@@ -423,7 +423,7 @@ module.exports = grammar({
         PREC.call,
         seq(
           seq(
-            field('name', $.identifier),
+            field('name', choice($.identifier, $.function_call)),
             optional(
               seq('@', field('superclass', alias($.identifier, $.superclass)))
             )

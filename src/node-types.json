@@ -1669,6 +1669,10 @@
         "required": true,
         "types": [
           {
+            "type": "function_call",
+            "named": true
+          },
+          {
             "type": "identifier",
             "named": true
           }
