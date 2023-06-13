@@ -14,6 +14,7 @@ enum TokenType {
     ESCAPE_SEQUENCE,
     STRING_TEXT,
     MULTIVAR_OPEN,
+    ENTRY_DELIMITER,
     ERROR_SENTINEL
 };
 
@@ -111,12 +112,18 @@ consume_identifier(TSLexer* lexer, char* buffer)
     buffer[0] = 0;
 }
 
-static inline void
+static inline int
 skip_whitespaces(TSLexer* lexer)
 {
+    int skipped = 0;
     while (iswspace(lexer->lookahead)) {
+        if (lexer->lookahead == '\n' || lexer->lookahead == '\r') {
+            skipped = skipped | 2;
+        }
         skip(lexer);
+        skipped = skipped | 1;
     }
+    return skipped;
 }
 
 static inline void
@@ -680,11 +687,65 @@ bool scan_multivar_open(TSLexer* lexer)
     return false;
 }
 
+bool scan_entry_delimiter(TSLexer* lexer, int skipped)
+{
+    lexer->mark_end(lexer);
+    lexer->result_symbol = ENTRY_DELIMITER;
+
+    if (skipped & 2) {
+        return false;
+    }
+
+    if (lexer->lookahead == ',') {
+        consume(lexer);
+        lexer->mark_end(lexer);
+        lexer->result_symbol = ENTRY_DELIMITER;
+        return true;
+    }
+
+    if (lexer->lookahead == '.') {
+        return isdigit(lexer->lookahead);
+    }
+
+    if (lexer->lookahead == '{') {
+        return skipped != 0;
+    }
+
+    if (lexer->lookahead == '[') {
+        return true;
+    }
+
+    const char end_op[] = { ']', '}', '&', '|', '=', '<', '>', '*', '/', '\\', '^', ';', '\'' };
+    for (int i = 0; i < sizeof(end_op); i++) {
+        if (end_op[i] == lexer->lookahead) {
+            return false;
+        }
+    }
+
+    if (lexer->lookahead == '~') {
+        consume(lexer);
+        return lexer->lookahead != '=';
+    }
+
+    const char maybe_end[] = { '+', '-' };
+    for (int i = 0; i < sizeof(maybe_end); i++) {
+        if (maybe_end[i] == lexer->lookahead) {
+            consume(lexer);
+            if (lexer->lookahead == ' ') {
+                return false;
+            }
+            return skipped != 0;
+        }
+    }
+
+    return true;
+}
+
 bool tree_sitter_matlab_external_scanner_scan(void* payload,
     TSLexer* lexer,
     const bool* valid_symbols)
 {
-    skip_whitespaces(lexer);
+    int skipped = skip_whitespaces(lexer);
 
     if (string_delimiter == 0) {
         if ((line_continuation || !is_inside_command) && valid_symbols[COMMENT] && (lexer->lookahead == '%' || lexer->lookahead == '.')) {
@@ -707,6 +768,10 @@ bool tree_sitter_matlab_external_scanner_scan(void* payload,
 
         if (valid_symbols[COMMAND_ARGUMENT] && is_inside_command) {
             return scan_command_argument(lexer);
+        }
+
+        if (valid_symbols[ENTRY_DELIMITER] && !is_inside_command && !line_continuation) {
+            return scan_entry_delimiter(lexer, skipped);
         }
     } else {
         if (valid_symbols[STRING_CLOSE] || valid_symbols[FORMATTING_SEQUENCE] || valid_symbols[ESCAPE_SEQUENCE]) {

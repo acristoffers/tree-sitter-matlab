@@ -29,10 +29,10 @@ module.exports = grammar({
     $.escape_sequence,
     $._string_text,
     $._multivar_open,
+    $._entry_delimiter,
     $.error_sentinel,
   ],
   conflicts: ($) => [
-    [$._expression, $._binary_expression],
     [$._expression, $._range_element],
     [$._range_element, $._binary_expression],
     [$.range],
@@ -134,22 +134,25 @@ module.exports = grammar({
       prec(PREC.parenthesized_expression, seq('(', $._expression, ')')),
 
     _binary_expression: ($) =>
-      choice(
-        $.binary_operator,
-        $.boolean,
-        $.boolean_operator,
-        $.cell_definition,
-        $.comparison_operator,
-        $.function_call,
-        $.identifier,
-        $.matrix_definition,
-        $.not_operator,
-        $.number,
-        $.parenthesized_expression,
-        $.postfix_operator,
-        $.string,
-        $.struct,
-        $.unary_operator
+      prec(
+        1,
+        choice(
+          $.binary_operator,
+          $.boolean,
+          $.boolean_operator,
+          $.cell_definition,
+          $.comparison_operator,
+          $.function_call,
+          $.identifier,
+          $.matrix_definition,
+          $.not_operator,
+          $.number,
+          $.parenthesized_expression,
+          $.postfix_operator,
+          $.string,
+          $.struct,
+          $.unary_operator
+        )
       ),
     binary_operator: ($) => {
       const table = [
@@ -336,14 +339,12 @@ module.exports = grammar({
     //     )
     //   ),
 
-    _expression_sequence: ($) =>
-      repeat1(seq(field('argument', $._expression), optional(','))),
-    row: ($) =>
-      prec.right(
-        seq($._expression_sequence, optional(choice(';', '\n', '\r')))
-      ),
-    matrix_definition: ($) => seq('[', repeat($.row), ']'),
-    cell_definition: ($) => seq('{', repeat($.row), '}'),
+    _entry: ($) => field('argument', $._expression),
+    row: ($) => seq($._entry, repeat(seq($._entry_delimiter, $._entry))),
+    matrix_definition: ($) =>
+      seq('[', optional($.row), repeat(seq(/[;\n\r]/, optional($.row))), ']'),
+    cell_definition: ($) =>
+      seq('{', optional($.row), repeat(seq(/[;\n\r]/, optional($.row))), '}'),
 
     ignored_argument: ($) => '~',
 

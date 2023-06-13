@@ -108,3 +108,70 @@ Matrix: Multiline
     (row
       (number)
       (number))))
+
+================================================================================
+Matrix: Expression With Transpose
+================================================================================
+
+[2*A' + 5+B' D'-3'
+ 3 4]
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (matrix_definition
+    (row
+      (binary_operator
+        (binary_operator
+          (binary_operator
+            (number)
+            (operator)
+            (postfix_operator
+              (identifier)
+              (operator)))
+          (operator)
+          (number))
+        (operator)
+        (postfix_operator
+          (identifier)
+          (operator)))
+      (binary_operator
+        (postfix_operator
+          (identifier)
+          (operator))
+        (operator)
+        (postfix_operator
+          (number)
+          (operator))))
+    (row
+      (number)
+      (number))))
+
+================================================================================
+Matrix: Meaning of Spaces
+================================================================================
+
+[1+1 +1 - 2 -2 3+ 4]
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (matrix_definition
+    (row
+      (binary_operator
+        (number)
+        (operator)
+        (number))
+      (binary_operator
+        (unary_operator
+          (operator)
+          (number))
+        (operator)
+        (number))
+      (unary_operator
+        (operator)
+        (number))
+      (binary_operator
+        (number)
+        (operator)
+        (number)))))
