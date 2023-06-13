@@ -634,9 +634,15 @@ module.exports = grammar({
     attributes: ($) =>
       seq(
         '(',
-        field('argument', seq($.identifier, '=', $._expression)),
+        field('argument', seq($.identifier, optional(seq('=', $._expression)))),
         repeat(
-          seq(',', field('argument', seq($.identifier, '=', $._expression)))
+          seq(
+            ',',
+            field(
+              'argument',
+              seq($.identifier, optional(seq('=', $._expression)))
+            )
+          )
         ),
         ')'
       ),
