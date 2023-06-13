@@ -612,7 +612,13 @@ module.exports = grammar({
       seq(
         alias('function', $.keyword),
         optional($.function_output),
-        field('function_name', $.identifier),
+        field(
+          'function_name',
+          seq(
+            optional(seq(alias(choice('get', 'set'), $.keyword), '.')),
+            $.identifier
+          )
+        ),
         optional($.function_arguments),
         $._end_of_line,
         repeat($.arguments),
@@ -623,7 +629,13 @@ module.exports = grammar({
       seq(
         alias('function', $.keyword),
         optional($.function_output),
-        field('function_name', $.identifier),
+        field(
+          'function_name',
+          seq(
+            optional(seq(alias(choice('get', 'set'), $.keyword), '.')),
+            $.identifier
+          )
+        ),
         optional($.function_arguments),
         $._end_of_line,
         repeat($.arguments),
@@ -678,7 +690,13 @@ module.exports = grammar({
     function_signature: ($) =>
       seq(
         optional($.function_output),
-        field('function_name', $.identifier),
+        field(
+          'function_name',
+          seq(
+            optional(seq(alias(choice('get', 'set'), $.keyword), '.')),
+            $.identifier
+          )
+        ),
         optional($.function_arguments),
         $._end_of_line
       ),
