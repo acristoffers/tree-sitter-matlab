@@ -71,7 +71,7 @@
     otherwise: (keyword) @conditional)+
   end: (keyword) @conditional)
 
-(arguments (_) @variable)
+(arguments_statement (_) @variable)
 (global_operator (identifier) @variable)
 (persistent_operator (identifier) @variable)
 

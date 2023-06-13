@@ -5,7 +5,7 @@
     "fields": {
       "argument": {
         "multiple": true,
-        "required": false,
+        "required": true,
         "types": [
           {
             "type": "binary_operator",
@@ -92,10 +92,16 @@
             "named": true
           }
         ]
-      },
+      }
+    }
+  },
+  {
+    "type": "arguments_statement",
+    "named": true,
+    "fields": {
       "end": {
         "multiple": false,
-        "required": false,
+        "required": true,
         "types": [
           {
             "type": "keyword",
@@ -106,7 +112,7 @@
     },
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
         {
           "type": "attributes",
@@ -1718,7 +1724,7 @@
       "required": true,
       "types": [
         {
-          "type": "arguments",
+          "type": "arguments_statement",
           "named": true
         },
         {
@@ -1769,11 +1775,19 @@
     "named": true,
     "fields": {
       "function_name": {
-        "multiple": false,
+        "multiple": true,
         "required": true,
         "types": [
           {
+            "type": ".",
+            "named": false
+          },
+          {
             "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "keyword",
             "named": true
           }
         ]

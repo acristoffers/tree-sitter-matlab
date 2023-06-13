@@ -593,7 +593,7 @@ module.exports = grammar({
         repeat(seq(',', field('argument', $.identifier))),
         ')'
       ),
-    arguments: ($) =>
+    arguments_statement: ($) =>
       seq(
         alias('arguments', $.keyword),
         optional(alias($._argument_attributes, $.attributes)),
@@ -621,7 +621,7 @@ module.exports = grammar({
         ),
         optional($.function_arguments),
         $._end_of_line,
-        repeat($.arguments),
+        repeat($.arguments_statement),
         $.block,
         optional($.end_function)
       ),
@@ -638,7 +638,7 @@ module.exports = grammar({
         ),
         optional($.function_arguments),
         $._end_of_line,
-        repeat($.arguments),
+        repeat($.arguments_statement),
         $.block,
         $.end_function
       ),

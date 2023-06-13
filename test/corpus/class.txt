@@ -191,7 +191,7 @@ end
         (identifier)
         (function_arguments
           (identifier))
-        (arguments
+        (arguments_statement
           (keyword)
           (attributes
             (identifier))
