@@ -147,7 +147,7 @@
 (validation_functions
   (identifier) @type)
 
-(attributes
+(attribute
   (identifier) @constant)
 
 (keyword) @keyword

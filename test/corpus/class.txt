@@ -26,10 +26,12 @@ end
   (class_definition
     (keyword)
     (attributes
-      (identifier)
-      (number)
-      (identifier)
-      (string))
+      (attribute
+        (identifier)
+        (number))
+      (attribute
+        (identifier)
+        (string)))
     (identifier)
     (keyword)))
 
@@ -126,8 +128,9 @@ end
     (methods
       (keyword)
       (attributes
-        (identifier)
-        (identifier))
+        (attribute
+          (identifier)
+          (identifier)))
       (function_definition
         (keyword)
         (function_output
@@ -178,8 +181,9 @@ end
     (methods
       (keyword)
       (attributes
-        (identifier)
-        (identifier))
+        (attribute
+          (identifier)
+          (identifier)))
       (function_definition
         (keyword)
         (function_output

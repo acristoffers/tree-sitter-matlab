@@ -117,3 +117,32 @@
 (assignment
   (multioutput_variable) @assignment.lhs
   (_) @assignment.rhs) @assignment.outer
+
+((superclasses "&"? @_start . (_) @parameter.inner . )
+ (#make-range! "parameter.outer" @_start @parameter.inner))
+((superclasses (_) @parameter.inner . "&" @_end)
+ (#make-range! "parameter.outer" @parameter.inner @_end))
+
+(enum argument: (identifier) @parameter.inner @parameter.outer)
+
+(property argument: (_) @parameter.outer @parameter.inner)
+
+((enum ","? @_start . (_) @parameter.inner . )
+ (#make-range! "parameter.outer" @_start @parameter.inner))
+((enum (_) @parameter.inner . "," @_end)
+ (#make-range! "parameter.outer" @parameter.inner @_end))
+
+((validation_functions ","? @_start . (_) @parameter.inner . )
+ (#make-range! "parameter.outer" @_start @parameter.inner))
+((validation_functions (_) @parameter.inner . "," @_end)
+ (#make-range! "parameter.outer" @parameter.inner @_end))
+
+((dimensions ","? @_start . (_) @parameter.inner . )
+ (#make-range! "parameter.outer" @_start @parameter.inner))
+((dimensions (_) @parameter.inner . "," @_end)
+ (#make-range! "parameter.outer" @parameter.inner @_end))
+
+((attributes ","? @_start . (_) @parameter.inner . )
+ (#make-range! "parameter.outer" @_start @parameter.inner))
+((attributes (_) @parameter.inner . "," @_end)
+ (#make-range! "parameter.outer" @parameter.inner @_end))

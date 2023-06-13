@@ -631,19 +631,12 @@ module.exports = grammar({
         $.end_function
       ),
 
+    attribute: ($) => seq($.identifier, optional(seq('=', $._expression))),
     attributes: ($) =>
       seq(
         '(',
-        field('argument', seq($.identifier, optional(seq('=', $._expression)))),
-        repeat(
-          seq(
-            ',',
-            field(
-              'argument',
-              seq($.identifier, optional(seq('=', $._expression)))
-            )
-          )
-        ),
+        field('argument', $.attribute),
+        repeat(seq(',', field('argument', $.attribute))),
         ')'
       ),
     superclasses: ($) =>

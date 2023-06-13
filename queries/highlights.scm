@@ -154,7 +154,7 @@
 (validation_functions
   (identifier) @variable)
 
-(attributes
+(attribute
   (identifier) @constant)
 
 ((keyword) @keyword.return
