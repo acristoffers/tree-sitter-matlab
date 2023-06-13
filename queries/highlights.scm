@@ -1,34 +1,28 @@
 ; highlights.scm
 
+(string) @string @spell
+(formatting_sequence) @string.special
+(escape_sequence) @string.escape
+
+(number) @number
+(boolean) @boolean
+(comment) @comment @spell
+(operator) @operator
+(keyword) @keyword
+(ERROR) @error
+
+[";" "," "." ":"] @punctuation.delimiter
+["(" ")" "[" "]" "{" "}" ] @punctuation.bracket
+
 (unary_operator
   (operator) @number
   (number))
 
-(unary_operator
-  (operator) @operator
-  (_))
-(binary_operator
-  (operator) @operator)
-(comparison_operator
-  (operator) @operator)
-(boolean_operator
-  (operator) @operator)
-(postfix_operator
-  (operator) @operator)
-(not_operator
-  (operator) @operator)
-(metaclass_operator
-  (operator) @operator
-  (identifier) @variable)
-(handle_operator
-  (operator) @operator
-  (identifier) @function)
+(metaclass_operator (identifier) @variable)
+(handle_operator (identifier) @function)
 
-(assignment
-  variable: (_) @variable)
-(assignment
-  (multioutput_variable
-    (_) @variable))
+(assignment variable: (_) @variable)
+(multioutput_variable (_) @variable)
 
 (struct "." @operator)
 (struct . [(function_call
@@ -49,8 +43,7 @@
 
 (spread_operator) @constant
 
-(range
-  ":" @operator)
+(range ":" @operator)
 
 (if_statement
   if: (keyword) @conditional
@@ -78,18 +71,9 @@
     otherwise: (keyword) @conditional)+
   end: (keyword) @conditional)
 
-(lambda
-  (operator) @operator
-  (arguments
-    (_) @variable)?)
-
-(global_operator
-  (keyword) @keyword
-  (identifier) @variable)
-
-(persistent_operator
-  (keyword) @keyword
-  (identifier) @variable)
+(arguments (_) @variable)
+(global_operator (identifier) @variable)
+(persistent_operator (identifier) @variable)
 
 (function_definition
   (keyword) @keyword.function
@@ -123,52 +107,16 @@
     (identifier) @type)?
   end: (keyword) @keyword.function)
 
-(enumeration
-  enumeration: (keyword) @keyword
-  (enum
-    argument: (identifier) @constant)
-  end: (keyword) @keyword)
+(enum argument: (identifier) @constant)
+(events (identifier) @constant)
+(validation_functions (identifier) @variable)
+(attribute (identifier) @constant)
 
-(events
-  events: (keyword) @keyword
-  (identifier) @constant
-  end: (keyword) @keyword)
-
-(methods
-  methods: (keyword) @keyword
-  end: (keyword) @keyword)
-
-(function_signature
-  (function_output)?
-  function_name: (identifier) @function
-  (function_arguments)?)
-
-(properties
-  properties: (keyword) @keyword
-  end: (keyword) @keyword)
+(function_signature function_name: (identifier) @function)
 
 (property
   (property_name) @constant
   (class)? @type)
 
-(validation_functions
-  (identifier) @variable)
-
-(attribute
-  (identifier) @constant)
-
 ((keyword) @keyword.return
   (#eq? @keyword.return "return"))
-(keyword) @keyword
-
-(string) @string @spell
-(formatting_sequence) @string.special
-(escape_sequence) @string.escape
-
-(number) @number
-(boolean) @boolean
-(comment) @comment @spell
-(ERROR) @error
-
-[";" "," "." ":"] @punctuation.delimiter
-["(" ")" "[" "]" "{" "}" ] @punctuation.bracket
