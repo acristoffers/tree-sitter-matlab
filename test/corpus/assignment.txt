@@ -15,12 +15,10 @@ d = 1.5;
   (assignment
     (identifier)
     (unary_operator
-      (operator)
       (number)))
   (assignment
     (identifier)
     (unary_operator
-      (operator)
       (number)))
   (assignment
     (identifier)
@@ -37,23 +35,21 @@ Assignment: Multiple Output
 
 (source_file
   (assignment
-    (multioutput_variable
-      (ignored_argument)
-      (identifier)
-      (identifier))
+    (matrix
+      (row
+        (ignored_argument)
+        (identifier)
+        (identifier)))
     (function_call
-      (identifier)
-      (func_call_paren)
-      (func_call_paren)))
+      (identifier)))
   (assignment
-    (multioutput_variable
-      (ignored_argument)
-      (identifier)
-      (identifier))
+    (matrix
+      (row
+        (ignored_argument)
+        (identifier)
+        (identifier)))
     (function_call
-      (identifier)
-      (func_call_paren)
-      (func_call_paren))))
+      (identifier))))
 
 ================================================================================
 Assignment: Indexing
@@ -68,18 +64,14 @@ A{1} = B
   (assignment
     (function_call
       (identifier)
-      (func_call_paren)
       (arguments
-        (number))
-      (func_call_paren))
+        (number)))
     (identifier))
   (assignment
     (function_call
       (identifier)
-      (func_call_paren)
       (arguments
-        (number))
-      (func_call_paren))
+        (number)))
     (identifier)))
 
 ================================================================================
@@ -94,29 +86,25 @@ a.b(2) = 4
 
 (source_file
   (assignment
-    (struct
+    (field_expression
       (identifier)
       (identifier))
     (number))
   (assignment
-    (struct
+    (field_expression
       (function_call
         (identifier)
-        (func_call_paren)
         (arguments
-          (number))
-        (func_call_paren))
+          (number)))
       (identifier))
     (number))
   (assignment
-    (struct
+    (field_expression
       (identifier)
       (function_call
         (identifier)
-        (func_call_paren)
         (arguments
-          (number))
-        (func_call_paren)))
+          (number))))
     (number)))
 
 ================================================================================
@@ -130,32 +118,30 @@ Assignment: Multiple Output With Struct
 
 (source_file
   (assignment
-    (multioutput_variable
-      (struct
-        (identifier)
-        (identifier))
-      (struct
-        (identifier)
-        (identifier)))
+    (matrix
+      (row
+        (field_expression
+          (identifier)
+          (identifier))
+        (field_expression
+          (identifier)
+          (identifier))))
     (identifier))
   (assignment
-    (multioutput_variable
-      (struct
-        (identifier)
-        (function_call
+    (matrix
+      (row
+        (field_expression
           (identifier)
-          (func_call_paren)
-          (arguments
-            (number))
-          (func_call_paren)))
-      (struct
-        (function_call
-          (identifier)
-          (func_call_paren)
-          (arguments
-            (number))
-          (func_call_paren))
-        (identifier)))
+          (function_call
+            (identifier)
+            (arguments
+              (number))))
+        (field_expression
+          (function_call
+            (identifier)
+            (arguments
+              (number)))
+          (identifier))))
     (identifier)))
 
 ================================================================================
@@ -169,32 +155,26 @@ Assignment: Multiple Output With Indexing
 
 (source_file
   (assignment
-    (multioutput_variable
-      (function_call
-        (identifier)
-        (func_call_paren)
-        (arguments
-          (number))
-        (func_call_paren))
-      (function_call
-        (identifier)
-        (func_call_paren)
-        (arguments
-          (number))
-        (func_call_paren)))
+    (matrix
+      (row
+        (function_call
+          (identifier)
+          (arguments
+            (number)))
+        (function_call
+          (identifier)
+          (arguments
+            (number)))))
     (identifier))
   (assignment
-    (multioutput_variable
-      (function_call
-        (identifier)
-        (func_call_paren)
-        (arguments
-          (number))
-        (func_call_paren))
-      (function_call
-        (identifier)
-        (func_call_paren)
-        (arguments
-          (number))
-        (func_call_paren)))
+    (matrix
+      (row
+        (function_call
+          (identifier)
+          (arguments
+            (number)))
+        (function_call
+          (identifier)
+          (arguments
+            (number)))))
     (identifier)))

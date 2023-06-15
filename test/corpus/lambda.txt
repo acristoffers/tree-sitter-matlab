@@ -11,23 +11,18 @@ a = @(x,~) 3
 
 (source_file
   (lambda
-    (operator)
     (number))
   (lambda
-    (operator)
     (binary_operator
       (number)
-      (operator)
       (number)))
   (lambda
-    (operator)
     (arguments
       (identifier))
     (number))
   (assignment
     (identifier)
     (lambda
-      (operator)
       (arguments
         (identifier)
         (ignored_argument))
@@ -45,5 +40,4 @@ a = @sin
   (assignment
     (identifier)
     (handle_operator
-      (operator)
       (identifier))))
