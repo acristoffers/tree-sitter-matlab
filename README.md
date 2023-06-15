@@ -1,49 +1,89 @@
 # MATLAB grammar for tree-sitter.
 
-The grammar is now complete, in that it supports every statement/expression I
-could find in MATLAB. I'll add more if I ever find something is missing. Since
-I'm currently working daily on MATLAB, I'll be fixing errors as I find them in
-real-world usage. That said, I got a nice suite of tests here too.
+There are screenshots at the end of this README :)
 
-This repo also hosts queries for highlight, fold, context, locals, tags and
-textobjects. I'm a Neovim/Doom Emacs user, and textobjects is what made me
-consider writing the grammar in the first place. The existing MATLAB grammar
-used everywhere seems to be unmaintained and does not have rules or behaves
-badly in many cases (no commands, no text objects, no line continuation, no
-arguments statement, only integers as numbers, no complex j, etc), so I
-preferred to write one from scratch. It was also a good opportunity to learn
-how it is done in tree-sitter.
+This parser has the objective of generating a tree that is as correct as
+possible (but sometimes just convenient) with what MATLAB itself executes. It
+is not intended only for syntax highlight, but also to be used by scripts to
+whatever it may be needed. In fact, I wrote it because I'm a Neovim/Doom Emacs
+user and love having text-objects, and was really missing a text object for
+matrices rows/cells.
 
-I hope you enjoy it and if you find any broken behaviour or missing
-expression/statement, just open an issue.
+Being as correct as possible means that some things are done correctly, for
+example:
 
-Things to try:
-- Selecting around/inside parameter when in a matrix. Spoiler alert: around
-selects the row, inside selects the cell!
-- Selecting around/inside function and parameters on a line like this `variable
-P(2, 2) semidefinite`. Spoiler again: this is a command and `P(2, 2)` is
-actually a single argument to MATLAB, not two, which actually makes sense.
+- Commands are parsed the same way MATLAB does it, by treating arguments as
+literals, grouping them correctly and only starting comments when allowed. It
+should perfectly match what MATLAB does.
 
-Things that are broken:
-- Single-quoted strings won't show escape and formatting options as a
-doubled-quoted one. It got impossible to differentiate a string from a
-transpose from the scanner.
+- Assignment has its own token, and multiple-variable assignment is NOT an
+assignment to a matrix (and returning an error is the correct thing to do, as
+it allows the user to see that something is off with the highlight, meaning
+something is probably off with the code):
 
-# Neovim
+```matlab
+% (assignment (multioutput_variable (identifier) (identifier)) (identifier)) 
+[a,b] = d
+
+% this is WRONG:
+[a;b] = d
+```
+
+- Inside a matrix, `1 + 1` and `1 +1` are different things:
+
+```matlab
+a = 1 + 1 % 2
+a = 1 +1 %2
+[1 + 1] == [2]
+[1 +1]  == [1 1]
+```
+
+Being convenient means that sometimes the difference between what is acceptable
+and what is not acceptable lives in the semantics, so we can't know. In such
+cases I just accept semantically wrong but syntax correct things and group them
+in the same token (first example). I do the same when the overhead of
+generating a specific token would not really pay off (second example).
+
+- Function calls and Matrix Indexing are the same in MATLAB: `A(1)` can be any
+of them and you cannot tell them apart unless you know for sure what `A` is
+referring to. So for convenience I just generate a `function_call` for them and
+also for cell indexing `A{1}`. The "problem" with that is that this is a valid
+indexing but an invalid function call: `A(:)`. However I don't distinguish at
+all and say that all of them are `function_call`.
+
+- Function definitions, when inside a class, accepts a special syntax for the
+name of the function, allowing it to be preceded by either `get.` or `set.`,
+like `function get.name()`. I could have a `method_definition` that would allow
+that to only be valid in the class context, but I doubt that would be worth it.
+So any function anywhere can have those and be recognize as correct still.
+Given the existence of external method definition, maybe that is even the
+correct thing to do, since we don't know if the current file is inside a
+special class folder.
+
+# Installation
+
+## Neovim
+
+Theoretically this should work:
 
 ```lua
 local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
 parser_config.matlab = {
   install_info = {
-    url = "https://github.com/acristoffers/tree-sitter-matlab",
-    files = { "src/parser.c", "src/scanner.c" },
-    branch= 'main'
+    url = 'https://github.com/acristoffers/tree-sitter-matlab',
+    files = { 'src/parser.c', 'src/scanner.c' },
+    branch = 'main',
+    generate_requires_npm = false,
+    requires_generate_from_grammar = false,
   },
-  filetype = "matlab", -- if filetype does not agrees with parser name
+  maintainers = { '@acristoffers' },
 }
 ```
 
-# Doom Emacs
+But I had to clone the repo locally and put the path to it in `url` for it to
+work, otherwise it keeps complaining about something no being a valid tarball.
+
+## Doom Emacs
 
 You have to manually compile and copy the files to the appropriate folders. Pay
 attention to the STRAIGHT variable value, as yours may be different.
@@ -93,3 +133,9 @@ mv $STRAIGHT/repos/elisp-tree-sitter/langs/queries/matlab/emacs-highlights.scm $
 
 You may need to add MATLAB to `tree-sitter-major-mode-language-alist` and
 `evil-textobj-tree-sitter-major-mode-language-alist`.
+
+# Screen Shots
+
+![First Screenshot](https://raw.githubusercontent.com/acristoffers/tree-sitter-matlab/screenshots/s1.png)
+![Second Screenshot](https://raw.githubusercontent.com/acristoffers/tree-sitter-matlab/screenshots/s2.png)
+![Third Screenshot](https://raw.githubusercontent.com/acristoffers/tree-sitter-matlab/screenshots/s3.png)
