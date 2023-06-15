@@ -58,34 +58,6 @@ module.exports = grammar({
 
     _end_of_line: ($) => choice(';', '\n', '\r', ','),
 
-    _operator: ($) =>
-      choice($._prefix_operator, $._infix_operator, $._postfix_operator),
-    _prefix_operator: ($) => choice('~', '+', '-'),
-    _infix_operator: ($) =>
-      choice(
-        '&',
-        '|',
-        '&&',
-        '||',
-        '==',
-        '~=',
-        '<',
-        '>',
-        '<=',
-        '>=',
-        '+',
-        '-',
-        '.*',
-        '*',
-        './',
-        '/',
-        '.\\',
-        '\\',
-        '.^',
-        '^'
-      ),
-    _postfix_operator: ($) => choice("'", ".'"),
-
     boolean: ($) => choice('true', 'false'),
 
     number: ($) => /(\d+|\d+\.\d*|\.\d+)([eE][+-]?\d+)?[ij]?/,
