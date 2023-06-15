@@ -707,7 +707,7 @@ bool scan_entry_delimiter(TSLexer* lexer, int skipped)
         return isdigit(lexer->lookahead);
     }
 
-    if (lexer->lookahead == '{') {
+    if (lexer->lookahead == '{' || lexer->lookahead == '(') {
         return skipped != 0;
     }
 
