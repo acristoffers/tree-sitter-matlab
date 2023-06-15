@@ -136,6 +136,9 @@ You may need to add MATLAB to `tree-sitter-major-mode-language-alist` and
 
 # Screenshots
 
+Note: if your theme highlights variable captures, you will have those colored
+too. Mine doesn't (Dracula), so all variables are just white.
+
 ![First Screenshot](https://raw.githubusercontent.com/acristoffers/tree-sitter-matlab/screenshots/s1.png)
 ![Second Screenshot](https://raw.githubusercontent.com/acristoffers/tree-sitter-matlab/screenshots/s2.png)
 ![Third Screenshot](https://raw.githubusercontent.com/acristoffers/tree-sitter-matlab/screenshots/s3.png)
