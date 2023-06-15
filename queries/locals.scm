@@ -24,8 +24,8 @@
 (metaclass_operator (identifier) @reference)
 (handle_operator (identifier) @reference)
 
-(function_call
-    name: (identifier) @reference)
+(function_call (identifier) @reference)
+(arguments (identifier) @reference)
 
 (struct . [(function_call
              name: (identifier) @reference)
