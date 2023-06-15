@@ -134,7 +134,7 @@ mv $STRAIGHT/repos/elisp-tree-sitter/langs/queries/matlab/emacs-highlights.scm $
 You may need to add MATLAB to `tree-sitter-major-mode-language-alist` and
 `evil-textobj-tree-sitter-major-mode-language-alist`.
 
-# Screen Shots
+# Screenshots
 
 ![First Screenshot](https://raw.githubusercontent.com/acristoffers/tree-sitter-matlab/screenshots/s1.png)
 ![Second Screenshot](https://raw.githubusercontent.com/acristoffers/tree-sitter-matlab/screenshots/s2.png)
