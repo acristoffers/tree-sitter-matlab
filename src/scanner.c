@@ -715,9 +715,12 @@ bool scan_entry_delimiter(TSLexer* lexer, int skipped)
         return true;
     }
 
-    const char end_op[] = { ']', '}', '&', '|', '=', '<', '>', '*', '/', '\\', '^', ';', '\'' };
-    for (int i = 0; i < sizeof(end_op); i++) {
-        if (end_op[i] == lexer->lookahead) {
+    // These chars mean we cannot end the cell here, as the expression will
+    // surely continue OR we need to just leave the char there and the internal
+    // parser will do the rest.
+    const char no_end[] = { ']', '}', '&', '|', '=', '<', '>', '*', '/', '\\', '^', ';', '\'' };
+    for (int i = 0; i < sizeof(no_end); i++) {
+        if (no_end[i] == lexer->lookahead) {
             return false;
         }
     }
@@ -752,26 +755,30 @@ bool tree_sitter_matlab_external_scanner_scan(void* payload,
             return scan_comment(lexer);
         }
 
-        if (valid_symbols[STRING_OPEN] && (lexer->lookahead == '\'' || lexer->lookahead == '"')) {
+        if (valid_symbols[STRING_OPEN] && lexer->lookahead == '"') {
             return scan_string_open(lexer);
         }
 
-        if (valid_symbols[MULTIVAR_OPEN] && !is_inside_command && !line_continuation && lexer->lookahead == '[') {
-            return scan_multivar_open(lexer);
-        }
+        if (!is_inside_command) {
+            if (!line_continuation) {
+                if (valid_symbols[MULTIVAR_OPEN] && lexer->lookahead == '[') {
+                    return scan_multivar_open(lexer);
+                }
 
-        if (valid_symbols[COMMAND_NAME] && !is_inside_command) {
-            is_inside_command = false;
-            is_shell_scape = false;
-            return scan_command(lexer);
-        }
+                if (valid_symbols[ENTRY_DELIMITER]) {
+                    return scan_entry_delimiter(lexer, skipped);
+                }
+            }
 
-        if (valid_symbols[COMMAND_ARGUMENT] && is_inside_command) {
-            return scan_command_argument(lexer);
-        }
-
-        if (valid_symbols[ENTRY_DELIMITER] && !is_inside_command && !line_continuation) {
-            return scan_entry_delimiter(lexer, skipped);
+            if (valid_symbols[COMMAND_NAME]) {
+                is_inside_command = false;
+                is_shell_scape = false;
+                return scan_command(lexer);
+            }
+        } else {
+            if (valid_symbols[COMMAND_ARGUMENT]) {
+                return scan_command_argument(lexer);
+            }
         }
     } else {
         if (valid_symbols[STRING_CLOSE] || valid_symbols[FORMATTING_SEQUENCE] || valid_symbols[ESCAPE_SEQUENCE]) {
