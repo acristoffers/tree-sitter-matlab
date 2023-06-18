@@ -15,46 +15,34 @@ end
 
 (source_file
   (switch_statement
-    (keyword)
-    (condition
-      (function_call
-        (identifier)
-        (func_call_paren)
-        (arguments
-          (identifier))
-        (func_call_paren)))
-    (case
-      (keyword)
-      (condition
-        (string))
+    (function_call
+      (identifier)
+      (arguments
+        (identifier)))
+    (case_clause
+      (string
+        (string_content))
       (block
         (function_call
           (identifier)
-          (func_call_paren)
           (arguments
-            (string))
-          (func_call_paren))))
-    (case
-      (keyword)
-      (condition
-        (number))
+            (string
+              (string_content))))))
+    (case_clause
+      (number)
       (block
         (function_call
           (identifier)
-          (func_call_paren)
           (arguments
-            (string))
-          (func_call_paren))))
-    (otherwise
-      (keyword)
+            (string
+              (string_content))))))
+    (otherwise_clause
       (block
         (function_call
           (identifier)
-          (func_call_paren)
           (arguments
-            (string))
-          (func_call_paren))))
-    (keyword)))
+            (string
+              (string_content))))))))
 
 ================================================================================
 Switch: Multiple Matches
@@ -71,35 +59,27 @@ end
 
 (source_file
   (switch_statement
-    (keyword)
-    (condition
-      (function_call
-        (identifier)
-        (func_call_paren)
-        (arguments
-          (identifier))
-        (func_call_paren)))
-    (case
-      (keyword)
-      (condition
-        (cell_definition
-          (row
-            (string)
-            (string))))
+    (function_call
+      (identifier)
+      (arguments
+        (identifier)))
+    (case_clause
+      (cell
+        (row
+          (string
+            (string_content))
+          (string
+            (string_content))))
       (block
         (function_call
           (identifier)
-          (func_call_paren)
           (arguments
-            (string))
-          (func_call_paren))))
-    (otherwise
-      (keyword)
+            (string
+              (string_content))))))
+    (otherwise_clause
       (block
         (function_call
           (identifier)
-          (func_call_paren)
           (arguments
-            (string))
-          (func_call_paren))))
-    (keyword)))
+            (string
+              (string_content))))))))

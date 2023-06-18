@@ -701,7 +701,10 @@ static inline bool scan_multioutput_var_start(TSLexer* lexer)
     }
 
     if (lexer->lookahead == '=') {
-        return true;
+        advance(lexer);
+        if (lexer->lookahead != '=') {
+            return true;
+        }
     }
 
     return false;

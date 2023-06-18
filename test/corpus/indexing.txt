@@ -10,17 +10,13 @@ A(1, 2)
 (source_file
   (function_call
     (identifier)
-    (func_call_paren)
     (arguments
-      (number))
-    (func_call_paren))
+      (number)))
   (function_call
     (identifier)
-    (func_call_paren)
     (arguments
       (number)
-      (number))
-    (func_call_paren)))
+      (number))))
 
 ================================================================================
 Matrix Indexing: Spread Operator
@@ -34,17 +30,13 @@ A(1, :)
 (source_file
   (function_call
     (identifier)
-    (func_call_paren)
     (arguments
-      (spread_operator))
-    (func_call_paren))
+      (spread_operator)))
   (function_call
     (identifier)
-    (func_call_paren)
     (arguments
       (number)
-      (spread_operator))
-    (func_call_paren)))
+      (spread_operator))))
 
 ================================================================================
 Cell Indexing: Simple
@@ -58,17 +50,13 @@ A{1, 2}
 (source_file
   (function_call
     (identifier)
-    (func_call_paren)
     (arguments
-      (number))
-    (func_call_paren))
+      (number)))
   (function_call
     (identifier)
-    (func_call_paren)
     (arguments
       (number)
-      (number))
-    (func_call_paren)))
+      (number))))
 
 ================================================================================
 Cell Indexing: Spread Operator
@@ -82,14 +70,10 @@ A{1, :}
 (source_file
   (function_call
     (identifier)
-    (func_call_paren)
     (arguments
-      (spread_operator))
-    (func_call_paren))
+      (spread_operator)))
   (function_call
     (identifier)
-    (func_call_paren)
     (arguments
       (number)
-      (spread_operator))
-    (func_call_paren)))
+      (spread_operator))))

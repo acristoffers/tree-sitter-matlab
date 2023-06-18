@@ -62,10 +62,8 @@ Matrix: Concatenation
     (row
       (binary_operator
         (identifier)
-        (operator)
         (binary_operator
           (identifier)
-          (operator)
           (identifier)))
       (matrix
         (row
@@ -78,10 +76,8 @@ Matrix: Concatenation
     (row
       (binary_operator
         (identifier)
-        (operator)
         (binary_operator
           (identifier)
-          (operator)
           (identifier)))
       (matrix
         (row
@@ -125,24 +121,16 @@ Matrix: Expression With Transpose
         (binary_operator
           (binary_operator
             (number)
-            (operator)
             (postfix_operator
-              (identifier)
-              (operator)))
-          (operator)
+              (identifier)))
           (number))
-        (operator)
         (postfix_operator
-          (identifier)
-          (operator)))
+          (identifier)))
       (binary_operator
         (postfix_operator
-          (identifier)
-          (operator))
-        (operator)
+          (identifier))
         (postfix_operator
-          (number)
-          (operator))))
+          (number))))
     (row
       (number)
       (number))))
@@ -160,18 +148,13 @@ Matrix: Meaning of Spaces
     (row
       (binary_operator
         (number)
-        (operator)
         (number))
       (binary_operator
         (unary_operator
-          (operator)
           (number))
-        (operator)
         (number))
       (unary_operator
-        (operator)
         (number))
       (binary_operator
         (number)
-        (operator)
         (number)))))

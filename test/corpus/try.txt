@@ -12,19 +12,16 @@ end
 
 (source_file
   (try_statement
-    (keyword)
     (block
       (command
         (command_name)
         (command_argument)))
-    (catch
-      (keyword)
-      (captured_exception)
+    (catch_clause
+      (identifier)
       (block
         (command
           (command_name)
-          (command_argument))))
-    (keyword)))
+          (command_argument))))))
 
 ================================================================================
 Try Statement: Without Capture
@@ -40,15 +37,12 @@ end
 
 (source_file
   (try_statement
-    (keyword)
     (block
       (command
         (command_name)
         (command_argument)))
-    (catch
-      (keyword)
+    (catch_clause
       (block
         (command
           (command_name)
-          (command_argument))))
-    (keyword)))
+          (command_argument))))))

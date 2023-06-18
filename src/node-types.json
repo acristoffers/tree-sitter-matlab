@@ -20,7 +20,7 @@
             "named": true
           },
           {
-            "type": "cell_definition",
+            "type": "cell",
             "named": true
           },
           {
@@ -64,15 +64,11 @@
             "named": true
           },
           {
-            "type": "parenthesized_expression",
+            "type": "parenthesis",
             "named": true
           },
           {
             "type": "postfix_operator",
-            "named": true
-          },
-          {
-            "type": "property_name",
             "named": true
           },
           {
@@ -111,7 +107,7 @@
           "named": true
         },
         {
-          "type": "cell_definition",
+          "type": "cell",
           "named": true
         },
         {
@@ -159,15 +155,11 @@
           "named": true
         },
         {
-          "type": "parenthesized_expression",
+          "type": "parenthesis",
           "named": true
         },
         {
           "type": "postfix_operator",
-          "named": true
-        },
-        {
-          "type": "property_name",
           "named": true
         },
         {
@@ -251,7 +243,7 @@
             "named": true
           },
           {
-            "type": "cell_definition",
+            "type": "cell",
             "named": true
           },
           {
@@ -295,15 +287,11 @@
             "named": true
           },
           {
-            "type": "parenthesized_expression",
+            "type": "parenthesis",
             "named": true
           },
           {
             "type": "postfix_operator",
-            "named": true
-          },
-          {
-            "type": "property_name",
             "named": true
           },
           {
@@ -343,7 +331,7 @@
           "named": true
         },
         {
-          "type": "cell_definition",
+          "type": "cell",
           "named": true
         },
         {
@@ -387,15 +375,11 @@
           "named": true
         },
         {
-          "type": "parenthesized_expression",
+          "type": "parenthesis",
           "named": true
         },
         {
           "type": "postfix_operator",
-          "named": true
-        },
-        {
-          "type": "property_name",
           "named": true
         },
         {
@@ -460,11 +444,15 @@
             "named": true
           },
           {
-            "type": "cell_definition",
+            "type": "cell",
             "named": true
           },
           {
             "type": "comparison_operator",
+            "named": true
+          },
+          {
+            "type": "field_expression",
             "named": true
           },
           {
@@ -488,15 +476,11 @@
             "named": true
           },
           {
-            "type": "parenthesized_expression",
+            "type": "parenthesis",
             "named": true
           },
           {
             "type": "postfix_operator",
-            "named": true
-          },
-          {
-            "type": "property_name",
             "named": true
           },
           {
@@ -526,11 +510,15 @@
             "named": true
           },
           {
-            "type": "cell_definition",
+            "type": "cell",
             "named": true
           },
           {
             "type": "comparison_operator",
+            "named": true
+          },
+          {
+            "type": "field_expression",
             "named": true
           },
           {
@@ -554,15 +542,11 @@
             "named": true
           },
           {
-            "type": "parenthesized_expression",
+            "type": "parenthesis",
             "named": true
           },
           {
             "type": "postfix_operator",
-            "named": true
-          },
-          {
-            "type": "property_name",
             "named": true
           },
           {
@@ -606,7 +590,7 @@
           "named": true
         },
         {
-          "type": "cell_definition",
+          "type": "cell",
           "named": true
         },
         {
@@ -678,7 +662,7 @@
           "named": true
         },
         {
-          "type": "parenthesized_expression",
+          "type": "parenthesis",
           "named": true
         },
         {
@@ -687,10 +671,6 @@
         },
         {
           "type": "postfix_operator",
-          "named": true
-        },
-        {
-          "type": "property_name",
           "named": true
         },
         {
@@ -750,7 +730,7 @@
             "named": true
           },
           {
-            "type": "cell_definition",
+            "type": "cell",
             "named": true
           },
           {
@@ -794,15 +774,11 @@
             "named": true
           },
           {
-            "type": "parenthesized_expression",
+            "type": "parenthesis",
             "named": true
           },
           {
             "type": "postfix_operator",
-            "named": true
-          },
-          {
-            "type": "property_name",
             "named": true
           },
           {
@@ -836,7 +812,7 @@
             "named": true
           },
           {
-            "type": "cell_definition",
+            "type": "cell",
             "named": true
           },
           {
@@ -880,15 +856,11 @@
             "named": true
           },
           {
-            "type": "parenthesized_expression",
+            "type": "parenthesis",
             "named": true
           },
           {
             "type": "postfix_operator",
-            "named": true
-          },
-          {
-            "type": "property_name",
             "named": true
           },
           {
@@ -908,7 +880,7 @@
     }
   },
   {
-    "type": "case",
+    "type": "case_clause",
     "named": true,
     "fields": {
       "condition": {
@@ -928,7 +900,7 @@
             "named": true
           },
           {
-            "type": "cell_definition",
+            "type": "cell",
             "named": true
           },
           {
@@ -972,15 +944,11 @@
             "named": true
           },
           {
-            "type": "parenthesized_expression",
+            "type": "parenthesis",
             "named": true
           },
           {
             "type": "postfix_operator",
-            "named": true
-          },
-          {
-            "type": "property_name",
             "named": true
           },
           {
@@ -1010,7 +978,7 @@
     }
   },
   {
-    "type": "catch",
+    "type": "catch_clause",
     "named": true,
     "fields": {},
     "children": {
@@ -1029,7 +997,7 @@
     }
   },
   {
-    "type": "cell_definition",
+    "type": "cell",
     "named": true,
     "fields": {},
     "children": {
@@ -1129,7 +1097,7 @@
           "named": true
         },
         {
-          "type": "cell_definition",
+          "type": "cell",
           "named": true
         },
         {
@@ -1173,15 +1141,11 @@
           "named": true
         },
         {
-          "type": "parenthesized_expression",
+          "type": "parenthesis",
           "named": true
         },
         {
           "type": "postfix_operator",
-          "named": true
-        },
-        {
-          "type": "property_name",
           "named": true
         },
         {
@@ -1220,7 +1184,7 @@
           "named": true
         },
         {
-          "type": "cell_definition",
+          "type": "cell",
           "named": true
         },
         {
@@ -1264,15 +1228,11 @@
           "named": true
         },
         {
-          "type": "parenthesized_expression",
+          "type": "parenthesis",
           "named": true
         },
         {
           "type": "postfix_operator",
-          "named": true
-        },
-        {
-          "type": "property_name",
           "named": true
         },
         {
@@ -1310,7 +1270,7 @@
     }
   },
   {
-    "type": "else_statement",
+    "type": "else_clause",
     "named": true,
     "fields": {},
     "children": {
@@ -1325,7 +1285,7 @@
     }
   },
   {
-    "type": "elseif_statement",
+    "type": "elseif_clause",
     "named": true,
     "fields": {
       "condition": {
@@ -1345,7 +1305,7 @@
             "named": true
           },
           {
-            "type": "cell_definition",
+            "type": "cell",
             "named": true
           },
           {
@@ -1389,15 +1349,11 @@
             "named": true
           },
           {
-            "type": "parenthesized_expression",
+            "type": "parenthesis",
             "named": true
           },
           {
             "type": "postfix_operator",
-            "named": true
-          },
-          {
-            "type": "property_name",
             "named": true
           },
           {
@@ -1439,7 +1395,11 @@
           "named": true
         },
         {
-          "type": "cell_definition",
+          "type": "cell",
+          "named": true
+        },
+        {
+          "type": "field_expression",
           "named": true
         },
         {
@@ -1464,10 +1424,6 @@
         },
         {
           "type": "postfix_operator",
-          "named": true
-        },
-        {
-          "type": "property_name",
           "named": true
         },
         {
@@ -1520,87 +1476,15 @@
     "named": true,
     "fields": {
       "field": {
-        "multiple": false,
+        "multiple": true,
         "required": true,
         "types": [
-          {
-            "type": "binary_operator",
-            "named": true
-          },
-          {
-            "type": "boolean",
-            "named": true
-          },
-          {
-            "type": "boolean_operator",
-            "named": true
-          },
-          {
-            "type": "cell_definition",
-            "named": true
-          },
-          {
-            "type": "comparison_operator",
-            "named": true
-          },
-          {
-            "type": "field_expression",
-            "named": true
-          },
           {
             "type": "function_call",
             "named": true
           },
           {
-            "type": "handle_operator",
-            "named": true
-          },
-          {
             "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "lambda",
-            "named": true
-          },
-          {
-            "type": "matrix",
-            "named": true
-          },
-          {
-            "type": "metaclass_operator",
-            "named": true
-          },
-          {
-            "type": "not_operator",
-            "named": true
-          },
-          {
-            "type": "number",
-            "named": true
-          },
-          {
-            "type": "parenthesized_expression",
-            "named": true
-          },
-          {
-            "type": "postfix_operator",
-            "named": true
-          },
-          {
-            "type": "property_name",
-            "named": true
-          },
-          {
-            "type": "range",
-            "named": true
-          },
-          {
-            "type": "string",
-            "named": true
-          },
-          {
-            "type": "unary_operator",
             "named": true
           }
         ]
@@ -1610,83 +1494,11 @@
         "required": true,
         "types": [
           {
-            "type": "binary_operator",
-            "named": true
-          },
-          {
-            "type": "boolean",
-            "named": true
-          },
-          {
-            "type": "boolean_operator",
-            "named": true
-          },
-          {
-            "type": "cell_definition",
-            "named": true
-          },
-          {
-            "type": "comparison_operator",
-            "named": true
-          },
-          {
-            "type": "field_expression",
-            "named": true
-          },
-          {
             "type": "function_call",
             "named": true
           },
           {
-            "type": "handle_operator",
-            "named": true
-          },
-          {
             "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "lambda",
-            "named": true
-          },
-          {
-            "type": "matrix",
-            "named": true
-          },
-          {
-            "type": "metaclass_operator",
-            "named": true
-          },
-          {
-            "type": "not_operator",
-            "named": true
-          },
-          {
-            "type": "number",
-            "named": true
-          },
-          {
-            "type": "parenthesized_expression",
-            "named": true
-          },
-          {
-            "type": "postfix_operator",
-            "named": true
-          },
-          {
-            "type": "property_name",
-            "named": true
-          },
-          {
-            "type": "range",
-            "named": true
-          },
-          {
-            "type": "string",
-            "named": true
-          },
-          {
-            "type": "unary_operator",
             "named": true
           }
         ]
@@ -1754,10 +1566,6 @@
           },
           {
             "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "property_name",
             "named": true
           }
         ]
@@ -1829,7 +1637,7 @@
           "named": true
         },
         {
-          "type": "matrix",
+          "type": "multioutput_variable",
           "named": true
         }
       ]
@@ -1916,7 +1724,7 @@
             "named": true
           },
           {
-            "type": "cell_definition",
+            "type": "cell",
             "named": true
           },
           {
@@ -1960,15 +1768,11 @@
             "named": true
           },
           {
-            "type": "parenthesized_expression",
+            "type": "parenthesis",
             "named": true
           },
           {
             "type": "postfix_operator",
-            "named": true
-          },
-          {
-            "type": "property_name",
             "named": true
           },
           {
@@ -1995,11 +1799,11 @@
           "named": true
         },
         {
-          "type": "else_statement",
+          "type": "else_clause",
           "named": true
         },
         {
-          "type": "elseif_statement",
+          "type": "elseif_clause",
           "named": true
         }
       ]
@@ -2031,7 +1835,7 @@
           "named": true
         },
         {
-          "type": "cell_definition",
+          "type": "cell",
           "named": true
         },
         {
@@ -2075,15 +1879,11 @@
           "named": true
         },
         {
-          "type": "parenthesized_expression",
+          "type": "parenthesis",
           "named": true
         },
         {
           "type": "postfix_operator",
-          "named": true
-        },
-        {
-          "type": "property_name",
           "named": true
         },
         {
@@ -2122,7 +1922,7 @@
             "named": true
           },
           {
-            "type": "cell_definition",
+            "type": "cell",
             "named": true
           },
           {
@@ -2166,15 +1966,11 @@
             "named": true
           },
           {
-            "type": "parenthesized_expression",
+            "type": "parenthesis",
             "named": true
           },
           {
             "type": "postfix_operator",
-            "named": true
-          },
-          {
-            "type": "property_name",
             "named": true
           },
           {
@@ -2239,7 +2035,7 @@
           "named": true
         },
         {
-          "type": "cell_definition",
+          "type": "cell",
           "named": true
         },
         {
@@ -2283,15 +2079,11 @@
           "named": true
         },
         {
-          "type": "parenthesized_expression",
+          "type": "parenthesis",
           "named": true
         },
         {
           "type": "postfix_operator",
-          "named": true
-        },
-        {
-          "type": "property_name",
           "named": true
         },
         {
@@ -2341,26 +2133,6 @@
       "required": true,
       "types": [
         {
-          "type": "binary_operator",
-          "named": true
-        },
-        {
-          "type": "boolean",
-          "named": true
-        },
-        {
-          "type": "boolean_operator",
-          "named": true
-        },
-        {
-          "type": "cell_definition",
-          "named": true
-        },
-        {
-          "type": "comparison_operator",
-          "named": true
-        },
-        {
           "type": "field_expression",
           "named": true
         },
@@ -2369,59 +2141,11 @@
           "named": true
         },
         {
-          "type": "handle_operator",
-          "named": true
-        },
-        {
           "type": "identifier",
           "named": true
         },
         {
           "type": "ignored_argument",
-          "named": true
-        },
-        {
-          "type": "lambda",
-          "named": true
-        },
-        {
-          "type": "matrix",
-          "named": true
-        },
-        {
-          "type": "metaclass_operator",
-          "named": true
-        },
-        {
-          "type": "not_operator",
-          "named": true
-        },
-        {
-          "type": "number",
-          "named": true
-        },
-        {
-          "type": "parenthesized_expression",
-          "named": true
-        },
-        {
-          "type": "postfix_operator",
-          "named": true
-        },
-        {
-          "type": "property_name",
-          "named": true
-        },
-        {
-          "type": "range",
-          "named": true
-        },
-        {
-          "type": "string",
-          "named": true
-        },
-        {
-          "type": "unary_operator",
           "named": true
         }
       ]
@@ -2448,7 +2172,7 @@
           "named": true
         },
         {
-          "type": "cell_definition",
+          "type": "cell",
           "named": true
         },
         {
@@ -2492,15 +2216,11 @@
           "named": true
         },
         {
-          "type": "parenthesized_expression",
+          "type": "parenthesis",
           "named": true
         },
         {
           "type": "postfix_operator",
-          "named": true
-        },
-        {
-          "type": "property_name",
           "named": true
         },
         {
@@ -2534,7 +2254,7 @@
     }
   },
   {
-    "type": "parenthesized_expression",
+    "type": "parenthesis",
     "named": true,
     "fields": {},
     "children": {
@@ -2554,7 +2274,7 @@
           "named": true
         },
         {
-          "type": "cell_definition",
+          "type": "cell",
           "named": true
         },
         {
@@ -2598,15 +2318,11 @@
           "named": true
         },
         {
-          "type": "parenthesized_expression",
+          "type": "parenthesis",
           "named": true
         },
         {
           "type": "postfix_operator",
-          "named": true
-        },
-        {
-          "type": "property_name",
           "named": true
         },
         {
@@ -2683,7 +2399,11 @@
             "named": true
           },
           {
-            "type": "cell_definition",
+            "type": "cell",
+            "named": true
+          },
+          {
+            "type": "field_expression",
             "named": true
           },
           {
@@ -2703,15 +2423,11 @@
             "named": true
           },
           {
-            "type": "parenthesized_expression",
+            "type": "parenthesis",
             "named": true
           },
           {
             "type": "postfix_operator",
-            "named": true
-          },
-          {
-            "type": "property_name",
             "named": true
           },
           {
@@ -2827,6 +2543,10 @@
           "named": true
         },
         {
+          "type": "field_expression",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -2847,15 +2567,11 @@
           "named": true
         },
         {
-          "type": "parenthesized_expression",
+          "type": "parenthesis",
           "named": true
         },
         {
           "type": "postfix_operator",
-          "named": true
-        },
-        {
-          "type": "property_name",
           "named": true
         },
         {
@@ -2886,15 +2602,11 @@
           "named": true
         },
         {
-          "type": "cell_definition",
+          "type": "cell",
           "named": true
         },
         {
           "type": "comparison_operator",
-          "named": true
-        },
-        {
-          "type": "entry_delimiter",
           "named": true
         },
         {
@@ -2938,15 +2650,11 @@
           "named": true
         },
         {
-          "type": "parenthesized_expression",
+          "type": "parenthesis",
           "named": true
         },
         {
           "type": "postfix_operator",
-          "named": true
-        },
-        {
-          "type": "property_name",
           "named": true
         },
         {
@@ -2993,7 +2701,7 @@
           "named": true
         },
         {
-          "type": "cell_definition",
+          "type": "cell",
           "named": true
         },
         {
@@ -3065,7 +2773,7 @@
           "named": true
         },
         {
-          "type": "parenthesized_expression",
+          "type": "parenthesis",
           "named": true
         },
         {
@@ -3074,10 +2782,6 @@
         },
         {
           "type": "postfix_operator",
-          "named": true
-        },
-        {
-          "type": "property_name",
           "named": true
         },
         {
@@ -3190,7 +2894,7 @@
             "named": true
           },
           {
-            "type": "cell_definition",
+            "type": "cell",
             "named": true
           },
           {
@@ -3234,15 +2938,11 @@
             "named": true
           },
           {
-            "type": "parenthesized_expression",
+            "type": "parenthesis",
             "named": true
           },
           {
             "type": "postfix_operator",
-            "named": true
-          },
-          {
-            "type": "property_name",
             "named": true
           },
           {
@@ -3265,7 +2965,7 @@
       "required": false,
       "types": [
         {
-          "type": "case",
+          "type": "case_clause",
           "named": true
         },
         {
@@ -3288,7 +2988,7 @@
           "named": true
         },
         {
-          "type": "catch",
+          "type": "catch_clause",
           "named": true
         }
       ]
@@ -3307,7 +3007,11 @@
             "named": true
           },
           {
-            "type": "cell_definition",
+            "type": "cell",
+            "named": true
+          },
+          {
+            "type": "field_expression",
             "named": true
           },
           {
@@ -3331,15 +3035,11 @@
             "named": true
           },
           {
-            "type": "parenthesized_expression",
+            "type": "parenthesis",
             "named": true
           },
           {
             "type": "postfix_operator",
-            "named": true
-          },
-          {
-            "type": "property_name",
             "named": true
           },
           {
@@ -3390,7 +3090,7 @@
             "named": true
           },
           {
-            "type": "cell_definition",
+            "type": "cell",
             "named": true
           },
           {
@@ -3434,15 +3134,11 @@
             "named": true
           },
           {
-            "type": "parenthesized_expression",
+            "type": "parenthesis",
             "named": true
           },
           {
             "type": "postfix_operator",
-            "named": true
-          },
-          {
-            "type": "property_name",
             "named": true
           },
           {
@@ -3662,10 +3358,6 @@
   {
     "type": "endfunction",
     "named": false
-  },
-  {
-    "type": "entry_delimiter",
-    "named": true
   },
   {
     "type": "enumeration",

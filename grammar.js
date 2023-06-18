@@ -37,9 +37,7 @@ module.exports = grammar({
     [$._expression, $._range_element],
     [$.range],
     [$._expression, $.validation_functions],
-    [$._expression, $._range_element, $.property_name],
-    [$._expression, $.property_name],
-    [$._range_element, $.property_name],
+    [$._expression, $._range_element],
     [$._enum_value, $.property_name],
     [$.block],
   ],
@@ -56,7 +54,7 @@ module.exports = grammar({
     $.formatting_sequence,
     $.escape_sequence,
     $.string_content,
-    $.entry_delimiter,
+    $._entry_delimiter,
     $._multioutput_variable_start,
     $.error_sentinel,
     $._eof,
@@ -106,7 +104,7 @@ module.exports = grammar({
       $.binary_operator,
       $.boolean,
       $.boolean_operator,
-      $.cell_definition,
+      $.cell,
       $.comparison_operator,
       $.function_call,
       $.handle_operator,
@@ -116,32 +114,31 @@ module.exports = grammar({
       $.metaclass_operator,
       $.not_operator,
       $.number,
-      $.parenthesized_expression,
+      $.parenthesis,
       $.postfix_operator,
       $.range,
       $.string,
       $.unary_operator,
       $.field_expression,
-      $.property_name,
     ),
 
-    parenthesized_expression: $ => prec(PREC.parentheses, seq('(', $._expression, ')')),
+    parenthesis: $ => prec(PREC.parentheses, seq('(', $._expression, ')')),
 
     _binary_expression: $ => prec(1, choice(
       $.binary_operator,
       $.boolean,
       $.boolean_operator,
-      $.cell_definition,
+      $.cell,
       $.comparison_operator,
       $.function_call,
       $.identifier,
       $.matrix,
       $.not_operator,
       $.number,
-      $.parenthesized_expression,
+      $.parenthesis,
       $.postfix_operator,
       $.string,
-      $.property_name,
+      $.field_expression,
       $.unary_operator,
     )),
 
@@ -183,24 +180,23 @@ module.exports = grammar({
       field('operand',
         choice(
           $.boolean,
-          $.cell_definition,
+          $.cell,
           $.function_call,
           $.identifier,
           $.matrix,
           $.not_operator,
           $.number,
-          $.parenthesized_expression,
+          $.parenthesis,
           $.postfix_operator,
-          $.property_name,
+          $.field_expression,
           $.unary_operator,
         ),
       ),
     )),
 
     field_expression: $ => prec.left(PREC.member, seq(
-      field('object', $._expression),
-      '.',
-      field('field', $._expression),
+      field('object', choice($.identifier, $.function_call)),
+      repeat1(seq('.', field('field', choice($.identifier, $.function_call )))),
     )),
 
     not_operator: $ => prec(PREC.not, seq(
@@ -236,15 +232,15 @@ module.exports = grammar({
         choice(
           $.binary_operator,
           $.boolean,
-          $.cell_definition,
+          $.cell,
           $.function_call,
           $.identifier,
           $.matrix,
           $.number,
-          $.parenthesized_expression,
+          $.parenthesis,
           $.postfix_operator,
           $.string,
-          $.property_name,
+          $.field_expression,
           $.unary_operator,
         ),
       ),
@@ -295,7 +291,7 @@ module.exports = grammar({
 
     row: $ => seq(
       choice($._expression, $.ignored_argument),
-      repeat(seq($.entry_delimiter, choice($._expression, $.ignored_argument))),
+      repeat(seq($._entry_delimiter, choice($._expression, $.ignored_argument))),
     ),
     matrix: $ => seq(
       '[',
@@ -305,7 +301,7 @@ module.exports = grammar({
       )),
       ']',
     ),
-    cell_definition: $ => seq(
+    cell: $ => seq(
       '{',
       optional(seq(
         $.row,
@@ -329,7 +325,7 @@ module.exports = grammar({
 
     multioutput_variable: $ => seq(
       alias($._multioutput_variable_start, '['),
-      optionalCommaSep1(choice($._expression, $.ignored_argument)),
+      optionalCommaSep1(choice($.identifier, $.field_expression, $.ignored_argument, $.function_call, $.ignored_argument)),
       ']',
     ),
 
@@ -347,7 +343,7 @@ module.exports = grammar({
       seq('{', optional($.arguments), '}'),
     ),
     function_call: $ => prec.right(PREC.call, seq(
-      field('name', choice($.identifier, $.property_name, $.function_call)),
+      field('name', choice($.identifier, $.function_call)),
       optional(seq(
         '@',
         alias($.property_name, $.superclass),
@@ -360,7 +356,7 @@ module.exports = grammar({
       repeat($.command_argument),
     )),
 
-    // Unary operators cannot bind stronger in this case, lest the world falls apart.
+    // Unary operators cannot bind stronger in this case_clause, lest the world falls apart.
     _range_element: $ => choice(
       prec.dynamic(1, $.binary_operator),
       $.boolean,
@@ -369,9 +365,9 @@ module.exports = grammar({
       $.matrix,
       $.not_operator,
       $.number,
-      $.parenthesized_expression,
+      $.parenthesis,
       $.postfix_operator,
-      $.property_name,
+      $.field_expression,
       prec.dynamic(-1, $.unary_operator),
     ),
     range: $ => prec.right(PREC.postfix, seq(
@@ -385,20 +381,20 @@ module.exports = grammar({
     continue_statement: _ => 'continue',
     break_statement: _ => 'break',
 
-    elseif_statement: $ => seq(
+    elseif_clause: $ => seq(
       'elseif',
       field('condition', $._expression),
       $._end_of_line,
       optional($.block),
     ),
-    else_statement: $ => seq('else', optional($.block)),
+    else_clause: $ => seq('else', optional($.block)),
     if_statement: $ => seq(
       'if',
       field('condition', $._expression),
       $._end_of_line,
       optional($.block),
-      repeat($.elseif_statement),
-      optional($.else_statement),
+      repeat($.elseif_clause),
+      optional($.else_clause),
       'end',
     ),
 
@@ -438,7 +434,7 @@ module.exports = grammar({
       'end',
     ),
 
-    case: $ => seq(
+    case_clause: $ => seq(
       'case',
       // MATLAB says it should be a `switch_expr`, but then accepts any expression
       field('condition', $._expression),
@@ -451,15 +447,10 @@ module.exports = grammar({
     switch_statement: $ => seq(
       'switch',
       field('condition', $._expression),
-      repeat($.case),
+      repeat($.case_clause),
       optional($.otherwise_clause),
       'end',
     ),
-
-    // _struct_element: $ => choice($.function_call, $.identifier),
-    // struct: $ => seq(
-    //   $._expression,
-    // ),
 
     _lambda_arguments: $ => commaSep1(choice($.ignored_argument, $.identifier)),
     lambda: $ => prec.right(seq(
@@ -472,10 +463,7 @@ module.exports = grammar({
 
     global_operator: $ => seq('global', repeat($.identifier)),
 
-    persistent_operator: $ => seq(
-      'persistent',
-      repeat($.identifier),
-    ),
+    persistent_operator: $ => seq('persistent', repeat($.identifier)),
 
     _argument_attributes: $ =>
       seq(
@@ -493,7 +481,7 @@ module.exports = grammar({
         'end',
       ),
 
-    function_output: $ => seq(choice($.identifier, $.matrix), '='),
+    function_output: $ => seq(choice($.identifier, $.multioutput_variable), '='),
     function_arguments: $ => seq('(', field('arguments', optional($._lambda_arguments)), ')'),
     function_definition: $ => seq(
       'function',
@@ -570,14 +558,14 @@ module.exports = grammar({
     ),
     _enum_value: $ => choice(
       $.boolean,
-      $.cell_definition,
+      $.cell,
       $.function_call,
       $.identifier,
       $.matrix,
       $.not_operator,
       $.number,
       $.postfix_operator,
-      $.property_name,
+      $.field_expression,
       $.unary_operator,
     ),
     enum: $ => seq(
@@ -601,7 +589,7 @@ module.exports = grammar({
       'end',
     ),
 
-    catch: $ => seq(
+    catch_clause: $ => seq(
       'catch',
       optional($.identifier),
       $._end_of_line,
@@ -611,7 +599,7 @@ module.exports = grammar({
       'try',
       $._end_of_line,
       optional($.block),
-      optional($.catch),
+      optional($.catch_clause),
       'end',
     ),
 

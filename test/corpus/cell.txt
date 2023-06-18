@@ -8,13 +8,13 @@ Cell: Simple
 --------------------------------------------------------------------------------
 
 (source_file
-  (cell_definition
+  (cell
     (row
       (number)
       (number)
       (number)
       (number)))
-  (cell_definition
+  (cell
     (row
       (number)
       (number)
@@ -31,28 +31,28 @@ Cell: Multidimensional
 --------------------------------------------------------------------------------
 
 (source_file
-  (cell_definition
+  (cell
     (row
       (number)
       (number))
     (row
       (number)
       (number)))
-  (cell_definition
+  (cell
     (row
-      (cell_definition
+      (cell
         (row
           (number)
           (number)))
-      (cell_definition
+      (cell
         (row
           (number)
           (number))))
     (row
-      (cell_definition
+      (cell
         (row
           (number)
           (number)))
-      (cell_definition
+      (cell
         (row
           (number))))))

@@ -9,9 +9,7 @@ end
 
 (source_file
   (class_definition
-    (keyword)
-    (identifier)
-    (keyword)))
+    (identifier)))
 
 ================================================================================
 Class Definition: With Attributes
@@ -24,16 +22,15 @@ end
 
 (source_file
   (class_definition
-    (keyword)
     (attributes
       (attribute
         (identifier)
         (number))
       (attribute
         (identifier)
-        (string)))
-    (identifier)
-    (keyword)))
+        (string
+          (string_content))))
+    (identifier)))
 
 ================================================================================
 Class Definition: With Super Classes
@@ -46,12 +43,12 @@ end
 
 (source_file
   (class_definition
-    (keyword)
     (identifier)
     (superclasses
-      (identifier)
-      (identifier))
-    (keyword)))
+      (property_name
+        (identifier))
+      (property_name
+        (identifier)))))
 
 ================================================================================
 Class Definition: Properties
@@ -69,17 +66,14 @@ end
 
 (source_file
   (class_definition
-    (keyword)
     (identifier)
     (properties
-      (keyword)
       (property
-        (property_name
-          (identifier))
+        (identifier)
         (dimensions
           (number)
           (spread_operator))
-        (class)
+        (identifier)
         (validation_functions
           (identifier))
         (default_value
@@ -89,19 +83,15 @@ end
               (number)
               (number)))))
       (property
-        (property_name
-          (identifier))
-        (class))
+        (identifier)
+        (identifier))
       (property
-        (property_name
-          (identifier))
+        (identifier)
         (validation_functions
           (identifier)
           (identifier))
         (default_value
-          (number)))
-      (keyword))
-    (keyword)))
+          (number))))))
 
 ================================================================================
 Class Definition: Methods
@@ -123,38 +113,28 @@ end
 
 (source_file
   (class_definition
-    (keyword)
     (identifier)
     (methods
-      (keyword)
       (attributes
         (attribute
           (identifier)
           (identifier)))
       (function_definition
-        (keyword)
         (function_output
           (identifier))
         (identifier)
         (function_arguments
           (identifier))
         (block
-          (number))
-        (end_function
-          (keyword)))
+          (number)))
       (function_definition
-        (keyword)
         (function_output
           (identifier))
         (identifier)
         (function_arguments
           (ignored_argument))
         (block
-          (number))
-        (end_function
-          (keyword)))
-      (keyword))
-    (keyword)))
+          (number))))))
 
 ================================================================================
 Class Definition: Arguments
@@ -176,32 +156,27 @@ end
 
 (source_file
   (class_definition
-    (keyword)
     (identifier)
     (methods
-      (keyword)
       (attributes
         (attribute
           (identifier)
           (identifier)))
       (function_definition
-        (keyword)
         (function_output
           (identifier))
         (identifier)
         (function_arguments
           (identifier))
         (arguments_statement
-          (keyword)
           (attributes
             (identifier))
           (property
-            (property_name
-              (identifier))
+            (identifier)
             (dimensions
               (number)
               (number))
-            (class))
+            (identifier))
           (property
             (property_name
               (identifier)
@@ -210,14 +185,9 @@ end
               (number)
               (number))
             (validation_functions
-              (identifier)))
-          (keyword))
+              (identifier))))
         (block
-          (number))
-        (end_function
-          (keyword)))
-      (keyword))
-    (keyword)))
+          (number))))))
 
 ================================================================================
 Class Definition: Simple Enumerations
@@ -233,10 +203,8 @@ end
 
 (source_file
   (class_definition
-    (keyword)
     (identifier)
     (enumeration
-      (keyword)
       (enum
         (identifier))
       (enum
@@ -246,9 +214,7 @@ end
       (enum
         (identifier))
       (enum
-        (identifier))
-      (keyword))
-    (keyword)))
+        (identifier)))))
 
 ================================================================================
 Class Definition: Enumerations With Values
@@ -265,22 +231,17 @@ end
 
 (source_file
   (class_definition
-    (keyword)
     (identifier)
     (superclasses
-      (identifier))
+      (property_name
+        (identifier)))
     (enumeration
-      (keyword)
       (enum
         (identifier)
-        (default_value
-          (number)))
+        (number))
       (enum
         (identifier)
-        (default_value
-          (number)))
-      (keyword))
-    (keyword)))
+        (number)))))
 
 ================================================================================
 Class Definition: Enumerations With Multiple Values
@@ -299,44 +260,28 @@ end
 
 (source_file
   (class_definition
-    (keyword)
     (identifier)
     (enumeration
-      (keyword)
       (enum
         (identifier)
-        (default_value
-          (number))
-        (default_value
-          (number))
-        (default_value
-          (number)))
+        (number)
+        (number)
+        (number))
       (enum
         (identifier)
-        (default_value
-          (number))
-        (default_value
-          (number))
-        (default_value
-          (number)))
+        (number)
+        (number)
+        (number))
       (enum
         (identifier)
-        (default_value
-          (number))
-        (default_value
-          (number))
-        (default_value
-          (number)))
+        (number)
+        (number)
+        (number))
       (enum
         (identifier)
-        (default_value
-          (number))
-        (default_value
-          (number))
-        (default_value
-          (number)))
-      (keyword))
-    (keyword)))
+        (number)
+        (number)
+        (number)))))
 
 ================================================================================
 Class Definition: Events
@@ -353,16 +298,13 @@ end
 
 (source_file
   (class_definition
-    (keyword)
     (identifier)
     (superclasses
-      (identifier))
+      (property_name
+        (identifier)))
     (events
-      (keyword)
       (identifier)
-      (identifier)
-      (keyword))
-    (keyword)))
+      (identifier))))
 
 ================================================================================
 Class Definition: External Methods
@@ -379,10 +321,8 @@ end
 
 (source_file
   (class_definition
-    (keyword)
     (identifier)
     (methods
-      (keyword)
       (function_signature
         (function_output
           (identifier))
@@ -390,6 +330,4 @@ end
         (function_arguments
           (identifier)))
       (function_signature
-        (identifier))
-      (keyword))
-    (keyword)))
+        (identifier)))))

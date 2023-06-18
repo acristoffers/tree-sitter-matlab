@@ -20,10 +20,10 @@
 ; Conditionals
 
 (if_statement [ "if" "end" ] @conditional)
-(elseif_statement "elseif" @conditional)
-(else_statement "else" @conditional)
+(elseif_clause "elseif" @conditional)
+(else_clause "else" @conditional)
 (switch_statement [ "switch" "end" ] @conditional)
-(case "case" @conditional)
+(case_clause "case" @conditional)
 (otherwise_clause "otherwise" @conditional)
 (break_statement) @conditional
 
@@ -36,7 +36,7 @@
 ; Exceptions
 
 (try_statement [ "try" "end" ] @exception)
-(catch "catch" @exception)
+(catch_clause "catch" @exception)
 
 ; Variables
 
@@ -46,9 +46,6 @@
 
 (events (identifier) @constant)
 (attribute (identifier) @constant)
-
-((identifier) @constant
-  (#lua-match? @constant "^[A-Z_]+$"))
 
 "~" @constant.builtin
 
@@ -89,9 +86,8 @@
 
 (validation_functions (identifier) @function)
 
-(command
-  (command_name) @function.call
-  (command_argument) @parameter)
+(command (command_name) @function.call)
+(command_argument) @parameter
 
 (return_statement) @keyword.return
 
@@ -99,11 +95,11 @@
 
 (function_arguments (identifier) @parameter)
 
-; ; Namespaces
-;
-; (property_name . (identifier) @namespace)
-;
-; (superclass . (identifier) @namespace)
+; Punctuation
+
+[ ";" "," "." ] @punctuation.delimiter
+
+[ "(" ")" "[" "]" "{" "}" ] @punctuation.bracket
 
 ; Operators
 
@@ -135,21 +131,15 @@
   "="
   "&&"
   "||"
+  ":"
 ] @operator
-
-(range ":" @operator)
-
-; Punctuation
-
-[ ";" "," "." ":" ] @punctuation.delimiter
-
-[ "(" ")" "[" "]" "{" "}" ] @punctuation.bracket
 
 ; Literals
 
 (string) @string
 
 (escape_sequence) @string.escape
+(formatting_sequence) @string.special
 
 (number) @number
 

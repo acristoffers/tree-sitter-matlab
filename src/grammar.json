@@ -150,7 +150,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "cell_definition"
+          "name": "cell"
         },
         {
           "type": "SYMBOL",
@@ -190,7 +190,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "parenthesized_expression"
+          "name": "parenthesis"
         },
         {
           "type": "SYMBOL",
@@ -211,14 +211,10 @@
         {
           "type": "SYMBOL",
           "name": "field_expression"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "property_name"
         }
       ]
     },
-    "parenthesized_expression": {
+    "parenthesis": {
       "type": "PREC",
       "value": -1,
       "content": {
@@ -259,7 +255,7 @@
           },
           {
             "type": "SYMBOL",
-            "name": "cell_definition"
+            "name": "cell"
           },
           {
             "type": "SYMBOL",
@@ -287,7 +283,7 @@
           },
           {
             "type": "SYMBOL",
-            "name": "parenthesized_expression"
+            "name": "parenthesis"
           },
           {
             "type": "SYMBOL",
@@ -299,7 +295,7 @@
           },
           {
             "type": "SYMBOL",
-            "name": "property_name"
+            "name": "field_expression"
           },
           {
             "type": "SYMBOL",
@@ -750,7 +746,7 @@
                 },
                 {
                   "type": "SYMBOL",
-                  "name": "cell_definition"
+                  "name": "cell"
                 },
                 {
                   "type": "SYMBOL",
@@ -774,7 +770,7 @@
                 },
                 {
                   "type": "SYMBOL",
-                  "name": "parenthesized_expression"
+                  "name": "parenthesis"
                 },
                 {
                   "type": "SYMBOL",
@@ -782,7 +778,7 @@
                 },
                 {
                   "type": "SYMBOL",
-                  "name": "property_name"
+                  "name": "field_expression"
                 },
                 {
                   "type": "SYMBOL",
@@ -804,20 +800,46 @@
             "type": "FIELD",
             "name": "object",
             "content": {
-              "type": "SYMBOL",
-              "name": "_expression"
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "identifier"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "function_call"
+                }
+              ]
             }
           },
           {
-            "type": "STRING",
-            "value": "."
-          },
-          {
-            "type": "FIELD",
-            "name": "field",
+            "type": "REPEAT1",
             "content": {
-              "type": "SYMBOL",
-              "name": "_expression"
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "."
+                },
+                {
+                  "type": "FIELD",
+                  "name": "field",
+                  "content": {
+                    "type": "CHOICE",
+                    "members": [
+                      {
+                        "type": "SYMBOL",
+                        "name": "identifier"
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "function_call"
+                      }
+                    ]
+                  }
+                }
+              ]
             }
           }
         ]
@@ -1001,7 +1023,7 @@
                 },
                 {
                   "type": "SYMBOL",
-                  "name": "cell_definition"
+                  "name": "cell"
                 },
                 {
                   "type": "SYMBOL",
@@ -1021,7 +1043,7 @@
                 },
                 {
                   "type": "SYMBOL",
-                  "name": "parenthesized_expression"
+                  "name": "parenthesis"
                 },
                 {
                   "type": "SYMBOL",
@@ -1033,7 +1055,7 @@
                 },
                 {
                   "type": "SYMBOL",
-                  "name": "property_name"
+                  "name": "field_expression"
                 },
                 {
                   "type": "SYMBOL",
@@ -1172,7 +1194,7 @@
             "members": [
               {
                 "type": "SYMBOL",
-                "name": "entry_delimiter"
+                "name": "_entry_delimiter"
               },
               {
                 "type": "CHOICE",
@@ -1246,7 +1268,7 @@
         }
       ]
     },
-    "cell_definition": {
+    "cell": {
       "type": "SEQ",
       "members": [
         {
@@ -1374,7 +1396,19 @@
               "members": [
                 {
                   "type": "SYMBOL",
-                  "name": "_expression"
+                  "name": "identifier"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "field_expression"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "ignored_argument"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "function_call"
                 },
                 {
                   "type": "SYMBOL",
@@ -1404,7 +1438,19 @@
                     "members": [
                       {
                         "type": "SYMBOL",
-                        "name": "_expression"
+                        "name": "identifier"
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "field_expression"
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "ignored_argument"
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "function_call"
                       },
                       {
                         "type": "SYMBOL",
@@ -1692,10 +1738,6 @@
                 },
                 {
                   "type": "SYMBOL",
-                  "name": "property_name"
-                },
-                {
-                  "type": "SYMBOL",
                   "name": "function_call"
                 }
               ]
@@ -1791,7 +1833,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "parenthesized_expression"
+          "name": "parenthesis"
         },
         {
           "type": "SYMBOL",
@@ -1799,7 +1841,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "property_name"
+          "name": "field_expression"
         },
         {
           "type": "PREC_DYNAMIC",
@@ -1865,7 +1907,7 @@
       "type": "STRING",
       "value": "break"
     },
-    "elseif_statement": {
+    "elseif_clause": {
       "type": "SEQ",
       "members": [
         {
@@ -1898,7 +1940,7 @@
         }
       ]
     },
-    "else_statement": {
+    "else_clause": {
       "type": "SEQ",
       "members": [
         {
@@ -1954,7 +1996,7 @@
           "type": "REPEAT",
           "content": {
             "type": "SYMBOL",
-            "name": "elseif_statement"
+            "name": "elseif_clause"
           }
         },
         {
@@ -1962,7 +2004,7 @@
           "members": [
             {
               "type": "SYMBOL",
-              "name": "else_statement"
+              "name": "else_clause"
             },
             {
               "type": "BLANK"
@@ -2146,7 +2188,7 @@
         }
       ]
     },
-    "case": {
+    "case_clause": {
       "type": "SEQ",
       "members": [
         {
@@ -2215,7 +2257,7 @@
           "type": "REPEAT",
           "content": {
             "type": "SYMBOL",
-            "name": "case"
+            "name": "case_clause"
           }
         },
         {
@@ -2451,7 +2493,7 @@
             },
             {
               "type": "SYMBOL",
-              "name": "matrix"
+              "name": "multioutput_variable"
             }
           ]
         },
@@ -3265,7 +3307,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "cell_definition"
+          "name": "cell"
         },
         {
           "type": "SYMBOL",
@@ -3293,7 +3335,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "property_name"
+          "name": "field_expression"
         },
         {
           "type": "SYMBOL",
@@ -3474,7 +3516,7 @@
         }
       ]
     },
-    "catch": {
+    "catch_clause": {
       "type": "SEQ",
       "members": [
         {
@@ -3539,7 +3581,7 @@
           "members": [
             {
               "type": "SYMBOL",
-              "name": "catch"
+              "name": "catch_clause"
             },
             {
               "type": "BLANK"
@@ -3627,16 +3669,7 @@
     ],
     [
       "_expression",
-      "_range_element",
-      "property_name"
-    ],
-    [
-      "_expression",
-      "property_name"
-    ],
-    [
-      "_range_element",
-      "property_name"
+      "_range_element"
     ],
     [
       "_enum_value",
@@ -3694,7 +3727,7 @@
     },
     {
       "type": "SYMBOL",
-      "name": "entry_delimiter"
+      "name": "_entry_delimiter"
     },
     {
       "type": "SYMBOL",

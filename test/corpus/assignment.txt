@@ -35,19 +35,17 @@ Assignment: Multiple Output
 
 (source_file
   (assignment
-    (matrix
-      (row
-        (ignored_argument)
-        (identifier)
-        (identifier)))
+    (multioutput_variable
+      (ignored_argument)
+      (identifier)
+      (identifier))
     (function_call
       (identifier)))
   (assignment
-    (matrix
-      (row
-        (ignored_argument)
-        (identifier)
-        (identifier)))
+    (multioutput_variable
+      (ignored_argument)
+      (identifier)
+      (identifier))
     (function_call
       (identifier))))
 
@@ -118,30 +116,28 @@ Assignment: Multiple Output With Struct
 
 (source_file
   (assignment
-    (matrix
-      (row
-        (field_expression
-          (identifier)
-          (identifier))
-        (field_expression
-          (identifier)
-          (identifier))))
+    (multioutput_variable
+      (field_expression
+        (identifier)
+        (identifier))
+      (field_expression
+        (identifier)
+        (identifier)))
     (identifier))
   (assignment
-    (matrix
-      (row
-        (field_expression
+    (multioutput_variable
+      (field_expression
+        (identifier)
+        (function_call
           (identifier)
-          (function_call
-            (identifier)
-            (arguments
-              (number))))
-        (field_expression
-          (function_call
-            (identifier)
-            (arguments
-              (number)))
-          (identifier))))
+          (arguments
+            (number))))
+      (field_expression
+        (function_call
+          (identifier)
+          (arguments
+            (number)))
+        (identifier)))
     (identifier)))
 
 ================================================================================
@@ -155,26 +151,24 @@ Assignment: Multiple Output With Indexing
 
 (source_file
   (assignment
-    (matrix
-      (row
-        (function_call
-          (identifier)
-          (arguments
-            (number)))
-        (function_call
-          (identifier)
-          (arguments
-            (number)))))
+    (multioutput_variable
+      (function_call
+        (identifier)
+        (arguments
+          (number)))
+      (function_call
+        (identifier)
+        (arguments
+          (number))))
     (identifier))
   (assignment
-    (matrix
-      (row
-        (function_call
-          (identifier)
-          (arguments
-            (number)))
-        (function_call
-          (identifier)
-          (arguments
-            (number)))))
+    (multioutput_variable
+      (function_call
+        (identifier)
+        (arguments
+          (number)))
+      (function_call
+        (identifier)
+        (arguments
+          (number))))
     (identifier)))

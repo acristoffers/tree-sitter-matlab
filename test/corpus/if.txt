@@ -10,12 +10,9 @@ end
 
 (source_file
   (if_statement
-    (keyword)
-    (condition
-      (identifier))
+    (identifier)
     (block
-      (number))
-    (keyword)))
+      (number))))
 
 ================================================================================
 If Statement: Else If
@@ -39,37 +36,25 @@ end
 
 (source_file
   (if_statement
-    (keyword)
-    (condition
-      (identifier))
+    (identifier)
     (block
       (number))
-    (elseif_statement
-      (keyword)
-      (condition
-        (identifier))
+    (elseif_clause
+      (identifier)
       (block
-        (number)))
-    (keyword))
+        (number))))
   (if_statement
-    (keyword)
-    (condition
-      (identifier))
+    (identifier)
     (block
       (number))
-    (elseif_statement
-      (keyword)
-      (condition
-        (identifier))
+    (elseif_clause
+      (identifier)
       (block
         (number)))
-    (elseif_statement
-      (keyword)
-      (condition
-        (identifier))
+    (elseif_clause
+      (identifier)
       (block
-        (number)))
-    (keyword)))
+        (number)))))
 
 ================================================================================
 If Statement: Else
@@ -85,16 +70,12 @@ end
 
 (source_file
   (if_statement
-    (keyword)
-    (condition
-      (identifier))
+    (identifier)
     (block
       (number))
-    (else_statement
-      (keyword)
+    (else_clause
       (block
-        (number)))
-    (keyword)))
+        (number)))))
 
 ================================================================================
 If Statement: Complete
@@ -114,25 +95,17 @@ end
 
 (source_file
   (if_statement
-    (keyword)
-    (condition
-      (identifier))
+    (identifier)
     (block
       (number))
-    (elseif_statement
-      (keyword)
-      (condition
-        (identifier))
+    (elseif_clause
+      (identifier)
       (block
         (number)))
-    (elseif_statement
-      (keyword)
-      (condition
-        (identifier))
+    (elseif_clause
+      (identifier)
       (block
         (number)))
-    (else_statement
-      (keyword)
+    (else_clause
       (block
-        (keyword)))
-    (keyword)))
+        (return_statement)))))

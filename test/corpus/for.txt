@@ -10,15 +10,13 @@ end
 
 (source_file
   (for_statement
-    (keyword)
     (iterator
       (identifier)
       (range
         (number)
         (number)))
     (block
-      (number))
-    (keyword)))
+      (number))))
 
 ================================================================================
 For Statement: Nested
@@ -35,7 +33,6 @@ end
 
 (source_file
   (for_statement
-    (keyword)
     (iterator
       (identifier)
       (range
@@ -43,17 +40,14 @@ end
         (identifier)))
     (block
       (for_statement
-        (keyword)
         (iterator
           (identifier)
           (range
             (number)
             (identifier)))
         (block
-          (keyword))
-        (keyword))
-      (keyword))
-    (keyword)))
+          (continue_statement)))
+      (break_statement))))
 
 ================================================================================
 For Statement: Single Line
@@ -67,41 +61,30 @@ for E = eye(N), do_some_task(E), end
 
 (source_file
   (for_statement
-    (keyword)
     (iterator
       (identifier)
       (range
         (number)
         (unary_operator
-          (operator)
           (number))
         (number)))
     (block
       (function_call
         (identifier)
-        (func_call_paren)
         (arguments
-          (identifier))
-        (func_call_paren)))
-    (keyword))
+          (identifier)))))
   (for_statement
-    (keyword)
     (iterator
       (identifier)
       (function_call
         (identifier)
-        (func_call_paren)
         (arguments
-          (identifier))
-        (func_call_paren)))
+          (identifier))))
     (block
       (function_call
         (identifier)
-        (func_call_paren)
         (arguments
-          (identifier))
-        (func_call_paren)))
-    (keyword)))
+          (identifier))))))
 
 ================================================================================
 ParFor Statement: Simple
@@ -115,15 +98,13 @@ end
 
 (source_file
   (for_statement
-    (keyword)
     (iterator
       (identifier)
       (range
         (number)
         (number)))
     (block
-      (number))
-    (keyword)))
+      (number))))
 
 ================================================================================
 ParFor Statement: Options
@@ -149,7 +130,6 @@ end
 
 (source_file
   (for_statement
-    (keyword)
     (iterator
       (identifier)
       (range
@@ -158,10 +138,8 @@ end
     (parfor_options
       (number))
     (block
-      (number))
-    (keyword))
+      (number)))
   (for_statement
-    (keyword)
     (iterator
       (identifier)
       (range
@@ -169,14 +147,10 @@ end
         (number)))
     (parfor_options
       (function_call
-        (identifier)
-        (func_call_paren)
-        (func_call_paren)))
+        (identifier)))
     (block
-      (number))
-    (keyword))
+      (number)))
   (for_statement
-    (keyword)
     (iterator
       (identifier)
       (range
@@ -185,17 +159,15 @@ end
     (parfor_options
       (identifier))
     (block
-      (number))
-    (keyword))
+      (number)))
   (for_statement
-    (keyword)
     (iterator
       (identifier)
       (range
         (number)
         (number)))
     (parfor_options
-      (string))
+      (string
+        (string_content)))
     (block
-      (number))
-    (keyword)))
+      (number))))

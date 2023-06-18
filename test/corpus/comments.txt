@@ -75,10 +75,8 @@ a(1)
   (comment)
   (function_call
     (identifier)
-    (func_call_paren)
     (arguments
-      (number))
-    (func_call_paren)))
+      (number))))
 
 ================================================================================
 Comment: Line Continuation
@@ -100,8 +98,7 @@ A = "Some " + ... multiline concatenation
     (identifier)
     (binary_operator
       (number)
-      (operator)
-      (comment)
+      (line_continuation)
       (number)))
   (assignment
     (identifier)
@@ -109,7 +106,7 @@ A = "Some " + ... multiline concatenation
       (row
         (identifier)
         (identifier))
-      (comment)
+      (line_continuation)
       (row
         (identifier)
         (identifier))))
@@ -117,10 +114,7 @@ A = "Some " + ... multiline concatenation
     (identifier)
     (binary_operator
       (string
-        (string_open)
-        (string_close))
-      (operator)
-      (comment)
+        (string_content))
+      (line_continuation)
       (string
-        (string_open)
-        (string_close)))))
+        (string_content)))))

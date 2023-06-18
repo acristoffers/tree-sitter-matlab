@@ -9,12 +9,12 @@ a.b.c = 1
 
 (source_file
   (assignment
-    (struct
+    (field_expression
       (identifier)
       (identifier))
     (number))
   (assignment
-    (struct
+    (field_expression
       (identifier)
       (identifier)
       (identifier))
@@ -30,10 +30,10 @@ a.b.c
 --------------------------------------------------------------------------------
 
 (source_file
-  (struct
+  (field_expression
     (identifier)
     (identifier))
-  (struct
+  (field_expression
     (identifier)
     (identifier)
     (identifier)))
@@ -49,23 +49,19 @@ a{1}.b = 1
 
 (source_file
   (assignment
-    (struct
+    (field_expression
       (function_call
         (identifier)
-        (func_call_paren)
         (arguments
-          (number))
-        (func_call_paren))
+          (number)))
       (identifier))
     (number))
   (assignment
-    (struct
+    (field_expression
       (function_call
         (identifier)
-        (func_call_paren)
         (arguments
-          (number))
-        (func_call_paren))
+          (number)))
       (identifier))
     (number)))
 
@@ -80,32 +76,24 @@ a{1}.b(1)
 --------------------------------------------------------------------------------
 
 (source_file
-  (struct
+  (field_expression
     (function_call
       (identifier)
-      (func_call_paren)
       (arguments
-        (number))
-      (func_call_paren))
+        (number)))
     (identifier))
-  (struct
+  (field_expression
     (identifier)
     (function_call
       (identifier)
-      (func_call_paren)
       (arguments
-        (number))
-      (func_call_paren)))
-  (struct
+        (number))))
+  (field_expression
     (function_call
       (identifier)
-      (func_call_paren)
       (arguments
-        (number))
-      (func_call_paren))
+        (number)))
     (function_call
       (identifier)
-      (func_call_paren)
       (arguments
-        (number))
-      (func_call_paren))))
+        (number)))))

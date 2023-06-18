@@ -1,35 +1,3 @@
-; @assignment.inner
-; @assignment.lhs
-; @assignment.outer
-; @assignment.rhs
-; @attribute.inner
-; @attribute.outer
-; @block.inner
-; @block.outer
-; @call.inner
-; @call.outer
-; @class.inner
-; @class.outer
-; @comment.inner
-; @comment.outer
-; @conditional.inner
-; @conditional.outer
-; @frame.inner
-; @frame.outer
-; @function.inner
-; @function.outer
-; @loop.inner
-; @loop.outer
-; @number.inner
-; @parameter.inner
-; @parameter.outer
-; @regex.inner
-; @regex.outer
-; @return.inner
-; @return.outer
-; @scopename.inner
-; @statement.outer
-
 (_ (block) @block.inner) @block.outer
 (block (_) @statement.outer)
 (source_file (_) @statement.outer)
@@ -50,14 +18,14 @@
 (if_statement
   (block) @conditional.inner) @conditional.outer
 (if_statement
-  (elseif_statement
+  (elseif_clause
     (block) @conditional.inner))
 (if_statement
-  (else_statement
+  (else_clause
     (block) @conditional.inner))
 
 (switch_statement
-  (case (block) @conditional.inner)) @conditional.outer
+  (case_clause (block) @conditional.inner)) @conditional.outer
 
 (switch_statement
   (otherwise_clause (block) @conditional.inner))
@@ -81,21 +49,21 @@
 
 (function_output (identifier) @parameter.inner @parameter.outer)
 
-; (assignment ((matrix (row ","? @_start . (_) @parameter.inner . )
-;  (#make-range! "parameter.outer" @_start @parameter.inner))))
-; (assignment ((matrix (row (_) @parameter.inner . "," @_end)
-;  (#make-range! "parameter.outer" @parameter.inner @_end))))
-
 ((function_arguments ","? @_start . (_) @parameter.inner . )
  (#make-range! "parameter.outer" @_start @parameter.inner))
 ((function_arguments (_) @parameter.inner . "," @_end)
  (#make-range! "parameter.outer" @parameter.inner @_end))
 
+((multioutput_variable ","? @_start . (_) @parameter.inner . )
+ (#make-range! "parameter.outer" @_start @parameter.inner))
+((multioutput_variable (_) @parameter.inner . "," @_end)
+ (#make-range! "parameter.outer" @parameter.inner @_end))
+
 (try_statement
   (block) @conditional.inner) @conditional.outer
-(catch
+(catch_clause
   (identifier) @parameter.inner @parameter.outer)
-(catch
+(catch_clause
   (block) @conditional.inner)
 
 (class_definition) @class.outer
@@ -105,10 +73,7 @@
 (comment) @comment.outer
 
 (matrix (row) @parameter.outer)
-(row (_) @parameter.inner)
-
-(matrix (row) @parameter.outer)
-(cell_definition (row) @parameter.outer)
+(cell (row) @parameter.outer)
 (row (_) @parameter.inner)
 
 (assignment

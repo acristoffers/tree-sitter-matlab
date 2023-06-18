@@ -14,17 +14,17 @@
   (block (_) @context.end)
 ) @context
 
-(elseif_statement
+(elseif_clause
   (block (_) @context.end)
 ) @context
 
-(else_statement
+(else_clause
   (block (_) @context.end)
 ) @context
 
 (switch_statement) @context
 
-(case
+(case_clause
   (block (_) @context.end)
 ) @context
 
@@ -36,6 +36,6 @@
   "try"
   (block (_) @context.end) @context
   "end")
-(catch
+(catch_clause
   "catch"
   (block (_) @context.end) @context)

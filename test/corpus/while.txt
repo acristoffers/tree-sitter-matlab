@@ -10,12 +10,8 @@ end
 
 (source_file
   (while_statement
-    (keyword)
-    (condition
-      (comparison_operator
-        (number)
-        (operator)
-        (identifier)))
+    (comparison_operator
+      (number)
+      (identifier))
     (block
-      (keyword))
-    (keyword)))
+      (continue_statement))))

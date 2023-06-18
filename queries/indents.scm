@@ -25,10 +25,10 @@
 ((matrix (row) @indent.align)
  (#set! indent.open_delimiter "[")
  (#set! indent.close_delimiter "]"))
-((cell_definition (row) @indent.align)
+((cell (row) @indent.align)
  (#set! indent.open_delimiter "{")
  (#set! indent.close_delimiter "}"))
-((parenthesized_expression) @indent.align
+((parenthesis) @indent.align
  (#set! indent.open_delimiter "(")
  (#set! indent.close_delimiter ")"))
 

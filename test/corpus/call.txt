@@ -8,9 +8,7 @@ rnd()
 
 (source_file
   (function_call
-    (identifier)
-    (func_call_paren)
-    (func_call_paren)))
+    (identifier)))
 
 ================================================================================
 Function Call: With Arguments
@@ -24,17 +22,13 @@ eig (A)
 (source_file
   (function_call
     (identifier)
-    (func_call_paren)
     (arguments
       (number)
-      (number))
-    (func_call_paren))
+      (number)))
   (function_call
     (identifier)
-    (func_call_paren)
     (arguments
-      (identifier))
-    (func_call_paren)))
+      (identifier))))
 
 ================================================================================
 Function Call: Indexing With Spread
@@ -48,17 +42,13 @@ A(1, :)
 (source_file
   (function_call
     (identifier)
-    (func_call_paren)
     (arguments
-      (spread_operator))
-    (func_call_paren))
+      (spread_operator)))
   (function_call
     (identifier)
-    (func_call_paren)
     (arguments
       (number)
-      (spread_operator))
-    (func_call_paren)))
+      (spread_operator))))
 
 ================================================================================
 Function Call: Call after Cell Indexing
@@ -72,14 +62,10 @@ A{:}(1)
   (function_call
     (function_call
       (identifier)
-      (func_call_paren)
       (arguments
-        (spread_operator))
-      (func_call_paren))
-    (func_call_paren)
+        (spread_operator)))
     (arguments
-      (number))
-    (func_call_paren)))
+      (number))))
 
 ================================================================================
 Command Call: No Arguments
@@ -155,8 +141,8 @@ cvx_end
 (source_file
   (command
     (command_name)
-    (command_argument)
-    (comment))
+    (command_argument))
+  (comment)
   (command
     (command_name)
     (command_argument))
@@ -187,12 +173,12 @@ cmd arg1 % comment
 
 (source_file
   (command
-    (command_name)
-    (comment))
+    (command_name))
+  (comment)
   (command
     (command_name)
-    (command_argument)
-    (comment)))
+    (command_argument))
+  (comment))
 
 ================================================================================
 Command Call: Line Continuation
@@ -208,12 +194,12 @@ cmd arg1 ... comment
 (source_file
   (command
     (command_name)
-    (comment)
+    (line_continuation)
     (command_argument))
   (command
     (command_name)
     (command_argument)
-    (comment)
+    (line_continuation)
     (command_argument)))
 
 ================================================================================

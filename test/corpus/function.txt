@@ -14,20 +14,14 @@ end
 
 (source_file
   (function_definition
-    (keyword)
     (identifier)
     (block
-      (number))
-    (end_function
-      (keyword)))
+      (number)))
   (function_definition
-    (keyword)
     (identifier)
     (function_arguments)
     (block
-      (number))
-    (end_function
-      (keyword))))
+      (number))))
 
 ================================================================================
 Function Declaration: Args, No Output
@@ -41,14 +35,11 @@ end
 
 (source_file
   (function_definition
-    (keyword)
     (identifier)
     (function_arguments
       (identifier))
     (block
-      (number))
-    (end_function
-      (keyword))))
+      (number))))
 
 ================================================================================
 Function Declaration: No Args, Simple Output
@@ -62,14 +53,11 @@ end
 
 (source_file
   (function_definition
-    (keyword)
     (function_output
       (identifier))
     (identifier)
     (block
-      (number))
-    (end_function
-      (keyword))))
+      (number))))
 
 ================================================================================
 Function Declaration: No Args, Multiple Outputs
@@ -83,16 +71,13 @@ end
 
 (source_file
   (function_definition
-    (keyword)
     (function_output
       (multioutput_variable
         (identifier)
         (identifier)))
     (identifier)
     (block
-      (number))
-    (end_function
-      (keyword))))
+      (number))))
 
 ================================================================================
 Function Declaration: Args, Multiple Outputs
@@ -106,7 +91,6 @@ end
 
 (source_file
   (function_definition
-    (keyword)
     (function_output
       (multioutput_variable
         (identifier)
@@ -116,9 +100,7 @@ end
       (identifier)
       (identifier))
     (block
-      (number))
-    (end_function
-      (keyword))))
+      (number))))
 
 ================================================================================
 Function Declaration: After Script
@@ -135,18 +117,12 @@ end
 (source_file
   (binary_operator
     (number)
-    (operator)
     (function_call
-      (identifier)
-      (func_call_paren)
-      (func_call_paren)))
+      (identifier)))
   (function_definition
-    (keyword)
     (identifier)
     (block
-      (number))
-    (end_function
-      (keyword))))
+      (number))))
 
 ================================================================================
 Function Declaration: Getter and Setter
@@ -164,26 +140,18 @@ end
 
 (source_file
   (function_definition
-    (keyword)
-    (keyword)
     (identifier)
     (block
-      (number))
-    (end_function
-      (keyword)))
+      (number)))
   (function_definition
-    (keyword)
     (function_output
       (identifier))
-    (keyword)
     (identifier)
     (function_arguments
       (identifier))
     (block
       (assignment
-        (struct
+        (field_expression
           (identifier)
           (identifier))
-        (identifier)))
-    (end_function
-      (keyword))))
+        (identifier)))))

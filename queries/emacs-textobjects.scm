@@ -1,35 +1,3 @@
-; @assignment.inner
-; @assignment.lhs
-; @assignment.outer
-; @assignment.rhs
-; @attribute.inner
-; @attribute.outer
-; @block.inner
-; @block.outer
-; @call.inner
-; @call.outer
-; @class.inner
-; @class.outer
-; @comment.inner
-; @comment.outer
-; @conditional.inner
-; @conditional.outer
-; @frame.inner
-; @frame.outer
-; @function.inner
-; @function.outer
-; @loop.inner
-; @loop.outer
-; @number.inner
-; @parameter.inner
-; @parameter.outer
-; @regex.inner
-; @regex.outer
-; @return.inner
-; @return.outer
-; @scopename.inner
-; @statement.outer
-
 (_ (block) @block.inner) @block.outer
 (block (_) @statement.outer)
 (source_file (_) @statement.outer)
@@ -47,17 +15,17 @@
 (if_statement
   (block) @conditional.inner) @conditional.outer
 (if_statement
-  (elseif_statement
+  (elseif_clause
     (block) @conditional.inner))
 (if_statement
-  (else_statement
+  (else_clause
     (block) @conditional.inner))
 
 (switch_statement
-  (case (block) @conditional.inner)) @conditional.outer
+  (case_clause (block) @conditional.inner)) @conditional.outer
 
 (switch_statement
-  (otherwise (block) @conditional.inner))
+  (otherwise_clause (block) @conditional.inner))
 
 (for_statement
   (block) @loop.inner) @loop.outer
@@ -86,56 +54,40 @@
 
 (try_statement
   (block) @conditional.inner) @conditional.outer
-(catch
-  (captured_exception) @parameter.inner @parameter.outer)
-(catch
+(catch_clause
+  (identifier) @parameter.inner @parameter.outer)
+(catch_clause
   (block) @conditional.inner)
 
 (class_definition) @class.outer
 
 (number) @number.inner
-(_ return: (keyword) @return.inner @return.outer)
+(_ (return_statement) @return.inner @return.outer)
 (comment) @comment.outer
 
-(matrix_definition (row) @parameter.outer)
-(row (_) @parameter.inner)
-
-(matrix_definition (row) @parameter.outer)
-(cell_definition (row) @parameter.outer)
+(matrix (row) @parameter.outer)
+(cell (row) @parameter.outer)
 (row (_) @parameter.inner)
 
 (assignment
-  variable: (_) @assignment.lhs
-  (_) @assignment.rhs) @assignment.outer
-(assignment
-  (multioutput_variable) @assignment.lhs
+  left: (_) @assignment.lhs
   (_) @assignment.rhs) @assignment.outer
 
-((superclasses "&"? @_start . (_) @parameter.inner . )
- (#make-range! "parameter.outer" @_start @parameter.inner))
-((superclasses (_) @parameter.inner . "&" @_end)
- (#make-range! "parameter.outer" @parameter.inner @_end))
+((superclasses "&"? @parameter.outer._start . (_) @parameter.inner @parameter.outer._end . ))
+((superclasses (_) @parameter.inner @parameter.outer._start . "&" @parameter.outer._end))
 
-(enum argument: (identifier) @parameter.inner @parameter.outer)
+(enum (identifier) @parameter.inner @parameter.outer)
 
-(property argument: (_) @parameter.outer @parameter.inner)
+(property name: (_) @parameter.outer @parameter.inner)
 
-((enum ","? @_start . (_) @parameter.inner . )
- (#make-range! "parameter.outer" @_start @parameter.inner))
-((enum (_) @parameter.inner . "," @_end)
- (#make-range! "parameter.outer" @parameter.inner @_end))
+((enum ","? @parameter.outer._start . (_) @parameter.inner @parameter.outer._end . ))
+((enum (_) @parameter.inner @parameter.outer._start . "," @parameter.outer._end))
 
-((validation_functions ","? @_start . (_) @parameter.inner . )
- (#make-range! "parameter.outer" @_start @parameter.inner))
-((validation_functions (_) @parameter.inner . "," @_end)
- (#make-range! "parameter.outer" @parameter.inner @_end))
+((validation_functions ","? @paramenter.outer._start . (_) @parameter.inner @parameter.outer._end . ))
+((validation_functions (_) @paramter.outer._start @parameter.inner . "," @parameter.outer._end))
 
-((dimensions ","? @_start . (_) @parameter.inner . )
- (#make-range! "parameter.outer" @_start @parameter.inner))
-((dimensions (_) @parameter.inner . "," @_end)
- (#make-range! "parameter.outer" @parameter.inner @_end))
+((dimensions ","? @parameter.outer._start @_start . (_) @parameter.inner @parameter.outer._end . ))
+((dimensions (_) @parameter.outer._start @parameter.inner . "," @parameter.outer._end))
 
-((attributes ","? @_start . (_) @parameter.inner . )
- (#make-range! "parameter.outer" @_start @parameter.inner))
-((attributes (_) @parameter.inner . "," @_end)
- (#make-range! "parameter.outer" @parameter.inner @_end))
+((attributes ","? @parameter.outer._start . (_) @parameter.inner @parameter.outer._end . ))
+((attributes (_) @parameter.outer._start @parameter.inner . "," @parameter.outer._end))
