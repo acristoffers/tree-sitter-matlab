@@ -1,122 +1,164 @@
-; highlights.scm
+; Includes
 
-(string) @string @spell
-(formatting_sequence) @string.special
-(escape_sequence) @string.escape
+((command_name) @include
+  (#eq? @include "import"))
 
-(number) @number
-(boolean) @boolean
-(comment) @comment @spell
-(operator) @operator
-(keyword) @keyword
-(ERROR) @error
+; Keywords
 
-[";" "," "." ":"] @punctuation.delimiter
-["(" ")" "[" "]" "{" "}" ] @punctuation.bracket
+[
+  "arguments"
+  "classdef"
+  "end"
+  "enumeration"
+  "events"
+  "global"
+  "methods"
+  "persistent"
+  "properties"
+] @keyword
 
-(unary_operator
-  (operator) @number
-  (number))
+; Conditionals
 
-(metaclass_operator (identifier) @variable)
-(handle_operator (identifier) @function)
+(if_statement [ "if" "end" ] @conditional)
+(elseif_statement "elseif" @conditional)
+(else_statement "else" @conditional)
+(switch_statement [ "switch" "end" ] @conditional)
+(case "case" @conditional)
+(otherwise_clause "otherwise" @conditional)
+(break_statement) @conditional
 
-(assignment variable: (_) @variable)
-(multioutput_variable (_) @variable)
+; Repeats
 
-(struct "." @operator)
-(struct . [(function_call
-             name: (identifier) @variable)
-           (identifier) @variable])
-(struct
-  [(function_call
-     name: (identifier) @field)
-   (identifier) @field])
+(for_statement [ "for" "parfor" "end" ] @repeat)
+(while_statement [ "while" "end" ] @repeat)
+(continue_statement) @repeat
+
+; Exceptions
+
+(try_statement [ "try" "end" ] @exception)
+(catch "catch" @exception)
+
+; Variables
+
+(identifier) @variable
+
+; Constants
+
+(events (identifier) @constant)
+(attribute (identifier) @constant)
+
+((identifier) @constant
+  (#lua-match? @constant "^[A-Z_]+$"))
+
+"~" @constant.builtin
+
+; Fields/Properties
+
+(field_expression field: (identifier) @field)
+
+(superclass "." (identifier) @property)
+
+(property_name "." (identifier) @property)
+
+(property name: (identifier) @property)
+
+; Types
+
+(class_definition name: (identifier) @type)
+
+(attributes (identifier) @constant)
+
+(enum . (identifier) @type)
+
+((identifier) @type
+  (#lua-match? @type "^_*[A-Z][a-zA-Z0-9_]+$"))
+
+; Functions
+
+(function_definition
+  "function" @keyword.function
+  name: (identifier) @function
+  [ "end" "endfunction" ]? @keyword.function)
+
+(function_signature name: (identifier) @function)
 
 (function_call
-  name: (identifier) @function.call
-  ("@" @operator (superclass) @type)?)
+  name: (identifier) @function.call)
+
+(handle_operator (identifier) @function)
+
+(validation_functions (identifier) @function)
 
 (command
   (command_name) @function.call
-  (command_argument)* @text.literal)
+  (command_argument) @parameter)
 
-(spread_operator) @constant
+(return_statement) @keyword.return
+
+; Parameters
+
+(function_arguments (identifier) @parameter)
+
+; ; Namespaces
+;
+; (property_name . (identifier) @namespace)
+;
+; (superclass . (identifier) @namespace)
+
+; Operators
+
+[
+  "+"
+  ".+"
+  "-"
+  ".*"
+  "*"
+  ".*"
+  "/"
+  "./"
+  "\\"
+  ".\\"
+  "^"
+  ".^"
+  "'"
+  ".'"
+  "|"
+  "&"
+  "?"
+  "@"
+  "<"
+  "<="
+  ">"
+  ">="
+  "=="
+  "~="
+  "="
+  "&&"
+  "||"
+] @operator
 
 (range ":" @operator)
 
-(if_statement
-  if: (keyword) @conditional
-  (elseif_statement
-    elseif: (keyword) @conditional)*
-  (else_statement
-    else: (keyword) @conditional)*
-  end: (keyword) @conditional)
+; Punctuation
 
-(for_statement
-  (keyword) @repeat
-  (identifier)? @variable
-  (block)
-  end: (keyword) @repeat)
+[ ";" "," "." ":" ] @punctuation.delimiter
 
-(while_statement
-  while: (keyword) @repeat
-  end: (keyword) @repeat)
+[ "(" ")" "[" "]" "{" "}" ] @punctuation.bracket
 
-(switch_statement
-  switch: (keyword) @conditional
-  (case
-    case: (keyword) @conditional)+
-  (otherwise
-    otherwise: (keyword) @conditional)+
-  end: (keyword) @conditional)
+; Literals
 
-(arguments_statement (_) @variable)
-(global_operator (identifier) @variable)
-(persistent_operator (identifier) @variable)
+(string) @string
 
-(function_definition
-  (keyword) @keyword.function
-  (identifier) @function
-  (end_function
-    (keyword) @keyword.function)?)
+(escape_sequence) @string.escape
 
-(function_output
-  [(identifier) @variable
-                (multioutput_variable
-                  (identifier) @variable
-                  ("," (identifier) @variable))])
+(number) @number
 
-(function_arguments
-  (identifier)* @variable
-  ("," (identifier) @variable)*)
+(boolean) @boolean
 
-(try_statement
-   try: (keyword) @exception
-   end: (keyword) @exception)
-(catch
-   catch: (keyword) @exception
-   (captured_exception) @variable)
+; Comments
 
-(class_definition
-  classdef: (keyword) @keyword.function
-  (attributes
-    (identifier) @constant)?
-  class_name: (identifier) @type.definition
-  (superclasses
-    (identifier) @type)?
-  end: (keyword) @keyword.function)
+[ (comment) (line_continuation) ] @comment @spell
 
-(enum argument: (identifier) @constant)
-(events (identifier) @constant)
-(validation_functions (identifier) @variable)
-(attribute (identifier) @constant)
+; Errors
 
-(function_signature function_name: (identifier) @function)
-
-(property
-  (property_name) @constant
-  (class)? @type)
-
-((keyword) @keyword.return
-  (#eq? @keyword.return "return"))
+(ERROR) @error

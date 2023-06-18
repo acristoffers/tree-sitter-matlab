@@ -83,7 +83,7 @@ end
         (validation_functions
           (identifier))
         (default_value
-          (matrix_definition
+          (matrix
             (row
               (number)
               (number)

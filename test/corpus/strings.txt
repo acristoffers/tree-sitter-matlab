@@ -52,10 +52,11 @@ Strings: Formatting
 
 (source_file
   (string
-    (string_open)
+    (string_content)
     (formatting_sequence)
+    (string_content)
     (formatting_sequence)
-    (string_close)))
+    (string_content)))
 
 ================================================================================
 Strings: Escaping
@@ -69,17 +70,20 @@ Strings: Escaping
 
 (source_file
   (string
-    (string_open)
+    (string_content)
     (escape_sequence)
-    (string_close))
+    (string_content))
   (string
-    (string_open)
+    (string_content)
     (escape_sequence)
-    (string_close))
+    (string_content))
   (string
-    (string_open)
+    (string_content)
     (escape_sequence)
+    (string_content)
     (escape_sequence)
+    (string_content)
     (escape_sequence)
+    (string_content)
     (escape_sequence)
-    (string_close)))
+    (string_content)))

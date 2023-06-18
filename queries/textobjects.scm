@@ -60,7 +60,7 @@
   (case (block) @conditional.inner)) @conditional.outer
 
 (switch_statement
-  (otherwise (block) @conditional.inner))
+  (otherwise_clause (block) @conditional.inner))
 
 (for_statement
   (block) @loop.inner) @loop.outer
@@ -81,10 +81,10 @@
 
 (function_output (identifier) @parameter.inner @parameter.outer)
 
-((multioutput_variable ","? @_start . (_) @parameter.inner . )
- (#make-range! "parameter.outer" @_start @parameter.inner))
-((multioutput_variable (_) @parameter.inner . "," @_end)
- (#make-range! "parameter.outer" @parameter.inner @_end))
+; (assignment ((matrix (row ","? @_start . (_) @parameter.inner . )
+;  (#make-range! "parameter.outer" @_start @parameter.inner))))
+; (assignment ((matrix (row (_) @parameter.inner . "," @_end)
+;  (#make-range! "parameter.outer" @parameter.inner @_end))))
 
 ((function_arguments ","? @_start . (_) @parameter.inner . )
  (#make-range! "parameter.outer" @_start @parameter.inner))
@@ -94,28 +94,25 @@
 (try_statement
   (block) @conditional.inner) @conditional.outer
 (catch
-  (captured_exception) @parameter.inner @parameter.outer)
+  (identifier) @parameter.inner @parameter.outer)
 (catch
   (block) @conditional.inner)
 
 (class_definition) @class.outer
 
 (number) @number.inner
-(_ return: (keyword) @return.inner @return.outer)
+(_ (return_statement) @return.inner @return.outer)
 (comment) @comment.outer
 
-(matrix_definition (row) @parameter.outer)
+(matrix (row) @parameter.outer)
 (row (_) @parameter.inner)
 
-(matrix_definition (row) @parameter.outer)
+(matrix (row) @parameter.outer)
 (cell_definition (row) @parameter.outer)
 (row (_) @parameter.inner)
 
 (assignment
-  variable: (_) @assignment.lhs
-  (_) @assignment.rhs) @assignment.outer
-(assignment
-  (multioutput_variable) @assignment.lhs
+  left: (_) @assignment.lhs
   (_) @assignment.rhs) @assignment.outer
 
 ((superclasses "&"? @_start . (_) @parameter.inner . )
@@ -123,9 +120,9 @@
 ((superclasses (_) @parameter.inner . "&" @_end)
  (#make-range! "parameter.outer" @parameter.inner @_end))
 
-(enum argument: (identifier) @parameter.inner @parameter.outer)
+(enum (identifier) @parameter.inner @parameter.outer)
 
-(property argument: (_) @parameter.outer @parameter.inner)
+(property name: (_) @parameter.outer @parameter.inner)
 
 ((enum ","? @_start . (_) @parameter.inner . )
  (#make-range! "parameter.outer" @_start @parameter.inner))

@@ -5,7 +5,7 @@
     "fields": {
       "argument": {
         "multiple": true,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "binary_operator",
@@ -28,6 +28,10 @@
             "named": true
           },
           {
+            "type": "field_expression",
+            "named": true
+          },
+          {
             "type": "function_call",
             "named": true
           },
@@ -40,15 +44,11 @@
             "named": true
           },
           {
-            "type": "ignored_argument",
-            "named": true
-          },
-          {
             "type": "lambda",
             "named": true
           },
           {
-            "type": "matrix_definition",
+            "type": "matrix",
             "named": true
           },
           {
@@ -69,6 +69,10 @@
           },
           {
             "type": "postfix_operator",
+            "named": true
+          },
+          {
+            "type": "property_name",
             "named": true
           },
           {
@@ -84,27 +88,7 @@
             "named": true
           },
           {
-            "type": "struct",
-            "named": true
-          },
-          {
             "type": "unary_operator",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
-    "type": "arguments_statement",
-    "named": true,
-    "fields": {
-      "end": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "keyword",
             "named": true
           }
         ]
@@ -112,14 +96,105 @@
     },
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
-          "type": "attributes",
+          "type": "binary_operator",
           "named": true
         },
         {
-          "type": "keyword",
+          "type": "boolean",
+          "named": true
+        },
+        {
+          "type": "boolean_operator",
+          "named": true
+        },
+        {
+          "type": "cell_definition",
+          "named": true
+        },
+        {
+          "type": "comparison_operator",
+          "named": true
+        },
+        {
+          "type": "field_expression",
+          "named": true
+        },
+        {
+          "type": "function_call",
+          "named": true
+        },
+        {
+          "type": "handle_operator",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "ignored_argument",
+          "named": true
+        },
+        {
+          "type": "lambda",
+          "named": true
+        },
+        {
+          "type": "matrix",
+          "named": true
+        },
+        {
+          "type": "metaclass_operator",
+          "named": true
+        },
+        {
+          "type": "not_operator",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "postfix_operator",
+          "named": true
+        },
+        {
+          "type": "property_name",
+          "named": true
+        },
+        {
+          "type": "range",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "unary_operator",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "arguments_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "attributes",
           "named": true
         },
         {
@@ -133,7 +208,33 @@
     "type": "assignment",
     "named": true,
     "fields": {
-      "value": {
+      "left": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "field_expression",
+            "named": true
+          },
+          {
+            "type": "function_call",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "ignored_argument",
+            "named": true
+          },
+          {
+            "type": "multioutput_variable",
+            "named": true
+          }
+        ]
+      },
+      "right": {
         "multiple": false,
         "required": true,
         "types": [
@@ -158,6 +259,10 @@
             "named": true
           },
           {
+            "type": "field_expression",
+            "named": true
+          },
+          {
             "type": "function_call",
             "named": true
           },
@@ -174,7 +279,7 @@
             "named": true
           },
           {
-            "type": "matrix_definition",
+            "type": "matrix",
             "named": true
           },
           {
@@ -198,6 +303,10 @@
             "named": true
           },
           {
+            "type": "property_name",
+            "named": true
+          },
+          {
             "type": "range",
             "named": true
           },
@@ -206,43 +315,11 @@
             "named": true
           },
           {
-            "type": "struct",
-            "named": true
-          },
-          {
             "type": "unary_operator",
             "named": true
           }
         ]
-      },
-      "variable": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "function_call",
-            "named": true
-          },
-          {
-            "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "struct",
-            "named": true
-          }
-        ]
       }
-    },
-    "children": {
-      "multiple": false,
-      "required": false,
-      "types": [
-        {
-          "type": "multioutput_variable",
-          "named": true
-        }
-      ]
     }
   },
   {
@@ -274,6 +351,10 @@
           "named": true
         },
         {
+          "type": "field_expression",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -290,7 +371,7 @@
           "named": true
         },
         {
-          "type": "matrix_definition",
+          "type": "matrix",
           "named": true
         },
         {
@@ -314,15 +395,15 @@
           "named": true
         },
         {
+          "type": "property_name",
+          "named": true
+        },
+        {
           "type": "range",
           "named": true
         },
         {
           "type": "string",
-          "named": true
-        },
-        {
-          "type": "struct",
           "named": true
         },
         {
@@ -338,18 +419,24 @@
     "fields": {
       "argument": {
         "multiple": true,
-        "required": true,
+        "required": false,
         "types": [
-          {
-            "type": "attribute",
-            "named": true
-          },
           {
             "type": "identifier",
             "named": true
           }
         ]
       }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "attribute",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -389,7 +476,7 @@
             "named": true
           },
           {
-            "type": "matrix_definition",
+            "type": "matrix",
             "named": true
           },
           {
@@ -409,11 +496,11 @@
             "named": true
           },
           {
-            "type": "string",
+            "type": "property_name",
             "named": true
           },
           {
-            "type": "struct",
+            "type": "string",
             "named": true
           },
           {
@@ -455,7 +542,7 @@
             "named": true
           },
           {
-            "type": "matrix_definition",
+            "type": "matrix",
             "named": true
           },
           {
@@ -475,11 +562,11 @@
             "named": true
           },
           {
-            "type": "string",
+            "type": "property_name",
             "named": true
           },
           {
-            "type": "struct",
+            "type": "string",
             "named": true
           },
           {
@@ -488,53 +575,12 @@
           }
         ]
       }
-    },
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "operator",
-          "named": true
-        }
-      ]
     }
   },
   {
     "type": "block",
     "named": true,
-    "fields": {
-      "break": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "keyword",
-            "named": true
-          }
-        ]
-      },
-      "continue": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "keyword",
-            "named": true
-          }
-        ]
-      },
-      "return": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "keyword",
-            "named": true
-          }
-        ]
-      }
-    },
+    "fields": {},
     "children": {
       "multiple": true,
       "required": false,
@@ -556,6 +602,10 @@
           "named": true
         },
         {
+          "type": "break_statement",
+          "named": true
+        },
+        {
           "type": "cell_definition",
           "named": true
         },
@@ -568,11 +618,15 @@
           "named": true
         },
         {
-          "type": "comment",
+          "type": "comparison_operator",
           "named": true
         },
         {
-          "type": "comparison_operator",
+          "type": "continue_statement",
+          "named": true
+        },
+        {
+          "type": "field_expression",
           "named": true
         },
         {
@@ -581,6 +635,10 @@
         },
         {
           "type": "function_call",
+          "named": true
+        },
+        {
+          "type": "function_definition",
           "named": true
         },
         {
@@ -604,7 +662,7 @@
           "named": true
         },
         {
-          "type": "matrix_definition",
+          "type": "matrix",
           "named": true
         },
         {
@@ -632,15 +690,19 @@
           "named": true
         },
         {
+          "type": "property_name",
+          "named": true
+        },
+        {
           "type": "range",
           "named": true
         },
         {
-          "type": "string",
+          "type": "return_statement",
           "named": true
         },
         {
-          "type": "struct",
+          "type": "string",
           "named": true
         },
         {
@@ -696,6 +758,10 @@
             "named": true
           },
           {
+            "type": "field_expression",
+            "named": true
+          },
+          {
             "type": "function_call",
             "named": true
           },
@@ -712,7 +778,7 @@
             "named": true
           },
           {
-            "type": "matrix_definition",
+            "type": "matrix",
             "named": true
           },
           {
@@ -736,15 +802,15 @@
             "named": true
           },
           {
+            "type": "property_name",
+            "named": true
+          },
+          {
             "type": "range",
             "named": true
           },
           {
             "type": "string",
-            "named": true
-          },
-          {
-            "type": "struct",
             "named": true
           },
           {
@@ -778,6 +844,10 @@
             "named": true
           },
           {
+            "type": "field_expression",
+            "named": true
+          },
+          {
             "type": "function_call",
             "named": true
           },
@@ -794,7 +864,7 @@
             "named": true
           },
           {
-            "type": "matrix_definition",
+            "type": "matrix",
             "named": true
           },
           {
@@ -818,6 +888,10 @@
             "named": true
           },
           {
+            "type": "property_name",
+            "named": true
+          },
+          {
             "type": "range",
             "named": true
           },
@@ -826,7 +900,95 @@
             "named": true
           },
           {
-            "type": "struct",
+            "type": "unary_operator",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "case",
+    "named": true,
+    "fields": {
+      "condition": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "binary_operator",
+            "named": true
+          },
+          {
+            "type": "boolean",
+            "named": true
+          },
+          {
+            "type": "boolean_operator",
+            "named": true
+          },
+          {
+            "type": "cell_definition",
+            "named": true
+          },
+          {
+            "type": "comparison_operator",
+            "named": true
+          },
+          {
+            "type": "field_expression",
+            "named": true
+          },
+          {
+            "type": "function_call",
+            "named": true
+          },
+          {
+            "type": "handle_operator",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "lambda",
+            "named": true
+          },
+          {
+            "type": "matrix",
+            "named": true
+          },
+          {
+            "type": "metaclass_operator",
+            "named": true
+          },
+          {
+            "type": "not_operator",
+            "named": true
+          },
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "postfix_operator",
+            "named": true
+          },
+          {
+            "type": "property_name",
+            "named": true
+          },
+          {
+            "type": "range",
+            "named": true
+          },
+          {
+            "type": "string",
             "named": true
           },
           {
@@ -838,40 +1000,10 @@
     },
     "children": {
       "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "operator",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "case",
-    "named": true,
-    "fields": {
-      "case": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "keyword",
-            "named": true
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "block",
-          "named": true
-        },
-        {
-          "type": "condition",
           "named": true
         }
       ]
@@ -880,18 +1012,7 @@
   {
     "type": "catch",
     "named": true,
-    "fields": {
-      "catch": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "keyword",
-            "named": true
-          }
-        ]
-      }
-    },
+    "fields": {},
     "children": {
       "multiple": true,
       "required": false,
@@ -901,7 +1022,7 @@
           "named": true
         },
         {
-          "type": "captured_exception",
+          "type": "identifier",
           "named": true
         }
       ]
@@ -923,54 +1044,15 @@
     }
   },
   {
-    "type": "class",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "function_call",
-          "named": true
-        },
-        {
-          "type": "identifier",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "class_definition",
     "named": true,
     "fields": {
-      "class_name": {
+      "name": {
         "multiple": false,
         "required": true,
         "types": [
           {
             "type": "identifier",
-            "named": true
-          }
-        ]
-      },
-      "classdef": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "keyword",
-            "named": true
-          }
-        ]
-      },
-      "end": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "keyword",
             "named": true
           }
         ]
@@ -1010,34 +1092,17 @@
   {
     "type": "command",
     "named": true,
-    "fields": {
-      "argument": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "command_argument",
-            "named": true
-          }
-        ]
-      },
-      "name": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "command_name",
-            "named": true
-          }
-        ]
-      }
-    },
+    "fields": {},
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
         {
-          "type": "comment",
+          "type": "command_argument",
+          "named": true
+        },
+        {
+          "type": "command_name",
           "named": true
         }
       ]
@@ -1072,6 +1137,10 @@
           "named": true
         },
         {
+          "type": "field_expression",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -1088,7 +1157,7 @@
           "named": true
         },
         {
-          "type": "matrix_definition",
+          "type": "matrix",
           "named": true
         },
         {
@@ -1104,15 +1173,15 @@
           "named": true
         },
         {
-          "type": "operator",
-          "named": true
-        },
-        {
           "type": "parenthesized_expression",
           "named": true
         },
         {
           "type": "postfix_operator",
+          "named": true
+        },
+        {
+          "type": "property_name",
           "named": true
         },
         {
@@ -1124,10 +1193,6 @@
           "named": true
         },
         {
-          "type": "struct",
-          "named": true
-        },
-        {
           "type": "unary_operator",
           "named": true
         }
@@ -1135,7 +1200,7 @@
     }
   },
   {
-    "type": "condition",
+    "type": "default_value",
     "named": true,
     "fields": {},
     "children": {
@@ -1163,6 +1228,10 @@
           "named": true
         },
         {
+          "type": "field_expression",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -1179,7 +1248,7 @@
           "named": true
         },
         {
-          "type": "matrix_definition",
+          "type": "matrix",
           "named": true
         },
         {
@@ -1203,149 +1272,15 @@
           "named": true
         },
         {
+          "type": "property_name",
+          "named": true
+        },
+        {
           "type": "range",
           "named": true
         },
         {
           "type": "string",
-          "named": true
-        },
-        {
-          "type": "struct",
-          "named": true
-        },
-        {
-          "type": "unary_operator",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "default_value",
-    "named": true,
-    "fields": {
-      "argument": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "binary_operator",
-            "named": true
-          },
-          {
-            "type": "boolean",
-            "named": true
-          },
-          {
-            "type": "boolean_operator",
-            "named": true
-          },
-          {
-            "type": "cell_definition",
-            "named": true
-          },
-          {
-            "type": "comparison_operator",
-            "named": true
-          },
-          {
-            "type": "function_call",
-            "named": true
-          },
-          {
-            "type": "handle_operator",
-            "named": true
-          },
-          {
-            "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "lambda",
-            "named": true
-          },
-          {
-            "type": "matrix_definition",
-            "named": true
-          },
-          {
-            "type": "metaclass_operator",
-            "named": true
-          },
-          {
-            "type": "not_operator",
-            "named": true
-          },
-          {
-            "type": "number",
-            "named": true
-          },
-          {
-            "type": "parenthesized_expression",
-            "named": true
-          },
-          {
-            "type": "postfix_operator",
-            "named": true
-          },
-          {
-            "type": "range",
-            "named": true
-          },
-          {
-            "type": "string",
-            "named": true
-          },
-          {
-            "type": "struct",
-            "named": true
-          },
-          {
-            "type": "unary_operator",
-            "named": true
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": false,
-      "required": false,
-      "types": [
-        {
-          "type": "boolean",
-          "named": true
-        },
-        {
-          "type": "cell_definition",
-          "named": true
-        },
-        {
-          "type": "function_call",
-          "named": true
-        },
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "matrix_definition",
-          "named": true
-        },
-        {
-          "type": "not_operator",
-          "named": true
-        },
-        {
-          "type": "number",
-          "named": true
-        },
-        {
-          "type": "postfix_operator",
-          "named": true
-        },
-        {
-          "type": "struct",
           "named": true
         },
         {
@@ -1377,13 +1312,104 @@
   {
     "type": "else_statement",
     "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "block",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "elseif_statement",
+    "named": true,
     "fields": {
-      "else": {
+      "condition": {
         "multiple": false,
         "required": true,
         "types": [
           {
-            "type": "keyword",
+            "type": "binary_operator",
+            "named": true
+          },
+          {
+            "type": "boolean",
+            "named": true
+          },
+          {
+            "type": "boolean_operator",
+            "named": true
+          },
+          {
+            "type": "cell_definition",
+            "named": true
+          },
+          {
+            "type": "comparison_operator",
+            "named": true
+          },
+          {
+            "type": "field_expression",
+            "named": true
+          },
+          {
+            "type": "function_call",
+            "named": true
+          },
+          {
+            "type": "handle_operator",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "lambda",
+            "named": true
+          },
+          {
+            "type": "matrix",
+            "named": true
+          },
+          {
+            "type": "metaclass_operator",
+            "named": true
+          },
+          {
+            "type": "not_operator",
+            "named": true
+          },
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "postfix_operator",
+            "named": true
+          },
+          {
+            "type": "property_name",
+            "named": true
+          },
+          {
+            "type": "range",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          },
+          {
+            "type": "unary_operator",
             "named": true
           }
         ]
@@ -1401,96 +1427,60 @@
     }
   },
   {
-    "type": "elseif_statement",
+    "type": "enum",
     "named": true,
-    "fields": {
-      "elseif": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "keyword",
-            "named": true
-          }
-        ]
-      }
-    },
+    "fields": {},
     "children": {
       "multiple": true,
       "required": true,
       "types": [
         {
-          "type": "block",
+          "type": "boolean",
           "named": true
         },
         {
-          "type": "condition",
+          "type": "cell_definition",
+          "named": true
+        },
+        {
+          "type": "function_call",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "matrix",
+          "named": true
+        },
+        {
+          "type": "not_operator",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "postfix_operator",
+          "named": true
+        },
+        {
+          "type": "property_name",
+          "named": true
+        },
+        {
+          "type": "unary_operator",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "end_function",
-    "named": true,
-    "fields": {
-      "end": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "keyword",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
-    "type": "enum",
-    "named": true,
-    "fields": {
-      "argument": {
-        "multiple": true,
-        "required": true,
-        "types": [
-          {
-            "type": "default_value",
-            "named": true
-          },
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
     "type": "enumeration",
     "named": true,
-    "fields": {
-      "end": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "keyword",
-            "named": true
-          }
-        ]
-      },
-      "enumeration": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "keyword",
-            "named": true
-          }
-        ]
-      }
-    },
+    "fields": {},
     "children": {
       "multiple": true,
       "required": false,
@@ -1509,104 +1499,218 @@
   {
     "type": "events",
     "named": true,
-    "fields": {
-      "argument": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      },
-      "end": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "keyword",
-            "named": true
-          }
-        ]
-      },
-      "events": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "keyword",
-            "named": true
-          }
-        ]
-      }
-    },
+    "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": false,
       "types": [
         {
           "type": "attributes",
+          "named": true
+        },
+        {
+          "type": "identifier",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "for_statement",
+    "type": "field_expression",
     "named": true,
     "fields": {
-      "argument": {
-        "multiple": true,
+      "field": {
+        "multiple": false,
         "required": true,
         "types": [
           {
-            "type": "iterator",
+            "type": "binary_operator",
             "named": true
           },
           {
-            "type": "parfor_options",
+            "type": "boolean",
+            "named": true
+          },
+          {
+            "type": "boolean_operator",
+            "named": true
+          },
+          {
+            "type": "cell_definition",
+            "named": true
+          },
+          {
+            "type": "comparison_operator",
+            "named": true
+          },
+          {
+            "type": "field_expression",
+            "named": true
+          },
+          {
+            "type": "function_call",
+            "named": true
+          },
+          {
+            "type": "handle_operator",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "lambda",
+            "named": true
+          },
+          {
+            "type": "matrix",
+            "named": true
+          },
+          {
+            "type": "metaclass_operator",
+            "named": true
+          },
+          {
+            "type": "not_operator",
+            "named": true
+          },
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "postfix_operator",
+            "named": true
+          },
+          {
+            "type": "property_name",
+            "named": true
+          },
+          {
+            "type": "range",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          },
+          {
+            "type": "unary_operator",
             "named": true
           }
         ]
       },
-      "end": {
+      "object": {
         "multiple": false,
         "required": true,
         "types": [
           {
-            "type": "keyword",
+            "type": "binary_operator",
             "named": true
-          }
-        ]
-      },
-      "for": {
-        "multiple": false,
-        "required": false,
-        "types": [
+          },
           {
-            "type": "keyword",
+            "type": "boolean",
             "named": true
-          }
-        ]
-      },
-      "parfor": {
-        "multiple": false,
-        "required": false,
-        "types": [
+          },
           {
-            "type": "keyword",
+            "type": "boolean_operator",
+            "named": true
+          },
+          {
+            "type": "cell_definition",
+            "named": true
+          },
+          {
+            "type": "comparison_operator",
+            "named": true
+          },
+          {
+            "type": "field_expression",
+            "named": true
+          },
+          {
+            "type": "function_call",
+            "named": true
+          },
+          {
+            "type": "handle_operator",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "lambda",
+            "named": true
+          },
+          {
+            "type": "matrix",
+            "named": true
+          },
+          {
+            "type": "metaclass_operator",
+            "named": true
+          },
+          {
+            "type": "not_operator",
+            "named": true
+          },
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "postfix_operator",
+            "named": true
+          },
+          {
+            "type": "property_name",
+            "named": true
+          },
+          {
+            "type": "range",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          },
+          {
+            "type": "unary_operator",
             "named": true
           }
         ]
       }
-    },
+    }
+  },
+  {
+    "type": "for_statement",
+    "named": true,
+    "fields": {},
     "children": {
-      "multiple": false,
-      "required": false,
+      "multiple": true,
+      "required": true,
       "types": [
         {
           "type": "block",
+          "named": true
+        },
+        {
+          "type": "iterator",
+          "named": true
+        },
+        {
+          "type": "parfor_options",
           "named": true
         }
       ]
@@ -1616,20 +1720,6 @@
     "type": "function_arguments",
     "named": true,
     "fields": {
-      "argument": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "ignored_argument",
-            "named": true
-          }
-        ]
-      },
       "arguments": {
         "multiple": true,
         "required": false,
@@ -1654,16 +1744,6 @@
     "type": "function_call",
     "named": true,
     "fields": {
-      "arguments": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "arguments",
-            "named": true
-          }
-        ]
-      },
       "name": {
         "multiple": false,
         "required": true,
@@ -1675,15 +1755,9 @@
           {
             "type": "identifier",
             "named": true
-          }
-        ]
-      },
-      "superclass": {
-        "multiple": false,
-        "required": false,
-        "types": [
+          },
           {
-            "type": "superclass",
+            "type": "property_name",
             "named": true
           }
         ]
@@ -1691,10 +1765,14 @@
     },
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
-          "type": "func_call_paren",
+          "type": "arguments",
+          "named": true
+        },
+        {
+          "type": "superclass",
           "named": true
         }
       ]
@@ -1704,20 +1782,12 @@
     "type": "function_definition",
     "named": true,
     "fields": {
-      "function_name": {
-        "multiple": true,
+      "name": {
+        "multiple": false,
         "required": true,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "keyword",
             "named": true
           }
         ]
@@ -1736,19 +1806,11 @@
           "named": true
         },
         {
-          "type": "end_function",
-          "named": true
-        },
-        {
           "type": "function_arguments",
           "named": true
         },
         {
           "type": "function_output",
-          "named": true
-        },
-        {
-          "type": "keyword",
           "named": true
         }
       ]
@@ -1757,41 +1819,32 @@
   {
     "type": "function_output",
     "named": true,
-    "fields": {
-      "output": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "multioutput_variable",
-            "named": true
-          }
-        ]
-      }
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "matrix",
+          "named": true
+        }
+      ]
     }
   },
   {
     "type": "function_signature",
     "named": true,
     "fields": {
-      "function_name": {
-        "multiple": true,
+      "name": {
+        "multiple": false,
         "required": true,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "keyword",
             "named": true
           }
         ]
@@ -1815,34 +1868,13 @@
   {
     "type": "global_operator",
     "named": true,
-    "fields": {
-      "argument": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      },
-      "arguments": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      }
-    },
+    "fields": {},
     "children": {
-      "multiple": false,
-      "required": true,
+      "multiple": true,
+      "required": false,
       "types": [
         {
-          "type": "keyword",
+          "type": "identifier",
           "named": true
         }
       ]
@@ -1853,15 +1885,11 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "types": [
         {
           "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "operator",
           "named": true
         }
       ]
@@ -1871,32 +1899,88 @@
     "type": "if_statement",
     "named": true,
     "fields": {
-      "argument": {
+      "condition": {
         "multiple": false,
         "required": true,
         "types": [
           {
-            "type": "condition",
+            "type": "binary_operator",
             "named": true
-          }
-        ]
-      },
-      "end": {
-        "multiple": false,
-        "required": true,
-        "types": [
+          },
           {
-            "type": "keyword",
+            "type": "boolean",
             "named": true
-          }
-        ]
-      },
-      "if": {
-        "multiple": false,
-        "required": true,
-        "types": [
+          },
           {
-            "type": "keyword",
+            "type": "boolean_operator",
+            "named": true
+          },
+          {
+            "type": "cell_definition",
+            "named": true
+          },
+          {
+            "type": "comparison_operator",
+            "named": true
+          },
+          {
+            "type": "field_expression",
+            "named": true
+          },
+          {
+            "type": "function_call",
+            "named": true
+          },
+          {
+            "type": "handle_operator",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "lambda",
+            "named": true
+          },
+          {
+            "type": "matrix",
+            "named": true
+          },
+          {
+            "type": "metaclass_operator",
+            "named": true
+          },
+          {
+            "type": "not_operator",
+            "named": true
+          },
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "postfix_operator",
+            "named": true
+          },
+          {
+            "type": "property_name",
+            "named": true
+          },
+          {
+            "type": "range",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          },
+          {
+            "type": "unary_operator",
             "named": true
           }
         ]
@@ -1955,6 +2039,10 @@
           "named": true
         },
         {
+          "type": "field_expression",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -1971,7 +2059,7 @@
           "named": true
         },
         {
-          "type": "matrix_definition",
+          "type": "matrix",
           "named": true
         },
         {
@@ -1995,15 +2083,15 @@
           "named": true
         },
         {
+          "type": "property_name",
+          "named": true
+        },
+        {
           "type": "range",
           "named": true
         },
         {
           "type": "string",
-          "named": true
-        },
-        {
-          "type": "struct",
           "named": true
         },
         {
@@ -2017,16 +2105,6 @@
     "type": "lambda",
     "named": true,
     "fields": {
-      "arguments": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "arguments",
-            "named": true
-          }
-        ]
-      },
       "expression": {
         "multiple": false,
         "required": true,
@@ -2052,6 +2130,10 @@
             "named": true
           },
           {
+            "type": "field_expression",
+            "named": true
+          },
+          {
             "type": "function_call",
             "named": true
           },
@@ -2068,7 +2150,7 @@
             "named": true
           },
           {
-            "type": "matrix_definition",
+            "type": "matrix",
             "named": true
           },
           {
@@ -2092,15 +2174,15 @@
             "named": true
           },
           {
+            "type": "property_name",
+            "named": true
+          },
+          {
             "type": "range",
             "named": true
           },
           {
             "type": "string",
-            "named": true
-          },
-          {
-            "type": "struct",
             "named": true
           },
           {
@@ -2112,17 +2194,17 @@
     },
     "children": {
       "multiple": false,
-      "required": true,
+      "required": false,
       "types": [
         {
-          "type": "operator",
+          "type": "arguments",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "matrix_definition",
+    "type": "matrix",
     "named": true,
     "fields": {},
     "children": {
@@ -2141,15 +2223,87 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "types": [
+        {
+          "type": "binary_operator",
+          "named": true
+        },
+        {
+          "type": "boolean",
+          "named": true
+        },
+        {
+          "type": "boolean_operator",
+          "named": true
+        },
+        {
+          "type": "cell_definition",
+          "named": true
+        },
+        {
+          "type": "comparison_operator",
+          "named": true
+        },
+        {
+          "type": "field_expression",
+          "named": true
+        },
+        {
+          "type": "function_call",
+          "named": true
+        },
+        {
+          "type": "handle_operator",
+          "named": true
+        },
         {
           "type": "identifier",
           "named": true
         },
         {
-          "type": "operator",
+          "type": "lambda",
+          "named": true
+        },
+        {
+          "type": "matrix",
+          "named": true
+        },
+        {
+          "type": "metaclass_operator",
+          "named": true
+        },
+        {
+          "type": "not_operator",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "postfix_operator",
+          "named": true
+        },
+        {
+          "type": "property_name",
+          "named": true
+        },
+        {
+          "type": "range",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "unary_operator",
           "named": true
         }
       ]
@@ -2158,28 +2312,7 @@
   {
     "type": "methods",
     "named": true,
-    "fields": {
-      "end": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "keyword",
-            "named": true
-          }
-        ]
-      },
-      "methods": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "keyword",
-            "named": true
-          }
-        ]
-      }
-    },
+    "fields": {},
     "children": {
       "multiple": true,
       "required": false,
@@ -2202,67 +2335,33 @@
   {
     "type": "multioutput_variable",
     "named": true,
-    "fields": {
-      "argument": {
-        "multiple": true,
-        "required": true,
-        "types": [
-          {
-            "type": "function_call",
-            "named": true
-          },
-          {
-            "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "ignored_argument",
-            "named": true
-          },
-          {
-            "type": "struct",
-            "named": true
-          }
-        ]
-      },
-      "variable": {
-        "multiple": true,
-        "required": true,
-        "types": [
-          {
-            "type": ",",
-            "named": false
-          },
-          {
-            "type": "function_call",
-            "named": true
-          },
-          {
-            "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "ignored_argument",
-            "named": true
-          },
-          {
-            "type": "struct",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
-    "type": "not_operator",
-    "named": true,
     "fields": {},
     "children": {
       "multiple": true,
       "required": true,
       "types": [
         {
+          "type": "binary_operator",
+          "named": true
+        },
+        {
           "type": "boolean",
+          "named": true
+        },
+        {
+          "type": "boolean_operator",
+          "named": true
+        },
+        {
+          "type": "cell_definition",
+          "named": true
+        },
+        {
+          "type": "comparison_operator",
+          "named": true
+        },
+        {
+          "type": "field_expression",
           "named": true
         },
         {
@@ -2270,11 +2369,27 @@
           "named": true
         },
         {
+          "type": "handle_operator",
+          "named": true
+        },
+        {
           "type": "identifier",
           "named": true
         },
         {
-          "type": "matrix_definition",
+          "type": "ignored_argument",
+          "named": true
+        },
+        {
+          "type": "lambda",
+          "named": true
+        },
+        {
+          "type": "matrix",
+          "named": true
+        },
+        {
+          "type": "metaclass_operator",
           "named": true
         },
         {
@@ -2286,7 +2401,94 @@
           "named": true
         },
         {
-          "type": "operator",
+          "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "postfix_operator",
+          "named": true
+        },
+        {
+          "type": "property_name",
+          "named": true
+        },
+        {
+          "type": "range",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "unary_operator",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "not_operator",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "binary_operator",
+          "named": true
+        },
+        {
+          "type": "boolean",
+          "named": true
+        },
+        {
+          "type": "boolean_operator",
+          "named": true
+        },
+        {
+          "type": "cell_definition",
+          "named": true
+        },
+        {
+          "type": "comparison_operator",
+          "named": true
+        },
+        {
+          "type": "field_expression",
+          "named": true
+        },
+        {
+          "type": "function_call",
+          "named": true
+        },
+        {
+          "type": "handle_operator",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "lambda",
+          "named": true
+        },
+        {
+          "type": "matrix",
+          "named": true
+        },
+        {
+          "type": "metaclass_operator",
+          "named": true
+        },
+        {
+          "type": "not_operator",
+          "named": true
+        },
+        {
+          "type": "number",
           "named": true
         },
         {
@@ -2298,7 +2500,15 @@
           "named": true
         },
         {
-          "type": "struct",
+          "type": "property_name",
+          "named": true
+        },
+        {
+          "type": "range",
+          "named": true
+        },
+        {
+          "type": "string",
           "named": true
         },
         {
@@ -2309,20 +2519,9 @@
     }
   },
   {
-    "type": "otherwise",
+    "type": "otherwise_clause",
     "named": true,
-    "fields": {
-      "otherwise": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "keyword",
-            "named": true
-          }
-        ]
-      }
-    },
+    "fields": {},
     "children": {
       "multiple": false,
       "required": false,
@@ -2363,6 +2562,10 @@
           "named": true
         },
         {
+          "type": "field_expression",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -2379,7 +2582,7 @@
           "named": true
         },
         {
-          "type": "matrix_definition",
+          "type": "matrix",
           "named": true
         },
         {
@@ -2403,15 +2606,15 @@
           "named": true
         },
         {
+          "type": "property_name",
+          "named": true
+        },
+        {
           "type": "range",
           "named": true
         },
         {
           "type": "string",
-          "named": true
-        },
-        {
-          "type": "struct",
           "named": true
         },
         {
@@ -2451,34 +2654,13 @@
   {
     "type": "persistent_operator",
     "named": true,
-    "fields": {
-      "argument": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      },
-      "arguments": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      }
-    },
+    "fields": {},
     "children": {
-      "multiple": false,
-      "required": true,
+      "multiple": true,
+      "required": false,
       "types": [
         {
-          "type": "keyword",
+          "type": "identifier",
           "named": true
         }
       ]
@@ -2488,7 +2670,7 @@
     "type": "postfix_operator",
     "named": true,
     "fields": {
-      "argument": {
+      "operand": {
         "multiple": false,
         "required": true,
         "types": [
@@ -2513,7 +2695,7 @@
             "named": true
           },
           {
-            "type": "matrix_definition",
+            "type": "matrix",
             "named": true
           },
           {
@@ -2529,11 +2711,11 @@
             "named": true
           },
           {
-            "type": "string",
+            "type": "property_name",
             "named": true
           },
           {
-            "type": "struct",
+            "type": "string",
             "named": true
           },
           {
@@ -2542,43 +2724,12 @@
           }
         ]
       }
-    },
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "operator",
-          "named": true
-        }
-      ]
     }
   },
   {
     "type": "properties",
     "named": true,
-    "fields": {
-      "end": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "keyword",
-            "named": true
-          }
-        ]
-      },
-      "properties": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "keyword",
-            "named": true
-          }
-        ]
-      }
-    },
+    "fields": {},
     "children": {
       "multiple": true,
       "required": false,
@@ -2598,35 +2749,47 @@
     "type": "property",
     "named": true,
     "fields": {
-      "argument": {
-        "multiple": true,
+      "name": {
+        "multiple": false,
         "required": true,
         "types": [
           {
-            "type": "class",
+            "type": "identifier",
             "named": true
           },
           {
-            "type": "dimensions",
+            "type": "ignored_argument",
             "named": true
           },
           {
             "type": "property_name",
-            "named": true
-          },
-          {
-            "type": "validation_functions",
             "named": true
           }
         ]
       }
     },
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": false,
       "types": [
         {
           "type": "default_value",
+          "named": true
+        },
+        {
+          "type": "dimensions",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "property_name",
+          "named": true
+        },
+        {
+          "type": "validation_functions",
           "named": true
         }
       ]
@@ -2672,7 +2835,7 @@
           "named": true
         },
         {
-          "type": "matrix_definition",
+          "type": "matrix",
           "named": true
         },
         {
@@ -2692,7 +2855,7 @@
           "named": true
         },
         {
-          "type": "struct",
+          "type": "property_name",
           "named": true
         },
         {
@@ -2705,126 +2868,106 @@
   {
     "type": "row",
     "named": true,
-    "fields": {
-      "argument": {
-        "multiple": true,
-        "required": true,
-        "types": [
-          {
-            "type": "binary_operator",
-            "named": true
-          },
-          {
-            "type": "boolean",
-            "named": true
-          },
-          {
-            "type": "boolean_operator",
-            "named": true
-          },
-          {
-            "type": "cell_definition",
-            "named": true
-          },
-          {
-            "type": "comparison_operator",
-            "named": true
-          },
-          {
-            "type": "function_call",
-            "named": true
-          },
-          {
-            "type": "handle_operator",
-            "named": true
-          },
-          {
-            "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "lambda",
-            "named": true
-          },
-          {
-            "type": "matrix_definition",
-            "named": true
-          },
-          {
-            "type": "metaclass_operator",
-            "named": true
-          },
-          {
-            "type": "not_operator",
-            "named": true
-          },
-          {
-            "type": "number",
-            "named": true
-          },
-          {
-            "type": "parenthesized_expression",
-            "named": true
-          },
-          {
-            "type": "postfix_operator",
-            "named": true
-          },
-          {
-            "type": "range",
-            "named": true
-          },
-          {
-            "type": "string",
-            "named": true
-          },
-          {
-            "type": "struct",
-            "named": true
-          },
-          {
-            "type": "unary_operator",
-            "named": true
-          }
-        ]
-      }
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "binary_operator",
+          "named": true
+        },
+        {
+          "type": "boolean",
+          "named": true
+        },
+        {
+          "type": "boolean_operator",
+          "named": true
+        },
+        {
+          "type": "cell_definition",
+          "named": true
+        },
+        {
+          "type": "comparison_operator",
+          "named": true
+        },
+        {
+          "type": "entry_delimiter",
+          "named": true
+        },
+        {
+          "type": "field_expression",
+          "named": true
+        },
+        {
+          "type": "function_call",
+          "named": true
+        },
+        {
+          "type": "handle_operator",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "ignored_argument",
+          "named": true
+        },
+        {
+          "type": "lambda",
+          "named": true
+        },
+        {
+          "type": "matrix",
+          "named": true
+        },
+        {
+          "type": "metaclass_operator",
+          "named": true
+        },
+        {
+          "type": "not_operator",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "postfix_operator",
+          "named": true
+        },
+        {
+          "type": "property_name",
+          "named": true
+        },
+        {
+          "type": "range",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "unary_operator",
+          "named": true
+        }
+      ]
     }
   },
   {
     "type": "source_file",
     "named": true,
-    "fields": {
-      "break": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "keyword",
-            "named": true
-          }
-        ]
-      },
-      "continue": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "keyword",
-            "named": true
-          }
-        ]
-      },
-      "return": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "keyword",
-            "named": true
-          }
-        ]
-      }
-    },
+    "fields": {},
     "children": {
       "multiple": true,
       "required": false,
@@ -2846,6 +2989,10 @@
           "named": true
         },
         {
+          "type": "break_statement",
+          "named": true
+        },
+        {
           "type": "cell_definition",
           "named": true
         },
@@ -2858,11 +3005,15 @@
           "named": true
         },
         {
-          "type": "comment",
+          "type": "comparison_operator",
           "named": true
         },
         {
-          "type": "comparison_operator",
+          "type": "continue_statement",
+          "named": true
+        },
+        {
+          "type": "field_expression",
           "named": true
         },
         {
@@ -2898,7 +3049,7 @@
           "named": true
         },
         {
-          "type": "matrix_definition",
+          "type": "matrix",
           "named": true
         },
         {
@@ -2926,15 +3077,19 @@
           "named": true
         },
         {
+          "type": "property_name",
+          "named": true
+        },
+        {
           "type": "range",
           "named": true
         },
         {
-          "type": "string",
+          "type": "return_statement",
           "named": true
         },
         {
-          "type": "struct",
+          "type": "string",
           "named": true
         },
         {
@@ -2978,28 +3133,20 @@
           "named": true
         },
         {
-          "type": "string_close",
-          "named": true
-        },
-        {
-          "type": "string_open",
+          "type": "string_content",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "struct",
+    "type": "superclass",
     "named": true,
     "fields": {},
     "children": {
       "multiple": true,
       "required": true,
       "types": [
-        {
-          "type": "function_call",
-          "named": true
-        },
         {
           "type": "identifier",
           "named": true
@@ -3010,49 +3157,104 @@
   {
     "type": "superclasses",
     "named": true,
-    "fields": {
-      "argument": {
-        "multiple": true,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      }
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "property_name",
+          "named": true
+        }
+      ]
     }
   },
   {
     "type": "switch_statement",
     "named": true,
     "fields": {
-      "argument": {
+      "condition": {
         "multiple": false,
         "required": true,
         "types": [
           {
-            "type": "condition",
+            "type": "binary_operator",
             "named": true
-          }
-        ]
-      },
-      "end": {
-        "multiple": false,
-        "required": true,
-        "types": [
+          },
           {
-            "type": "keyword",
+            "type": "boolean",
             "named": true
-          }
-        ]
-      },
-      "switch": {
-        "multiple": false,
-        "required": true,
-        "types": [
+          },
           {
-            "type": "keyword",
+            "type": "boolean_operator",
+            "named": true
+          },
+          {
+            "type": "cell_definition",
+            "named": true
+          },
+          {
+            "type": "comparison_operator",
+            "named": true
+          },
+          {
+            "type": "field_expression",
+            "named": true
+          },
+          {
+            "type": "function_call",
+            "named": true
+          },
+          {
+            "type": "handle_operator",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "lambda",
+            "named": true
+          },
+          {
+            "type": "matrix",
+            "named": true
+          },
+          {
+            "type": "metaclass_operator",
+            "named": true
+          },
+          {
+            "type": "not_operator",
+            "named": true
+          },
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "postfix_operator",
+            "named": true
+          },
+          {
+            "type": "property_name",
+            "named": true
+          },
+          {
+            "type": "range",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          },
+          {
+            "type": "unary_operator",
             "named": true
           }
         ]
@@ -3067,7 +3269,7 @@
           "named": true
         },
         {
-          "type": "otherwise",
+          "type": "otherwise_clause",
           "named": true
         }
       ]
@@ -3076,28 +3278,7 @@
   {
     "type": "try_statement",
     "named": true,
-    "fields": {
-      "end": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "keyword",
-            "named": true
-          }
-        ]
-      },
-      "try": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "keyword",
-            "named": true
-          }
-        ]
-      }
-    },
+    "fields": {},
     "children": {
       "multiple": true,
       "required": false,
@@ -3117,7 +3298,7 @@
     "type": "unary_operator",
     "named": true,
     "fields": {
-      "argument": {
+      "operand": {
         "multiple": false,
         "required": true,
         "types": [
@@ -3138,7 +3319,7 @@
             "named": true
           },
           {
-            "type": "matrix_definition",
+            "type": "matrix",
             "named": true
           },
           {
@@ -3158,7 +3339,7 @@
             "named": true
           },
           {
-            "type": "struct",
+            "type": "property_name",
             "named": true
           },
           {
@@ -3167,16 +3348,6 @@
           }
         ]
       }
-    },
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "operator",
-          "named": true
-        }
-      ]
     }
   },
   {
@@ -3188,6 +3359,10 @@
       "required": true,
       "types": [
         {
+          "type": "function_call",
+          "named": true
+        },
+        {
           "type": "identifier",
           "named": true
         }
@@ -3198,32 +3373,88 @@
     "type": "while_statement",
     "named": true,
     "fields": {
-      "argument": {
+      "condition": {
         "multiple": false,
         "required": true,
         "types": [
           {
-            "type": "condition",
+            "type": "binary_operator",
             "named": true
-          }
-        ]
-      },
-      "end": {
-        "multiple": false,
-        "required": true,
-        "types": [
+          },
           {
-            "type": "keyword",
+            "type": "boolean",
             "named": true
-          }
-        ]
-      },
-      "while": {
-        "multiple": false,
-        "required": true,
-        "types": [
+          },
           {
-            "type": "keyword",
+            "type": "boolean_operator",
+            "named": true
+          },
+          {
+            "type": "cell_definition",
+            "named": true
+          },
+          {
+            "type": "comparison_operator",
+            "named": true
+          },
+          {
+            "type": "field_expression",
+            "named": true
+          },
+          {
+            "type": "function_call",
+            "named": true
+          },
+          {
+            "type": "handle_operator",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "lambda",
+            "named": true
+          },
+          {
+            "type": "matrix",
+            "named": true
+          },
+          {
+            "type": "metaclass_operator",
+            "named": true
+          },
+          {
+            "type": "not_operator",
+            "named": true
+          },
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "postfix_operator",
+            "named": true
+          },
+          {
+            "type": "property_name",
+            "named": true
+          },
+          {
+            "type": "range",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          },
+          {
+            "type": "unary_operator",
             "named": true
           }
         ]
@@ -3249,7 +3480,19 @@
     "named": false
   },
   {
+    "type": "\"",
+    "named": false
+  },
+  {
     "type": "&",
+    "named": false
+  },
+  {
+    "type": "&&",
+    "named": false
+  },
+  {
+    "type": "'",
     "named": false
   },
   {
@@ -3261,7 +3504,19 @@
     "named": false
   },
   {
+    "type": "*",
+    "named": false
+  },
+  {
+    "type": "+",
+    "named": false
+  },
+  {
     "type": ",",
+    "named": false
+  },
+  {
+    "type": "-",
     "named": false
   },
   {
@@ -3269,7 +3524,35 @@
     "named": false
   },
   {
-    "type": ".?",
+    "type": ".'",
+    "named": false
+  },
+  {
+    "type": ".*",
+    "named": false
+  },
+  {
+    "type": ".+",
+    "named": false
+  },
+  {
+    "type": ".-",
+    "named": false
+  },
+  {
+    "type": "./",
+    "named": false
+  },
+  {
+    "type": ".\\",
+    "named": false
+  },
+  {
+    "type": ".^",
+    "named": false
+  },
+  {
+    "type": "/",
     "named": false
   },
   {
@@ -3285,7 +3568,27 @@
     "named": false
   },
   {
+    "type": "<=",
+    "named": false
+  },
+  {
     "type": "=",
+    "named": false
+  },
+  {
+    "type": "==",
+    "named": false
+  },
+  {
+    "type": ">",
+    "named": false
+  },
+  {
+    "type": ">=",
+    "named": false
+  },
+  {
+    "type": "?",
     "named": false
   },
   {
@@ -3297,12 +3600,36 @@
     "named": false
   },
   {
+    "type": "\\",
+    "named": false
+  },
+  {
     "type": "]",
     "named": false
   },
   {
-    "type": "captured_exception",
+    "type": "^",
+    "named": false
+  },
+  {
+    "type": "arguments",
+    "named": false
+  },
+  {
+    "type": "break_statement",
     "named": true
+  },
+  {
+    "type": "case",
+    "named": false
+  },
+  {
+    "type": "catch",
+    "named": false
+  },
+  {
+    "type": "classdef",
+    "named": false
   },
   {
     "type": "command_argument",
@@ -3317,11 +3644,47 @@
     "named": true
   },
   {
+    "type": "continue_statement",
+    "named": true
+  },
+  {
+    "type": "else",
+    "named": false
+  },
+  {
+    "type": "elseif",
+    "named": false
+  },
+  {
+    "type": "end",
+    "named": false
+  },
+  {
+    "type": "endfunction",
+    "named": false
+  },
+  {
+    "type": "entry_delimiter",
+    "named": true
+  },
+  {
+    "type": "enumeration",
+    "named": false
+  },
+  {
     "type": "escape_sequence",
     "named": true
   },
   {
+    "type": "events",
+    "named": false
+  },
+  {
     "type": "false",
+    "named": false
+  },
+  {
+    "type": "for",
     "named": false
   },
   {
@@ -3329,43 +3692,91 @@
     "named": true
   },
   {
-    "type": "func_call_paren",
-    "named": true
+    "type": "function",
+    "named": false
+  },
+  {
+    "type": "get",
+    "named": false
+  },
+  {
+    "type": "global",
+    "named": false
   },
   {
     "type": "identifier",
     "named": true
   },
   {
-    "type": "keyword",
+    "type": "if",
+    "named": false
+  },
+  {
+    "type": "line_continuation",
     "named": true
+  },
+  {
+    "type": "methods",
+    "named": false
   },
   {
     "type": "number",
     "named": true
   },
   {
-    "type": "operator",
+    "type": "otherwise",
+    "named": false
+  },
+  {
+    "type": "parfor",
+    "named": false
+  },
+  {
+    "type": "persistent",
+    "named": false
+  },
+  {
+    "type": "properties",
+    "named": false
+  },
+  {
+    "type": "return_statement",
     "named": true
   },
   {
-    "type": "string_close",
+    "type": "set",
+    "named": false
+  },
+  {
+    "type": "string_content",
     "named": true
   },
   {
-    "type": "string_open",
-    "named": true
-  },
-  {
-    "type": "superclass",
-    "named": true
+    "type": "switch",
+    "named": false
   },
   {
     "type": "true",
     "named": false
   },
   {
+    "type": "try",
+    "named": false
+  },
+  {
+    "type": "while",
+    "named": false
+  },
+  {
     "type": "{",
+    "named": false
+  },
+  {
+    "type": "|",
+    "named": false
+  },
+  {
+    "type": "||",
     "named": false
   },
   {
@@ -3374,6 +3785,10 @@
   },
   {
     "type": "~",
+    "named": false
+  },
+  {
+    "type": "~=",
     "named": false
   }
 ]

@@ -243,20 +243,20 @@ Range: Matrix Definition
 (source_file
   (range
     (number)
-    (matrix_definition
+    (matrix
       (row
         (number)
         (number)))
     (number))
   (range
-    (matrix_definition
+    (matrix
       (row
         (number)
         (number)))
     (number))
   (range
     (number)
-    (matrix_definition
+    (matrix
       (row
         (number)
         (number)))))

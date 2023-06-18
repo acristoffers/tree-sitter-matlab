@@ -28,14 +28,14 @@
   (block (_) @context.end)
 ) @context
 
-(otherwise
+(otherwise_clause
   (block (_) @context.end)
 ) @context
 
 (try_statement
-  try: (keyword)
+  "try"
   (block (_) @context.end) @context
-  end: (keyword))
+  "end")
 (catch
-  catch: (keyword)
+  "catch"
   (block (_) @context.end) @context)

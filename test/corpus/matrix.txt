@@ -8,13 +8,13 @@ Matrix: Simple
 --------------------------------------------------------------------------------
 
 (source_file
-  (matrix_definition
+  (matrix
     (row
       (number)
       (number)
       (number)
       (number)))
-  (matrix_definition
+  (matrix
     (row
       (number)
       (number)
@@ -31,14 +31,14 @@ Matrix: Multidimensional
 --------------------------------------------------------------------------------
 
 (source_file
-  (matrix_definition
+  (matrix
     (row
       (number)
       (number))
     (row
       (number)
       (number)))
-  (matrix_definition
+  (matrix
     (row
       (number)
       (number))
@@ -58,7 +58,7 @@ Matrix: Concatenation
 --------------------------------------------------------------------------------
 
 (source_file
-  (matrix_definition
+  (matrix
     (row
       (binary_operator
         (identifier)
@@ -67,14 +67,14 @@ Matrix: Concatenation
           (identifier)
           (operator)
           (identifier)))
-      (matrix_definition
+      (matrix
         (row
           (identifier)
           (identifier))))
     (row
       (identifier)
       (number)))
-  (matrix_definition
+  (matrix
     (row
       (binary_operator
         (identifier)
@@ -83,7 +83,7 @@ Matrix: Concatenation
           (identifier)
           (operator)
           (identifier)))
-      (matrix_definition
+      (matrix
         (row
           (identifier)
           (identifier))))
@@ -101,7 +101,7 @@ Matrix: Multiline
 --------------------------------------------------------------------------------
 
 (source_file
-  (matrix_definition
+  (matrix
     (row
       (number)
       (number))
@@ -119,7 +119,7 @@ Matrix: Expression With Transpose
 --------------------------------------------------------------------------------
 
 (source_file
-  (matrix_definition
+  (matrix
     (row
       (binary_operator
         (binary_operator
@@ -156,7 +156,7 @@ Matrix: Meaning of Spaces
 --------------------------------------------------------------------------------
 
 (source_file
-  (matrix_definition
+  (matrix
     (row
       (binary_operator
         (number)
