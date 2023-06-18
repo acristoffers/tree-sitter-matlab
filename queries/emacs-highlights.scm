@@ -11,8 +11,6 @@
 
 ; Fields/Properties
 
-(field_expression field: (identifier) @field)
-
 (superclass "." (identifier) @property)
 
 (property_name "." (identifier) @property)
@@ -30,9 +28,9 @@
 ; Functions
 
 (function_definition
-  "function" @keyword.function
+  "function" @keyword
   name: (identifier) @function
-  [ "end" "endfunction" ]? @keyword.function)
+  [ "end" "endfunction" ]? @keyword)
 
 (function_signature name: (identifier) @function)
 
@@ -46,7 +44,7 @@
 (command (command_name) @function.call)
 (command_argument) @string
 
-(return_statement) @keyword.return
+(return_statement) @keyword
 
 ; Assignments
 
@@ -92,24 +90,24 @@
 
 ; Conditionals
 
-(if_statement [ "if" "end" ] @conditional)
-(elseif_clause "elseif" @conditional)
-(else_clause "else" @conditional)
-(switch_statement [ "switch" "end" ] @conditional)
-(case_clause "case" @conditional)
-(otherwise_clause "otherwise" @conditional)
-(break_statement) @conditional
+(if_statement [ "if" "end" ] @keyword)
+(elseif_clause "elseif" @keyword)
+(else_clause "else" @keyword)
+(switch_statement [ "switch" "end" ] @keyword)
+(case_clause "case" @keyword)
+(otherwise_clause "otherwise" @keyword)
+(break_statement) @keyword
 
 ; Repeats
 
-(for_statement [ "for" "parfor" "end" ] @repeat)
-(while_statement [ "while" "end" ] @repeat)
-(continue_statement) @repeat
+(for_statement [ "for" "parfor" "end" ] @keyword)
+(while_statement [ "while" "end" ] @keyword)
+(continue_statement) @keyword
 
 ; Exceptions
 
-(try_statement [ "try" "end" ] @exception)
-(catch_clause "catch" @exception)
+(try_statement [ "try" "end" ] @keyword)
+(catch_clause "catch" @keyword)
 
 ; Punctuation
 
@@ -119,11 +117,11 @@
 
 ; Literals
 
+(escape_sequence) @escape
+(formatting_sequence) @escape
 (string) @string
-(escape_sequence) @string.escape
-(formatting_sequence) @string.special
 (number) @number
-(boolean) @boolean
+(boolean) @keyword.builtin
 
 ; Comments
 
