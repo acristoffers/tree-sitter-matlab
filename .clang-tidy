@@ -1,0 +1,2 @@
+Checks: "*,clang-analyzer-optin-performance.Padding,-modernize-use-trailing-return-type,-altera-*,-google-readability-todo,-cppcoreguidelines-avoid-magic-numbers,-llvmlibc-*,-readability-magic-numbers,-hicpp-signed-bitwise,-readability-function-cognitive-complexity"
+HeaderFilterRegex: ""
