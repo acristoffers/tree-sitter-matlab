@@ -1,3 +1,41 @@
+; attribute
+; comment
+; constant
+; constant.builtin
+; constructor
+; doc
+; embedded
+; escape
+; function
+; function.builtin
+; function.call
+; function.macro
+; function.special
+; keyword
+; label
+; method
+; method.call
+; number
+; operator
+; property
+; property.definition
+; punctuation
+; punctuation.bracket
+; punctuation.delimiter
+; punctuation.special
+; string
+; string.special
+; tag
+; type
+; type.argument
+; type.builtin
+; type.parameter
+; type.super
+; variable
+; variable.builtin
+; variable.parameter
+; variable.special
+
 ; Errors
 
 (ERROR) @error
@@ -11,18 +49,15 @@
 
 ; Fields/Properties
 
+(field_expression field: (identifier) @property)
 (superclass "." (identifier) @property)
-
 (property_name "." (identifier) @property)
-
 (property name: (identifier) @property)
 
 ; Types
 
 (class_definition name: (identifier) @type)
-
 (attributes (identifier) @constant)
-
 (enum . (identifier) @type)
 
 ; Functions
@@ -34,28 +69,28 @@
 
 (function_signature name: (identifier) @function)
 
-(function_call
-  name: (identifier) @function.call)
+(function_call name: (identifier) @function.call)
 
 (handle_operator (identifier) @function)
-
 (validation_functions (identifier) @function)
 
-(command (command_name) @function.call)
+(command (command_name) @function.macro)
 (command_argument) @string
 
 (return_statement) @keyword
+
+; Parameters
+
+(function_arguments (identifier) @variable.parameter)
 
 ; Assignments
 
 (assignment left: (_) @variable)
 (multioutput_variable (_) @variable)
 
-; Parameters
-
-(function_arguments (identifier) @variable.parameter)
-
 ; Operators
+
+(unary_operator ["+" "-"] @number)
 
 [
   "+"
@@ -112,7 +147,6 @@
 ; Punctuation
 
 [ ";" "," "." ] @punctuation.delimiter
-
 [ "(" ")" "[" "]" "{" "}" ] @punctuation.bracket
 
 ; Literals
@@ -121,7 +155,7 @@
 (formatting_sequence) @escape
 (string) @string
 (number) @number
-(boolean) @keyword.builtin
+(boolean) @constant.builtin
 
 ; Comments
 
