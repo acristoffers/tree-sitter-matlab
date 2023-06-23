@@ -81,6 +81,7 @@
 
 ; Parameters
 
+(lambda (arguments (identifier) @variable.parameter))
 (function_arguments (identifier) @variable.parameter)
 
 ; Assignments
