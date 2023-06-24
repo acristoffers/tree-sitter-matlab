@@ -64,34 +64,16 @@ special class folder.
 
 ## Neovim
 
-Theoretically this should work:
-
-```lua
-local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
-parser_config.matlab = {
-  install_info = {
-    url = 'https://github.com/acristoffers/tree-sitter-matlab',
-    files = { 'src/parser.c', 'src/scanner.c' },
-    branch = 'main',
-    generate_requires_npm = false,
-    requires_generate_from_grammar = false,
-  },
-  maintainers = { '@acristoffers' },
-}
-```
-
-But I had to clone the repo locally and put the path to it in `url` for it to
-work, otherwise it keeps complaining about something no being a valid tarball.
+It is the default in `nvim-treesitter` now.
 
 ## Doom Emacs
 
 You have to manually compile and copy the files to the appropriate folders. Pay
-attention to the STRAIGHT variable value, as yours may be different.
+attention to the `STRAIGHT` variable value, as yours may be different. If you
+are not using `straight.el`, then you need to find out what are the appropriate
+folders for you.
 
 ```zsh
-tree-sitter generate --abi 13
-gcc src/*.c -I./src --shared -fPIC -Os -o matlab.so 
-
 VERSION=28.2
 STRAIGHT=~/.config/emacs/.local/straight
 
@@ -100,34 +82,33 @@ mkdir -p $STRAIGHT/{build-$VERSION,repos}/tree-sitter-langs/queries/matlab
 mkdir -p $STRAIGHT/{build-$VERSION,repos}/evil-textobj-tree-sitter/queries/matlab
 mkdir -p $STRAIGHT/repos/elisp-tree-sitter/langs/queries/matlab
 
-cp matlab.so $STRAIGHT/repos/tree-sitter-langs/bin
-cp matlab.so $STRAIGHT/build-$VERSION/tree-sitter-langs/bin
+tree-sitter generate --abi 13
+gcc src/*.c -I./src -o matlab.so --shared -fPIC -Os
 
-cp queries/*               $STRAIGHT/repos/tree-sitter-langs/queries/matlab/
-cp queries/*               $STRAIGHT/build-$VERSION/tree-sitter-langs/queries/matlab/
-cp queries/*               $STRAIGHT/repos/elisp-tree-sitter/langs/queries/matlab
-cp queries/emacs-textobjects.scm $STRAIGHT/repos/evil-textobj-tree-sitter/queries/matlab/textobjects.scm
-cp queries/emacs-textobjects.scm $STRAIGHT/build-$VERSION/evil-textobj-tree-sitter/queries/matlab/textobjects.scm
+cp matlab.so $STRAIGHT/repos/tree-sitter-langs/bin/
+cp matlab.so $STRAIGHT/build-$VERSION/tree-sitter-langs/bin/
 
-mv $STRAIGHT/repos/tree-sitter-langs/queries/matlab/emacs-highlights.scm $STRAIGHT/repos/tree-sitter-langs/queries/matlab/highlights.scm
-mv $STRAIGHT/build-$VERSION/tree-sitter-langs/queries/matlab/emacs-highlights.scm $STRAIGHT/build-$VERSION/tree-sitter-langs/queries/matlab/highlights.scm
-mv $STRAIGHT/repos/elisp-tree-sitter/langs/queries/matlab/emacs-highlights.scm $STRAIGHT/repos/elisp-tree-sitter/langs/queries/matlab/highlights.scm
+cp queries/emacs/highlights.scm  $STRAIGHT/repos/tree-sitter-langs/queries/matlab/
+cp queries/emacs/highlights.scm  $STRAIGHT/build-$VERSION/tree-sitter-langs/queries/matlab/
+cp queries/emacs/highlights.scm  $STRAIGHT/repos/elisp-tree-sitter/langs/queries/matlab/
+cp queries/emacs/textobjects.scm $STRAIGHT/repos/evil-textobj-tree-sitter/queries/matlab/
+cp queries/emacs/textobjects.scm $STRAIGHT/build-$VERSION/evil-textobj-tree-sitter/queries/matlab/
 ```
 
-- packages.el
+- `packages.el`
 
 ```elisp
 (package! matlab-mode)
 ```
 
-- config.el
+- `config.el`
 
 ```elisp
 (use-package! matlab-mode :defer t)
 (add-hook! 'matlab-mode-hook
            #'display-line-numbers-mode
            #'matlab-toggle-show-mlint-warnings
-           (setq! matlab-file-font-lock-keywords matlab-file-basic-font-lock-keywords)
+           (setq! matlab-file-font-lock-keywords '())
            (tree-sitter-hl-mode 1))
 ```
 
@@ -135,9 +116,6 @@ You may need to add MATLAB to `tree-sitter-major-mode-language-alist` and
 `evil-textobj-tree-sitter-major-mode-language-alist`.
 
 # Screenshots
-
-Note: if your theme highlights variable captures, you will have those colored
-too. Mine doesn't (Dracula), so all variables are just white.
 
 ![First Screenshot](https://raw.githubusercontent.com/acristoffers/tree-sitter-matlab/screenshots/s1.png)
 ![Second Screenshot](https://raw.githubusercontent.com/acristoffers/tree-sitter-matlab/screenshots/s2.png)
