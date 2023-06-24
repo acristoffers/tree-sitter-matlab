@@ -56,3 +56,23 @@ Cell: Multidimensional
       (cell
         (row
           (number))))))
+
+================================================================================
+Cell: Sequence of strings
+================================================================================
+
+{'a' b' 'c' 'd'}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (cell
+    (row
+      (string
+        (string_content))
+      (postfix_operator
+        (identifier))
+      (string
+        (string_content))
+      (string
+        (string_content)))))
