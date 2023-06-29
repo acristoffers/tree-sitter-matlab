@@ -84,11 +84,6 @@
 (lambda (arguments (identifier) @variable.parameter))
 (function_arguments (identifier) @variable.parameter)
 
-; Assignments
-
-(assignment left: (_) @variable)
-(multioutput_variable (_) @variable)
-
 ; Operators
 
 (unary_operator ["+" "-"] @number)
@@ -161,6 +156,11 @@
 ; Comments
 
 [ (comment) (line_continuation) ] @comment @spell
+
+; Assignments
+
+(assignment left: (_) @variable)
+(multioutput_variable (_) @variable)
 
 ; Keywords
 
