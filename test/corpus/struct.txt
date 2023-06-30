@@ -39,6 +39,36 @@ a.b.c
     (identifier)))
 
 ================================================================================
+Struct: Indirect Access
+================================================================================
+
+a.(b)
+a.(b(1)).c
+a.("b").c
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (field_expression
+    (identifier)
+    (indirect_access
+      (identifier)))
+  (field_expression
+    (identifier)
+    (indirect_access
+      (function_call
+        (identifier)
+        (arguments
+          (number))))
+    (identifier))
+  (field_expression
+    (identifier)
+    (indirect_access
+      (string
+        (string_content)))
+    (identifier)))
+
+================================================================================
 Struct: Indexed Initialization
 ================================================================================
 

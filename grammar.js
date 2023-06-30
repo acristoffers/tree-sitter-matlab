@@ -194,9 +194,10 @@ module.exports = grammar({
       ),
     )),
 
+    indirect_access: $ => seq('(', choice($.identifier, $.string, $.function_call), ')'),
     field_expression: $ => prec.left(PREC.member, seq(
       field('object', choice($.identifier, $.function_call)),
-      repeat1(seq('.', field('field', choice($.identifier, $.function_call )))),
+      repeat1(seq('.', field('field', choice($.identifier, $.function_call, $.indirect_access)))),
     )),
 
     not_operator: $ => prec(PREC.not, seq(

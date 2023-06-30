@@ -1486,6 +1486,10 @@
           {
             "type": "identifier",
             "named": true
+          },
+          {
+            "type": "indirect_access",
+            "named": true
           }
         ]
       },
@@ -1818,6 +1822,29 @@
     "type": "ignored_argument",
     "named": true,
     "fields": {}
+  },
+  {
+    "type": "indirect_access",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "function_call",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "iterator",
