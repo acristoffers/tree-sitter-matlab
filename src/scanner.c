@@ -752,7 +752,7 @@ bool scan_entry_delimiter(TSLexer* lexer, int skipped)
     // These chars mean we cannot end the cell here, as the expression will
     // surely continue OR we need to just leave the char there and the internal
     // parser will do the rest.
-    const char no_end[] = { ']', '}', '&', '|', '=', '<', '>', '*', '/', '\\', '^', ';'};
+    const char no_end[] = { ']', '}', '&', '|', '=', '<', '>', '*', '/', '\\', '^', ';', ':'};
     for (int i = 0; i < sizeof(no_end); i++) {
         if (no_end[i] == lexer->lookahead) {
             return false;
