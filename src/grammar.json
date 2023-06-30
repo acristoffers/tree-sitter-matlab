@@ -2213,6 +2213,10 @@
           }
         },
         {
+          "type": "SYMBOL",
+          "name": "_end_of_line"
+        },
+        {
           "type": "CHOICE",
           "members": [
             {
@@ -2232,6 +2236,10 @@
         {
           "type": "STRING",
           "value": "otherwise"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_end_of_line"
         },
         {
           "type": "CHOICE",
@@ -2261,6 +2269,10 @@
             "type": "SYMBOL",
             "name": "_expression"
           }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_end_of_line"
         },
         {
           "type": "REPEAT",

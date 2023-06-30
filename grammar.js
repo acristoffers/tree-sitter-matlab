@@ -438,15 +438,18 @@ module.exports = grammar({
       'case',
       // MATLAB says it should be a `switch_expr`, but then accepts any expression
       field('condition', $._expression),
+      $._end_of_line,
       optional($.block),
     ),
     otherwise_clause: $ => seq(
       'otherwise',
+      $._end_of_line,
       optional($.block),
     ),
     switch_statement: $ => seq(
       'switch',
       field('condition', $._expression),
+      $._end_of_line,
       repeat($.case_clause),
       optional($.otherwise_clause),
       'end',
