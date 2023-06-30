@@ -1733,6 +1733,15 @@
               "type": "CHOICE",
               "members": [
                 {
+                  "type": "ALIAS",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "boolean"
+                  },
+                  "named": true,
+                  "value": "identifier"
+                },
+                {
                   "type": "SYMBOL",
                   "name": "identifier"
                 },

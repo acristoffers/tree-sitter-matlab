@@ -16,6 +16,7 @@ Function Call: With Arguments
 
 add(1, 2)
 eig (A)
+false(2)
 
 --------------------------------------------------------------------------------
 
@@ -28,7 +29,11 @@ eig (A)
   (function_call
     (identifier)
     (arguments
-      (identifier))))
+      (identifier)))
+  (function_call
+    (identifier)
+    (arguments
+      (number))))
 
 ================================================================================
 Function Call: Indexing With Spread

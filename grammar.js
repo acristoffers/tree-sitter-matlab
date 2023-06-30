@@ -343,7 +343,7 @@ module.exports = grammar({
       seq('{', optional($.arguments), '}'),
     ),
     function_call: $ => prec.right(PREC.call, seq(
-      field('name', choice($.identifier, $.function_call)),
+      field('name', choice(alias($.boolean, $.identifier), $.identifier, $.function_call)),
       optional(seq(
         '@',
         alias($.property_name, $.superclass),
