@@ -38,6 +38,7 @@ module.exports = grammar({
     [$.range],
     [$._expression, $.validation_functions],
     [$._expression, $._range_element],
+    [$._expression, $.indirect_access],
     [$._enum_value, $.property_name],
     [$.block],
   ],
@@ -344,7 +345,7 @@ module.exports = grammar({
       seq('{', optional($.arguments), '}'),
     ),
     function_call: $ => prec.right(PREC.call, seq(
-      field('name', choice(alias($.boolean, $.identifier), $.identifier, $.function_call)),
+      field('name', choice(alias($.boolean, $.identifier), $.identifier, $.function_call, $.indirect_access)),
       optional(seq(
         '@',
         alias($.property_name, $.superclass),

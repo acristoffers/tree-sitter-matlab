@@ -73,6 +73,43 @@ A{:}(1)
       (number))))
 
 ================================================================================
+Function Call: Indexing of Indirect Field Access
+================================================================================
+
+a.("b"){:}
+a.(b){:}
+a.(b(2)){:}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (field_expression
+    (identifier)
+    (function_call
+      (indirect_access
+        (string
+          (string_content)))
+      (arguments
+        (spread_operator))))
+  (field_expression
+    (identifier)
+    (function_call
+      (indirect_access
+        (identifier))
+      (arguments
+        (spread_operator))))
+  (field_expression
+    (identifier)
+    (function_call
+      (indirect_access
+        (function_call
+          (identifier)
+          (arguments
+            (number))))
+      (arguments
+        (spread_operator)))))
+
+================================================================================
 Command Call: No Arguments
 ================================================================================
 

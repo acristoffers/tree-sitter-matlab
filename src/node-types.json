@@ -1571,6 +1571,10 @@
           {
             "type": "identifier",
             "named": true
+          },
+          {
+            "type": "indirect_access",
+            "named": true
           }
         ]
       }

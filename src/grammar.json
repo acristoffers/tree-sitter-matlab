@@ -1782,6 +1782,10 @@
                 {
                   "type": "SYMBOL",
                   "name": "function_call"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "indirect_access"
                 }
               ]
             }
@@ -3725,6 +3729,10 @@
     [
       "_expression",
       "_range_element"
+    ],
+    [
+      "_expression",
+      "indirect_access"
     ],
     [
       "_enum_value",
