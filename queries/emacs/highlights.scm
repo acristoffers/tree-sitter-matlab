@@ -84,41 +84,6 @@
 (lambda (arguments (identifier) @variable.parameter))
 (function_arguments (identifier) @variable.parameter)
 
-; Operators
-
-(unary_operator ["+" "-"] @number)
-
-[
-  "+"
-  ".+"
-  "-"
-  ".*"
-  "*"
-  ".*"
-  "/"
-  "./"
-  "\\"
-  ".\\"
-  "^"
-  ".^"
-  "'"
-  ".'"
-  "|"
-  "&"
-  "?"
-  "@"
-  "<"
-  "<="
-  ">"
-  ">="
-  "=="
-  "~="
-  "="
-  "&&"
-  "||"
-  ":"
-] @operator
-
 ; Conditionals
 
 (if_statement [ "if" "end" ] @keyword)
@@ -157,6 +122,41 @@
 
 [ (comment) (line_continuation) ] @comment @spell
 
+; Operators
+
+(unary_operator ["+" "-"] @number)
+
+[
+  "+"
+  ".+"
+  "-"
+  ".*"
+  "*"
+  ".*"
+  "/"
+  "./"
+  "\\"
+  ".\\"
+  "^"
+  ".^"
+  "'"
+  ".'"
+  "|"
+  "&"
+  "?"
+  "@"
+  "<"
+  "<="
+  ">"
+  ">="
+  "=="
+  "~="
+  "="
+  "&&"
+  "||"
+  ":"
+] @operator
+
 ; Assignments
 
 (assignment left: (_) @variable)
@@ -175,3 +175,4 @@
   "persistent"
   "properties"
 ] @keyword
+
