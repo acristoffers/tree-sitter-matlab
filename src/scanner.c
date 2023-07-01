@@ -145,11 +145,6 @@ consume_whitespaces(TSLexer* lexer)
     }
 }
 
-/* bool is_inside_command = false; */
-/* bool line_continuation = false; */
-/* bool is_shell_scape = false; */
-/* char string_delimiter = 0; */
-
 void* tree_sitter_matlab_external_scanner_create()
 {
     Scanner* scanner = calloc(1, sizeof(Scanner));
@@ -191,11 +186,21 @@ static inline void consume_comment_line(TSLexer* lexer)
     }
 }
 
-bool scan_comment(TSLexer* lexer)
+bool scan_comment(TSLexer* lexer, bool entry_delimiter)
 {
+    lexer->mark_end(lexer);
+
     const bool percent = lexer->lookahead == '%';
     const bool block = percent && consume_char('%', lexer) && consume_char('{', lexer);
     const bool line_continuation = lexer->lookahead == '.' && consume_char('.', lexer) && consume_char('.', lexer) && consume_char('.', lexer);
+
+    // Since we cannot look multiple chars ahead in the main function, this
+    // ended up being handled here. It allows the correct detection of numbers
+    // like .5 inside matrices/cells: [0 .5].
+    if (entry_delimiter && !percent && !line_continuation) {
+        lexer->result_symbol = ENTRY_DELIMITER;
+        return isdigit(lexer->lookahead);
+    }
 
     if (block) {
         while (!lexer->eof(lexer)) {
@@ -240,7 +245,7 @@ bool scan_comment(TSLexer* lexer)
         }
 
         if (lexer->lookahead == '%') {
-            return scan_comment(lexer);
+            return scan_comment(lexer, false);
         }
 
         return true;
@@ -479,7 +484,7 @@ bool scan_command_argument(Scanner* scanner, TSLexer* lexer)
                 lexer->mark_end(lexer);
                 return true;
             }
-            return scan_comment(lexer);
+            return scan_comment(lexer, false);
         }
 
         // Line continuation
@@ -739,6 +744,8 @@ bool scan_entry_delimiter(TSLexer* lexer, int skipped)
     }
 
     if (lexer->lookahead == '.') {
+        advance(lexer);
+        advance(lexer);
         return isdigit(lexer->lookahead);
     }
 
@@ -791,7 +798,7 @@ bool tree_sitter_matlab_external_scanner_scan(void* payload,
             (scanner->line_continuation || !scanner->is_inside_command)
             && valid_symbols[COMMENT]
             && (lexer->lookahead == '%' || lexer->lookahead == '.')) {
-            return scan_comment(lexer);
+            return scan_comment(lexer, valid_symbols[ENTRY_DELIMITER]);
         }
 
         if (
