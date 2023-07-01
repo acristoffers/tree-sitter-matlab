@@ -3448,7 +3448,7 @@
     "named": false
   },
   {
-    "type": "get",
+    "type": "get.",
     "named": false
   },
   {
@@ -3492,7 +3492,7 @@
     "named": true
   },
   {
-    "type": "set",
+    "type": "set.",
     "named": false
   },
   {

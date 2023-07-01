@@ -2674,24 +2674,15 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "SEQ",
+              "type": "CHOICE",
               "members": [
                 {
-                  "type": "CHOICE",
-                  "members": [
-                    {
-                      "type": "STRING",
-                      "value": "get"
-                    },
-                    {
-                      "type": "STRING",
-                      "value": "set"
-                    }
-                  ]
+                  "type": "STRING",
+                  "value": "get."
                 },
                 {
                   "type": "STRING",
-                  "value": "."
+                  "value": "set."
                 }
               ]
             },
@@ -2789,24 +2780,15 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "SEQ",
+              "type": "CHOICE",
               "members": [
                 {
-                  "type": "CHOICE",
-                  "members": [
-                    {
-                      "type": "STRING",
-                      "value": "get"
-                    },
-                    {
-                      "type": "STRING",
-                      "value": "set"
-                    }
-                  ]
+                  "type": "STRING",
+                  "value": "get."
                 },
                 {
                   "type": "STRING",
-                  "value": "."
+                  "value": "set."
                 }
               ]
             },
@@ -3286,24 +3268,15 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "SEQ",
+              "type": "CHOICE",
               "members": [
                 {
-                  "type": "CHOICE",
-                  "members": [
-                    {
-                      "type": "STRING",
-                      "value": "get"
-                    },
-                    {
-                      "type": "STRING",
-                      "value": "set"
-                    }
-                  ]
+                  "type": "STRING",
+                  "value": "get."
                 },
                 {
                   "type": "STRING",
-                  "value": "."
+                  "value": "set."
                 }
               ]
             },
