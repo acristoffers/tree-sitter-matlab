@@ -572,6 +572,15 @@ bool scan_string_close(Scanner* scanner, TSLexer* lexer)
         return true;
     }
 
+    // This means this string is not properly terminated. Finish it here to
+    // make it easier for the user to find the problem.
+    if (lexer->lookahead == '\n' || lexer->lookahead == '\r') {
+        lexer->result_symbol = scanner->string_delimiter == '"' ? DOUBLE_QUOTE_STRING_END : SINGLE_QUOTE_STRING_END;
+        lexer->mark_end(lexer);
+        scanner->string_delimiter = 0;
+        return true;
+    }
+
     if (lexer->lookahead == '%') {
         advance(lexer);
 
@@ -693,6 +702,16 @@ content:
         }
 
         advance(lexer);
+    }
+
+    // Mark end of content here and end of string on next call. This is an
+    // unterminated string and it's better to wrongly finish it here, otherwise
+    // the error will appear god knows how many lines after this and it will be
+    // hard for the user to understand what went wrong.
+    if (lexer->lookahead == '\n' || lexer->lookahead == '\r') {
+        lexer->result_symbol = STRING_CONTENT;
+        lexer->mark_end(lexer);
+        return true;
     }
 
     scanner->string_delimiter = 0;
