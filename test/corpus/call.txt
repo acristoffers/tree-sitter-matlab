@@ -175,6 +175,7 @@ cvx_begin sdp % quiet
     variable P(n, n) semidefinite
     variable Y(n, p, 4)
     variable K(n, p, 4)
+    minimize max(P(1,2), P(2,1))
     subject to
 cvx_end
 
@@ -191,6 +192,9 @@ cvx_end
   (command
     (command_name)
     (command_argument)
+    (command_argument))
+  (command
+    (command_name)
     (command_argument))
   (command
     (command_name)
@@ -277,3 +281,35 @@ Command Call: Shell Escape With Arguments
     (command_name)
     (command_argument)
     (command_argument)))
+
+================================================================================
+Command Call: Parens Breaking
+================================================================================
+
+var A(b, c)   % one arg
+var A(b; c)   % one arg and an error
+var A('b; c)' % one arg (wrong in matlab, ok here)
+var A) b c( d % two args
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (command
+    (command_name)
+    (command_argument))
+  (comment)
+  (command
+    (command_name)
+    (command_argument))
+  (ERROR
+    (identifier))
+  (comment)
+  (command
+    (command_name)
+    (command_argument))
+  (comment)
+  (command
+    (command_name)
+    (command_argument)
+    (command_argument))
+  (comment))
