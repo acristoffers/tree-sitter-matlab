@@ -155,3 +155,23 @@ end
           (identifier)
           (identifier))
         (identifier)))))
+
+================================================================================
+Function Declaration: Empty Body
+================================================================================
+
+function A
+end
+
+function B
+    % just a coment
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier))
+  (function_definition
+    (identifier)
+    (comment)))

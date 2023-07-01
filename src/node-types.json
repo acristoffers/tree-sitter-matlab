@@ -622,10 +622,6 @@
           "named": true
         },
         {
-          "type": "function_definition",
-          "named": true
-        },
-        {
           "type": "global_operator",
           "named": true
         },
@@ -1611,7 +1607,7 @@
     },
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "arguments_statement",

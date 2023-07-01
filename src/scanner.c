@@ -212,6 +212,7 @@ bool scan_comment(TSLexer* lexer)
 
         return false;
     }
+
     if (percent || line_continuation) {
         consume_comment_line(lexer);
 
@@ -741,7 +742,7 @@ bool scan_entry_delimiter(TSLexer* lexer, int skipped)
         return isdigit(lexer->lookahead);
     }
 
-    if (lexer->lookahead == '{' || lexer->lookahead == '(' || lexer->lookahead == '\'' ) {
+    if (lexer->lookahead == '{' || lexer->lookahead == '(' || lexer->lookahead == '\'') {
         return skipped != 0;
     }
 
@@ -752,7 +753,7 @@ bool scan_entry_delimiter(TSLexer* lexer, int skipped)
     // These chars mean we cannot end the cell here, as the expression will
     // surely continue OR we need to just leave the char there and the internal
     // parser will do the rest.
-    const char no_end[] = { ']', '}', '&', '|', '=', '<', '>', '*', '/', '\\', '^', ';', ':'};
+    const char no_end[] = { ']', '}', '&', '|', '=', '<', '>', '*', '/', '\\', '^', ';', ':' };
     for (int i = 0; i < sizeof(no_end); i++) {
         if (no_end[i] == lexer->lookahead) {
             return false;

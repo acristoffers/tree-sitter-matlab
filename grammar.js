@@ -90,8 +90,7 @@ module.exports = grammar({
         $.persistent_operator,
         $.switch_statement,
         $.try_statement,
-        $.while_statement,
-        alias($._function_definition_with_end, $.function_definition)
+        $.while_statement
       ),
 
     _expression: ($) =>
@@ -556,7 +555,7 @@ module.exports = grammar({
         optional($.function_arguments),
         $._end_of_line,
         repeat($.arguments_statement),
-        $.block,
+        optional($.block),
         optional(choice('end', 'endfunction'))
       ),
     _function_definition_with_end: ($) =>
@@ -568,7 +567,7 @@ module.exports = grammar({
         optional($.function_arguments),
         $._end_of_line,
         repeat($.arguments_statement),
-        $.block,
+        optional($.block),
         choice('end', 'endfunction')
       ),
 
