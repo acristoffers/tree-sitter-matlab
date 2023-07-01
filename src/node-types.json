@@ -1836,6 +1836,14 @@
       "required": true,
       "types": [
         {
+          "type": "binary_operator",
+          "named": true
+        },
+        {
+          "type": "field_expression",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -1848,7 +1856,19 @@
           "named": true
         },
         {
+          "type": "parenthesis",
+          "named": true
+        },
+        {
+          "type": "postfix_operator",
+          "named": true
+        },
+        {
           "type": "string",
+          "named": true
+        },
+        {
+          "type": "unary_operator",
           "named": true
         }
       ]

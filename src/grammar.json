@@ -802,7 +802,15 @@
           "members": [
             {
               "type": "SYMBOL",
-              "name": "matrix"
+              "name": "binary_operator"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "field_expression"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "function_call"
             },
             {
               "type": "SYMBOL",
@@ -810,11 +818,23 @@
             },
             {
               "type": "SYMBOL",
+              "name": "matrix"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "parenthesis"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "postfix_operator"
+            },
+            {
+              "type": "SYMBOL",
               "name": "string"
             },
             {
               "type": "SYMBOL",
-              "name": "function_call"
+              "name": "unary_operator"
             }
           ]
         },
