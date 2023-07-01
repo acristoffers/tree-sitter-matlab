@@ -680,7 +680,7 @@ module.exports = grammar({
     try_statement: ($) =>
       seq(
         'try',
-        $._end_of_line,
+        optional($._end_of_line),
         optional($.block),
         optional($.catch_clause),
         'end'
