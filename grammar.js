@@ -441,7 +441,7 @@ module.exports = grammar({
         $._end_of_line,
         optional($.block)
       ),
-    else_clause: ($) => seq('else', $._end_of_line, optional($.block)),
+    else_clause: ($) => seq('else', optional($._end_of_line), optional($.block)),
     if_statement: ($) =>
       seq(
         'if',

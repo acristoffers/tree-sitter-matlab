@@ -1995,8 +1995,16 @@
           "value": "else"
         },
         {
-          "type": "SYMBOL",
-          "name": "_end_of_line"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_end_of_line"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         },
         {
           "type": "CHOICE",

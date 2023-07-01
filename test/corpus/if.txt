@@ -109,3 +109,24 @@ end
     (else_clause
       (block
         (return_statement)))))
+
+================================================================================
+If Statement: Inline
+================================================================================
+
+if cond, a=1; else a=2; end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (if_statement
+    (identifier)
+    (block
+      (assignment
+        (identifier)
+        (number)))
+    (else_clause
+      (block
+        (assignment
+          (identifier)
+          (number))))))
