@@ -40,6 +40,8 @@ module.exports = grammar({
     [$._expression, $._range_element],
     [$._expression, $.indirect_access],
     [$._enum_value, $.property_name],
+    [$.function_definition, $._function_definition_with_end],
+    [$.function_definition],
     [$.block],
   ],
 
@@ -73,7 +75,16 @@ module.exports = grammar({
       ),
 
     _block: ($) =>
-      repeat1(seq(choice($._statement, $._expression), $._end_of_line)),
+      repeat1(
+        seq(
+          choice(
+            $._statement,
+            $._expression,
+            alias($._function_definition_with_end, $.function_definition)
+          ),
+          $._end_of_line
+        )
+      ),
     block: ($) => $._block,
 
     _statement: ($) =>
@@ -199,7 +210,7 @@ module.exports = grammar({
       ),
 
     indirect_access: ($) =>
-      seq('(', choice($.identifier, $.string, $.function_call), ')'),
+      seq('(', choice($.matrix, $.identifier, $.string, $.function_call), ')'),
     field_expression: ($) =>
       prec.left(
         PREC.member,

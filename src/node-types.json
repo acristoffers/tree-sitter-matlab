@@ -567,7 +567,7 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
         {
           "type": "assignment",
@@ -619,6 +619,10 @@
         },
         {
           "type": "function_call",
+          "named": true
+        },
+        {
+          "type": "function_definition",
           "named": true
         },
         {
@@ -1837,6 +1841,10 @@
         },
         {
           "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "matrix",
           "named": true
         },
         {

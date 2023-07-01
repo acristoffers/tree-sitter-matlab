@@ -53,6 +53,15 @@
               {
                 "type": "SYMBOL",
                 "name": "_expression"
+              },
+              {
+                "type": "ALIAS",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "_function_definition_with_end"
+                },
+                "named": true,
+                "value": "function_definition"
               }
             ]
           },
@@ -791,6 +800,10 @@
         {
           "type": "CHOICE",
           "members": [
+            {
+              "type": "SYMBOL",
+              "name": "matrix"
+            },
             {
               "type": "SYMBOL",
               "name": "identifier"
@@ -3788,6 +3801,13 @@
     [
       "_enum_value",
       "property_name"
+    ],
+    [
+      "function_definition",
+      "_function_definition_with_end"
+    ],
+    [
+      "function_definition"
     ],
     [
       "block"

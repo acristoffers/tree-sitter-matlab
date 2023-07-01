@@ -175,3 +175,41 @@ end
   (function_definition
     (identifier)
     (comment)))
+
+================================================================================
+Function Declaration: Nested Functions
+================================================================================
+
+function A
+    x = 1
+    B()
+    function B
+        x = x + 1
+    end
+    x = x + 1
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (block
+      (assignment
+        (identifier)
+        (number))
+      (function_call
+        (identifier))
+      (function_definition
+        (identifier)
+        (block
+          (assignment
+            (identifier)
+            (binary_operator
+              (identifier)
+              (number)))))
+      (assignment
+        (identifier)
+        (binary_operator
+          (identifier)
+          (number))))))
