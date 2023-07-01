@@ -76,3 +76,24 @@ Cell: Sequence of strings
         (string_content))
       (string
         (string_content)))))
+
+================================================================================
+Cell: Extra delimiters
+================================================================================
+
+% MATLAB accepts 1 extra comma at the start and end, and as many ; as you wish.
+{,1,2,3,;;;,1,2,3,}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (comment)
+  (cell
+    (row
+      (number)
+      (number)
+      (number))
+    (row
+      (number)
+      (number)
+      (number))))

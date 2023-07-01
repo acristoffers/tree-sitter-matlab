@@ -311,10 +311,12 @@ module.exports = grammar({
 
     row: ($) =>
       seq(
+        optional(','),
         choice($._expression, $.ignored_argument),
         repeat(
           seq($._entry_delimiter, choice($._expression, $.ignored_argument))
-        )
+        ),
+        optional($._entry_delimiter)
       ),
     matrix: ($) =>
       seq(
@@ -441,7 +443,8 @@ module.exports = grammar({
         $._end_of_line,
         optional($.block)
       ),
-    else_clause: ($) => seq('else', optional($._end_of_line), optional($.block)),
+    else_clause: ($) =>
+      seq('else', optional($._end_of_line), optional($.block)),
     if_statement: ($) =>
       seq(
         'if',
