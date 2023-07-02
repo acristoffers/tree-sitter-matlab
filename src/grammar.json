@@ -2228,8 +2228,11 @@
               "name": "iterator"
             },
             {
-              "type": "SYMBOL",
-              "name": "_end_of_line"
+              "type": "REPEAT",
+              "content": {
+                "type": "SYMBOL",
+                "name": "_end_of_line"
+              }
             },
             {
               "type": "CHOICE",
@@ -2277,8 +2280,11 @@
               "value": ")"
             },
             {
-              "type": "SYMBOL",
-              "name": "_end_of_line"
+              "type": "REPEAT",
+              "content": {
+                "type": "SYMBOL",
+                "name": "_end_of_line"
+              }
             },
             {
               "type": "CHOICE",
@@ -2316,8 +2322,11 @@
           }
         },
         {
-          "type": "SYMBOL",
-          "name": "_end_of_line"
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_end_of_line"
+          }
         },
         {
           "type": "CHOICE",
@@ -2353,8 +2362,11 @@
           }
         },
         {
-          "type": "SYMBOL",
-          "name": "_end_of_line"
+          "type": "REPEAT1",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_end_of_line"
+          }
         },
         {
           "type": "CHOICE",
@@ -2378,8 +2390,11 @@
           "value": "otherwise"
         },
         {
-          "type": "SYMBOL",
-          "name": "_end_of_line"
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_end_of_line"
+          }
         },
         {
           "type": "CHOICE",
@@ -2411,8 +2426,11 @@
           }
         },
         {
-          "type": "SYMBOL",
-          "name": "_end_of_line"
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_end_of_line"
+          }
         },
         {
           "type": "REPEAT",
@@ -3686,8 +3704,11 @@
           ]
         },
         {
-          "type": "SYMBOL",
-          "name": "_end_of_line"
+          "type": "REPEAT1",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_end_of_line"
+          }
         },
         {
           "type": "CHOICE",
@@ -3711,16 +3732,11 @@
           "value": "try"
         },
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "_end_of_line"
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_end_of_line"
+          }
         },
         {
           "type": "CHOICE",

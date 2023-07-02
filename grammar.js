@@ -490,7 +490,7 @@ module.exports = grammar({
         seq(
           choice('for', 'parfor'),
           $.iterator,
-          $._end_of_line,
+          repeat($._end_of_line),
           optional($.block),
           'end'
         ),
@@ -501,7 +501,7 @@ module.exports = grammar({
           ',',
           $.parfor_options,
           ')',
-          $._end_of_line,
+          repeat($._end_of_line),
           optional($.block),
           'end'
         )
@@ -511,7 +511,7 @@ module.exports = grammar({
       seq(
         'while',
         field('condition', $._expression),
-        $._end_of_line,
+        repeat($._end_of_line),
         optional($.block),
         'end'
       ),
@@ -521,16 +521,16 @@ module.exports = grammar({
         'case',
         // MATLAB says it should be a `switch_expr`, but then accepts any expression
         field('condition', $._expression),
-        $._end_of_line,
+        repeat1($._end_of_line),
         optional($.block)
       ),
     otherwise_clause: ($) =>
-      seq('otherwise', $._end_of_line, optional($.block)),
+      seq('otherwise', repeat($._end_of_line), optional($.block)),
     switch_statement: ($) =>
       seq(
         'switch',
         field('condition', $._expression),
-        $._end_of_line,
+        repeat($._end_of_line),
         repeat($.case_clause),
         optional($.otherwise_clause),
         'end'
@@ -703,11 +703,16 @@ module.exports = grammar({
       ),
 
     catch_clause: ($) =>
-      seq('catch', optional($.identifier), $._end_of_line, optional($.block)),
+      seq(
+        'catch',
+        optional($.identifier),
+        repeat1($._end_of_line),
+        optional($.block)
+      ),
     try_statement: ($) =>
       seq(
         'try',
-        optional($._end_of_line),
+        repeat($._end_of_line),
         optional($.block),
         optional($.catch_clause),
         'end'

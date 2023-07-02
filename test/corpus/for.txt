@@ -171,3 +171,39 @@ end
         (string_content)))
     (block
       (number))))
+
+================================================================================
+For Statement: Inline
+================================================================================
+
+for i = 1:10 1; end
+for i = 1:10, 1; end
+for i = 1:10,,,, 1; end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (for_statement
+    (iterator
+      (identifier)
+      (range
+        (number)
+        (number)))
+    (block
+      (number)))
+  (for_statement
+    (iterator
+      (identifier)
+      (range
+        (number)
+        (number)))
+    (block
+      (number)))
+  (for_statement
+    (iterator
+      (identifier)
+      (range
+        (number)
+        (number)))
+    (block
+      (number))))

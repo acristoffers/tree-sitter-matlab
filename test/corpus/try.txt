@@ -46,3 +46,47 @@ end
         (command
           (command_name)
           (command_argument))))))
+
+================================================================================
+Try Statement: Without Catch
+================================================================================
+
+try
+    disp ok
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (try_statement
+    (block
+      (command
+        (command_name)
+        (command_argument)))))
+
+================================================================================
+Try Statement: Onliners
+================================================================================
+
+try disp ok; end
+try,, disp ok; catch,,, disp not ok; end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (try_statement
+    (block
+      (command
+        (command_name)
+        (command_argument))))
+  (try_statement
+    (block
+      (command
+        (command_name)
+        (command_argument)))
+    (catch_clause
+      (block
+        (command
+          (command_name)
+          (command_argument)
+          (command_argument))))))

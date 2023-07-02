@@ -83,3 +83,63 @@ end
           (arguments
             (string
               (string_content))))))))
+
+================================================================================
+Switch: Inline
+================================================================================
+
+switch i case 1, func; case 2, func; otherwise func; end
+switch i, case 1, func; case 2, func; otherwise, func; end
+switch i,, case 1,, func; case 2, func; otherwise,, func; end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (switch_statement
+    (identifier)
+    (case_clause
+      (number)
+      (block
+        (command
+          (command_name))))
+    (case_clause
+      (number)
+      (block
+        (command
+          (command_name))))
+    (otherwise_clause
+      (block
+        (command
+          (command_name)))))
+  (switch_statement
+    (identifier)
+    (case_clause
+      (number)
+      (block
+        (command
+          (command_name))))
+    (case_clause
+      (number)
+      (block
+        (command
+          (command_name))))
+    (otherwise_clause
+      (block
+        (command
+          (command_name)))))
+  (switch_statement
+    (identifier)
+    (case_clause
+      (number)
+      (block
+        (command
+          (command_name))))
+    (case_clause
+      (number)
+      (block
+        (command
+          (command_name))))
+    (otherwise_clause
+      (block
+        (command
+          (command_name))))))
