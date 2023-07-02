@@ -196,6 +196,7 @@ module.exports = grammar({
             choice(
               $.boolean,
               $.cell,
+              $.field_expression,
               $.function_call,
               $.identifier,
               $.matrix,
@@ -203,8 +204,8 @@ module.exports = grammar({
               $.number,
               $.parenthesis,
               $.postfix_operator,
-              $.field_expression,
-              $.unary_operator
+              $.string,
+              $.unary_operator,
             )
           )
         )
