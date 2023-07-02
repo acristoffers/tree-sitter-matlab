@@ -466,16 +466,16 @@ module.exports = grammar({
       seq(
         'elseif',
         field('condition', $._expression),
-        $._end_of_line,
+        repeat($._end_of_line),
         optional($.block)
       ),
     else_clause: ($) =>
-      seq('else', optional($._end_of_line), optional($.block)),
+      seq('else', repeat($._end_of_line), optional($.block)),
     if_statement: ($) =>
       seq(
         'if',
         field('condition', $._expression),
-        $._end_of_line,
+        repeat($._end_of_line),
         optional($.block),
         repeat($.elseif_clause),
         optional($.else_clause),
