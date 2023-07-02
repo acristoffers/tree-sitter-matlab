@@ -33,6 +33,7 @@ Lambda: Handle
 ================================================================================
 
 a = @sin
+b = @math.sin
 
 --------------------------------------------------------------------------------
 
@@ -40,4 +41,9 @@ a = @sin
   (assignment
     (identifier)
     (handle_operator
+      (identifier)))
+  (assignment
+    (identifier)
+    (handle_operator
+      (identifier)
       (identifier))))

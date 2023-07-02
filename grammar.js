@@ -246,7 +246,8 @@ module.exports = grammar({
 
     metaclass_operator: ($) => prec.left(seq('?', $._expression)),
 
-    handle_operator: ($) => seq('@', $.identifier),
+    handle_operator: ($) =>
+      seq('@', seq($.identifier, repeat(seq('.', $.identifier)))),
 
     comparison_operator: ($) =>
       prec.left(
