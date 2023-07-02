@@ -534,6 +534,14 @@ bool scan_command_argument(Scanner* scanner, TSLexer* lexer)
         consumed = true;
     }
 
+    // Mark as argument so the scanner doesnt get called again in an infinite
+    // loop.
+    if (lexer->eof(lexer)) {
+        lexer->result_symbol = COMMAND_ARGUMENT;
+        lexer->mark_end(lexer);
+        return true;
+    }
+
     return false;
 }
 
