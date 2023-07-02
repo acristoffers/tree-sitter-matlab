@@ -66,8 +66,11 @@
             ]
           },
           {
-            "type": "SYMBOL",
-            "name": "_end_of_line"
+            "type": "REPEAT1",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_end_of_line"
+            }
           }
         ]
       }

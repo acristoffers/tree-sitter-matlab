@@ -82,7 +82,7 @@ module.exports = grammar({
             $._expression,
             alias($._function_definition_with_end, $.function_definition)
           ),
-          $._end_of_line
+          repeat1($._end_of_line)
         )
       ),
     block: ($) => $._block,
