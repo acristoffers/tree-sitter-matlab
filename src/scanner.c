@@ -440,6 +440,10 @@ bool scan_command_argument(Scanner* scanner, TSLexer* lexer)
     // If this is a shell escape command, we just break arguments in spaces
     // since we don't know what shell it is.
     if (scanner->is_shell_scape) {
+        if (lexer->eof(lexer)) {
+            return false;
+        }
+
         while (lexer->lookahead != ' ' && lexer->lookahead != '\n' && !lexer->eof(lexer)) {
             advance(lexer);
         }
@@ -453,6 +457,11 @@ bool scan_command_argument(Scanner* scanner, TSLexer* lexer)
             scanner->is_shell_scape = false;
         }
         return true;
+    }
+
+    // Avoids infinite loop when the argument is right before the eof.
+    if (lexer->eof(lexer)) {
+        return false;
     }
 
     bool quote = false;
@@ -482,7 +491,7 @@ bool scan_command_argument(Scanner* scanner, TSLexer* lexer)
         }
 
         // Line comment, finish.
-        if ((!quote || quote && parens != 0) && lexer->lookahead == '%') {
+        if ((!quote || (quote && parens != 0)) && lexer->lookahead == '%') {
             scanner->is_inside_command = false;
             if (consumed) {
                 lexer->result_symbol = COMMAND_ARGUMENT;
@@ -493,7 +502,7 @@ bool scan_command_argument(Scanner* scanner, TSLexer* lexer)
         }
 
         // Line continuation
-        if ((!quote || quote && parens != 0) && lexer->lookahead == '.') {
+        if ((!quote || (quote && parens != 0)) && lexer->lookahead == '.') {
             lexer->result_symbol = COMMAND_ARGUMENT;
             lexer->mark_end(lexer);
             advance(lexer);
@@ -517,12 +526,12 @@ bool scan_command_argument(Scanner* scanner, TSLexer* lexer)
         }
 
         if ((lexer->lookahead == '(' || lexer->lookahead == '[' || lexer->lookahead == '{')
-            && (!quote || quote && parens != 0)) {
+            && (!quote || (quote && parens != 0))) {
             parens++;
         }
 
         if ((lexer->lookahead == ')' || lexer->lookahead == ']' || lexer->lookahead == '}')
-            && (!quote || quote && parens != 0)) {
+            && (!quote || (quote && parens != 0))) {
             parens--;
         }
 
@@ -582,7 +591,7 @@ bool scan_string_close(Scanner* scanner, TSLexer* lexer)
 
     // This means this string is not properly terminated. Finish it here to
     // make it easier for the user to find the problem.
-    if (lexer->lookahead == '\n' || lexer->lookahead == '\r') {
+    if (lexer->lookahead == '\n' || lexer->lookahead == '\r' || lexer->eof(lexer)) {
         lexer->result_symbol = scanner->string_delimiter == '"' ? DOUBLE_QUOTE_STRING_END : SINGLE_QUOTE_STRING_END;
         lexer->mark_end(lexer);
         scanner->string_delimiter = 0;
@@ -716,7 +725,7 @@ content:
     // unterminated string and it's better to wrongly finish it here, otherwise
     // the error will appear god knows how many lines after this and it will be
     // hard for the user to understand what went wrong.
-    if (lexer->lookahead == '\n' || lexer->lookahead == '\r') {
+    if (lexer->lookahead == '\n' || lexer->lookahead == '\r' || lexer->eof(lexer)) {
         lexer->result_symbol = STRING_CONTENT;
         lexer->mark_end(lexer);
         return true;
@@ -859,10 +868,6 @@ bool tree_sitter_matlab_external_scanner_scan(void* payload,
                 scanner->is_inside_command = false;
                 scanner->is_shell_scape = false;
                 return scan_command(scanner, lexer);
-            }
-
-            if (valid_symbols[ENTRY_DELIMITER] && !scanner->is_inside_command && !scanner->line_continuation) {
-                return scan_entry_delimiter(lexer, skipped);
             }
         } else {
             if (valid_symbols[COMMAND_ARGUMENT]) {
