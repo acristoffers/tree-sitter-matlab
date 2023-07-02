@@ -435,8 +435,8 @@ module.exports = grammar({
     // Unary operators cannot bind stronger in this case_clause, lest the world falls apart.
     _range_element: ($) =>
       choice(
-        prec.dynamic(1, $.binary_operator),
         $.boolean,
+        $.field_expression,
         $.function_call,
         $.identifier,
         $.matrix,
@@ -444,8 +444,9 @@ module.exports = grammar({
         $.number,
         $.parenthesis,
         $.postfix_operator,
-        $.field_expression,
-        prec.dynamic(-1, $.unary_operator)
+        $.string,
+        prec.dynamic(-1, $.unary_operator),
+        prec.dynamic(1, $.binary_operator)
       ),
     range: ($) =>
       prec.right(
@@ -469,8 +470,7 @@ module.exports = grammar({
         repeat($._end_of_line),
         optional($.block)
       ),
-    else_clause: ($) =>
-      seq('else', repeat($._end_of_line), optional($.block)),
+    else_clause: ($) => seq('else', repeat($._end_of_line), optional($.block)),
     if_statement: ($) =>
       seq(
         'if',

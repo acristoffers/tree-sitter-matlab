@@ -1932,16 +1932,12 @@
       "type": "CHOICE",
       "members": [
         {
-          "type": "PREC_DYNAMIC",
-          "value": 1,
-          "content": {
-            "type": "SYMBOL",
-            "name": "binary_operator"
-          }
+          "type": "SYMBOL",
+          "name": "boolean"
         },
         {
           "type": "SYMBOL",
-          "name": "boolean"
+          "name": "field_expression"
         },
         {
           "type": "SYMBOL",
@@ -1973,7 +1969,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "field_expression"
+          "name": "string"
         },
         {
           "type": "PREC_DYNAMIC",
@@ -1981,6 +1977,14 @@
           "content": {
             "type": "SYMBOL",
             "name": "unary_operator"
+          }
+        },
+        {
+          "type": "PREC_DYNAMIC",
+          "value": 1,
+          "content": {
+            "type": "SYMBOL",
+            "name": "binary_operator"
           }
         }
       ]
