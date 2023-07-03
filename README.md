@@ -62,58 +62,11 @@ special class folder.
 
 # Installation
 
-## Neovim
+This parser is now the default for the following editors:
 
-It is the default in `nvim-treesitter` now.
-
-## Doom Emacs
-
-You have to manually compile and copy the files to the appropriate folders. Pay
-attention to the `STRAIGHT` variable value, as yours may be different. If you
-are not using `straight.el`, then you need to find out what are the appropriate
-folders for you.
-
-```zsh
-VERSION=28.2
-STRAIGHT=~/.config/emacs/.local/straight
-
-mkdir -p $STRAIGHT/{build-$VERSION,repos}/tree-sitter-langs/bin
-mkdir -p $STRAIGHT/{build-$VERSION,repos}/tree-sitter-langs/queries/matlab
-mkdir -p $STRAIGHT/{build-$VERSION,repos}/evil-textobj-tree-sitter/queries/matlab
-mkdir -p $STRAIGHT/repos/elisp-tree-sitter/langs/queries/matlab
-
-tree-sitter generate --abi 13
-gcc src/*.c -I./src -o matlab.so --shared -fPIC -Os
-
-cp matlab.so $STRAIGHT/repos/tree-sitter-langs/bin/
-cp matlab.so $STRAIGHT/build-$VERSION/tree-sitter-langs/bin/
-
-cp queries/emacs/highlights.scm  $STRAIGHT/repos/tree-sitter-langs/queries/matlab/
-cp queries/emacs/highlights.scm  $STRAIGHT/build-$VERSION/tree-sitter-langs/queries/matlab/
-cp queries/emacs/highlights.scm  $STRAIGHT/repos/elisp-tree-sitter/langs/queries/matlab/
-cp queries/emacs/textobjects.scm $STRAIGHT/repos/evil-textobj-tree-sitter/queries/matlab/
-cp queries/emacs/textobjects.scm $STRAIGHT/build-$VERSION/evil-textobj-tree-sitter/queries/matlab/
-```
-
-- `packages.el`
-
-```elisp
-(package! matlab-mode)
-```
-
-- `config.el`
-
-```elisp
-(use-package! matlab-mode :defer t)
-(add-hook! 'matlab-mode-hook
-           #'display-line-numbers-mode
-           #'matlab-toggle-show-mlint-warnings
-           (setq! matlab-file-font-lock-keywords '())
-           (tree-sitter-hl-mode 1))
-```
-
-You may need to add MATLAB to `tree-sitter-major-mode-language-alist` and
-`evil-textobj-tree-sitter-major-mode-language-alist`.
+- Emacs: Through the `tree-sitter-langs` package.
+- Helix: Builtin, now in master and will be available in the next release (whatever comes after 23.05).
+- Neovim: Through the `nvim-treesitter` plugin.
 
 # Screenshots
 
