@@ -96,6 +96,12 @@ iswspace_matlab(const uint32_t chr)
 static inline bool
 is_identifier(const uint32_t chr, const bool start)
 {
+    // isalpha or isdigit is SIGSEGVing os some UTF-8 chars, like U+10C6BD
+    // (0xF48C9ABD), a file with just those bytes shows the problem.
+    if (chr >= 0x80) {
+        return false;
+    }
+
     const bool alpha = isalpha(chr);
     const bool numeric = !start && isdigit(chr);
     const bool special = chr == '_';
@@ -127,7 +133,7 @@ static inline int
 skip_whitespaces(TSLexer* lexer)
 {
     int skipped = 0;
-    while (iswspace(lexer->lookahead)) {
+    while (!lexer->eof(lexer) && iswspace(lexer->lookahead)) {
         if (lexer->lookahead == '\n' || lexer->lookahead == '\r') {
             skipped = skipped | 2;
         }
