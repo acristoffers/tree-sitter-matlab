@@ -60,7 +60,6 @@ module.exports = grammar({
     $._entry_delimiter,
     $._multioutput_variable_start,
     $.error_sentinel,
-    $._eof,
   ],
 
   extras: ($) => [/\s/, $.comment, $.line_continuation],
@@ -205,7 +204,7 @@ module.exports = grammar({
               $.parenthesis,
               $.postfix_operator,
               $.string,
-              $.unary_operator,
+              $.unary_operator
             )
           )
         )
@@ -725,7 +724,7 @@ module.exports = grammar({
 
     identifier: (_) => /[a-zA-Z_][a-zA-Z0-9_]*/,
 
-    _end_of_line: ($) => choice(';', '\n', '\r', ',', $._eof),
+    _end_of_line: ($) => choice(';', '\n', '\r', ','),
   },
 })
 

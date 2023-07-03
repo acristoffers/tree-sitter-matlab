@@ -19,7 +19,6 @@ enum TokenType {
     ENTRY_DELIMITER,
     MULTIOUTPUT_VARIABLE_START,
     ERROR_SENTINEL,
-    EOF_,
 };
 
 typedef struct {
@@ -884,11 +883,6 @@ bool tree_sitter_matlab_external_scanner_scan(void* payload,
         if (valid_symbols[DOUBLE_QUOTE_STRING_END] || valid_symbols[SINGLE_QUOTE_STRING_END] || valid_symbols[FORMATTING_SEQUENCE]) {
             return scan_string_close(scanner, lexer);
         }
-    }
-
-    if (valid_symbols[EOF_]) {
-        lexer->result_symbol = EOF_;
-        return lexer->eof(lexer);
     }
 
     return false;
