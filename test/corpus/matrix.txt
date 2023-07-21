@@ -158,3 +158,23 @@ Matrix: Meaning of Spaces
       (binary_operator
         (number)
         (number)))))
+
+================================================================================
+Matrix: Parenthesised Expression
+================================================================================
+
+[(1 + 2) (3 + 4)]
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (matrix
+    (row
+      (parenthesis
+        (binary_operator
+          (number)
+          (number)))
+      (parenthesis
+        (binary_operator
+          (number)
+          (number))))))

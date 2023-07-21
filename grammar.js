@@ -211,20 +211,23 @@ module.exports = grammar({
       ),
 
     indirect_access: ($) =>
-      seq(
-        '(',
-        choice(
-          $.binary_operator,
-          $.field_expression,
-          $.function_call,
-          $.identifier,
-          $.matrix,
-          $.parenthesis,
-          $.postfix_operator,
-          $.string,
-          $.unary_operator
-        ),
-        ')'
+      prec(
+        -2,
+        seq(
+          '(',
+          choice(
+            $.binary_operator,
+            $.field_expression,
+            $.function_call,
+            $.identifier,
+            $.matrix,
+            $.parenthesis,
+            $.postfix_operator,
+            $.string,
+            $.unary_operator
+          ),
+          ')'
+        )
       ),
     field_expression: ($) =>
       prec.left(
