@@ -3843,19 +3843,7 @@
     ],
     [
       "_expression",
-      "validation_functions"
-    ],
-    [
-      "_expression",
       "_range_element"
-    ],
-    [
-      "_expression",
-      "indirect_access"
-    ],
-    [
-      "_enum_value",
-      "property_name"
     ],
     [
       "function_definition",

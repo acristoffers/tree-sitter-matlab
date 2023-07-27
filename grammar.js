@@ -36,10 +36,7 @@ module.exports = grammar({
   conflicts: ($) => [
     [$._expression, $._range_element],
     [$.range],
-    [$._expression, $.validation_functions],
     [$._expression, $._range_element],
-    [$._expression, $.indirect_access],
-    [$._enum_value, $.property_name],
     [$.function_definition, $._function_definition_with_end],
     [$.function_definition],
     [$.block],
