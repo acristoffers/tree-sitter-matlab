@@ -191,7 +191,7 @@ static inline void consume_comment_line(TSLexer* lexer)
     }
 }
 
-bool scan_comment(TSLexer* lexer, bool entry_delimiter)
+static bool scan_comment(TSLexer* lexer, bool entry_delimiter)
 {
     lexer->mark_end(lexer);
 
@@ -259,7 +259,7 @@ bool scan_comment(TSLexer* lexer, bool entry_delimiter)
     return false;
 }
 
-bool scan_command(Scanner* scanner, TSLexer* lexer)
+static bool scan_command(Scanner* scanner, TSLexer* lexer)
 {
     // Special case: shell escape
     if (lexer->lookahead == '!') {
@@ -440,7 +440,7 @@ bool scan_command(Scanner* scanner, TSLexer* lexer)
     return false;
 }
 
-bool scan_command_argument(Scanner* scanner, TSLexer* lexer)
+static bool scan_command_argument(Scanner* scanner, TSLexer* lexer)
 {
     // If this is a shell escape command, we just break arguments in spaces
     // since we don't know what shell it is.
@@ -559,7 +559,7 @@ bool scan_command_argument(Scanner* scanner, TSLexer* lexer)
     return false;
 }
 
-bool scan_string_open(Scanner* scanner, TSLexer* lexer)
+static bool scan_string_open(Scanner* scanner, TSLexer* lexer)
 {
     switch (lexer->lookahead) {
     case '"':
@@ -579,7 +579,7 @@ bool scan_string_open(Scanner* scanner, TSLexer* lexer)
     }
 }
 
-bool scan_string_close(Scanner* scanner, TSLexer* lexer)
+static bool scan_string_close(Scanner* scanner, TSLexer* lexer)
 {
     if (lexer->lookahead == scanner->string_delimiter) {
         advance(lexer);
@@ -779,7 +779,7 @@ static inline bool scan_multioutput_var_start(TSLexer* lexer)
     return false;
 }
 
-bool scan_entry_delimiter(TSLexer* lexer, int skipped)
+static bool scan_entry_delimiter(TSLexer* lexer, int skipped)
 {
     lexer->mark_end(lexer);
     lexer->result_symbol = ENTRY_DELIMITER;
