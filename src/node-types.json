@@ -1427,6 +1427,10 @@
           "named": true
         },
         {
+          "type": "string",
+          "named": true
+        },
+        {
           "type": "unary_operator",
           "named": true
         }

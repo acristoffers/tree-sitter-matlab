@@ -3487,6 +3487,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "field_expression"
+        },
+        {
+          "type": "SYMBOL",
           "name": "function_call"
         },
         {
@@ -3511,7 +3515,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "field_expression"
+          "name": "string"
         },
         {
           "type": "SYMBOL",
