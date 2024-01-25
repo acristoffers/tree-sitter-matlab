@@ -158,6 +158,9 @@ void* tree_sitter_matlab_external_scanner_create()
 
 void tree_sitter_matlab_external_scanner_destroy(void* payload)
 {
+    if (payload != NULL) {
+        free(payload);
+    }
 }
 
 unsigned
