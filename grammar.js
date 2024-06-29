@@ -340,20 +340,20 @@ module.exports = grammar({
         optional(','),
         choice($._expression, $.ignored_argument),
         repeat(
-          seq($._entry_delimiter, choice($._expression, $.ignored_argument)),
+          seq(alias($._entry_delimiter, ";"), choice($._expression, $.ignored_argument)),
         ),
-        optional($._entry_delimiter),
+        optional(alias($._entry_delimiter, ";")),
       ),
     matrix: ($) =>
       seq(
         '[',
-        optional(seq($.row, repeat(seq(/[;\r\n]/, optional($.row))))),
+        optional(seq($.row, repeat(seq(choice(";", /[\r\n]/), optional($.row))))),
         ']',
       ),
     cell: ($) =>
       seq(
         '{',
-        optional(seq($.row, repeat(seq(/[;\r\n]/, optional($.row))))),
+        optional(seq($.row, repeat(seq(choice(";", /[\r\n]/), optional($.row))))),
         '}',
       ),
 
