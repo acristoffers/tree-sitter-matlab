@@ -25,5 +25,5 @@ Homepage = "https://github.com/tree-sitter/tree-sitter-matlab"
 core = ["tree-sitter~=0.21"]
 
 [tool.cibuildwheel]
-build = "cp38-*"
+skip = "cp36-* cp37*"
 build-frontend = "build"
