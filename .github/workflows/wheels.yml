@@ -46,6 +46,7 @@ jobs:
 
   upload:
     name: Upload to PyPI
+    environment: release
     needs: [build_wheels, build_sdist]
     runs-on: ubuntu-22.04
     if: github.repository == 'acristoffers/tree-sitter-matlab' && github.event_name == 'push' && github.ref_type == 'tag' && startsWith(github.ref_name, 'v')
