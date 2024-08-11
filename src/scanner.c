@@ -4,6 +4,7 @@
 #include <string.h>
 #include <wctype.h>
 
+
 enum TokenType {
     COMMENT,
     LINE_CONTINUATION,
@@ -761,15 +762,22 @@ static inline bool scan_multioutput_var_start(TSLexer* lexer)
             break;
         }
     }
-
     if (lexer->lookahead != ']') {
         return false;
     }
 
     advance(lexer);
 
-    while (!lexer->eof(lexer) && iswspace_matlab(lexer->lookahead)) {
-        advance(lexer);
+    while (!lexer->eof(lexer)) {
+        if (consume_char('.', lexer) && consume_char('.', lexer) && consume_char('.', lexer)) {
+	  consume_comment_line(lexer);
+	  advance(lexer);
+        } else if (iswspace_matlab(lexer->lookahead)){
+            advance(lexer);
+	} else
+	{
+	  break;
+	}
     }
 
     if (lexer->lookahead == '=') {
