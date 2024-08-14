@@ -39,6 +39,7 @@ module.exports = grammar({
     [$._expression, $._range_element],
     [$.function_definition, $._function_definition_with_end],
     [$.function_definition],
+    [$._function_definition_with_end],
     [$.block],
   ],
 
@@ -383,7 +384,7 @@ module.exports = grammar({
     multioutput_variable: ($) =>
       seq(
         alias($._multioutput_variable_start, '['),
-        optionalCommaSep1(
+        commaSep(
           choice(
             $.identifier,
             $.field_expression,
@@ -596,6 +597,7 @@ module.exports = grammar({
         repeat($.arguments_statement),
         optional($.block),
         choice('end', 'endfunction'),
+	optional(';')
       ),
 
     attribute: ($) => seq($.identifier, optional(seq('=', $._expression))),
@@ -638,6 +640,7 @@ module.exports = grammar({
         $._end_of_line,
         repeat($.property),
         'end',
+	optional(';')
       ),
     function_signature: ($) =>
       seq(
@@ -659,6 +662,7 @@ module.exports = grammar({
           ),
         ),
         'end',
+	optional(';')
       ),
     events: ($) =>
       seq(
@@ -667,6 +671,7 @@ module.exports = grammar({
         $._end_of_line,
         repeat(seq($.identifier, $._end_of_line)),
         'end',
+	optional(';')
       ),
     _enum_value: ($) =>
       choice(
@@ -691,6 +696,7 @@ module.exports = grammar({
         $._end_of_line,
         repeat(seq($.enum, $._end_of_line)),
         'end',
+	optional(';')
       ),
     class_definition: ($) =>
       seq(
@@ -739,6 +745,18 @@ module.exports = grammar({
  */
 function commaSep1(rule) {
   return seq(rule, repeat(seq(',', rule)));
+}
+
+/**
+ * Creates a rule to match zero or more of the rules separated by a comma
+ *
+ * @param {Rule} rule
+ *
+ * @return {SeqRule}
+ *
+ */
+function commaSep(rule) {
+  return optional(seq(rule, repeat(seq(',', rule))));
 }
 
 /**
