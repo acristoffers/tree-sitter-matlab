@@ -2923,7 +2923,19 @@
               "value": "endfunction"
             }
           ]
-        }
+        },
+	{
+	  "type": "CHOICE",
+	  "members": [
+            {
+              "type": "STRING",
+              "value": ";"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+	}
       ]
     },
     "attribute": {
@@ -3317,7 +3329,19 @@
         {
           "type": "STRING",
           "value": "end"
-        }
+        },
+	{
+	  "type": "CHOICE",
+	  "members": [
+            {
+              "type": "STRING",
+              "value": ";"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+	}
       ]
     },
     "function_signature": {
@@ -3429,7 +3453,19 @@
         {
           "type": "STRING",
           "value": "end"
-        }
+        },
+	{
+	  "type": "CHOICE",
+	  "members": [
+            {
+              "type": "STRING",
+              "value": ";"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+	}
       ]
     },
     "events": {
@@ -3474,7 +3510,19 @@
         {
           "type": "STRING",
           "value": "end"
-        }
+        },
+	{
+	  "type": "CHOICE",
+	  "members": [
+            {
+              "type": "STRING",
+              "value": ";"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+	}
       ]
     },
     "_enum_value": {
@@ -3623,7 +3671,19 @@
         {
           "type": "STRING",
           "value": "end"
-        }
+        },
+	{
+	  "type": "CHOICE",
+	  "members": [
+            {
+              "type": "STRING",
+              "value": ";"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+	}
       ]
     },
     "class_definition": {
@@ -3858,6 +3918,9 @@
     ],
     [
       "function_definition"
+    ],
+    [
+      "_function_definition_with_end"
     ],
     [
       "block"
