@@ -245,7 +245,7 @@ module.exports = grammar({
 
     not_operator: ($) => prec(PREC.not, seq('~', $._expression)),
 
-    metaclass_operator: ($) => prec.left(seq('?', $._expression)),
+    metaclass_operator: ($) => prec.left(seq('?', seq($.identifier,repeat(seq('.',$.identifier))))),
 
     handle_operator: ($) =>
       seq('@', seq($.identifier, repeat(seq('.', $.identifier)))),
