@@ -59,7 +59,7 @@ classdef DifferentValidation
       MyPublicData (1,:) double {mustBePositive} = [1 1 1]
       RestrictedByClass uint32
       RestrictedByFunction {mustBeInteger,mustBePositive} = 0
-   end
+   end;
 end
 
 --------------------------------------------------------------------------------
@@ -101,12 +101,12 @@ classdef Class
     methods (Access = public)
         function out = a(in)
             1
-        end
+        end;
 
         function out = b(~)
             2
         end
-    end
+    end;
 end
 
 --------------------------------------------------------------------------------
@@ -196,7 +196,7 @@ Class Definition: Simple Enumerations
 classdef WeekDays
    enumeration
       Monday, Tuesday, Wednesday, Thursday, Friday
-   end
+   end;
 end
 
 --------------------------------------------------------------------------------
@@ -291,7 +291,7 @@ classdef ToggleButton < handle
    events
       ToggledState
       Quitting
-   end
+   end;
 end
 
 --------------------------------------------------------------------------------
