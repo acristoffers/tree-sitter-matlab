@@ -383,7 +383,7 @@ module.exports = grammar({
     multioutput_variable: ($) =>
       seq(
         alias($._multioutput_variable_start, '['),
-        optionalCommaSep1(
+        optionalCommaSep(
           choice(
             $.identifier,
             $.field_expression,
@@ -751,4 +751,16 @@ function commaSep1(rule) {
  */
 function optionalCommaSep1(rule) {
   return seq(rule, repeat(seq(optional(','), rule)), optional(','));
+}
+
+/**
+ * Creates a rule to match zero or more of the rules optionally separated by a comma
+ *
+ * @param {Rule} rule
+ *
+ * @return {SeqRule}
+ *
+ */
+function optionalCommaSep(rule) {
+  return optional(seq(rule, repeat(seq(optional(','), rule)), optional(',')));
 }
