@@ -37,8 +37,6 @@ module.exports = grammar({
     [$._expression, $._range_element],
     [$.range],
     [$._expression, $._range_element],
-    [$.function_definition, $._function_definition_with_end],
-    [$.function_definition],
     [$.block],
   ],
 
@@ -574,7 +572,7 @@ module.exports = grammar({
     function_arguments: ($) =>
       seq('(', field('arguments', optional($._lambda_arguments)), ')'),
     function_definition: ($) =>
-      seq(
+      prec.left(seq(
         'function',
         optional($.function_output),
         optional(choice('get.', 'set.')),
@@ -583,10 +581,10 @@ module.exports = grammar({
         $._end_of_line,
         repeat($.arguments_statement),
         optional($.block),
-        optional(choice('end', 'endfunction')),
-      ),
+        optional(seq(choice('end', 'endfunction'), optional(';'))),
+      )),
     _function_definition_with_end: ($) =>
-      seq(
+      prec.left(seq(
         'function',
         optional($.function_output),
         optional(choice('get.', 'set.')),
@@ -596,7 +594,8 @@ module.exports = grammar({
         repeat($.arguments_statement),
         optional($.block),
         choice('end', 'endfunction'),
-      ),
+        optional(';'),
+      )),
 
     attribute: ($) => seq($.identifier, optional(seq('=', $._expression))),
     attributes: ($) =>
@@ -699,7 +698,7 @@ module.exports = grammar({
         field('name', $.identifier),
         optional($.superclasses),
         $._end_of_line,
-        repeat(choice($.properties, $.methods, $.events, $.enumeration)),
+        repeat(choice($.properties, $.methods, $.events, $.enumeration, ';')),
         'end',
       ),
 
