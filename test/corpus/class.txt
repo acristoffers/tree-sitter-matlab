@@ -383,3 +383,25 @@ end
         (identifier)
         (default_value
           (number))))))
+
+================================================================================
+Class: Metaclass operator
+================================================================================
+
+?double
+?com.example.AClass
+?"invalid"
+
+--------------------------------------------------------------------------------
+
+(source_file
+      (metaclass_operator
+        (identifier))
+      (metaclass_operator
+        (identifier)
+        (identifier)
+        (identifier))
+      (ERROR)
+      (identifier)
+      (MISSING ";")
+      (string))
