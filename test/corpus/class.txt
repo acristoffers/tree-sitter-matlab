@@ -331,3 +331,55 @@ end
           (identifier)))
       (function_signature
         (identifier)))))
+
+================================================================================
+Class Definition: Old-style property
+================================================================================
+
+classdef PropTypeOld
+    properties
+        link_name@char = 'none';
+        pos@double vector = zeros(3,1);
+        rotm@double matrix = zeros(3,3);
+        idx@uint8 scalar = 0;
+    end
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (class_definition
+    (identifier)
+    (properties
+      (property
+        (identifier)
+        (identifier)
+        (default_value
+          (string
+            (string_content))))
+      (property
+        (identifier)
+        (identifier)
+        (identifier)
+        (default_value
+          (function_call
+            (identifier)
+            (arguments
+              (number)
+              (number)))))
+      (property
+        (identifier)
+        (identifier)
+        (identifier)
+        (default_value
+          (function_call
+            (identifier)
+            (arguments
+              (number)
+              (number)))))
+      (property
+        (identifier)
+        (identifier)
+        (identifier)
+        (default_value
+          (number))))))
