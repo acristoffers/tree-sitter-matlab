@@ -295,26 +295,6 @@ module.exports = grammar({
         ),
       ),
 
-    // _escape_sequence: $ => choice(
-    //   prec(2, token.immediate(seq('\\', /[^abfnrtvxu'\"\\\?]/))),
-    //   prec(1, $.escape_sequence),
-    // ),
-    //
-    // escape_sequence: _ => token.immediate(seq(
-    //   '\\',
-    //   choice(
-    //     /[^xu0-7"]/,
-    //     /[0-7]{1,3}/,
-    //     /x[0-9a-fA-F]{2}/,
-    //     /u[0-9a-fA-F]{4}/,
-    //     /u{[0-9a-fA-F]+}/,
-    //     /U[0-9a-fA-F]{8}/,
-    //   ),
-    // )),
-    // formatting_sequence: $ => token.immediate(seq(
-    //   '%',
-    //   choice('%', /\d*[-+ 0#]?\d*(\.\d+)?[bt]?[cdeEfgGosuxX]/),
-    // )),
     string: ($) =>
       choice(
         seq(
@@ -338,20 +318,20 @@ module.exports = grammar({
         optional(','),
         choice($._expression, $.ignored_argument),
         repeat(
-          seq(alias($._entry_delimiter, ";"), choice($._expression, $.ignored_argument)),
+          seq(alias($._entry_delimiter, ';'), choice($._expression, $.ignored_argument)),
         ),
-        optional(alias($._entry_delimiter, ";")),
+        optional(alias($._entry_delimiter, ';')),
       ),
     matrix: ($) =>
       seq(
         '[',
-        optional(seq($.row, repeat(seq(choice(";", /[\r\n]/), optional($.row))))),
+        optional(seq($.row, repeat(seq(choice(';', /[\r\n]/), optional($.row))))),
         ']',
       ),
     cell: ($) =>
       seq(
         '{',
-        optional(seq($.row, repeat(seq(choice(";", /[\r\n]/), optional($.row))))),
+        optional(seq($.row, repeat(seq(choice(';', /[\r\n]/), optional($.row))))),
         '}',
       ),
 
@@ -751,18 +731,6 @@ module.exports = grammar({
  */
 function commaSep1(rule) {
   return seq(rule, repeat(seq(',', rule)));
-}
-
-/**
- * Creates a rule to match one or more of the rules optionally separated by a comma
- *
- * @param {Rule} rule
- *
- * @return {SeqRule}
- *
- */
-function optionalCommaSep1(rule) {
-  return seq(rule, repeat(seq(optional(','), rule)), optional(','));
 }
 
 /**
