@@ -6,7 +6,7 @@ available in a package named `clang-tools`.
 
 # Commit message
 
-This repo uses [semantic-commits](Semantic Commits), all lowercase and with no dot at the end.
+This repo uses [Semantic Commits], all lowercase and with no dot at the end.
 
 # Commit contents
 
@@ -20,7 +20,7 @@ try to keep the changes as minimal as possible.
 
 # Tests
 
-Add or modify tests to cover the chances you a making. There is no reason to go crazy, just add
+Add or modify tests to cover the changes you a making. There is no reason to go crazy, just add
 something so that if it ever breaks for some reason, I know right away that it broke.
 
-[semantic-commits]: https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716
+[Semantic Commits]: https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716
