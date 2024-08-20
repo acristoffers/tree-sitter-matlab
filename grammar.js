@@ -619,16 +619,29 @@ module.exports = grammar({
         ),
       ),
     property: ($) =>
-      seq(
-        field(
-          'name',
-          choice($.identifier, $.property_name, $.ignored_argument),
+      choice(
+        seq(
+          field(
+            'name',
+            choice($.identifier, $.property_name, $.ignored_argument),
+          ),
+          optional($.dimensions),
+          optional(choice($.identifier, $.property_name)),
+          optional($.validation_functions),
+          optional($.default_value),
+          $._end_of_line,
         ),
-        optional($.dimensions),
-        optional(choice($.identifier, $.property_name)),
-        optional($.validation_functions),
-        optional($.default_value),
-        $._end_of_line,
+        seq(
+          field(
+            'name',
+            choice($.identifier, $.property_name, $.ignored_argument),
+          ),
+          '@',
+          $.identifier,
+          alias(optional(choice('vector', 'matrix', 'scalar')), $.identifier),
+          optional($.default_value),
+          $._end_of_line,
+        )
       ),
     properties: ($) =>
       seq(
