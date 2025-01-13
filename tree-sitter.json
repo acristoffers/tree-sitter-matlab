@@ -1,0 +1,35 @@
+{
+  "grammars": [
+    {
+      "name": "matlab",
+      "camelcase": "Matlab",
+      "scope": "source.m",
+      "path": ".",
+      "file-types": [
+        "m"
+      ],
+      "highlights": "queries/neovim/highlights.scm"
+    }
+  ],
+  "metadata": {
+    "version": "1.0.3",
+    "license": "MIT",
+    "description": "MATLAB tree-sitter parser",
+    "authors": [
+      {
+        "name": "Álan Crístoffer e Sousa"
+      }
+    ],
+    "links": {
+      "repository": "https://github.com/tree-sitter/tree-sitter-matlab"
+    }
+  },
+  "bindings": {
+    "c": true,
+    "go": true,
+    "node": true,
+    "python": true,
+    "rust": true,
+    "swift": true
+  }
+}
