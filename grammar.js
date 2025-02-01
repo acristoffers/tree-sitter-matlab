@@ -552,7 +552,7 @@ module.exports = grammar({
     function_arguments: ($) =>
       seq('(', field('arguments', optional($._lambda_arguments)), ')'),
     function_definition: ($) =>
-      prec.left(seq(
+      prec.right(seq(
         'function',
         optional($.function_output),
         optional(choice('get.', 'set.')),
@@ -564,7 +564,7 @@ module.exports = grammar({
         optional(seq(choice('end', 'endfunction'), optional(';'))),
       )),
     _function_definition_with_end: ($) =>
-      prec.left(seq(
+      prec.right(seq(
         'function',
         optional($.function_output),
         optional(choice('get.', 'set.')),

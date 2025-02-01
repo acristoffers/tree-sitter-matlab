@@ -2778,7 +2778,7 @@
       ]
     },
     "function_definition": {
-      "type": "PREC_LEFT",
+      "type": "PREC_RIGHT",
       "value": 0,
       "content": {
         "type": "SEQ",
@@ -2905,7 +2905,7 @@
       }
     },
     "_function_definition_with_end": {
-      "type": "PREC_LEFT",
+      "type": "PREC_RIGHT",
       "value": 0,
       "content": {
         "type": "SEQ",

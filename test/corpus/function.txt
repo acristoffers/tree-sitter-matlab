@@ -213,3 +213,25 @@ end
         (binary_operator
           (identifier)
           (number))))))
+
+================================================================================
+Function Declaration: Nested Functions
+================================================================================
+
+function A
+    function B
+    end
+end
+function C
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (block
+      (function_definition
+        (identifier))))
+  (function_definition
+    (identifier)))
