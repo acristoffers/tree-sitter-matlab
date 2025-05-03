@@ -2,38 +2,49 @@
   "name": "tree-sitter-matlab",
   "version": "1.0.4",
   "description": "MATLAB tree-sitter parser",
+  "repository": "https://github.com/tree-sitter/tree-sitter-matlab",
+  "license": "MIT",
+  "author": {
+    "name": "Álan Crístoffer e Sousa"
+  },
   "main": "bindings/node",
   "types": "bindings/node",
-  "author": "Álan Crístoffer e Sousa",
-  "license": "MIT",
-  "dependencies": {
-    "node-addon-api": "^7.1.0",
-    "node-gyp-build": "^4.8.0"
-  },
-  "peerDependencies": {
-    "tree-sitter": "^0.21.0"
-  },
-  "peerDependenciesMeta": {
-    "tree_sitter": {
-      "optional": true
-    }
-  },
-  "devDependencies": {
-    "eslint": "^8.42.0",
-    "eslint-config-google": "^0.14.0",
-    "tree-sitter-cli": "^0.20.8",
-    "prebuildify": "^6.0.0"
-  },
+  "keywords": [
+    "incremental",
+    "parsing",
+    "tree-sitter",
+    "matlab"
+  ],
   "files": [
     "grammar.js",
+    "tree-sitter.json",
     "binding.gyp",
     "prebuilds/**",
     "bindings/node/*",
     "queries/*",
-    "src/**"
+    "src/**",
+    "*.wasm"
   ],
+  "dependencies": {
+    "node-addon-api": "^8.2.1",
+    "node-gyp-build": "^4.8.2"
+  },
+  "devDependencies": {
+    "prebuildify": "^6.0.1",
+    "tree-sitter-cli": "^0.25.3"
+  },
+  "peerDependencies": {
+    "tree-sitter": "^0.21.1"
+  },
+  "peerDependenciesMeta": {
+    "tree-sitter": {
+      "optional": true
+    }
+  },
   "scripts": {
     "install": "node-gyp-build",
-    "prebuildify": "prebuildify --napi --strip"
+    "prestart": "tree-sitter build --wasm",
+    "start": "tree-sitter playground",
+    "test": "node --test bindings/node/*_test.js"
   }
 }
