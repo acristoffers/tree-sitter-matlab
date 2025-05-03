@@ -1,4 +1,7 @@
 {
+  "variables": {
+    "is_arm%": "<!(node -e \"console.log(process.arch.startsWith('arm') || process.arch === 'arm64' ? 1 : 0)\")"
+  },
   "targets": [
     {
       "target_name": "tree_sitter_matlab_binding",
@@ -15,8 +18,18 @@
       ],
       "conditions": [
         ["OS!='win'", {
-          "cflags_c": [
-            "-std=c11",
+          "conditions": [
+            ["is_arm==1", {
+              "cflags_c": [
+                "-std=c11",
+                "-march=armv8-a",
+                "-mtune=generic"
+              ],
+            }, { # not ARM
+              "cflags_c": [
+                "-std=c11"
+              ],
+            }],
           ],
         }, { # OS == "win"
           "cflags_c": [

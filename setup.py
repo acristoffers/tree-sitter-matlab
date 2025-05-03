@@ -1,5 +1,5 @@
 from os.path import isdir, join
-from platform import system
+from platform import system, machine
 
 from setuptools import Extension, find_packages, setup
 from setuptools.command.build import build
@@ -22,6 +22,23 @@ class BdistWheel(bdist_wheel):
         return python, abi, platform
 
 
+def get_extra_compile_args():
+
+    if system() == "Windows":
+        return ["/std:c11", "/utf-8"]
+
+    args = ["-std=c11"]
+
+    arch = machine().lower()
+    if "arm" in arch or "aarch64" in arch:
+        if "aarch64" in arch or arch == "arm64":
+            args.extend(["-march=armv8-a", "-mtune=generic"])
+        else:
+            args.extend(["-march=armv7-a", "-mtune=generic"])
+
+    return args
+
+
 setup(
     packages=find_packages("bindings/python"),
     package_dir={"": "bindings/python"},
@@ -38,12 +55,7 @@ setup(
                 "src/parser.c",
                 "src/scanner.c"
             ],
-            extra_compile_args=[
-                "-std=c11",
-            ] if system() != "Windows" else [
-                "/std:c11",
-                "/utf-8",
-            ],
+            extra_compile_args=get_extra_compile_args(),
             define_macros=[
                 ("Py_LIMITED_API", "0x03080000"),
                 ("PY_SSIZE_T_CLEAN", None)
