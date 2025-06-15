@@ -98,15 +98,17 @@ Class Definition: Methods
 ================================================================================
 
 classdef Class
-    methods (Access = public)
-        function out = a(in)
-            1
-        end;
+   methods (Access = protected)
+      function out = method1(obj,inputArg)
+         ...
+      end
+   end
+   methods (Access = private)
+      function out = method2(obj,inputArg)
+          ...
 
-        function out = b(~)
-            2
-        end
-    end;
+      end
+   end
 end
 
 --------------------------------------------------------------------------------
@@ -124,17 +126,22 @@ end
           (identifier))
         (identifier)
         (function_arguments
+          (identifier)
           (identifier))
-        (block
-          (number)))
+        (line_continuation)))
+    (methods
+      (attributes
+        (attribute
+          (identifier)
+          (identifier)))
       (function_definition
         (function_output
           (identifier))
         (identifier)
         (function_arguments
-          (ignored_argument))
-        (block
-          (number))))))
+          (identifier)
+          (identifier))
+        (line_continuation)))))
 
 ================================================================================
 Class Definition: Arguments
@@ -395,13 +402,13 @@ Class: Metaclass operator
 --------------------------------------------------------------------------------
 
 (source_file
-      (metaclass_operator
-        (identifier))
-      (metaclass_operator
-        (identifier)
-        (identifier)
-        (identifier))
-      (ERROR)
-      (identifier)
-      (MISSING ";")
-      (string))
+  (metaclass_operator
+    (identifier))
+  (metaclass_operator
+    (identifier)
+    (identifier)
+    (identifier))
+  (ERROR)
+  (identifier)
+  (MISSING ";")
+  (string))

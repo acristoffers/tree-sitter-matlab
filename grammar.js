@@ -660,22 +660,8 @@ module.exports = grammar({
         repeat(seq($.identifier, $._end_of_line)),
         'end',
       ),
-    _enum_value: ($) =>
-      choice(
-        $.boolean,
-        $.cell,
-        $.field_expression,
-        $.function_call,
-        $.identifier,
-        $.matrix,
-        $.not_operator,
-        $.number,
-        $.postfix_operator,
-        $.string,
-        $.unary_operator,
-      ),
     enum: ($) =>
-      seq($.identifier, optional(seq('(', commaSep1($._enum_value), ')'))),
+      seq($.identifier, optional(seq('(', commaSep1($._expression), ')'))),
     enumeration: ($) =>
       seq(
         'enumeration',

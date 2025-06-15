@@ -3654,55 +3654,6 @@
         }
       ]
     },
-    "_enum_value": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "boolean"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "cell"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "field_expression"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "function_call"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "identifier"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "matrix"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "not_operator"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "number"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "postfix_operator"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "string"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "unary_operator"
-        }
-      ]
-    },
     "enum": {
       "type": "SEQ",
       "members": [
@@ -3725,7 +3676,7 @@
                   "members": [
                     {
                       "type": "SYMBOL",
-                      "name": "_enum_value"
+                      "name": "_expression"
                     },
                     {
                       "type": "REPEAT",
@@ -3738,7 +3689,7 @@
                           },
                           {
                             "type": "SYMBOL",
-                            "name": "_enum_value"
+                            "name": "_expression"
                           }
                         ]
                       }
