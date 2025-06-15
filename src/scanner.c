@@ -223,11 +223,8 @@ static bool scan_comment(TSLexer* lexer, bool entry_delimiter)
             lexer->result_symbol = COMMENT;
             advance(lexer);
         } else {
-            while (lexer->lookahead == '\r' || lexer->lookahead == '\n') {
-                advance(lexer);
-            }
-            lexer->mark_end(lexer);
             lexer->result_symbol = LINE_CONTINUATION;
+            return true;
         }
 
         // Merges consecutive comments into one token, unless they are
@@ -842,7 +839,7 @@ bool tree_sitter_matlab_external_scanner_scan(void* payload, TSLexer* lexer, con
         int skipped = skip_whitespaces(lexer);
 
         if ((scanner->line_continuation || !scanner->is_inside_command) && valid_symbols[COMMENT]
-            && (lexer->lookahead == '%' || lexer->lookahead == '.')) {
+            && (lexer->lookahead == '%' || ((skipped & 2) == 0 && lexer->lookahead == '.'))) {
             return scan_comment(lexer, valid_symbols[ENTRY_DELIMITER]);
         }
 
