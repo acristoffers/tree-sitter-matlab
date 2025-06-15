@@ -118,3 +118,20 @@ A = "Some " + ... multiline concatenation
       (line_continuation)
       (string
         (string_content)))))
+
+================================================================================
+Comment: inline with %{
+================================================================================
+
+myVar = 1 %{single line comment %} + 1;
+
+%{ this is also a single line comment
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (assignment
+    (identifier)
+    (number))
+  (comment)
+  (comment))
