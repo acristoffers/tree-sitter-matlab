@@ -3725,7 +3725,7 @@
                   "members": [
                     {
                       "type": "SYMBOL",
-                      "name": "_enum_value"
+                      "name": "_expression"
                     },
                     {
                       "type": "REPEAT",
@@ -3738,7 +3738,7 @@
                           },
                           {
                             "type": "SYMBOL",
-                            "name": "_enum_value"
+                            "name": "_expression"
                           }
                         ]
                       }
