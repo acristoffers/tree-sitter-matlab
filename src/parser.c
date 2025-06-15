@@ -6,7 +6,7 @@
 #pragma GCC diagnostic ignored "-Wmissing-field-initializers"
 #endif
 
-#define LANGUAGE_VERSION 15
+#define LANGUAGE_VERSION 14
 #define STATE_COUNT 1267
 #define LARGE_STATE_COUNT 76
 #define SYMBOL_COUNT 188
@@ -47676,13 +47676,6 @@ TS_PUBLIC const TSLanguage *tree_sitter_matlab(void) {
       tree_sitter_matlab_external_scanner_deserialize,
     },
     .primary_state_ids = ts_primary_state_ids,
-    .name = "matlab",
-    .max_reserved_word_set_size = 0,
-    .metadata = {
-      .major_version = 1,
-      .minor_version = 0,
-      .patch_version = 5,
-    },
   };
   return &language;
 }
