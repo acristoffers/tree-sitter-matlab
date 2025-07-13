@@ -682,6 +682,10 @@
           "named": true
         },
         {
+          "type": "spmd_statement",
+          "named": true
+        },
+        {
           "type": "string",
           "named": true
         },
@@ -2822,6 +2826,10 @@
           "named": true
         },
         {
+          "type": "spmd_statement",
+          "named": true
+        },
+        {
           "type": "string",
           "named": true
         },
@@ -2839,6 +2847,97 @@
         },
         {
           "type": "while_statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "spmd_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "binary_operator",
+          "named": true
+        },
+        {
+          "type": "block",
+          "named": true
+        },
+        {
+          "type": "boolean",
+          "named": true
+        },
+        {
+          "type": "boolean_operator",
+          "named": true
+        },
+        {
+          "type": "cell",
+          "named": true
+        },
+        {
+          "type": "comparison_operator",
+          "named": true
+        },
+        {
+          "type": "field_expression",
+          "named": true
+        },
+        {
+          "type": "function_call",
+          "named": true
+        },
+        {
+          "type": "handle_operator",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "lambda",
+          "named": true
+        },
+        {
+          "type": "matrix",
+          "named": true
+        },
+        {
+          "type": "metaclass_operator",
+          "named": true
+        },
+        {
+          "type": "not_operator",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "parenthesis",
+          "named": true
+        },
+        {
+          "type": "postfix_operator",
+          "named": true
+        },
+        {
+          "type": "range",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "unary_operator",
           "named": true
         }
       ]
@@ -3468,6 +3567,10 @@
   },
   {
     "type": "set.",
+    "named": false
+  },
+  {
+    "type": "spmd",
     "named": false
   },
   {

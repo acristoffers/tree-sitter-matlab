@@ -106,19 +106,15 @@
         },
         {
           "type": "SYMBOL",
-          "name": "continue_statement"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "return_statement"
-        },
-        {
-          "type": "SYMBOL",
           "name": "class_definition"
         },
         {
           "type": "SYMBOL",
           "name": "command"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "continue_statement"
         },
         {
           "type": "SYMBOL",
@@ -135,6 +131,14 @@
         {
           "type": "SYMBOL",
           "name": "persistent_operator"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "return_statement"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "spmd_statement"
         },
         {
           "type": "SYMBOL",
@@ -3915,6 +3919,93 @@
         }
       ]
     },
+    "spmd_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "spmd"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "("
+                },
+                {
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "CHOICE",
+                      "members": [
+                        {
+                          "type": "SYMBOL",
+                          "name": "_expression"
+                        },
+                        {
+                          "type": "SEQ",
+                          "members": [
+                            {
+                              "type": "SYMBOL",
+                              "name": "_expression"
+                            },
+                            {
+                              "type": "STRING",
+                              "value": ","
+                            },
+                            {
+                              "type": "SYMBOL",
+                              "name": "_expression"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "BLANK"
+                    }
+                  ]
+                },
+                {
+                  "type": "STRING",
+                  "value": ")"
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_end_of_line"
+          }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "block"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": "end"
+        }
+      ]
+    },
     "number": {
       "type": "PATTERN",
       "value": "(\\d+|\\d+\\.\\d*|\\.\\d+)([eE][+-]?\\d+)?[ij]?"
@@ -3979,10 +4070,6 @@
     ],
     [
       "range"
-    ],
-    [
-      "_expression",
-      "_range_element"
     ],
     [
       "block"

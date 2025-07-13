@@ -36,7 +36,6 @@ module.exports = grammar({
   conflicts: ($) => [
     [$._expression, $._range_element],
     [$.range],
-    [$._expression, $._range_element],
     [$.block],
   ],
 
@@ -86,14 +85,15 @@ module.exports = grammar({
       choice(
         $.assignment,
         $.break_statement,
-        $.continue_statement,
-        $.return_statement,
         $.class_definition,
         $.command,
+        $.continue_statement,
         $.for_statement,
         $.global_operator,
         $.if_statement,
         $.persistent_operator,
+        $.return_statement,
+        $.spmd_statement,
         $.switch_statement,
         $.try_statement,
         $.while_statement,
@@ -694,6 +694,15 @@ module.exports = grammar({
         repeat($._end_of_line),
         optional($.block),
         optional($.catch_clause),
+        'end',
+      ),
+
+    spmd_statement: ($) =>
+      seq(
+        'spmd',
+        optional(seq('(', optional(choice($._expression, seq($._expression, ',', $._expression))), ')')),
+        repeat($._end_of_line),
+        optional($.block),
         'end',
       ),
 
