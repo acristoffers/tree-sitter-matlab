@@ -587,7 +587,7 @@ module.exports = grammar({
     dimensions: ($) =>
       seq('(', commaSep1(choice($.number, $.spread_operator)), ')'),
     validation_functions: ($) =>
-      seq('{', commaSep1(choice($.identifier, $.function_call)), '}'),
+      seq('{', choice($.identifier, $.function_call), repeat(seq(optional(","), choice($.identifier, $.function_call))), '}'),
     default_value: ($) => seq('=', $._expression),
     property_name: ($) =>
       prec.right(

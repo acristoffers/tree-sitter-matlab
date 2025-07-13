@@ -3236,47 +3236,50 @@
           "value": "{"
         },
         {
-          "type": "SEQ",
+          "type": "CHOICE",
           "members": [
             {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "identifier"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "function_call"
-                }
-              ]
+              "type": "SYMBOL",
+              "name": "identifier"
             },
             {
-              "type": "REPEAT",
-              "content": {
-                "type": "SEQ",
+              "type": "SYMBOL",
+              "name": "function_call"
+            }
+          ]
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "CHOICE",
                 "members": [
                   {
                     "type": "STRING",
                     "value": ","
                   },
                   {
-                    "type": "CHOICE",
-                    "members": [
-                      {
-                        "type": "SYMBOL",
-                        "name": "identifier"
-                      },
-                      {
-                        "type": "SYMBOL",
-                        "name": "function_call"
-                      }
-                    ]
+                    "type": "BLANK"
+                  }
+                ]
+              },
+              {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "identifier"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "function_call"
                   }
                 ]
               }
-            }
-          ]
+            ]
+          }
         },
         {
           "type": "STRING",
