@@ -575,14 +575,10 @@ static bool scan_string_close(Scanner* scanner, TSLexer* lexer)
         return true;
     }
 
-    // This means this string is not properly terminated. Finish it here to
-    // make it easier for the user to find the problem.
+    // This means this string is not properly terminated.
     if (lexer->lookahead == '\n' || lexer->lookahead == '\r' || lexer->eof(lexer)) {
-        lexer->result_symbol = scanner->string_delimiter == '"' ? DOUBLE_QUOTE_STRING_END
-                                                                : SINGLE_QUOTE_STRING_END;
-        lexer->mark_end(lexer);
         scanner->string_delimiter = 0;
-        return true;
+        return false;
     }
 
     if (lexer->lookahead == '%') {
