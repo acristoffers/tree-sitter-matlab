@@ -401,14 +401,13 @@ Class: Metaclass operator
 
 --------------------------------------------------------------------------------
 
-(source_file
-  (metaclass_operator
-    (identifier))
-  (metaclass_operator
-    (identifier)
-    (identifier)
-    (identifier))
-  (ERROR)
-  (identifier)
-  (MISSING ";")
-  (string))
+   (source_file
+      (metaclass_operator
+        (identifier))
+      (metaclass_operator
+        (identifier)
+        (identifier)
+        (identifier))
+      (ERROR)
+      (string
+        (string_content)))

@@ -21,6 +21,7 @@ enum TokenType {
     STRING_CONTENT,
     ENTRY_DELIMITER,
     MULTIOUTPUT_VARIABLE_START,
+    IDENTIFIER,
     ERROR_SENTINEL,
 };
 
@@ -190,9 +191,16 @@ static bool scan_comment(TSLexer* lexer, bool entry_delimiter)
 
         if (!consume_char('\n', lexer) && !consume_char('\r', lexer)) {
             consume_comment_line(lexer);
-                lexer->result_symbol = COMMENT;
-                lexer->mark_end(lexer);
-                return true;
+            lexer->result_symbol = COMMENT;
+            lexer->mark_end(lexer);
+            return true;
+        }
+
+        // Empty block comment
+        if (lexer->lookahead == '%' && consume_char('%', lexer) && consume_char('}', lexer)) {
+            lexer->result_symbol = COMMENT;
+            lexer->mark_end(lexer);
+            return true;
         }
 
         while (!lexer->eof(lexer)) {
@@ -212,11 +220,6 @@ static bool scan_comment(TSLexer* lexer, bool entry_delimiter)
 
     if (percent || line_continuation) {
         consume_comment_line(lexer);
-
-        if (line_continuation) {
-            advance(lexer);
-        }
-
         lexer->mark_end(lexer);
 
         if (!line_continuation) {
@@ -292,7 +295,9 @@ static bool scan_command(Scanner* scanner, TSLexer* lexer)
     // If it's not followed by a space, it may be something else, like A' for
     // example. Or A+2.
     if (lexer->lookahead != ' ') {
-        return false;
+        lexer->result_symbol = IDENTIFIER;
+        lexer->mark_end(lexer);
+        return true;
     }
 
     // If it is followed by a space, it doesn't mean it's a command yet.
@@ -312,7 +317,9 @@ static bool scan_command(Scanner* scanner, TSLexer* lexer)
 
     // The first char of the first argument cannot be /=()/
     if (lexer->lookahead == '=' || lexer->lookahead == '(' || lexer->lookahead == ')') {
-        return false;
+        lexer->result_symbol = IDENTIFIER;
+        lexer->mark_end(lexer);
+        return true;
     }
 
     // If it is a single quote, it is a command.
@@ -379,7 +386,8 @@ static bool scan_command(Scanner* scanner, TSLexer* lexer)
                     advance(lexer);
                 }
                 scanner->is_inside_command = is_eol(lexer->lookahead);
-                return scanner->is_inside_command;
+                lexer->result_symbol = scanner->is_inside_command ? COMMAND_NAME : IDENTIFIER;
+                return true;
             }
 
             // If it's not an operator, then this is a command.
@@ -413,7 +421,8 @@ static bool scan_command(Scanner* scanner, TSLexer* lexer)
 
         for (int i = 0; i < 12; i++) {
             if ((uint32_t) operators[i][0] == first && (uint32_t) operators[i][1] == second) {
-                return false;
+                lexer->result_symbol = IDENTIFIER;
+                return true;
             }
         }
 
@@ -580,14 +589,10 @@ static bool scan_string_close(Scanner* scanner, TSLexer* lexer)
         return true;
     }
 
-    // This means this string is not properly terminated. Finish it here to
-    // make it easier for the user to find the problem.
+    // This means this string is not properly terminated.
     if (lexer->lookahead == '\n' || lexer->lookahead == '\r' || lexer->eof(lexer)) {
-        lexer->result_symbol = scanner->string_delimiter == '"' ? DOUBLE_QUOTE_STRING_END
-                                                                : SINGLE_QUOTE_STRING_END;
-        lexer->mark_end(lexer);
         scanner->string_delimiter = 0;
-        return true;
+        return false;
     }
 
     if (lexer->lookahead == '%') {
@@ -832,6 +837,27 @@ static bool scan_entry_delimiter(TSLexer* lexer, int skipped)
     return skipped != 0;
 }
 
+static bool scan_identifier(TSLexer* lexer)
+{
+    char buffer[256] = {0};
+    consume_identifier(lexer, buffer);
+    if (buffer[0] != 0) {
+        for (int i = 0; i < 27; i++) {
+            if (lexer->lookahead == '.'
+                && (strcmp("get", buffer) == 0 || strcmp("set", buffer) == 0)) {
+                return false;
+            }
+            if (strcmp(keywords[i], buffer) == 0) {
+                return false;
+            }
+        }
+        lexer->result_symbol = IDENTIFIER;
+        lexer->mark_end(lexer);
+        return true;
+    }
+    return false;
+}
+
 bool tree_sitter_matlab_external_scanner_scan(void* payload, TSLexer* lexer, const bool* valid_symbols)
 {
     Scanner* scanner = (Scanner*) payload;
@@ -863,6 +889,12 @@ bool tree_sitter_matlab_external_scanner_scan(void* payload, TSLexer* lexer, con
                 scanner->is_inside_command = false;
                 scanner->is_shell_scape = false;
                 return scan_command(scanner, lexer);
+            }
+
+            if (valid_symbols[IDENTIFIER] && (skipped & 2) == 0) {
+                scanner->is_inside_command = false;
+                scanner->is_shell_scape = false;
+                return scan_identifier(lexer);
             }
         } else {
             if (valid_symbols[COMMAND_ARGUMENT]) {
