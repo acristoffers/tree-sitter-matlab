@@ -190,9 +190,9 @@ static bool scan_comment(TSLexer* lexer, bool entry_delimiter)
 
         if (!consume_char('\n', lexer) && !consume_char('\r', lexer)) {
             consume_comment_line(lexer);
-                lexer->result_symbol = COMMENT;
-                lexer->mark_end(lexer);
-                return true;
+            lexer->result_symbol = COMMENT;
+            lexer->mark_end(lexer);
+            return true;
         }
 
         while (!lexer->eof(lexer)) {
@@ -212,11 +212,6 @@ static bool scan_comment(TSLexer* lexer, bool entry_delimiter)
 
     if (percent || line_continuation) {
         consume_comment_line(lexer);
-
-        if (line_continuation) {
-            advance(lexer);
-        }
-
         lexer->mark_end(lexer);
 
         if (!line_continuation) {
