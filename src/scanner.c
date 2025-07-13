@@ -196,6 +196,13 @@ static bool scan_comment(TSLexer* lexer, bool entry_delimiter)
             return true;
         }
 
+        // Empty block comment
+        if (lexer->lookahead == '%' && consume_char('%', lexer) && consume_char('}', lexer)) {
+            lexer->result_symbol = COMMENT;
+            lexer->mark_end(lexer);
+            return true;
+        }
+
         while (!lexer->eof(lexer)) {
             consume_comment_line(lexer);
             advance(lexer);
