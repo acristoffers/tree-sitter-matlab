@@ -3,7 +3,7 @@ $(error Windows is not supported)
 endif
 
 LANGUAGE_NAME := tree-sitter-matlab
-HOMEPAGE_URL := https://github.com/tree-sitter/tree-sitter-matlab
+HOMEPAGE_URL := https://github.com/acristoffers/tree-sitter-matlab
 VERSION := 1.0.7
 
 # repository
