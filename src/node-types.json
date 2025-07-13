@@ -190,6 +190,10 @@
           "named": true
         },
         {
+          "type": "class_property",
+          "named": true
+        },
+        {
           "type": "property",
           "named": true
         }
@@ -1056,6 +1060,21 @@
         },
         {
           "type": "superclasses",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "class_property",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
           "named": true
         }
       ]
@@ -3369,6 +3388,10 @@
   },
   {
     "type": "./",
+    "named": false
+  },
+  {
+    "type": ".?",
     "named": false
   },
   {

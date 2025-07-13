@@ -538,12 +538,13 @@ module.exports = grammar({
         repeat(seq(',', field('argument', $.identifier))),
         ')',
       ),
+    class_property: ($) => seq($.identifier, '.?', $.identifier, repeat(seq('.', $.identifier))),
     arguments_statement: ($) =>
       seq(
         'arguments',
         optional(alias($._argument_attributes, $.attributes)),
         $._end_of_line,
-        repeat($.property),
+        repeat(choice($.property, $.class_property)),
         'end',
       ),
 
