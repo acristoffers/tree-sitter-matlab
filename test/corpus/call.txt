@@ -287,9 +287,9 @@ Command Call: Parens Breaking
 ================================================================================
 
 var A(b, c)   % one arg
-var A(b; c)   % one arg and an error
 var A('b; c)' % one arg (wrong in matlab, ok here)
 var A) b c( d % two args
+var A(b; c)   % one arg and an error
 
 --------------------------------------------------------------------------------
 
@@ -301,15 +301,15 @@ var A) b c( d % two args
   (command
     (command_name)
     (command_argument))
-  (ERROR
-    (identifier))
-  (comment)
-  (command
-    (command_name)
-    (command_argument))
   (comment)
   (command
     (command_name)
     (command_argument)
     (command_argument))
+  (comment)
+  (command
+    (command_name)
+    (command_argument))
+  (ERROR
+    (identifier))
   (comment))

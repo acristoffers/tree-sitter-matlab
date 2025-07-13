@@ -1,7 +1,6 @@
 {
   "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/grammar.schema.json",
   "name": "matlab",
-  "word": "identifier",
   "rules": {
     "source_file": {
       "type": "CHOICE",
@@ -92,6 +91,23 @@
     "block": {
       "type": "SYMBOL",
       "name": "_block"
+    },
+    "identifier": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_external_identifier"
+        },
+        {
+          "type": "STRING",
+          "value": "get"
+        },
+        {
+          "type": "STRING",
+          "value": "set"
+        }
+      ]
     },
     "_statement": {
       "type": "CHOICE",
@@ -3420,8 +3436,11 @@
               ]
             },
             {
-              "type": "SYMBOL",
-              "name": "_end_of_line"
+              "type": "REPEAT1",
+              "content": {
+                "type": "SYMBOL",
+                "name": "_end_of_line"
+              }
             }
           ]
         },
@@ -3500,8 +3519,11 @@
               ]
             },
             {
-              "type": "SYMBOL",
-              "name": "_end_of_line"
+              "type": "REPEAT1",
+              "content": {
+                "type": "SYMBOL",
+                "name": "_end_of_line"
+              }
             }
           ]
         }
@@ -4065,10 +4087,6 @@
         }
       ]
     },
-    "identifier": {
-      "type": "PATTERN",
-      "value": "[a-zA-Z_][a-zA-Z0-9_]*"
-    },
     "_end_of_line": {
       "type": "CHOICE",
       "members": [
@@ -4170,6 +4188,10 @@
     {
       "type": "SYMBOL",
       "name": "_multioutput_variable_start"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "_external_identifier"
     },
     {
       "type": "SYMBOL",

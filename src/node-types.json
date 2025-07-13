@@ -3544,6 +3544,10 @@
     "named": false
   },
   {
+    "type": "get",
+    "named": false
+  },
+  {
     "type": "get.",
     "named": false
   },
@@ -3587,6 +3591,10 @@
   {
     "type": "return_statement",
     "named": true
+  },
+  {
+    "type": "set",
+    "named": false
   },
   {
     "type": "set.",

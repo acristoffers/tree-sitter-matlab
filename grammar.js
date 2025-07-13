@@ -53,12 +53,11 @@ module.exports = grammar({
     $.string_content,
     $._entry_delimiter,
     $._multioutput_variable_start,
+    $._external_identifier,
     $.error_sentinel,
   ],
 
   extras: ($) => [/\s/, $.comment, $.line_continuation],
-
-  word: ($) => $.identifier,
 
   rules: {
     source_file: ($) =>
@@ -80,6 +79,8 @@ module.exports = grammar({
         ),
       ),
     block: ($) => $._block,
+
+    identifier: ($) => choice($._external_identifier, "get", "set"),
 
     _statement: ($) =>
       choice(
@@ -610,7 +611,7 @@ module.exports = grammar({
           optional(choice($.identifier, $.property_name)),
           optional($.validation_functions),
           optional($.default_value),
-          $._end_of_line,
+          repeat1($._end_of_line),
         ),
         seq(
           field(
@@ -621,7 +622,7 @@ module.exports = grammar({
           $.identifier,
           alias(optional(choice('vector', 'matrix', 'scalar')), $.identifier),
           optional($.default_value),
-          $._end_of_line,
+          repeat1($._end_of_line),
         )
       ),
     properties: ($) =>
@@ -711,8 +712,6 @@ module.exports = grammar({
 
     boolean: (_) => choice('true', 'false'),
 
-    identifier: (_) => /[a-zA-Z_][a-zA-Z0-9_]*/,
-
     _end_of_line: ($) => choice(';', '\n', '\r', ','),
   },
 });
@@ -725,7 +724,8 @@ module.exports = grammar({
  * @return {SeqRule}
  *
  */
-function commaSep1(rule) {
+function commaSep1(rule)
+{
   return seq(rule, repeat(seq(',', rule)));
 }
 
@@ -737,6 +737,7 @@ function commaSep1(rule) {
  * @return {SeqRule}
  *
  */
-function optionalCommaSep(rule) {
+function optionalCommaSep(rule)
+{
   return optional(seq(rule, repeat(seq(optional(','), rule)), optional(',')));
 }
