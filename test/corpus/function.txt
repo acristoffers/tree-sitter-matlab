@@ -235,3 +235,113 @@ end
         (identifier))))
   (function_definition
     (identifier)))
+
+================================================================================
+Function Declaration: argument with property
+================================================================================
+
+function myBar(x,y,propArgs)
+    arguments
+        x (:,:) double
+        y (:,:) double
+        propArgs.?matlab.graphics.chart.primitive.Bar
+    end
+    propertyCell = namedargs2cell(propArgs);
+    bar(x,y,propertyCell{:})
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (function_arguments
+      (identifier)
+      (identifier)
+      (identifier))
+    (arguments_statement
+      (property
+        (identifier)
+        (dimensions
+          (spread_operator)
+          (spread_operator))
+        (identifier))
+      (property
+        (identifier)
+        (dimensions
+          (spread_operator)
+          (spread_operator))
+        (identifier))
+      (class_property
+        (identifier)
+        (identifier)
+        (identifier)
+        (identifier)
+        (identifier)
+        (identifier)))
+    (block
+      (assignment
+        (identifier)
+        (function_call
+          (identifier)
+          (arguments
+            (identifier))))
+      (function_call
+        (identifier)
+        (arguments
+          (identifier)
+          (identifier)
+          (function_call
+            (identifier)
+            (arguments
+              (spread_operator))))))))
+
+================================================================================
+Function Declaration: Argument validators functions
+================================================================================
+
+function foo(a)
+    arguments
+        a (1,1) double {mustBeNumeric mustBePositive}
+    end
+end
+
+function foo_38(a)
+    arguments
+        a (1,1) double {mustBeNumeric, ...
+                        mustBePositive}
+    end
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (function_arguments
+      (identifier))
+    (arguments_statement
+      (property
+        (identifier)
+        (dimensions
+          (number)
+          (number))
+        (identifier)
+        (validation_functions
+          (identifier)
+          (identifier)))))
+  (function_definition
+    (identifier)
+    (function_arguments
+      (identifier))
+    (arguments_statement
+      (property
+        (identifier)
+        (dimensions
+          (number)
+          (number))
+        (identifier)
+        (validation_functions
+          (identifier)
+          (line_continuation)
+          (identifier))))))

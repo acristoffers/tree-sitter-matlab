@@ -244,7 +244,7 @@ module.exports = grammar({
 
     not_operator: ($) => prec(PREC.not, seq('~', $._expression)),
 
-    metaclass_operator: ($) => prec.left(seq('?', seq($.identifier,repeat(seq('.',$.identifier))))),
+    metaclass_operator: ($) => prec.left(seq('?', seq($.identifier, repeat(seq('.', $.identifier))))),
 
     handle_operator: ($) =>
       seq('@', seq($.identifier, repeat(seq('.', $.identifier)))),
@@ -319,9 +319,9 @@ module.exports = grammar({
         optional(','),
         choice($._expression, $.ignored_argument),
         repeat(
-          seq(alias($._entry_delimiter, ';'), choice($._expression, $.ignored_argument)),
+          seq(alias($._entry_delimiter, ','), choice($._expression, $.ignored_argument)),
         ),
-        optional(alias($._entry_delimiter, ';')),
+        optional(alias($._entry_delimiter, ',')),
       ),
     matrix: ($) =>
       seq(
@@ -724,8 +724,7 @@ module.exports = grammar({
  * @return {SeqRule}
  *
  */
-function commaSep1(rule)
-{
+function commaSep1(rule) {
   return seq(rule, repeat(seq(',', rule)));
 }
 
@@ -737,7 +736,6 @@ function commaSep1(rule)
  * @return {SeqRule}
  *
  */
-function optionalCommaSep(rule)
-{
+function optionalCommaSep(rule) {
   return optional(seq(rule, repeat(seq(optional(','), rule)), optional(',')));
 }

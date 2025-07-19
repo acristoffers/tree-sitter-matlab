@@ -401,13 +401,52 @@ Class: Metaclass operator
 
 --------------------------------------------------------------------------------
 
-   (source_file
-      (metaclass_operator
-        (identifier))
-      (metaclass_operator
+(source_file
+  (metaclass_operator
+    (identifier))
+  (metaclass_operator
+    (identifier)
+    (identifier)
+    (identifier))
+  (ERROR)
+  (string
+    (string_content)))
+
+================================================================================
+Class: Enumeration with expressions
+================================================================================
+
+classdef FlowRate < int32
+   enumeration
+      Low    (10)
+      Medium (FlowRate.Low*5)
+      High   (FlowRate.Low*10)
+   end
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (class_definition
+    (identifier)
+    (superclasses
+      (property_name
+        (identifier)))
+    (enumeration
+      (enum
         (identifier)
+        (number))
+      (enum
         (identifier)
-        (identifier))
-      (ERROR)
-      (string
-        (string_content)))
+        (binary_operator
+          (field_expression
+            (identifier)
+            (identifier))
+          (number)))
+      (enum
+        (identifier)
+        (binary_operator
+          (field_expression
+            (identifier)
+            (identifier))
+          (number))))))

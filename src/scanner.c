@@ -183,6 +183,14 @@ static bool scan_comment(TSLexer* lexer, bool entry_delimiter)
         lexer->result_symbol = ENTRY_DELIMITER;
         return isdigit(lexer->lookahead);
     }
+    // We are inside a matrix/cell row and there is a line continuation, like this:
+    // a = { 1 ...
+    //       2 ...
+    // }
+    if (entry_delimiter && line_continuation) {
+        lexer->result_symbol = ENTRY_DELIMITER;
+        return true;
+    }
 
     if (block) {
         while (!lexer->eof(lexer) && iswspace_matlab(lexer->lookahead)) {
@@ -227,6 +235,8 @@ static bool scan_comment(TSLexer* lexer, bool entry_delimiter)
             advance(lexer);
         } else {
             lexer->result_symbol = LINE_CONTINUATION;
+            consume_whitespaces(lexer);
+            lexer->mark_end(lexer);
             return true;
         }
 
@@ -318,7 +328,6 @@ static bool scan_command(Scanner* scanner, TSLexer* lexer)
     // The first char of the first argument cannot be /=()/
     if (lexer->lookahead == '=' || lexer->lookahead == '(' || lexer->lookahead == ')') {
         lexer->result_symbol = IDENTIFIER;
-        lexer->mark_end(lexer);
         return true;
     }
 

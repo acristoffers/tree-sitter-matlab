@@ -1356,7 +1356,7 @@
                   "name": "_entry_delimiter"
                 },
                 "named": false,
-                "value": ";"
+                "value": ","
               },
               {
                 "type": "CHOICE",
@@ -1384,7 +1384,7 @@
                 "name": "_entry_delimiter"
               },
               "named": false,
-              "value": ";"
+              "value": ","
             },
             {
               "type": "BLANK"
