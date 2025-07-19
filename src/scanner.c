@@ -33,11 +33,12 @@ typedef struct
     char string_delimiter;
 } Scanner;
 
+static const size_t keywords_size = 26;
 static const char* const keywords[] = {
-    "arguments", "break", "case",        "catch",     "classdef", "continue",   "else",
-    "elseif",    "end",   "enumeration", "events",    "false",    "for",        "function",
-    "global",    "if",    "methods",     "otherwise", "parfor",   "persistent", "properties",
-    "return",    "spmd",  "switch",      "true",      "try",      "while",
+    "arguments", "break",  "case",        "catch",     "classdef", "continue",   "else",
+    "elseif",    "end",    "enumeration", "events",    "false",    "for",        "function",
+    "global",    "if",     "methods",     "otherwise", "parfor",   "persistent", "return",
+    "spmd",      "switch", "true",        "try",       "while",
 };
 
 static inline void advance(TSLexer* lexer)
@@ -284,7 +285,7 @@ static bool scan_command(Scanner* scanner, TSLexer* lexer)
     char buffer[256] = {0};
     consume_identifier(lexer, buffer);
     if (buffer[0] != 0) {
-        for (int i = 0; i < 27; i++) {
+        for (int i = 0; i < keywords_size; i++) {
             if (strcmp(keywords[i], buffer) == 0) {
                 return false;
             }
@@ -851,7 +852,7 @@ static bool scan_identifier(TSLexer* lexer)
     char buffer[256] = {0};
     consume_identifier(lexer, buffer);
     if (buffer[0] != 0) {
-        for (int i = 0; i < 27; i++) {
+        for (int i = 0; i < keywords_size; i++) {
             if (lexer->lookahead == '.'
                 && (strcmp("get", buffer) == 0 || strcmp("set", buffer) == 0)) {
                 return false;

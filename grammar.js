@@ -80,7 +80,7 @@ module.exports = grammar({
       ),
     block: ($) => $._block,
 
-    identifier: ($) => choice($._external_identifier, "get", "set"),
+    identifier: ($) => choice($._external_identifier, "get", "set", "properties"),
 
     _statement: ($) =>
       choice(
