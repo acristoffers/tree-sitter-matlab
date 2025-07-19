@@ -33,11 +33,12 @@ typedef struct
     char string_delimiter;
 } Scanner;
 
+static const size_t keywords_size = 26;
 static const char* const keywords[] = {
-    "arguments", "break", "case",        "catch",     "classdef", "continue",   "else",
-    "elseif",    "end",   "enumeration", "events",    "false",    "for",        "function",
-    "global",    "if",    "methods",     "otherwise", "parfor",   "persistent", "properties",
-    "return",    "spmd",  "switch",      "true",      "try",      "while",
+    "arguments", "break",  "case",        "catch",     "classdef", "continue",   "else",
+    "elseif",    "end",    "enumeration", "events",    "false",    "for",        "function",
+    "global",    "if",     "methods",     "otherwise", "parfor",   "persistent", "return",
+    "spmd",      "switch", "true",        "try",       "while",
 };
 
 static inline void advance(TSLexer* lexer)
@@ -183,6 +184,14 @@ static bool scan_comment(TSLexer* lexer, bool entry_delimiter)
         lexer->result_symbol = ENTRY_DELIMITER;
         return isdigit(lexer->lookahead);
     }
+    // We are inside a matrix/cell row and there is a line continuation, like this:
+    // a = { 1 ...
+    //       2 ...
+    // }
+    if (entry_delimiter && line_continuation) {
+        lexer->result_symbol = ENTRY_DELIMITER;
+        return true;
+    }
 
     if (block) {
         while (!lexer->eof(lexer) && iswspace_matlab(lexer->lookahead)) {
@@ -227,6 +236,8 @@ static bool scan_comment(TSLexer* lexer, bool entry_delimiter)
             advance(lexer);
         } else {
             lexer->result_symbol = LINE_CONTINUATION;
+            consume_whitespaces(lexer);
+            lexer->mark_end(lexer);
             return true;
         }
 
@@ -274,7 +285,7 @@ static bool scan_command(Scanner* scanner, TSLexer* lexer)
     char buffer[256] = {0};
     consume_identifier(lexer, buffer);
     if (buffer[0] != 0) {
-        for (int i = 0; i < 27; i++) {
+        for (int i = 0; i < keywords_size; i++) {
             if (strcmp(keywords[i], buffer) == 0) {
                 return false;
             }
@@ -307,7 +318,9 @@ static bool scan_command(Scanner* scanner, TSLexer* lexer)
     // this point on.
     lexer->result_symbol = COMMAND_NAME;
     lexer->mark_end(lexer);
-    consume_whitespaces(lexer);
+    while (!lexer->eof(lexer) && iswspace_matlab(lexer->lookahead)) {
+        advance(lexer);
+    }
 
     // Check for end-of-line again, since it may be that the user just put a
     // space at the end, like `pwd ;`
@@ -318,7 +331,6 @@ static bool scan_command(Scanner* scanner, TSLexer* lexer)
     // The first char of the first argument cannot be /=()/
     if (lexer->lookahead == '=' || lexer->lookahead == '(' || lexer->lookahead == ')') {
         lexer->result_symbol = IDENTIFIER;
-        lexer->mark_end(lexer);
         return true;
     }
 
@@ -842,7 +854,7 @@ static bool scan_identifier(TSLexer* lexer)
     char buffer[256] = {0};
     consume_identifier(lexer, buffer);
     if (buffer[0] != 0) {
-        for (int i = 0; i < 27; i++) {
+        for (int i = 0; i < keywords_size; i++) {
             if (lexer->lookahead == '.'
                 && (strcmp("get", buffer) == 0 || strcmp("set", buffer) == 0)) {
                 return false;

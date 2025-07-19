@@ -1,8 +1,8 @@
 {
   "name": "tree-sitter-matlab",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "MATLAB tree-sitter parser",
-  "repository": "https://github.com/tree-sitter/tree-sitter-matlab",
+  "repository": "https://github.com/acristoffers/tree-sitter-matlab",
   "license": "MIT",
   "author": {
     "name": "Álan Crístoffer e Sousa"

@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "tree-sitter-matlab"
 description = "MATLAB tree-sitter parser"
-version = "1.0.7"
+version = "1.0.8"
 keywords = ["incremental", "parsing", "tree-sitter", "matlab"]
 classifiers = [
   "Intended Audience :: Developers",
@@ -19,7 +19,7 @@ license.text = "MIT"
 readme = "README.md"
 
 [project.urls]
-Homepage = "https://github.com/tree-sitter/tree-sitter-matlab"
+Homepage = "https://github.com/acristoffers/tree-sitter-matlab"
 
 [project.optional-dependencies]
 core = ["tree-sitter~=0.24"]

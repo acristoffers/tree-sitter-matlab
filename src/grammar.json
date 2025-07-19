@@ -106,6 +106,10 @@
         {
           "type": "STRING",
           "value": "set"
+        },
+        {
+          "type": "STRING",
+          "value": "properties"
         }
       ]
     },
@@ -1356,7 +1360,7 @@
                   "name": "_entry_delimiter"
                 },
                 "named": false,
-                "value": ";"
+                "value": ","
               },
               {
                 "type": "CHOICE",
@@ -1384,7 +1388,7 @@
                 "name": "_entry_delimiter"
               },
               "named": false,
-              "value": ";"
+              "value": ","
             },
             {
               "type": "BLANK"

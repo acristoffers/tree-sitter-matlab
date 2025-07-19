@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.13)
 
 project(tree-sitter-matlab
-        VERSION "1.0.7"
+        VERSION "1.0.8"
         DESCRIPTION "MATLAB tree-sitter parser"
-        HOMEPAGE_URL "https://github.com/tree-sitter/tree-sitter-matlab"
+        HOMEPAGE_URL "https://github.com/acristoffers/tree-sitter-matlab"
         LANGUAGES C)
 
 option(BUILD_SHARED_LIBS "Build using shared libraries" ON)

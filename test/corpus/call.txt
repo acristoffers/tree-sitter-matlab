@@ -313,3 +313,33 @@ var A(b; c)   % one arg and an error
   (ERROR
     (identifier))
   (comment))
+
+================================================================================
+Command Call: Space After Command
+================================================================================
+
+function varargout = fcn2(varargin)
+  nargin
+  disp(nargin)
+  varargout = varargin
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (function_output
+      (identifier))
+    (identifier)
+    (function_arguments
+      (identifier))
+    (block
+      (command
+        (command_name))
+      (function_call
+        (identifier)
+        (arguments
+          (identifier)))
+      (assignment
+        (identifier)
+        (identifier)))))
