@@ -318,7 +318,9 @@ static bool scan_command(Scanner* scanner, TSLexer* lexer)
     // this point on.
     lexer->result_symbol = COMMAND_NAME;
     lexer->mark_end(lexer);
-    consume_whitespaces(lexer);
+    while (!lexer->eof(lexer) && iswspace_matlab(lexer->lookahead)) {
+        advance(lexer);
+    }
 
     // Check for end-of-line again, since it may be that the user just put a
     // space at the end, like `pwd ;`
