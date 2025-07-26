@@ -343,3 +343,39 @@ end
       (assignment
         (identifier)
         (identifier)))))
+
+=================================================================================
+Function Call: Ranges
+=================================================================================
+
+a(1:end)
+a(1:end-1)
+a(end-3:end-2)
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_call
+    (identifier)
+    (arguments
+      (range
+        (number)
+        (identifier))))
+  (function_call
+    (identifier)
+    (arguments
+      (range
+        (number)
+        (binary_operator
+          (identifier)
+          (number)))))
+  (function_call
+    (identifier)
+    (arguments
+      (range
+        (binary_operator
+          (identifier)
+          (number))
+        (binary_operator
+          (identifier)
+          (number))))))
