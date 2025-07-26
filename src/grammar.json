@@ -3917,8 +3917,13 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "SYMBOL",
-              "name": "identifier"
+              "type": "ALIAS",
+              "content": {
+                "type": "SYMBOL",
+                "name": "_catch_capture"
+              },
+              "named": true,
+              "value": "identifier"
             },
             {
               "type": "BLANK"
@@ -4199,6 +4204,10 @@
     {
       "type": "SYMBOL",
       "name": "_external_identifier"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "_catch_capture"
     },
     {
       "type": "SYMBOL",

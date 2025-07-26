@@ -178,3 +178,24 @@ Matrix: Parenthesised Expression
         (binary_operator
           (number)
           (number))))))
+
+================================================================================
+Matrix: Newlines
+================================================================================
+
+[
+  foo(1), ...
+  2
+]
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (matrix
+    (row
+      (function_call
+        (identifier)
+        (arguments
+          (number)))
+      (line_continuation)
+      (number))))

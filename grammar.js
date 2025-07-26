@@ -54,6 +54,7 @@ module.exports = grammar({
     $._entry_delimiter,
     $._multioutput_variable_start,
     $._external_identifier,
+    $._catch_capture,
     $.error_sentinel,
   ],
 
@@ -686,7 +687,7 @@ module.exports = grammar({
     catch_clause: ($) =>
       seq(
         'catch',
-        optional($.identifier),
+        optional(alias($._catch_capture, $.identifier)),
         repeat1($._end_of_line),
         optional($.block),
       ),
@@ -712,7 +713,7 @@ module.exports = grammar({
 
     boolean: (_) => choice('true', 'false'),
 
-    _end_of_line: ($) => choice(';', '\n', '\r', ','),
+    _end_of_line: (_) => choice(';', '\n', '\r', ','),
   },
 });
 
