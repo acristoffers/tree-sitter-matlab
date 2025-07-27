@@ -1613,6 +1613,13 @@
           "value": "["
         },
         {
+          "type": "REPEAT",
+          "content": {
+            "type": "STRING",
+            "value": "\n"
+          }
+        },
+        {
           "type": "CHOICE",
           "members": [
             {
@@ -2815,8 +2822,11 @@
           ]
         },
         {
-          "type": "SYMBOL",
-          "name": "_end_of_line"
+          "type": "REPEAT1",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_end_of_line"
+          }
         },
         {
           "type": "REPEAT",
@@ -3604,8 +3614,11 @@
           ]
         },
         {
-          "type": "SYMBOL",
-          "name": "_end_of_line"
+          "type": "REPEAT1",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_end_of_line"
+          }
         },
         {
           "type": "REPEAT",
@@ -3758,11 +3771,20 @@
         {
           "type": "REPEAT",
           "content": {
-            "type": "SEQ",
+            "type": "CHOICE",
             "members": [
               {
-                "type": "SYMBOL",
-                "name": "identifier"
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "identifier"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "_end_of_line"
+                  }
+                ]
               },
               {
                 "type": "SYMBOL",
@@ -3858,11 +3880,20 @@
         {
           "type": "REPEAT",
           "content": {
-            "type": "SEQ",
+            "type": "CHOICE",
             "members": [
               {
-                "type": "SYMBOL",
-                "name": "enum"
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "enum"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "_end_of_line"
+                  }
+                ]
               },
               {
                 "type": "SYMBOL",

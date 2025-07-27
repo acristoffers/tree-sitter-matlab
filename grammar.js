@@ -365,6 +365,7 @@ module.exports = grammar({
     multioutput_variable: ($) =>
       seq(
         alias($._multioutput_variable_start, '['),
+        repeat("\n"),
         optionalCommaSep(
           choice(
             $.identifier,
@@ -547,7 +548,7 @@ module.exports = grammar({
       seq(
         'arguments',
         optional(alias($._argument_attributes, $.attributes)),
-        $._end_of_line,
+        repeat1($._end_of_line),
         repeat(choice($.property, $.class_property)),
         'end',
       ),
@@ -632,7 +633,7 @@ module.exports = grammar({
       seq(
         'properties',
         optional($.attributes),
-        $._end_of_line,
+        repeat1($._end_of_line),
         repeat($.property),
         'end',
       ),
@@ -662,7 +663,7 @@ module.exports = grammar({
         'events',
         optional($.attributes),
         $._end_of_line,
-        repeat(seq($.identifier, $._end_of_line)),
+        repeat(choice(seq($.identifier, $._end_of_line), $._end_of_line)),
         'end',
       ),
     enum: ($) =>
@@ -672,7 +673,7 @@ module.exports = grammar({
         'enumeration',
         optional($.attributes),
         $._end_of_line,
-        repeat(seq($.enum, $._end_of_line)),
+        repeat(choice(seq($.enum, $._end_of_line), $._end_of_line)),
         'end',
       ),
     class_definition: ($) =>

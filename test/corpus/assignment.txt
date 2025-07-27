@@ -30,6 +30,8 @@ Assignment: Multiple Output
 
 [~ T X] = lsim()
 [~,T,X] = lsim()
+[
+  T,X] = lsim()
 
 --------------------------------------------------------------------------------
 
@@ -44,6 +46,12 @@ Assignment: Multiple Output
   (assignment
     (multioutput_variable
       (ignored_argument)
+      (identifier)
+      (identifier))
+    (function_call
+      (identifier)))
+  (assignment
+    (multioutput_variable
       (identifier)
       (identifier))
     (function_call

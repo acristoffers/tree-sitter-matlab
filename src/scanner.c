@@ -756,7 +756,7 @@ static inline bool scan_multioutput_var_start(TSLexer* lexer)
             advance(lexer);
         }
 
-        if (lexer->lookahead != ']' && lexer->lookahead != '\n' && lexer->lookahead != '\r') {
+        if (lexer->lookahead != ']') {
             advance(lexer);
         } else {
             break;

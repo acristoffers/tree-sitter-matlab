@@ -64,10 +64,13 @@ end
 
 classdef Class
   properties
+
     foo1
+
     foo2
 
     foo3
+
   end
 end
 
