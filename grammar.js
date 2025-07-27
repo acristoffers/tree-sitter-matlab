@@ -54,6 +54,7 @@ module.exports = grammar({
     $._entry_delimiter,
     $._multioutput_variable_start,
     $._external_identifier,
+    $._catch_capture,
     $.error_sentinel,
   ],
 
@@ -144,6 +145,7 @@ module.exports = grammar({
           $.string,
           $.field_expression,
           $.unary_operator,
+          alias('end', $.identifier),
         ),
       ),
 
@@ -426,6 +428,7 @@ module.exports = grammar({
         $.string,
         prec.dynamic(-1, $.unary_operator),
         prec.dynamic(1, $.binary_operator),
+        alias('end', $.identifier),
       ),
     range: ($) =>
       prec.right(
@@ -442,14 +445,14 @@ module.exports = grammar({
     continue_statement: (_) => 'continue',
     break_statement: (_) => 'break',
 
-    elseif_clause: ($) =>
+    elseif_clause: ($) => prec.left(
       seq(
         'elseif',
         field('condition', $._expression),
         repeat($._end_of_line),
         optional($.block),
-      ),
-    else_clause: ($) => seq('else', repeat($._end_of_line), optional($.block)),
+      )),
+    else_clause: ($) => prec.left(seq('else', repeat($._end_of_line), optional($.block))),
     if_statement: ($) =>
       seq(
         'if',
@@ -495,16 +498,15 @@ module.exports = grammar({
         'end',
       ),
 
-    case_clause: ($) =>
+    case_clause: ($) => prec.left(
       seq(
         'case',
         // MATLAB says it should be a `switch_expr`, but then accepts any expression
         field('condition', $._expression),
         repeat1($._end_of_line),
         optional($.block),
-      ),
-    otherwise_clause: ($) =>
-      seq('otherwise', repeat($._end_of_line), optional($.block)),
+      )),
+    otherwise_clause: ($) => prec.left(seq('otherwise', repeat($._end_of_line), optional($.block))),
     switch_statement: ($) =>
       seq(
         'switch',
@@ -683,13 +685,13 @@ module.exports = grammar({
         'end',
       ),
 
-    catch_clause: ($) =>
+    catch_clause: ($) => prec.left(
       seq(
         'catch',
-        optional($.identifier),
+        optional(alias($._catch_capture, $.identifier)),
         repeat1($._end_of_line),
         optional($.block),
-      ),
+      )),
     try_statement: ($) =>
       seq(
         'try',
@@ -712,7 +714,7 @@ module.exports = grammar({
 
     boolean: (_) => choice('true', 'false'),
 
-    _end_of_line: ($) => choice(';', '\n', '\r', ','),
+    _end_of_line: (_) => choice(';', '\n', '\r', ','),
   },
 });
 
