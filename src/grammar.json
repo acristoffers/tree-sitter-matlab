@@ -1414,6 +1414,13 @@
           "value": "["
         },
         {
+          "type": "REPEAT",
+          "content": {
+            "type": "STRING",
+            "value": "\n"
+          }
+        },
+        {
           "type": "CHOICE",
           "members": [
             {
@@ -1475,6 +1482,13 @@
         {
           "type": "STRING",
           "value": "{"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "STRING",
+            "value": "\n"
+          }
         },
         {
           "type": "CHOICE",
