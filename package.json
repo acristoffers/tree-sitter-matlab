@@ -1,6 +1,6 @@
 {
   "name": "tree-sitter-matlab",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "MATLAB tree-sitter parser",
   "repository": "https://github.com/acristoffers/tree-sitter-matlab",
   "license": "MIT",
