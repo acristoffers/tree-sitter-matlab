@@ -123,6 +123,29 @@ module.exports = grammar({
         $.field_expression,
       ),
 
+    _expression_with_end: ($) =>
+      choice(
+        alias($._binary_operator_with_end, $.binary_operator),
+        $.boolean,
+        $.boolean_operator,
+        $.cell,
+        $.comparison_operator,
+        $.function_call,
+        $.handle_operator,
+        $.identifier,
+        $.lambda,
+        $.matrix,
+        $.metaclass_operator,
+        $.not_operator,
+        $.number,
+        $.parenthesis,
+        $.postfix_operator,
+        alias($._range_with_end, $.range),
+        $.string,
+        $.unary_operator,
+        $.field_expression,
+      ),
+
     parenthesis: ($) => prec(PREC.parentheses, seq('(', $._expression, ')')),
 
     _binary_expression: ($) =>
@@ -144,7 +167,6 @@ module.exports = grammar({
           $.string,
           $.field_expression,
           $.unary_operator,
-          alias('end', $.identifier),
         ),
       ),
 
@@ -176,6 +198,63 @@ module.exports = grammar({
               // @ts-ignore
               operator,
               field('right', $._binary_expression),
+            ),
+          ),
+        ),
+      );
+    },
+
+    _binary_expression_with_end: ($) =>
+      prec(
+        100,
+        choice(
+          alias($._binary_operator_with_end, $.binary_operator),
+          $.boolean,
+          $.boolean_operator,
+          $.cell,
+          $.comparison_operator,
+          $.function_call,
+          $.identifier,
+          $.matrix,
+          $.not_operator,
+          $.number,
+          $.parenthesis,
+          $.postfix_operator,
+          $.string,
+          $.field_expression,
+          $.unary_operator,
+          alias('end', $.identifier),
+        ),
+      ),
+
+    _binary_operator_with_end: ($) => {
+      const table = [
+        [prec.left, '+', PREC.plus],
+        [prec.left, '.+', PREC.plus],
+        [prec.left, '-', PREC.plus],
+        [prec.left, '.-', PREC.plus],
+        [prec.left, '*', PREC.times],
+        [prec.left, '.*', PREC.times],
+        [prec.left, '/', PREC.times],
+        [prec.left, './', PREC.times],
+        [prec.left, '\\', PREC.times],
+        [prec.left, '.\\', PREC.times],
+        [prec.right, '^', PREC.power],
+        [prec.right, '.^', PREC.power],
+        [prec.left, '|', PREC.bitwise_or],
+        [prec.left, '&', PREC.bitwise_and],
+      ];
+
+      return choice(
+        // @ts-ignore
+        ...table.map(([fn, operator, precedence]) =>
+          fn(
+            precedence,
+            seq(
+              field('left', $._binary_expression_with_end),
+              // @ts-ignore
+              operator,
+              field('right', $._binary_expression_with_end),
             ),
           ),
         ),
@@ -384,11 +463,11 @@ module.exports = grammar({
       choice(
         seq(
           commaSep1(
-            field('argument', choice($.spread_operator, $._expression)),
+            field('argument', choice($.spread_operator, $._expression_with_end)),
           ),
-          optional(seq(',', commaSep1(seq($.identifier, '=', $._expression)))),
+          optional(seq(',', commaSep1(seq($.identifier, '=', $._expression_with_end)))),
         ),
-        commaSep1(seq($.identifier, '=', $._expression)),
+        commaSep1(seq($.identifier, '=', $._expression_with_end)),
       ),
     _args: ($) =>
       choice(
@@ -430,7 +509,6 @@ module.exports = grammar({
         $.string,
         prec.dynamic(-1, $.unary_operator),
         prec.dynamic(1, $.binary_operator),
-        alias('end', $.identifier),
       ),
     range: ($) =>
       prec.right(
@@ -440,6 +518,33 @@ module.exports = grammar({
           ':',
           $._range_element,
           optional(seq(':', $._range_element)),
+        ),
+      ),
+
+    _range_element_with_end: ($) =>
+      prec(101, choice(
+        $.boolean,
+        $.field_expression,
+        $.function_call,
+        $.identifier,
+        $.matrix,
+        $.not_operator,
+        $.number,
+        $.parenthesis,
+        $.postfix_operator,
+        $.string,
+        prec.dynamic(-1, $.unary_operator),
+        prec.dynamic(1, alias($._binary_operator_with_end, $.binary_operator)),
+        alias('end', $.identifier),
+      )),
+    _range_with_end: ($) =>
+      prec.right(
+        PREC.postfix,
+        seq(
+          $._range_element_with_end,
+          ':',
+          $._range_element_with_end,
+          optional(seq(':', $._range_element_with_end)),
         ),
       ),
 

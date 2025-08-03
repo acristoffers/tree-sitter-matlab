@@ -379,3 +379,33 @@ a(end-3:end-2)
         (binary_operator
           (identifier)
           (number))))))
+
+=================================================================================
+Function Call: Ranges
+=================================================================================
+
+function result = foo(a, b)
+    result = 1 + myfcn(a, b) + ...
+
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+      (function_definition
+        (function_output
+          (identifier))
+        (identifier)
+        (function_arguments
+          (identifier)
+          (identifier))
+        (ERROR
+          (identifier)
+          (binary_operator
+            (number)
+            (function_call
+              (identifier)
+              (arguments
+                (identifier)
+                (identifier)))))
+        (line_continuation)))
