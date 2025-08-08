@@ -360,24 +360,24 @@ a(end-3:end-2)
     (arguments
       (range
         (number)
-        (identifier))))
+        (end_keyword))))
   (function_call
     (identifier)
     (arguments
       (range
         (number)
         (binary_operator
-          (identifier)
+          (end_keyword)
           (number)))))
   (function_call
     (identifier)
     (arguments
       (range
         (binary_operator
-          (identifier)
+          (end_keyword)
           (number))
         (binary_operator
-          (identifier)
+          (end_keyword)
           (number))))))
 
 =================================================================================
@@ -392,20 +392,20 @@ end
 --------------------------------------------------------------------------------
 
 (source_file
-      (function_definition
-        (function_output
-          (identifier))
-        (identifier)
-        (function_arguments
+  (function_definition
+    (function_output
+      (identifier))
+    (identifier)
+    (function_arguments
+      (identifier)
+      (identifier))
+    (ERROR
+      (identifier)
+      (binary_operator
+        (number)
+        (function_call
           (identifier)
-          (identifier))
-        (ERROR
-          (identifier)
-          (binary_operator
-            (number)
-            (function_call
-              (identifier)
-              (arguments
-                (identifier)
-                (identifier)))))
-        (line_continuation)))
+          (arguments
+            (identifier)
+            (identifier)))))
+    (line_continuation)))

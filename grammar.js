@@ -223,7 +223,7 @@ module.exports = grammar({
           $.string,
           $.field_expression,
           $.unary_operator,
-          alias('end', $.identifier),
+          alias('end', $.end_keyword),
         ),
       ),
 
@@ -535,7 +535,7 @@ module.exports = grammar({
         $.string,
         prec.dynamic(-1, $.unary_operator),
         prec.dynamic(1, alias($._binary_operator_with_end, $.binary_operator)),
-        alias('end', $.identifier),
+        alias('end', $.end_keyword),
       )),
     _range_with_end: ($) =>
       prec.right(

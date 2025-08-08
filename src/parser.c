@@ -10,7 +10,7 @@
 #define STATE_COUNT 1413
 #define LARGE_STATE_COUNT 158
 #define SYMBOL_COUNT 202
-#define ALIAS_COUNT 1
+#define ALIAS_COUNT 2
 #define TOKEN_COUNT 94
 #define EXTERNAL_TOKEN_COUNT 15
 #define FIELD_COUNT 10
@@ -221,7 +221,8 @@ enum ts_symbol_identifiers {
   aux_sym_enum_repeat1 = 199,
   aux_sym_enumeration_repeat1 = 200,
   aux_sym_class_definition_repeat1 = 201,
-  alias_sym_superclass = 202,
+  alias_sym_end_keyword = 202,
+  alias_sym_superclass = 203,
 };
 
 static const char * const ts_symbol_names[] = {
@@ -427,6 +428,7 @@ static const char * const ts_symbol_names[] = {
   [aux_sym_enum_repeat1] = "enum_repeat1",
   [aux_sym_enumeration_repeat1] = "enumeration_repeat1",
   [aux_sym_class_definition_repeat1] = "class_definition_repeat1",
+  [alias_sym_end_keyword] = "end_keyword",
   [alias_sym_superclass] = "superclass",
 };
 
@@ -633,6 +635,7 @@ static const TSSymbol ts_symbol_map[] = {
   [aux_sym_enum_repeat1] = aux_sym_enum_repeat1,
   [aux_sym_enumeration_repeat1] = aux_sym_enumeration_repeat1,
   [aux_sym_class_definition_repeat1] = aux_sym_class_definition_repeat1,
+  [alias_sym_end_keyword] = alias_sym_end_keyword,
   [alias_sym_superclass] = alias_sym_superclass,
 };
 
@@ -1445,6 +1448,10 @@ static const TSSymbolMetadata ts_symbol_metadata[] = {
     .visible = false,
     .named = false,
   },
+  [alias_sym_end_keyword] = {
+    .visible = true,
+    .named = true,
+  },
   [alias_sym_superclass] = {
     .visible = true,
     .named = true,
@@ -1566,7 +1573,7 @@ static const TSSymbol ts_alias_sequences[PRODUCTION_ID_COUNT][MAX_ALIAS_SEQUENCE
     [0] = sym_identifier,
   },
   [9] = {
-    [0] = sym_identifier,
+    [0] = alias_sym_end_keyword,
   },
   [18] = {
     [2] = alias_sym_superclass,
