@@ -343,6 +343,15 @@
         {
           "type": "SYMBOL",
           "name": "field_expression"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "STRING",
+            "value": "end"
+          },
+          "named": true,
+          "value": "end_keyword"
         }
       ]
     },

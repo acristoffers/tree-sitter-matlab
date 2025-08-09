@@ -28,6 +28,10 @@
             "named": true
           },
           {
+            "type": "end_keyword",
+            "named": true
+          },
+          {
             "type": "field_expression",
             "named": true
           },
@@ -112,6 +116,10 @@
         },
         {
           "type": "comparison_operator",
+          "named": true
+        },
+        {
+          "type": "end_keyword",
           "named": true
         },
         {
