@@ -22,7 +22,6 @@ enum TokenType {
     ENTRY_DELIMITER,
     MULTIOUTPUT_VARIABLE_START,
     IDENTIFIER,
-    CATCH_CAPTURE,
     ERROR_SENTINEL,
 };
 
@@ -757,7 +756,7 @@ static inline bool scan_multioutput_var_start(TSLexer* lexer)
             advance(lexer);
         }
 
-        if (lexer->lookahead != ']' && lexer->lookahead != '\n' && lexer->lookahead != '\r') {
+        if (lexer->lookahead != ']') {
             advance(lexer);
         } else {
             break;
@@ -850,7 +849,7 @@ static bool scan_entry_delimiter(TSLexer* lexer, int skipped)
     return skipped != 0;
 }
 
-static bool scan_identifier(TSLexer* lexer, bool catch_capture)
+static bool scan_identifier(TSLexer* lexer)
 {
     char buffer[256] = {0};
     consume_identifier(lexer, buffer);
@@ -864,7 +863,7 @@ static bool scan_identifier(TSLexer* lexer, bool catch_capture)
                 return false;
             }
         }
-        lexer->result_symbol = catch_capture ? CATCH_CAPTURE : IDENTIFIER;
+        lexer->result_symbol = IDENTIFIER;
         lexer->mark_end(lexer);
         return true;
     }
@@ -904,16 +903,10 @@ bool tree_sitter_matlab_external_scanner_scan(void* payload, TSLexer* lexer, con
                 return scan_command(scanner, lexer);
             }
 
-            if (valid_symbols[CATCH_CAPTURE] && (skipped & 2) == 0) {
+            if (valid_symbols[IDENTIFIER] && (skipped & 2) == 0) {
                 scanner->is_inside_command = false;
                 scanner->is_shell_scape = false;
-                return scan_identifier(lexer, true);
-            }
-
-            if (valid_symbols[IDENTIFIER]) {
-                scanner->is_inside_command = false;
-                scanner->is_shell_scape = false;
-                return scan_identifier(lexer, false);
+                return scan_identifier(lexer);
             }
         } else {
             if (valid_symbols[COMMAND_ARGUMENT]) {

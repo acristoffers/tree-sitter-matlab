@@ -62,6 +62,18 @@ classdef DifferentValidation
    end;
 end
 
+classdef Class
+  properties
+
+    foo1
+
+    foo2
+
+    foo3
+
+  end
+end
+
 --------------------------------------------------------------------------------
 
 (source_file
@@ -91,7 +103,16 @@ end
           (identifier)
           (identifier))
         (default_value
-          (number))))))
+          (number)))))
+  (class_definition
+    (identifier)
+    (properties
+      (property
+        (identifier))
+      (property
+        (identifier))
+      (property
+        (identifier)))))
 
 ================================================================================
 Class Definition: Methods
