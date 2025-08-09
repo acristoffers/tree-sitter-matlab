@@ -144,6 +144,7 @@ module.exports = grammar({
         $.string,
         $.unary_operator,
         $.field_expression,
+        alias('end', $.end_keyword)
       ),
 
     parenthesis: ($) => prec(PREC.parentheses, seq('(', $._expression, ')')),
