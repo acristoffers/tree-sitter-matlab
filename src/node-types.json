@@ -16,18 +16,6 @@
             "named": true
           },
           {
-            "type": "boolean_operator",
-            "named": true
-          },
-          {
-            "type": "cell",
-            "named": true
-          },
-          {
-            "type": "comparison_operator",
-            "named": true
-          },
-          {
             "type": "end_keyword",
             "named": true
           },
@@ -40,23 +28,11 @@
             "named": true
           },
           {
-            "type": "handle_operator",
-            "named": true
-          },
-          {
             "type": "identifier",
             "named": true
           },
           {
-            "type": "lambda",
-            "named": true
-          },
-          {
             "type": "matrix",
-            "named": true
-          },
-          {
-            "type": "metaclass_operator",
             "named": true
           },
           {
@@ -116,10 +92,6 @@
         },
         {
           "type": "comparison_operator",
-          "named": true
-        },
-        {
-          "type": "end_keyword",
           "named": true
         },
         {
@@ -1422,6 +1394,11 @@
     }
   },
   {
+    "type": "end_keyword",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "enum",
     "named": true,
     "fields": {},
@@ -2345,6 +2322,10 @@
           "named": true
         },
         {
+          "type": "end_keyword",
+          "named": true
+        },
+        {
           "type": "field_expression",
           "named": true
         },
@@ -2678,6 +2659,10 @@
         },
         {
           "type": "comparison_operator",
+          "named": true
+        },
+        {
+          "type": "end_keyword",
           "named": true
         },
         {
@@ -3530,10 +3515,6 @@
   {
     "type": "end",
     "named": false
-  },
-  {
-    "type": "end_keyword",
-    "named": true
   },
   {
     "type": "endfunction",

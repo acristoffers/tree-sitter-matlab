@@ -35,8 +35,13 @@ module.exports = grammar({
 
   conflicts: ($) => [
     [$._expression, $._range_element],
+    [$._expression, $._index_expression],
     [$.range],
     [$.block],
+    [$._index_arguments],
+    [$._binary_expression, $._index_binary_expression],
+    [$._index_matrix, $.matrix],
+    [$._index_row, $.row],
   ],
 
   externals: ($) => [
@@ -123,30 +128,6 @@ module.exports = grammar({
         $.field_expression,
       ),
 
-    _expression_with_end: ($) =>
-      choice(
-        alias($._binary_operator_with_end, $.binary_operator),
-        $.boolean,
-        $.boolean_operator,
-        $.cell,
-        $.comparison_operator,
-        $.function_call,
-        $.handle_operator,
-        $.identifier,
-        $.lambda,
-        $.matrix,
-        $.metaclass_operator,
-        $.not_operator,
-        $.number,
-        $.parenthesis,
-        $.postfix_operator,
-        alias($._range_with_end, $.range),
-        $.string,
-        $.unary_operator,
-        $.field_expression,
-        alias('end', $.end_keyword)
-      ),
-
     parenthesis: ($) => prec(PREC.parentheses, seq('(', $._expression, ')')),
 
     _binary_expression: ($) =>
@@ -199,63 +180,6 @@ module.exports = grammar({
               // @ts-ignore
               operator,
               field('right', $._binary_expression),
-            ),
-          ),
-        ),
-      );
-    },
-
-    _binary_expression_with_end: ($) =>
-      prec(
-        100,
-        choice(
-          alias($._binary_operator_with_end, $.binary_operator),
-          $.boolean,
-          $.boolean_operator,
-          $.cell,
-          $.comparison_operator,
-          $.function_call,
-          $.identifier,
-          $.matrix,
-          $.not_operator,
-          $.number,
-          $.parenthesis,
-          $.postfix_operator,
-          $.string,
-          $.field_expression,
-          $.unary_operator,
-          alias('end', $.end_keyword),
-        ),
-      ),
-
-    _binary_operator_with_end: ($) => {
-      const table = [
-        [prec.left, '+', PREC.plus],
-        [prec.left, '.+', PREC.plus],
-        [prec.left, '-', PREC.plus],
-        [prec.left, '.-', PREC.plus],
-        [prec.left, '*', PREC.times],
-        [prec.left, '.*', PREC.times],
-        [prec.left, '/', PREC.times],
-        [prec.left, './', PREC.times],
-        [prec.left, '\\', PREC.times],
-        [prec.left, '.\\', PREC.times],
-        [prec.right, '^', PREC.power],
-        [prec.right, '.^', PREC.power],
-        [prec.left, '|', PREC.bitwise_or],
-        [prec.left, '&', PREC.bitwise_and],
-      ];
-
-      return choice(
-        // @ts-ignore
-        ...table.map(([fn, operator, precedence]) =>
-          fn(
-            precedence,
-            seq(
-              field('left', $._binary_expression_with_end),
-              // @ts-ignore
-              operator,
-              field('right', $._binary_expression_with_end),
             ),
           ),
         ),
@@ -460,15 +384,121 @@ module.exports = grammar({
 
     spread_operator: (_) => ':',
 
+    _index_row: ($) =>
+      seq(
+        optional(','),
+        choice($._index_expression, $.ignored_argument),
+        repeat(
+          seq(alias($._entry_delimiter, ','), choice($._index_expression, $.ignored_argument)),
+        ),
+        optional(alias($._entry_delimiter, ',')),
+      ),
+    _index_matrix: ($) =>
+      seq(
+        '[',
+        repeat("\n"),
+        optional(seq(alias($._index_row, $.row), repeat(seq(choice(';', /[\r\n]/), optional(alias($._index_row, $.row)))))),
+        ']',
+      ),
+    _index_range_element: ($) =>
+      prec(100, choice(
+        $.boolean,
+        $.field_expression,
+        $.function_call,
+        $.identifier,
+        alias($._index_matrix, $.matrix),
+        $.not_operator,
+        $.number,
+        alias($._index_parenthesis, $.parenthesis),
+        $.postfix_operator,
+        $.string,
+        prec.dynamic(-1, $.unary_operator),
+        prec.dynamic(1, alias($._index_binary_operator, $.binary_operator)),
+        $.end_keyword,
+      )),
+    _index_range: ($) =>
+      prec.right(
+        PREC.postfix,
+        seq(
+          $._index_range_element,
+          ':',
+          $._index_range_element,
+          optional(seq(':', $._index_range_element)),
+        ),
+      ),
+    _index_parenthesis: ($) => seq('(', $._index_expression, ')'),
+    _index_expression: ($) =>
+      choice(
+        $.boolean,
+        $.field_expression,
+        $.function_call,
+        $.identifier,
+        alias($._index_matrix, $.matrix),
+        $.not_operator,
+        $.number,
+        alias($._index_parenthesis, $.parenthesis),
+        alias($._index_range, $.range),
+        alias($._index_binary_operator, $.binary_operator),
+        $.postfix_operator,
+        $.string,
+        $.unary_operator,
+        $.end_keyword,
+      ),
+    _index_binary_expression: ($) =>
+      prec(
+        1,
+        choice(
+          alias($._index_binary_operator, $.binary_operator),
+          $.boolean,
+          $.boolean_operator,
+          $.cell,
+          $.comparison_operator,
+          $.function_call,
+          $.identifier,
+          alias($._index_matrix, $.matrix),
+          $.not_operator,
+          $.number,
+          alias($._index_parenthesis, $.parenthesis),
+          $.postfix_operator,
+          $.string,
+          $.field_expression,
+          $.unary_operator,
+          $.end_keyword,
+        ),
+      ),
+    _index_binary_operator: ($) => {
+      const table = [
+        [prec.left, '+', PREC.plus],
+        [prec.left, '.+', PREC.plus],
+        [prec.left, '-', PREC.plus],
+        [prec.left, '.-', PREC.plus],
+        [prec.left, '*', PREC.times],
+        [prec.left, '.*', PREC.times],
+        [prec.left, '/', PREC.times],
+        [prec.left, './', PREC.times],
+        [prec.left, '\\', PREC.times],
+        [prec.left, '.\\', PREC.times],
+        [prec.right, '^', PREC.power],
+        [prec.right, '.^', PREC.power],
+        [prec.left, '|', PREC.bitwise_or],
+        [prec.left, '&', PREC.bitwise_and],
+      ];
+      return choice(
+        ...table.map(([fn, op, p]) =>
+          fn(p, seq(field('left', $._index_binary_expression), op, field('right', $._index_binary_expression))),
+        ),
+      );
+    },
+    _index_argument: ($) => choice($.spread_operator, $._index_expression),
+    _index_arguments: ($) => commaSep1(field('argument', $._index_argument)),
+
     arguments: ($) =>
       choice(
         seq(
-          commaSep1(
-            field('argument', choice($.spread_operator, $._expression_with_end)),
-          ),
-          optional(seq(',', commaSep1(seq($.identifier, '=', $._expression_with_end)))),
+          $._index_arguments,
+          optional(seq(',', commaSep1(seq($.identifier, '=', $._expression)))),
         ),
-        commaSep1(seq($.identifier, '=', $._expression_with_end)),
+        commaSep1(seq($.identifier, '=', $._expression)),
       ),
     _args: ($) =>
       choice(
@@ -519,33 +549,6 @@ module.exports = grammar({
           ':',
           $._range_element,
           optional(seq(':', $._range_element)),
-        ),
-      ),
-
-    _range_element_with_end: ($) =>
-      prec(101, choice(
-        $.boolean,
-        $.field_expression,
-        $.function_call,
-        $.identifier,
-        $.matrix,
-        $.not_operator,
-        $.number,
-        $.parenthesis,
-        $.postfix_operator,
-        $.string,
-        prec.dynamic(-1, $.unary_operator),
-        prec.dynamic(1, alias($._binary_operator_with_end, $.binary_operator)),
-        alias('end', $.end_keyword),
-      )),
-    _range_with_end: ($) =>
-      prec.right(
-        PREC.postfix,
-        seq(
-          $._range_element_with_end,
-          ':',
-          $._range_element_with_end,
-          optional(seq(':', $._range_element_with_end)),
         ),
       ),
 
@@ -821,6 +824,8 @@ module.exports = grammar({
     number: (_) => /(\d+|\d+\.\d*|\.\d+)([eE][+-]?\d+)?[ij]?/,
 
     boolean: (_) => choice('true', 'false'),
+
+    end_keyword: ($) => 'end',
 
     _end_of_line: ($) => choice(';', '\n', '\r', ','),
   },

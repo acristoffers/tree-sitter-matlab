@@ -351,6 +351,9 @@ Function Call: Ranges
 a(1:end)
 a(1:end-1)
 a(end-3:end-2)
+v(2:(end-3))
+v(2:abs((end-3)*2)/2)
+v([1 end]);
 
 --------------------------------------------------------------------------------
 
@@ -378,10 +381,42 @@ a(end-3:end-2)
           (number))
         (binary_operator
           (end_keyword)
-          (number))))))
+          (number)))))
+  (function_call
+    (identifier)
+    (arguments
+      (range
+        (number)
+        (parenthesis
+          (binary_operator
+            (end_keyword)
+            (number))))))
+  (function_call
+    (identifier)
+    (arguments
+      (range
+        (number)
+        (binary_operator
+          (function_call
+            (identifier)
+            (arguments
+              (binary_operator
+                (parenthesis
+                  (binary_operator
+                    (end_keyword)
+                    (number)))
+                (number))))
+          (number)))))
+  (function_call
+    (identifier)
+    (arguments
+      (matrix
+        (row
+          (number)
+          (end_keyword))))))
 
 =================================================================================
-Function Call: Ranges
+Function Call: Line Continuation
 =================================================================================
 
 function result = foo(a, b)
