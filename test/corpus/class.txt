@@ -132,6 +132,13 @@ classdef Class
    end
 end
 
+classdef Super
+    methods(Abstract)
+        a = f(obj);
+        b = g(obj);
+    end
+end
+
 --------------------------------------------------------------------------------
 
 (source_file
@@ -162,7 +169,25 @@ end
         (function_arguments
           (identifier)
           (identifier))
-        (line_continuation)))))
+        (line_continuation))))
+  (class_definition
+    (identifier)
+    (methods
+      (attributes
+        (attribute
+          (identifier)))
+      (function_signature
+        (function_output
+          (identifier))
+        (identifier)
+        (function_arguments
+          (identifier)))
+      (function_signature
+        (function_output
+          (identifier))
+        (identifier)
+        (function_arguments
+          (identifier))))))
 
 ================================================================================
 Class Definition: Arguments
