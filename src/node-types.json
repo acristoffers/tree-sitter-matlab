@@ -3243,7 +3243,7 @@
           "named": true
         },
         {
-          "type": "identifier",
+          "type": "property_name",
           "named": true
         }
       ]

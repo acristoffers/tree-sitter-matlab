@@ -4180,11 +4180,11 @@
           "members": [
             {
               "type": "SYMBOL",
-              "name": "identifier"
+              "name": "function_call"
             },
             {
               "type": "SYMBOL",
-              "name": "function_call"
+              "name": "property_name"
             }
           ]
         },
@@ -4210,11 +4210,11 @@
                 "members": [
                   {
                     "type": "SYMBOL",
-                    "name": "identifier"
+                    "name": "function_call"
                   },
                   {
                     "type": "SYMBOL",
-                    "name": "function_call"
+                    "name": "property_name"
                   }
                 ]
               }
