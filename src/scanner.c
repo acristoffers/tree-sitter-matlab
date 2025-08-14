@@ -756,13 +756,25 @@ static inline bool scan_multioutput_var_start(TSLexer* lexer)
     lexer->result_symbol = MULTIOUTPUT_VARIABLE_START;
     lexer->mark_end(lexer);
 
+    // We can have arrays inside function calls inside the multi-output variable, so we have to keep
+    // track.
+    unsigned sb_count = 0;
+
     while (!lexer->eof(lexer)) {
         if (consume_char('.', lexer) && consume_char('.', lexer) && consume_char('.', lexer)) {
             consume_comment_line(lexer);
             advance(lexer);
         }
 
+        if (lexer->lookahead == '[') {
+            sb_count++;
+            advance(lexer);
+        }
+
         if (lexer->lookahead != ']') {
+            advance(lexer);
+        } else if (sb_count > 0) {
+            sb_count--;
             advance(lexer);
         } else {
             break;
