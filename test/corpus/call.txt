@@ -238,18 +238,12 @@ cmd arg1 % comment
 Command Call: Line Continuation
 ================================================================================
 
-cmd ... comment
-    arg1
 cmd arg1 ... comment
     arg2
 
 --------------------------------------------------------------------------------
 
 (source_file
-  (command
-    (command_name)
-    (line_continuation)
-    (command_argument))
   (command
     (command_name)
     (command_argument)

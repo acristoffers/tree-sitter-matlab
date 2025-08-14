@@ -5,6 +5,10 @@ Assignment: To Variable
 a = 1
 b = -1, c = +1;
 d = 1.5;
+c1 ...
+    = { ...
+        'a'; ...
+      };
 
 --------------------------------------------------------------------------------
 
@@ -22,7 +26,16 @@ d = 1.5;
       (number)))
   (assignment
     (identifier)
-    (number)))
+    (number))
+  (assignment
+    (identifier)
+    (line_continuation)
+    (cell
+      (line_continuation)
+      (row
+        (string
+          (string_content)))
+      (line_continuation))))
 
 ================================================================================
 Assignment: Multiple Output

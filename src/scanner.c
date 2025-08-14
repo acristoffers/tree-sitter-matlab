@@ -317,13 +317,21 @@ static bool scan_command(Scanner* scanner, TSLexer* lexer)
         return true;
     }
 
+    // If followed by a line continuation, look after it
+    consume_whitespaces(lexer);
+    lexer->mark_end(lexer);
+    if (lexer->lookahead == '.' && consume_char('.', lexer) && consume_char('.', lexer)
+        && consume_char('.', lexer)) {
+        lexer->result_symbol = IDENTIFIER;
+        return true;
+    }
+
     // If it is followed by a space, it doesn't mean it's a command yet.
     // It could be A + 2 or A = 2. Let's check what is the first char after
     // all whitespaces. We mark it already as this is the right place, and we
     // only need to make sure this is a command and not something else from
     // this point on.
     lexer->result_symbol = COMMAND_NAME;
-    lexer->mark_end(lexer);
     while (!lexer->eof(lexer) && iswspace_matlab(lexer->lookahead)) {
         advance(lexer);
     }
