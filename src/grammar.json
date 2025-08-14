@@ -3716,8 +3716,20 @@
                 "name": "property"
               },
               {
-                "type": "SYMBOL",
-                "name": "class_property"
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "class_property"
+                  },
+                  {
+                    "type": "REPEAT1",
+                    "content": {
+                      "type": "SYMBOL",
+                      "name": "_end_of_line"
+                    }
+                  }
+                ]
               }
             ]
           }

@@ -245,6 +245,7 @@ function myBar(x,y,propArgs)
         x (:,:) double
         y (:,:) double
         propArgs.?matlab.graphics.chart.primitive.Bar
+        some.propery
     end
     propertyCell = namedargs2cell(propArgs);
     bar(x,y,propertyCell{:})
@@ -278,7 +279,11 @@ end
         (identifier)
         (identifier)
         (identifier)
-        (identifier)))
+        (identifier))
+      (property
+        (property_name
+          (identifier)
+          (identifier))))
     (block
       (assignment
         (identifier)

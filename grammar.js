@@ -658,7 +658,7 @@ module.exports = grammar({
         'arguments',
         optional(alias($._argument_attributes, $.attributes)),
         repeat1($._end_of_line),
-        repeat(choice($.property, $.class_property)),
+        repeat(choice($.property, seq($.class_property, repeat1($._end_of_line)))),
         'end',
       ),
 
@@ -839,7 +839,8 @@ module.exports = grammar({
  * @return {SeqRule}
  *
  */
-function commaSep1(rule) {
+function commaSep1(rule)
+{
   return seq(rule, repeat(seq(',', rule)));
 }
 
@@ -851,6 +852,7 @@ function commaSep1(rule) {
  * @return {SeqRule}
  *
  */
-function optionalCommaSep(rule) {
+function optionalCommaSep(rule)
+{
   return optional(seq(rule, repeat(seq(optional(','), rule)), optional(',')));
 }
