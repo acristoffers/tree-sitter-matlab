@@ -189,7 +189,13 @@ static bool scan_comment(TSLexer* lexer, bool entry_delimiter)
     //       2 ...
     // }
     if (entry_delimiter && line_continuation) {
-        lexer->result_symbol = ENTRY_DELIMITER;
+        consume_whitespaces(lexer);
+        if (lexer->lookahead == ',') {
+            lexer->result_symbol = LINE_CONTINUATION;
+            lexer->mark_end(lexer);
+        } else {
+            lexer->result_symbol = ENTRY_DELIMITER;
+        }
         return true;
     }
 

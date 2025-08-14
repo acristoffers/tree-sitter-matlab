@@ -153,3 +153,55 @@ x = ['foo ' ...
         (line_continuation)
         (string
           (string_content))))))
+
+================================================================================
+Cell: Comma positioning + line continuation
+================================================================================
+
+c1 = {'one' ...
+     ,'two'}
+
+m1 = [1 ...
+      ,2]
+
+c1 = {'one', ...
+      'two'}
+
+m1 = [1, ...
+      2]
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (assignment
+    (identifier)
+    (cell
+      (row
+        (string
+          (string_content))
+        (line_continuation)
+        (string
+          (string_content)))))
+  (assignment
+    (identifier)
+    (matrix
+      (row
+        (number)
+        (line_continuation)
+        (number))))
+  (assignment
+    (identifier)
+    (cell
+      (row
+        (string
+          (string_content))
+        (line_continuation)
+        (string
+          (string_content)))))
+  (assignment
+    (identifier)
+    (matrix
+      (row
+        (number)
+        (line_continuation)
+        (number)))))
