@@ -489,7 +489,7 @@ module.exports = grammar({
         ),
       );
     },
-    _index_argument: ($) => choice($.spread_operator, $._index_expression),
+    _index_argument: ($) => choice($.spread_operator, choice(prec.dynamic(1, $._index_expression), prec.dynamic(-1, $._expression))),
     _index_arguments: ($) => commaSep1(field('argument', $._index_argument)),
 
     arguments: ($) =>

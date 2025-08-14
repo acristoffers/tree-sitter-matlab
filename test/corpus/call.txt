@@ -17,6 +17,7 @@ Function Call: With Arguments
 add(1, 2)
 eig (A)
 false(2)
+myfcn({'str'});
 
 --------------------------------------------------------------------------------
 
@@ -33,7 +34,14 @@ false(2)
   (function_call
     (identifier)
     (arguments
-      (number))))
+      (number)))
+  (function_call
+    (identifier)
+    (arguments
+      (cell
+        (row
+          (string
+            (string_content)))))))
 
 ================================================================================
 Function Call: Indexing With Spread
