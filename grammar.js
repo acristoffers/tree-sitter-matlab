@@ -820,7 +820,7 @@ module.exports = grammar({
         'end',
       ),
 
-    number: (_) => /(\d+|\d+\.\d*|\.\d+)([eE][+-]?\d+)?[ij]?/,
+    number: (_) => choice(/(\d+|\d+\.\d*|\.\d+)([eE][+-]?\d+)?[ij]?/, /0x[\dA-Fa-f]+/, /0b[01]+/),
 
     boolean: (_) => choice('true', 'false'),
 

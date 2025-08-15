@@ -5055,8 +5055,21 @@
       ]
     },
     "number": {
-      "type": "PATTERN",
-      "value": "(\\d+|\\d+\\.\\d*|\\.\\d+)([eE][+-]?\\d+)?[ij]?"
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "(\\d+|\\d+\\.\\d*|\\.\\d+)([eE][+-]?\\d+)?[ij]?"
+        },
+        {
+          "type": "PATTERN",
+          "value": "0x[\\dA-Fa-f]+"
+        },
+        {
+          "type": "PATTERN",
+          "value": "0b[01]+"
+        }
+      ]
     },
     "boolean": {
       "type": "CHOICE",

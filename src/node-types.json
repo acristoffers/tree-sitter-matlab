@@ -2303,6 +2303,11 @@
     }
   },
   {
+    "type": "number",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "otherwise_clause",
     "named": true,
     "fields": {},
@@ -3596,10 +3601,6 @@
   {
     "type": "methods",
     "named": false
-  },
-  {
-    "type": "number",
-    "named": true
   },
   {
     "type": "otherwise",
