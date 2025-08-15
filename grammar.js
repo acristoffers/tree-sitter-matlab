@@ -85,7 +85,7 @@ module.exports = grammar({
       ),
     block: ($) => $._block,
 
-    identifier: ($) => choice($._external_identifier, "get", "set", "properties"),
+    identifier: ($) => choice($._external_identifier, $._keywords),
 
     _statement: ($) =>
       choice(
@@ -653,13 +653,13 @@ module.exports = grammar({
       ),
     class_property: ($) => seq($.identifier, '.?', $.identifier, repeat(seq('.', $.identifier))),
     arguments_statement: ($) =>
-      seq(
+      prec(1, seq(
         'arguments',
         optional(alias($._argument_attributes, $.attributes)),
         repeat1($._end_of_line),
         repeat(choice($.property, seq($.class_property, repeat1($._end_of_line)))),
         'end',
-      ),
+      )),
 
     function_output: ($) =>
       seq(choice($.identifier, $.multioutput_variable), '='),
@@ -825,6 +825,8 @@ module.exports = grammar({
     boolean: (_) => choice('true', 'false'),
 
     end_keyword: ($) => 'end',
+
+    _keywords: ($) => choice("get", "set", "properties", "arguments", "enumeration", "events", "methods"),
 
     _end_of_line: ($) => choice(';', '\n', '\r', ','),
   },

@@ -100,16 +100,8 @@
           "name": "_external_identifier"
         },
         {
-          "type": "STRING",
-          "value": "get"
-        },
-        {
-          "type": "STRING",
-          "value": "set"
-        },
-        {
-          "type": "STRING",
-          "value": "properties"
+          "type": "SYMBOL",
+          "name": "_keywords"
         }
       ]
     },
@@ -3676,69 +3668,73 @@
       ]
     },
     "arguments_statement": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "arguments"
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "ALIAS",
-              "content": {
-                "type": "SYMBOL",
-                "name": "_argument_attributes"
-              },
-              "named": true,
-              "value": "attributes"
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
-          "type": "REPEAT1",
-          "content": {
-            "type": "SYMBOL",
-            "name": "_end_of_line"
-          }
-        },
-        {
-          "type": "REPEAT",
-          "content": {
+      "type": "PREC",
+      "value": 1,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "STRING",
+            "value": "arguments"
+          },
+          {
             "type": "CHOICE",
             "members": [
               {
-                "type": "SYMBOL",
-                "name": "property"
+                "type": "ALIAS",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "_argument_attributes"
+                },
+                "named": true,
+                "value": "attributes"
               },
               {
-                "type": "SEQ",
-                "members": [
-                  {
-                    "type": "SYMBOL",
-                    "name": "class_property"
-                  },
-                  {
-                    "type": "REPEAT1",
-                    "content": {
-                      "type": "SYMBOL",
-                      "name": "_end_of_line"
-                    }
-                  }
-                ]
+                "type": "BLANK"
               }
             ]
+          },
+          {
+            "type": "REPEAT1",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_end_of_line"
+            }
+          },
+          {
+            "type": "REPEAT",
+            "content": {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "property"
+                },
+                {
+                  "type": "SEQ",
+                  "members": [
+                    {
+                      "type": "SYMBOL",
+                      "name": "class_property"
+                    },
+                    {
+                      "type": "REPEAT1",
+                      "content": {
+                        "type": "SYMBOL",
+                        "name": "_end_of_line"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "type": "STRING",
+            "value": "end"
           }
-        },
-        {
-          "type": "STRING",
-          "value": "end"
-        }
-      ]
+        ]
+      }
     },
     "function_output": {
       "type": "SEQ",
@@ -5073,6 +5069,39 @@
     "end_keyword": {
       "type": "STRING",
       "value": "end"
+    },
+    "_keywords": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "get"
+        },
+        {
+          "type": "STRING",
+          "value": "set"
+        },
+        {
+          "type": "STRING",
+          "value": "properties"
+        },
+        {
+          "type": "STRING",
+          "value": "arguments"
+        },
+        {
+          "type": "STRING",
+          "value": "enumeration"
+        },
+        {
+          "type": "STRING",
+          "value": "events"
+        },
+        {
+          "type": "STRING",
+          "value": "methods"
+        }
+      ]
     },
     "_end_of_line": {
       "type": "CHOICE",
