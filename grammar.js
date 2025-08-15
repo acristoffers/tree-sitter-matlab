@@ -297,7 +297,7 @@ module.exports = grammar({
               $.unary_operator,
             ),
           ),
-          choice('.\'', '\''),
+          choice(".'", "'"),
         ),
       ),
 
@@ -576,8 +576,7 @@ module.exports = grammar({
       ),
 
     iterator: ($) => seq($.identifier, '=', $._expression),
-    parfor_options: ($) =>
-      choice($.number, $.identifier, $.function_call, $.string),
+    parfor_options: ($) => choice($.number, $.identifier, $.function_call, $.string),
     for_statement: ($) =>
       choice(
         seq(
@@ -839,8 +838,7 @@ module.exports = grammar({
  * @return {SeqRule}
  *
  */
-function commaSep1(rule)
-{
+function commaSep1(rule) {
   return seq(rule, repeat(seq(',', rule)));
 }
 
@@ -852,7 +850,6 @@ function commaSep1(rule)
  * @return {SeqRule}
  *
  */
-function optionalCommaSep(rule)
-{
+function optionalCommaSep(rule) {
   return optional(seq(rule, repeat(seq(optional(','), rule)), optional(',')));
 }

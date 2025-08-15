@@ -593,7 +593,14 @@ static bool scan_string_open(Scanner* scanner, TSLexer* lexer)
         advance(lexer);
         lexer->result_symbol = SINGLE_QUOTE_STRING_START;
         lexer->mark_end(lexer);
-        return true;
+        // A single quote string has to be ended in the same line.
+        while (!lexer->eof(lexer) && lexer->lookahead != '\n') {
+            if (lexer->lookahead == '\'') {
+                return true;
+            }
+            advance(lexer);
+        }
+        return false;
     default:
         return false;
     }

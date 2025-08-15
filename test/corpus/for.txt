@@ -5,6 +5,9 @@ For Statement: Simple
 for i = 1:10
     1
 end
+for i = colVect'
+  1
+end
 
 --------------------------------------------------------------------------------
 
@@ -15,6 +18,13 @@ end
       (range
         (number)
         (number)))
+    (block
+      (number)))
+  (for_statement
+    (iterator
+      (identifier)
+      (postfix_operator
+        (identifier)))
     (block
       (number))))
 
