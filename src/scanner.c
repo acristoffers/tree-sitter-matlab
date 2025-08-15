@@ -508,7 +508,8 @@ static bool scan_command_argument(Scanner* scanner, TSLexer* lexer)
                 advance(lexer);
             }
 
-            if (is_eol(lexer->lookahead)) {
+            if (is_eol(lexer->lookahead) || cond1) {
+                scanner->line_continuation = false;
                 scanner->is_inside_command = false;
             }
 

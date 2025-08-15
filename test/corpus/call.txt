@@ -241,6 +241,10 @@ Command Call: Line Continuation
 cmd arg1 ... comment
     arg2
 
+myCmd theFirstArg...
+    theSecondArg
+[a,b]  = deal(2)
+
 --------------------------------------------------------------------------------
 
 (source_file
@@ -248,7 +252,20 @@ cmd arg1 ... comment
     (command_name)
     (command_argument)
     (line_continuation)
-    (command_argument)))
+    (command_argument))
+  (command
+    (command_name)
+    (command_argument)
+    (line_continuation)
+    (command_argument))
+  (assignment
+    (multioutput_variable
+      (identifier)
+      (identifier))
+    (function_call
+      (identifier)
+      (arguments
+        (number)))))
 
 ================================================================================
 Command Call: Shell Escape Without Arguments
