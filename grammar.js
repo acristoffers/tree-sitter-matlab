@@ -240,7 +240,7 @@ module.exports = grammar({
               '.',
               field(
                 'field',
-                choice($.identifier, $.function_call, $.indirect_access),
+                choice($.identifier, alias($._extended_keywords, $.identifier), $.function_call, $.indirect_access),
               ),
             ),
           ),
@@ -827,6 +827,12 @@ module.exports = grammar({
     end_keyword: ($) => 'end',
 
     _keywords: ($) => choice("get", "set", "properties", "arguments", "enumeration", "events", "methods"),
+
+    _extended_keywords: ($) => prec(100, choice(
+      "break", "case", "catch", "classdef", "continue", "else", "elseif", "end", "false", "for",
+      "function", "global", "if", "otherwise", "parfor", "persistent", "return", "spmd", "switch",
+      "true", "try", "while",
+    )),
 
     _end_of_line: ($) => choice(';', '\n', '\r', ','),
   },
