@@ -132,6 +132,7 @@ classdef Class
           ...
 
       end
+      out1 = f2(obj, in1);
    end
 end
 
@@ -172,7 +173,14 @@ end
         (function_arguments
           (identifier)
           (identifier))
-        (line_continuation))))
+        (line_continuation))
+      (function_signature
+        (function_output
+          (identifier))
+        (identifier)
+        (function_arguments
+          (identifier)
+          (identifier)))))
   (class_definition
     (identifier)
     (methods

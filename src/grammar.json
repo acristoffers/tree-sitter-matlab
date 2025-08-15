@@ -4574,13 +4574,6 @@
               "type": "BLANK"
             }
           ]
-        },
-        {
-          "type": "REPEAT1",
-          "content": {
-            "type": "SYMBOL",
-            "name": "_end_of_line"
-          }
         }
       ]
     },
@@ -4610,20 +4603,32 @@
         {
           "type": "REPEAT",
           "content": {
-            "type": "CHOICE",
+            "type": "SEQ",
             "members": [
               {
-                "type": "SYMBOL",
-                "name": "function_signature"
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "function_signature"
+                  },
+                  {
+                    "type": "ALIAS",
+                    "content": {
+                      "type": "SYMBOL",
+                      "name": "_function_definition_with_end"
+                    },
+                    "named": true,
+                    "value": "function_definition"
+                  }
+                ]
               },
               {
-                "type": "ALIAS",
+                "type": "REPEAT1",
                 "content": {
                   "type": "SYMBOL",
-                  "name": "_function_definition_with_end"
-                },
-                "named": true,
-                "value": "function_definition"
+                  "name": "_end_of_line"
+                }
               }
             ]
           }

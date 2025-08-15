@@ -751,7 +751,6 @@ module.exports = grammar({
         optional(choice('get.', 'set.')),
         field('name', $.identifier),
         optional($.function_arguments),
-        repeat1($._end_of_line),
       ),
     methods: ($) =>
       seq(
@@ -759,10 +758,11 @@ module.exports = grammar({
         optional($.attributes),
         $._end_of_line,
         repeat(
-          choice(
-            $.function_signature,
-            alias($._function_definition_with_end, $.function_definition),
-          ),
+          seq(
+            choice(
+              $.function_signature,
+              alias($._function_definition_with_end, $.function_definition)),
+            repeat1($._end_of_line)),
         ),
         'end',
       ),
