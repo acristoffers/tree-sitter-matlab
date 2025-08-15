@@ -205,3 +205,24 @@ m1 = [1, ...
         (number)
         (line_continuation)
         (number)))))
+
+================================================================================
+Cell: Prefix Operators
+================================================================================
+
+b = [~a -3 +~2];
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (assignment
+    (identifier)
+    (matrix
+      (row
+        (not_operator
+          (identifier))
+        (unary_operator
+          (number))
+        (unary_operator
+          (not_operator
+            (number)))))))

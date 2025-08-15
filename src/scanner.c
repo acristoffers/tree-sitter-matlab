@@ -824,6 +824,7 @@ static inline bool scan_multioutput_var_start(TSLexer* lexer)
     return false;
 }
 
+static bool scan_identifier(TSLexer* lexer);
 static bool scan_entry_delimiter(TSLexer* lexer, int skipped)
 {
     lexer->mark_end(lexer);
@@ -880,7 +881,15 @@ static bool scan_entry_delimiter(TSLexer* lexer, int skipped)
         }
     }
 
-    return skipped != 0;
+    if (skipped != 0) {
+        return true;
+    }
+
+    if (is_identifier(lexer->lookahead, true)) {
+        return scan_identifier(lexer);
+    }
+
+    return false;
 }
 
 static bool scan_identifier(TSLexer* lexer)
