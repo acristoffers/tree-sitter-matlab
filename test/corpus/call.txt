@@ -163,6 +163,13 @@ Command Call: With Arguments
 cd ../something
 disp some text
 
+% special cases
+methods foo
+arguments foo
+properties foo
+events foo
+enumeration foo
+
 --------------------------------------------------------------------------------
 
 (source_file
@@ -172,6 +179,22 @@ disp some text
   (command
     (command_name)
     (command_argument)
+    (command_argument))
+  (comment)
+  (command
+    (command_name)
+    (command_argument))
+  (command
+    (command_name)
+    (command_argument))
+  (command
+    (command_name)
+    (command_argument))
+  (command
+    (command_name)
+    (command_argument))
+  (command
+    (command_name)
     (command_argument)))
 
 ================================================================================

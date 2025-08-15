@@ -290,13 +290,37 @@ static bool scan_command(Scanner* scanner, TSLexer* lexer)
 
     char buffer[256] = {0};
     consume_identifier(lexer, buffer);
+    const char* allowed_commands[] = {"methods", "arguments", "enumeration", "events"};
     if (buffer[0] != 0) {
+        // The following keywords are allowed as commands if they get 1 argument
+        for (int i = 0; i < sizeof(allowed_commands) / sizeof(allowed_commands[0]); i++) {
+            if (strcmp(allowed_commands[i], buffer) == 0) {
+                goto check_command_for_argument;
+            }
+        }
         for (int i = 0; i < keywords_size; i++) {
             if (strcmp(keywords[i], buffer) == 0) {
                 return false;
             }
         }
     }
+    goto skip_commanda_check;
+
+check_command_for_argument:
+    // If this is a keyword-command, check if it has an argument.
+    // If it has no arguments, this is a keyword, not a command.
+    lexer->result_symbol = COMMAND_NAME;
+    lexer->mark_end(lexer);
+    while (!lexer->eof(lexer) && iswspace_matlab(lexer->lookahead)) {
+        advance(lexer);
+    }
+    if (is_identifier(lexer->lookahead, true)) {
+        scanner->is_inside_command = true;
+        return true;
+    }
+    return false;
+
+skip_commanda_check:
 
     // First case: found an end-of-line already, so this is a command for sure.
     // example:
