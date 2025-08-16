@@ -290,6 +290,7 @@ static bool scan_command(Scanner* scanner, TSLexer* lexer)
 
     char buffer[256] = {0};
     consume_identifier(lexer, buffer);
+    lexer->mark_end(lexer);
     const char* allowed_commands[] = {"methods", "arguments", "enumeration", "events"};
     if (buffer[0] != 0) {
         // The following keywords are allowed as commands if they get 1 argument
@@ -310,7 +311,6 @@ check_command_for_argument:
     // If this is a keyword-command, check if it has an argument.
     // If it has no arguments, this is a keyword, not a command.
     lexer->result_symbol = COMMAND_NAME;
-    lexer->mark_end(lexer);
     while (!lexer->eof(lexer) && iswspace_matlab(lexer->lookahead)) {
         advance(lexer);
     }
@@ -329,7 +329,6 @@ skip_commanda_check:
     // pwd,
     if (is_eol(lexer->lookahead)) {
         lexer->result_symbol = COMMAND_NAME;
-        lexer->mark_end(lexer);
         return true;
     }
 
@@ -337,13 +336,11 @@ skip_commanda_check:
     // example. Or A+2.
     if (lexer->lookahead != ' ') {
         lexer->result_symbol = IDENTIFIER;
-        lexer->mark_end(lexer);
         return true;
     }
 
     // If followed by a line continuation, look after it
     consume_whitespaces(lexer);
-    lexer->mark_end(lexer);
     if (lexer->lookahead == '.' && consume_char('.', lexer) && consume_char('.', lexer)
         && consume_char('.', lexer)) {
         lexer->result_symbol = IDENTIFIER;
