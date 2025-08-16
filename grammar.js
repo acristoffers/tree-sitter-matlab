@@ -749,7 +749,7 @@ module.exports = grammar({
       seq(
         optional($.function_output),
         optional(choice('get.', 'set.')),
-        field('name', $.identifier),
+        field('name', alias(choice($._external_identifier, 'get', 'set', 'arguments'), $.identifier)),
         optional($.function_arguments),
       ),
     methods: ($) =>
