@@ -2406,7 +2406,17 @@
   {
     "type": "number",
     "named": true,
-    "fields": {}
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "number_size",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "otherwise_clause",
@@ -3711,6 +3721,10 @@
   {
     "type": "methods",
     "named": false
+  },
+  {
+    "type": "number_size",
+    "named": true
   },
   {
     "type": "otherwise",

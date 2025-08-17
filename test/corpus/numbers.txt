@@ -174,3 +174,60 @@ Number: Hexadecimals and Binaries
   (number)
   (number)
   (number))
+
+================================================================================
+Number: Hexadecimals and Binaries
+================================================================================
+
+0xFFs8
+0xFFs16
+0xFFs32
+0xFFs64
+0xFFu8
+0xFFu16
+0xFFu32
+0xFFu64
+0b0101s8
+0b0101s16
+0b0101s32
+0b0101s64
+0b0101u8
+0b0101u16
+0b0101u32
+0b0101u64
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (number
+    (number_size))
+  (number
+    (number_size))
+  (number
+    (number_size))
+  (number
+    (number_size))
+  (number
+    (number_size))
+  (number
+    (number_size))
+  (number
+    (number_size))
+  (number
+    (number_size))
+  (number
+    (number_size))
+  (number
+    (number_size))
+  (number
+    (number_size))
+  (number
+    (number_size))
+  (number
+    (number_size))
+  (number
+    (number_size))
+  (number
+    (number_size))
+  (number
+    (number_size)))

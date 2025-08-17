@@ -909,7 +909,12 @@ module.exports = grammar({
         'end',
       ),
 
-    number: (_) => choice(/(\d+|\d+\.\d*|\.\d+)([eE][+-]?\d+)?[ij]?/, /0x[\dA-Fa-f]+/, /0b[01]+/),
+    number_size: (_) => token.immediate(choice("s8", "s16", "s32", "s64", "u8", "u16", "u32", "u64")),
+    number: ($) => choice(
+      /(\d+|\d+\.\d*|\.\d+)([eE][+-]?\d+)?[ij]?/,
+      seq(/0x[\dA-Fa-f]+/, optional($.number_size)),
+      seq(/0b[01]+/, optional($.number_size))
+    ),
 
     boolean: (_) => choice('true', 'false'),
 
