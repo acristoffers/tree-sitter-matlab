@@ -23,6 +23,8 @@ classdef (abstract) mclass < handle & matlab.mixin.SetGetExactNames
 
     methods
         function obj = mclass()
+            true.some.nested.namespace.foo
+
             obj.AB = obj.AP(1:end);
             unusedvar = 1;
             disp('charvect with if and for words [ in it');
@@ -183,6 +185,12 @@ end
         (identifier)
         (function_arguments)
         (block
+          (field_expression
+            (identifier)
+            (identifier)
+            (identifier)
+            (identifier)
+            (identifier))
           (assignment
             (field_expression
               (identifier)

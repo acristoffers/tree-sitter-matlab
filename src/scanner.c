@@ -168,6 +168,7 @@ static inline void consume_comment_line(TSLexer* lexer)
     }
 }
 
+// NOLINTNEXTLINE(*misc-no-recursion)
 static bool scan_comment(TSLexer* lexer, bool entry_delimiter)
 {
     lexer->mark_end(lexer);
@@ -293,6 +294,19 @@ static bool scan_command(Scanner* scanner, TSLexer* lexer)
     lexer->mark_end(lexer);
     const char* allowed_commands[] = {"methods", "arguments", "enumeration", "events"};
     if (buffer[0] != 0) {
+        if (lexer->lookahead == '.') {
+            // Since it is not followed by a space, it cannot be a command.
+            if ((strcmp("get", buffer) == 0 || strcmp("set", buffer) == 0)) {
+                return false;
+            }
+            // so it is ok to consume to identify a line continuation
+            // NOLINTNEXTLINE(*misc-redundant-expression)
+            if (consume_char('.', lexer) && consume_char('.', lexer) && consume_char('.', lexer)) {
+                return false;
+            }
+            lexer->result_symbol = IDENTIFIER;
+            return true;
+        }
         // The following keywords are allowed as commands if they get 1 argument
         for (int i = 0; i < sizeof(allowed_commands) / sizeof(allowed_commands[0]); i++) {
             if (strcmp(allowed_commands[i], buffer) == 0) {
@@ -798,6 +812,7 @@ static inline bool scan_multioutput_var_start(TSLexer* lexer)
     unsigned sb_count = 0;
 
     while (!lexer->eof(lexer)) {
+        // NOLINTNEXTLINE(*misc-redundant-expression)
         if (consume_char('.', lexer) && consume_char('.', lexer) && consume_char('.', lexer)) {
             consume_comment_line(lexer);
             advance(lexer);
@@ -825,6 +840,7 @@ static inline bool scan_multioutput_var_start(TSLexer* lexer)
     advance(lexer);
 
     while (!lexer->eof(lexer)) {
+        // NOLINTNEXTLINE(*misc-redundant-expression)
         if (consume_char('.', lexer) && consume_char('.', lexer) && consume_char('.', lexer)) {
             consume_comment_line(lexer);
             advance(lexer);
@@ -918,11 +934,15 @@ static bool scan_identifier(TSLexer* lexer)
     char buffer[256] = {0};
     consume_identifier(lexer, buffer);
     if (buffer[0] != 0) {
-        for (int i = 0; i < keywords_size; i++) {
-            if (lexer->lookahead == '.'
-                && (strcmp("get", buffer) == 0 || strcmp("set", buffer) == 0)) {
+        if (lexer->lookahead == '.') {
+            if ((strcmp("get", buffer) == 0 || strcmp("set", buffer) == 0)) {
                 return false;
             }
+            lexer->result_symbol = IDENTIFIER;
+            lexer->mark_end(lexer);
+            return true;
+        }
+        for (size_t i = 0; i < keywords_size; i++) {
             if (strcmp(keywords[i], buffer) == 0) {
                 return false;
             }
