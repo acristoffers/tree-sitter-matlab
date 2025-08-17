@@ -72,7 +72,7 @@
 (function_call name: (identifier) @function.call)
 
 (handle_operator (identifier) @function)
-(validation_functions (identifier) @function)
+(validation_functions (property_name (identifier) @function))
 
 (command (command_name) @function.macro)
 (command_argument) @string
@@ -175,4 +175,3 @@
   "persistent"
   "properties"
 ] @keyword
-

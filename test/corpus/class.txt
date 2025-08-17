@@ -87,7 +87,8 @@ end
           (spread_operator))
         (identifier)
         (validation_functions
-          (identifier))
+          (property_name
+            (identifier)))
         (default_value
           (matrix
             (row
@@ -100,8 +101,10 @@ end
       (property
         (identifier)
         (validation_functions
-          (identifier)
-          (identifier))
+          (property_name
+            (identifier))
+          (property_name
+            (identifier)))
         (default_value
           (number)))))
   (class_definition
@@ -129,7 +132,15 @@ classdef Class
           ...
 
       end
+      out1 = f2(obj, in1);
    end
+end
+
+classdef Super
+    methods(Abstract)
+        a = f(obj);
+        b = g(obj);
+    end
 end
 
 --------------------------------------------------------------------------------
@@ -162,7 +173,32 @@ end
         (function_arguments
           (identifier)
           (identifier))
-        (line_continuation)))))
+        (line_continuation))
+      (function_signature
+        (function_output
+          (identifier))
+        (identifier)
+        (function_arguments
+          (identifier)
+          (identifier)))))
+  (class_definition
+    (identifier)
+    (methods
+      (attributes
+        (attribute
+          (identifier)))
+      (function_signature
+        (function_output
+          (identifier))
+        (identifier)
+        (function_arguments
+          (identifier)))
+      (function_signature
+        (function_output
+          (identifier))
+        (identifier)
+        (function_arguments
+          (identifier))))))
 
 ================================================================================
 Class Definition: Arguments
@@ -213,7 +249,8 @@ end
               (number)
               (number))
             (validation_functions
-              (identifier))))
+              (property_name
+                (identifier)))))
         (block
           (number))))))
 

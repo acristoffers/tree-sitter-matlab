@@ -35,8 +35,13 @@ module.exports = grammar({
 
   conflicts: ($) => [
     [$._expression, $._range_element],
+    [$._expression, $._index_expression],
     [$.range],
     [$.block],
+    [$._index_arguments],
+    [$._binary_expression, $._index_binary_expression],
+    [$._index_matrix, $.matrix],
+    [$._index_row, $.row],
   ],
 
   externals: ($) => [
@@ -80,7 +85,7 @@ module.exports = grammar({
       ),
     block: ($) => $._block,
 
-    identifier: ($) => choice($._external_identifier, "get", "set", "properties"),
+    identifier: ($) => choice($._external_identifier, $._keywords),
 
     _statement: ($) =>
       choice(
@@ -118,29 +123,6 @@ module.exports = grammar({
         $.parenthesis,
         $.postfix_operator,
         $.range,
-        $.string,
-        $.unary_operator,
-        $.field_expression,
-      ),
-
-    _expression_with_end: ($) =>
-      choice(
-        alias($._binary_operator_with_end, $.binary_operator),
-        $.boolean,
-        $.boolean_operator,
-        $.cell,
-        $.comparison_operator,
-        $.function_call,
-        $.handle_operator,
-        $.identifier,
-        $.lambda,
-        $.matrix,
-        $.metaclass_operator,
-        $.not_operator,
-        $.number,
-        $.parenthesis,
-        $.postfix_operator,
-        alias($._range_with_end, $.range),
         $.string,
         $.unary_operator,
         $.field_expression,
@@ -204,63 +186,6 @@ module.exports = grammar({
       );
     },
 
-    _binary_expression_with_end: ($) =>
-      prec(
-        100,
-        choice(
-          alias($._binary_operator_with_end, $.binary_operator),
-          $.boolean,
-          $.boolean_operator,
-          $.cell,
-          $.comparison_operator,
-          $.function_call,
-          $.identifier,
-          $.matrix,
-          $.not_operator,
-          $.number,
-          $.parenthesis,
-          $.postfix_operator,
-          $.string,
-          $.field_expression,
-          $.unary_operator,
-          alias('end', $.end_keyword),
-        ),
-      ),
-
-    _binary_operator_with_end: ($) => {
-      const table = [
-        [prec.left, '+', PREC.plus],
-        [prec.left, '.+', PREC.plus],
-        [prec.left, '-', PREC.plus],
-        [prec.left, '.-', PREC.plus],
-        [prec.left, '*', PREC.times],
-        [prec.left, '.*', PREC.times],
-        [prec.left, '/', PREC.times],
-        [prec.left, './', PREC.times],
-        [prec.left, '\\', PREC.times],
-        [prec.left, '.\\', PREC.times],
-        [prec.right, '^', PREC.power],
-        [prec.right, '.^', PREC.power],
-        [prec.left, '|', PREC.bitwise_or],
-        [prec.left, '&', PREC.bitwise_and],
-      ];
-
-      return choice(
-        // @ts-ignore
-        ...table.map(([fn, operator, precedence]) =>
-          fn(
-            precedence,
-            seq(
-              field('left', $._binary_expression_with_end),
-              // @ts-ignore
-              operator,
-              field('right', $._binary_expression_with_end),
-            ),
-          ),
-        ),
-      );
-    },
-
     unary_operator: ($) =>
       prec(
         PREC.unary,
@@ -315,7 +240,7 @@ module.exports = grammar({
               '.',
               field(
                 'field',
-                choice($.identifier, $.function_call, $.indirect_access),
+                choice($.identifier, alias($._extended_keywords, $.identifier), $.function_call, $.indirect_access),
               ),
             ),
           ),
@@ -372,7 +297,7 @@ module.exports = grammar({
               $.unary_operator,
             ),
           ),
-          choice('.\'', '\''),
+          choice(".'", "'"),
         ),
       ),
 
@@ -459,15 +384,121 @@ module.exports = grammar({
 
     spread_operator: (_) => ':',
 
+    _index_row: ($) =>
+      seq(
+        optional(','),
+        choice($._index_expression, $.ignored_argument),
+        repeat(
+          seq(alias($._entry_delimiter, ','), choice($._index_expression, $.ignored_argument)),
+        ),
+        optional(alias($._entry_delimiter, ',')),
+      ),
+    _index_matrix: ($) =>
+      seq(
+        '[',
+        repeat("\n"),
+        optional(seq(alias($._index_row, $.row), repeat(seq(choice(';', /[\r\n]/), optional(alias($._index_row, $.row)))))),
+        ']',
+      ),
+    _index_range_element: ($) =>
+      prec(100, choice(
+        $.boolean,
+        $.field_expression,
+        $.function_call,
+        $.identifier,
+        alias($._index_matrix, $.matrix),
+        $.not_operator,
+        $.number,
+        alias($._index_parenthesis, $.parenthesis),
+        $.postfix_operator,
+        $.string,
+        prec.dynamic(-1, $.unary_operator),
+        prec.dynamic(1, alias($._index_binary_operator, $.binary_operator)),
+        $.end_keyword,
+      )),
+    _index_range: ($) =>
+      prec.right(
+        PREC.postfix,
+        seq(
+          $._index_range_element,
+          ':',
+          $._index_range_element,
+          optional(seq(':', $._index_range_element)),
+        ),
+      ),
+    _index_parenthesis: ($) => seq('(', $._index_expression, ')'),
+    _index_expression: ($) =>
+      choice(
+        $.boolean,
+        $.field_expression,
+        $.function_call,
+        $.identifier,
+        alias($._index_matrix, $.matrix),
+        $.not_operator,
+        $.number,
+        alias($._index_parenthesis, $.parenthesis),
+        alias($._index_range, $.range),
+        alias($._index_binary_operator, $.binary_operator),
+        $.postfix_operator,
+        $.string,
+        $.unary_operator,
+        $.end_keyword,
+      ),
+    _index_binary_expression: ($) =>
+      prec(
+        1,
+        choice(
+          alias($._index_binary_operator, $.binary_operator),
+          $.boolean,
+          $.boolean_operator,
+          $.cell,
+          $.comparison_operator,
+          $.function_call,
+          $.identifier,
+          alias($._index_matrix, $.matrix),
+          $.not_operator,
+          $.number,
+          alias($._index_parenthesis, $.parenthesis),
+          $.postfix_operator,
+          $.string,
+          $.field_expression,
+          $.unary_operator,
+          $.end_keyword,
+        ),
+      ),
+    _index_binary_operator: ($) => {
+      const table = [
+        [prec.left, '+', PREC.plus],
+        [prec.left, '.+', PREC.plus],
+        [prec.left, '-', PREC.plus],
+        [prec.left, '.-', PREC.plus],
+        [prec.left, '*', PREC.times],
+        [prec.left, '.*', PREC.times],
+        [prec.left, '/', PREC.times],
+        [prec.left, './', PREC.times],
+        [prec.left, '\\', PREC.times],
+        [prec.left, '.\\', PREC.times],
+        [prec.right, '^', PREC.power],
+        [prec.right, '.^', PREC.power],
+        [prec.left, '|', PREC.bitwise_or],
+        [prec.left, '&', PREC.bitwise_and],
+      ];
+      return choice(
+        ...table.map(([fn, op, p]) =>
+          fn(p, seq(field('left', $._index_binary_expression), op, field('right', $._index_binary_expression))),
+        ),
+      );
+    },
+    _index_argument: ($) => choice($.spread_operator, choice(prec.dynamic(1, $._index_expression), prec.dynamic(-1, $._expression))),
+    _index_arguments: ($) => commaSep1(field('argument', $._index_argument)),
+
     arguments: ($) =>
       choice(
         seq(
-          commaSep1(
-            field('argument', choice($.spread_operator, $._expression_with_end)),
-          ),
-          optional(seq(',', commaSep1(seq($.identifier, '=', $._expression_with_end)))),
+          $._index_arguments,
+          optional(seq(',', commaSep1(seq($.identifier, '=', $._expression)))),
         ),
-        commaSep1(seq($.identifier, '=', $._expression_with_end)),
+        commaSep1(seq($.identifier, '=', $._expression)),
       ),
     _args: ($) =>
       choice(
@@ -521,33 +552,6 @@ module.exports = grammar({
         ),
       ),
 
-    _range_element_with_end: ($) =>
-      prec(101, choice(
-        $.boolean,
-        $.field_expression,
-        $.function_call,
-        $.identifier,
-        $.matrix,
-        $.not_operator,
-        $.number,
-        $.parenthesis,
-        $.postfix_operator,
-        $.string,
-        prec.dynamic(-1, $.unary_operator),
-        prec.dynamic(1, alias($._binary_operator_with_end, $.binary_operator)),
-        alias('end', $.end_keyword),
-      )),
-    _range_with_end: ($) =>
-      prec.right(
-        PREC.postfix,
-        seq(
-          $._range_element_with_end,
-          ':',
-          $._range_element_with_end,
-          optional(seq(':', $._range_element_with_end)),
-        ),
-      ),
-
     return_statement: (_) => 'return',
     continue_statement: (_) => 'continue',
     break_statement: (_) => 'break',
@@ -572,8 +576,7 @@ module.exports = grammar({
       ),
 
     iterator: ($) => seq($.identifier, '=', $._expression),
-    parfor_options: ($) =>
-      choice($.number, $.identifier, $.function_call, $.string),
+    parfor_options: ($) => choice($.number, $.identifier, $.function_call, $.string),
     for_statement: ($) =>
       choice(
         seq(
@@ -650,13 +653,13 @@ module.exports = grammar({
       ),
     class_property: ($) => seq($.identifier, '.?', $.identifier, repeat(seq('.', $.identifier))),
     arguments_statement: ($) =>
-      seq(
+      prec(1, seq(
         'arguments',
         optional(alias($._argument_attributes, $.attributes)),
         repeat1($._end_of_line),
-        repeat(choice($.property, $.class_property)),
+        repeat(choice($.property, seq($.class_property, repeat1($._end_of_line)))),
         'end',
-      ),
+      )),
 
     function_output: ($) =>
       seq(choice($.identifier, $.multioutput_variable), '='),
@@ -696,7 +699,7 @@ module.exports = grammar({
     dimensions: ($) =>
       seq('(', commaSep1(choice($.number, $.spread_operator)), ')'),
     validation_functions: ($) =>
-      seq('{', choice($.identifier, $.function_call), repeat(seq(optional(","), choice($.identifier, $.function_call))), '}'),
+      seq('{', choice($.function_call, $.property_name), repeat(seq(optional(","), choice($.function_call, $.property_name))), '}'),
     default_value: ($) => seq('=', $._expression),
     property_name: ($) =>
       prec.right(
@@ -746,9 +749,8 @@ module.exports = grammar({
       seq(
         optional($.function_output),
         optional(choice('get.', 'set.')),
-        field('name', $.identifier),
+        field('name', alias(choice($._external_identifier, 'get', 'set', 'arguments'), $.identifier)),
         optional($.function_arguments),
-        $._end_of_line,
       ),
     methods: ($) =>
       seq(
@@ -756,10 +758,11 @@ module.exports = grammar({
         optional($.attributes),
         $._end_of_line,
         repeat(
-          choice(
-            $.function_signature,
-            alias($._function_definition_with_end, $.function_definition),
-          ),
+          seq(
+            choice(
+              $.function_signature,
+              alias($._function_definition_with_end, $.function_definition)),
+            repeat1($._end_of_line)),
         ),
         'end',
       ),
@@ -817,9 +820,19 @@ module.exports = grammar({
         'end',
       ),
 
-    number: (_) => /(\d+|\d+\.\d*|\.\d+)([eE][+-]?\d+)?[ij]?/,
+    number: (_) => choice(/(\d+|\d+\.\d*|\.\d+)([eE][+-]?\d+)?[ij]?/, /0x[\dA-Fa-f]+/, /0b[01]+/),
 
     boolean: (_) => choice('true', 'false'),
+
+    end_keyword: ($) => 'end',
+
+    _keywords: ($) => choice("get", "set", "properties", "arguments", "enumeration", "events", "methods"),
+
+    _extended_keywords: ($) => prec(100, choice(
+      "break", "case", "catch", "classdef", "continue", "else", "elseif", "end", "false", "for",
+      "function", "global", "if", "otherwise", "parfor", "persistent", "return", "spmd", "switch",
+      "true", "try", "while",
+    )),
 
     _end_of_line: ($) => choice(';', '\n', '\r', ','),
   },

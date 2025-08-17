@@ -245,6 +245,7 @@ function myBar(x,y,propArgs)
         x (:,:) double
         y (:,:) double
         propArgs.?matlab.graphics.chart.primitive.Bar
+        some.propery
     end
     propertyCell = namedargs2cell(propArgs);
     bar(x,y,propertyCell{:})
@@ -278,7 +279,11 @@ end
         (identifier)
         (identifier)
         (identifier)
-        (identifier)))
+        (identifier))
+      (property
+        (property_name
+          (identifier)
+          (identifier))))
     (block
       (assignment
         (identifier)
@@ -302,7 +307,7 @@ Function Declaration: Argument validators functions
 
 function foo(a)
     arguments
-        a (1,1) double {mustBeNumeric mustBePositive}
+        a (1,1) double {mustBeNumeric mustBePositive can.be.a.property}
     end
 end
 
@@ -328,8 +333,15 @@ end
           (number))
         (identifier)
         (validation_functions
-          (identifier)
-          (identifier)))))
+          (property_name
+            (identifier))
+          (property_name
+            (identifier))
+          (property_name
+            (identifier)
+            (identifier)
+            (identifier)
+            (identifier))))))
   (function_definition
     (identifier)
     (function_arguments
@@ -342,6 +354,8 @@ end
           (number))
         (identifier)
         (validation_functions
-          (identifier)
+          (property_name
+            (identifier))
           (line_continuation)
-          (identifier))))))
+          (property_name
+            (identifier)))))))

@@ -168,6 +168,7 @@ static inline void consume_comment_line(TSLexer* lexer)
     }
 }
 
+// NOLINTNEXTLINE(*misc-no-recursion)
 static bool scan_comment(TSLexer* lexer, bool entry_delimiter)
 {
     lexer->mark_end(lexer);
@@ -189,7 +190,13 @@ static bool scan_comment(TSLexer* lexer, bool entry_delimiter)
     //       2 ...
     // }
     if (entry_delimiter && line_continuation) {
-        lexer->result_symbol = ENTRY_DELIMITER;
+        consume_whitespaces(lexer);
+        if (lexer->lookahead == ',') {
+            lexer->result_symbol = LINE_CONTINUATION;
+            lexer->mark_end(lexer);
+        } else {
+            lexer->result_symbol = ENTRY_DELIMITER;
+        }
         return true;
     }
 
@@ -284,13 +291,50 @@ static bool scan_command(Scanner* scanner, TSLexer* lexer)
 
     char buffer[256] = {0};
     consume_identifier(lexer, buffer);
+    lexer->mark_end(lexer);
+    const char* allowed_commands[] = {"methods", "arguments", "enumeration", "events"};
     if (buffer[0] != 0) {
+        if (lexer->lookahead == '.') {
+            // Since it is not followed by a space, it cannot be a command.
+            if ((strcmp("get", buffer) == 0 || strcmp("set", buffer) == 0)) {
+                return false;
+            }
+            // so it is ok to consume to identify a line continuation
+            // NOLINTNEXTLINE(*misc-redundant-expression)
+            if (consume_char('.', lexer) && consume_char('.', lexer) && consume_char('.', lexer)) {
+                return false;
+            }
+            lexer->result_symbol = IDENTIFIER;
+            return true;
+        }
+        // The following keywords are allowed as commands if they get 1 argument
+        for (int i = 0; i < sizeof(allowed_commands) / sizeof(allowed_commands[0]); i++) {
+            if (strcmp(allowed_commands[i], buffer) == 0) {
+                goto check_command_for_argument;
+            }
+        }
         for (int i = 0; i < keywords_size; i++) {
             if (strcmp(keywords[i], buffer) == 0) {
                 return false;
             }
         }
     }
+    goto skip_commanda_check;
+
+check_command_for_argument:
+    // If this is a keyword-command, check if it has an argument.
+    // If it has no arguments, this is a keyword, not a command.
+    lexer->result_symbol = COMMAND_NAME;
+    while (!lexer->eof(lexer) && iswspace_matlab(lexer->lookahead)) {
+        advance(lexer);
+    }
+    if (is_identifier(lexer->lookahead, true)) {
+        scanner->is_inside_command = true;
+        return true;
+    }
+    return false;
+
+skip_commanda_check:
 
     // First case: found an end-of-line already, so this is a command for sure.
     // example:
@@ -299,7 +343,6 @@ static bool scan_command(Scanner* scanner, TSLexer* lexer)
     // pwd,
     if (is_eol(lexer->lookahead)) {
         lexer->result_symbol = COMMAND_NAME;
-        lexer->mark_end(lexer);
         return true;
     }
 
@@ -307,7 +350,14 @@ static bool scan_command(Scanner* scanner, TSLexer* lexer)
     // example. Or A+2.
     if (lexer->lookahead != ' ') {
         lexer->result_symbol = IDENTIFIER;
-        lexer->mark_end(lexer);
+        return true;
+    }
+
+    // If followed by a line continuation, look after it
+    consume_whitespaces(lexer);
+    if (lexer->lookahead == '.' && consume_char('.', lexer) && consume_char('.', lexer)
+        && consume_char('.', lexer)) {
+        lexer->result_symbol = IDENTIFIER;
         return true;
     }
 
@@ -317,7 +367,6 @@ static bool scan_command(Scanner* scanner, TSLexer* lexer)
     // only need to make sure this is a command and not something else from
     // this point on.
     lexer->result_symbol = COMMAND_NAME;
-    lexer->mark_end(lexer);
     while (!lexer->eof(lexer) && iswspace_matlab(lexer->lookahead)) {
         advance(lexer);
     }
@@ -494,7 +543,8 @@ static bool scan_command_argument(Scanner* scanner, TSLexer* lexer)
                 advance(lexer);
             }
 
-            if (is_eol(lexer->lookahead)) {
+            if (is_eol(lexer->lookahead) || cond1) {
+                scanner->line_continuation = false;
                 scanner->is_inside_command = false;
             }
 
@@ -579,7 +629,14 @@ static bool scan_string_open(Scanner* scanner, TSLexer* lexer)
         advance(lexer);
         lexer->result_symbol = SINGLE_QUOTE_STRING_START;
         lexer->mark_end(lexer);
-        return true;
+        // A single quote string has to be ended in the same line.
+        while (!lexer->eof(lexer) && lexer->lookahead != '\n') {
+            if (lexer->lookahead == '\'') {
+                return true;
+            }
+            advance(lexer);
+        }
+        return false;
     default:
         return false;
     }
@@ -750,13 +807,26 @@ static inline bool scan_multioutput_var_start(TSLexer* lexer)
     lexer->result_symbol = MULTIOUTPUT_VARIABLE_START;
     lexer->mark_end(lexer);
 
+    // We can have arrays inside function calls inside the multi-output variable, so we have to keep
+    // track.
+    unsigned sb_count = 0;
+
     while (!lexer->eof(lexer)) {
+        // NOLINTNEXTLINE(*misc-redundant-expression)
         if (consume_char('.', lexer) && consume_char('.', lexer) && consume_char('.', lexer)) {
             consume_comment_line(lexer);
             advance(lexer);
         }
 
+        if (lexer->lookahead == '[') {
+            sb_count++;
+            advance(lexer);
+        }
+
         if (lexer->lookahead != ']') {
+            advance(lexer);
+        } else if (sb_count > 0) {
+            sb_count--;
             advance(lexer);
         } else {
             break;
@@ -770,6 +840,7 @@ static inline bool scan_multioutput_var_start(TSLexer* lexer)
     advance(lexer);
 
     while (!lexer->eof(lexer)) {
+        // NOLINTNEXTLINE(*misc-redundant-expression)
         if (consume_char('.', lexer) && consume_char('.', lexer) && consume_char('.', lexer)) {
             consume_comment_line(lexer);
             advance(lexer);
@@ -790,6 +861,7 @@ static inline bool scan_multioutput_var_start(TSLexer* lexer)
     return false;
 }
 
+static bool scan_identifier(TSLexer* lexer);
 static bool scan_entry_delimiter(TSLexer* lexer, int skipped)
 {
     lexer->mark_end(lexer);
@@ -846,7 +918,15 @@ static bool scan_entry_delimiter(TSLexer* lexer, int skipped)
         }
     }
 
-    return skipped != 0;
+    if (skipped != 0) {
+        return true;
+    }
+
+    if (is_identifier(lexer->lookahead, true)) {
+        return scan_identifier(lexer);
+    }
+
+    return false;
 }
 
 static bool scan_identifier(TSLexer* lexer)
@@ -854,11 +934,15 @@ static bool scan_identifier(TSLexer* lexer)
     char buffer[256] = {0};
     consume_identifier(lexer, buffer);
     if (buffer[0] != 0) {
-        for (int i = 0; i < keywords_size; i++) {
-            if (lexer->lookahead == '.'
-                && (strcmp("get", buffer) == 0 || strcmp("set", buffer) == 0)) {
+        if (lexer->lookahead == '.') {
+            if ((strcmp("get", buffer) == 0 || strcmp("set", buffer) == 0)) {
                 return false;
             }
+            lexer->result_symbol = IDENTIFIER;
+            lexer->mark_end(lexer);
+            return true;
+        }
+        for (size_t i = 0; i < keywords_size; i++) {
             if (strcmp(keywords[i], buffer) == 0) {
                 return false;
             }

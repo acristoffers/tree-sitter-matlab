@@ -28,6 +28,10 @@
             "named": true
           },
           {
+            "type": "end_keyword",
+            "named": true
+          },
+          {
             "type": "field_expression",
             "named": true
           },
@@ -896,6 +900,11 @@
     }
   },
   {
+    "type": "break_statement",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "case_clause",
     "named": true,
     "fields": {
@@ -1195,6 +1204,11 @@
     }
   },
   {
+    "type": "continue_statement",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "default_value",
     "named": true,
     "fields": {},
@@ -1412,6 +1426,11 @@
         }
       ]
     }
+  },
+  {
+    "type": "end_keyword",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "enum",
@@ -2294,6 +2313,11 @@
     }
   },
   {
+    "type": "number",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "otherwise_clause",
     "named": true,
     "fields": {},
@@ -2334,6 +2358,10 @@
         },
         {
           "type": "comparison_operator",
+          "named": true
+        },
+        {
+          "type": "end_keyword",
           "named": true
         },
         {
@@ -2645,6 +2673,11 @@
     }
   },
   {
+    "type": "return_statement",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "row",
     "named": true,
     "fields": {},
@@ -2670,6 +2703,10 @@
         },
         {
           "type": "comparison_operator",
+          "named": true
+        },
+        {
+          "type": "end_keyword",
           "named": true
         },
         {
@@ -3226,7 +3263,7 @@
           "named": true
         },
         {
-          "type": "identifier",
+          "type": "property_name",
           "named": true
         }
       ]
@@ -3479,8 +3516,8 @@
     "named": false
   },
   {
-    "type": "break_statement",
-    "named": true
+    "type": "break",
+    "named": false
   },
   {
     "type": "case",
@@ -3508,8 +3545,8 @@
     "extra": true
   },
   {
-    "type": "continue_statement",
-    "named": true
+    "type": "continue",
+    "named": false
   },
   {
     "type": "else",
@@ -3522,10 +3559,6 @@
   {
     "type": "end",
     "named": false
-  },
-  {
-    "type": "end_keyword",
-    "named": true
   },
   {
     "type": "endfunction",
@@ -3585,10 +3618,6 @@
     "named": false
   },
   {
-    "type": "number",
-    "named": true
-  },
-  {
     "type": "otherwise",
     "named": false
   },
@@ -3605,8 +3634,8 @@
     "named": false
   },
   {
-    "type": "return_statement",
-    "named": true
+    "type": "return",
+    "named": false
   },
   {
     "type": "set",
