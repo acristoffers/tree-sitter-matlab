@@ -129,8 +129,7 @@ end
           (spread_operator))
         (identifier)
         (validation_functions
-          (property_name
-            (identifier)))
+          (identifier))
         (default_value
           (number))))
     (properties

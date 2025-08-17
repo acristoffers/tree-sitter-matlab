@@ -38,8 +38,8 @@ module.exports = grammar({
     [$._expression, $._index_expression],
     [$.range],
     [$.block],
+    [$._index_range],
     [$._index_arguments],
-    [$._binary_expression, $._index_binary_expression],
     [$._index_matrix, $.matrix],
     [$._index_row, $.row],
   ],
@@ -217,6 +217,7 @@ module.exports = grammar({
         seq(
           '(',
           choice(
+            $.number,
             $.binary_operator,
             $.field_expression,
             $.function_call,
@@ -384,6 +385,75 @@ module.exports = grammar({
 
     spread_operator: (_) => ':',
 
+    _index_boolean_operator: ($) =>
+      choice(
+        prec.left(
+          PREC.and + 1,
+          seq(field('left', alias($._index_expression, $._expression)), '&&', field('right', alias($._index_expression, $._expression))),
+        ),
+        prec.left(
+          PREC.or + 1,
+          seq(field('left', alias($._index_expression, $._expression)), '||', field('right', alias($._index_expression, $._expression))),
+        ),
+      ),
+    _index_comparison_operator: ($) =>
+      prec.left(
+        PREC.compare + 1,
+        seq(
+          $._expression,
+          choice('<', '<=', '==', '~=', '>=', '>'),
+          $._expression,
+        ),
+      ),
+    _index_not_operator: ($) => prec(PREC.not + 1, seq('~', alias($._index_expression, $._expression))),
+    _index_unary_operator: ($) =>
+      prec(
+        PREC.unary + 1,
+        seq(
+          choice('+', '-'),
+          field(
+            'operand',
+            choice(
+              $.boolean,
+              $.cell,
+              $.field_expression,
+              $.function_call,
+              $.identifier,
+              alias($._index_matrix, $.matrix),
+              alias($._index_not_operator, $.not_operator),
+              $.number,
+              alias($._index_parenthesis, $.parenthesis),
+              alias($._index_postfix_operator, $.postfix_operator),
+              $.string,
+              alias($._index_unary_operator, $.unary_operator),
+            ),
+          ),
+        ),
+      ),
+    _index_postfix_operator: ($) =>
+      prec(
+        PREC.postfix + 1,
+        seq(
+          field(
+            'operand',
+            choice(
+              alias($._index_binary_operator, $.binary_operator),
+              $.boolean,
+              $.cell,
+              $.function_call,
+              $.identifier,
+              alias($._index_matrix, $.matrix),
+              $.number,
+              alias($._index_parenthesis, $.parenthesis),
+              alias($._index_postfix_operator, $.postfix_operator),
+              $.string,
+              $.field_expression,
+              alias($._index_unary_operator, $.unary_operator),
+            ),
+          ),
+          choice(".'", "'"),
+        ),
+      ),
     _index_row: ($) =>
       seq(
         optional(','),
@@ -401,24 +471,24 @@ module.exports = grammar({
         ']',
       ),
     _index_range_element: ($) =>
-      prec(100, choice(
+      prec(1, choice(
         $.boolean,
         $.field_expression,
         $.function_call,
         $.identifier,
         alias($._index_matrix, $.matrix),
-        $.not_operator,
+        alias($._index_not_operator, $.not_operator),
         $.number,
         alias($._index_parenthesis, $.parenthesis),
-        $.postfix_operator,
+        alias($._index_postfix_operator, $.postfix_operator),
         $.string,
-        prec.dynamic(-1, $.unary_operator),
+        prec.dynamic(-1, alias($._index_unary_operator, $.unary_operator)),
         prec.dynamic(1, alias($._index_binary_operator, $.binary_operator)),
         $.end_keyword,
       )),
     _index_range: ($) =>
       prec.right(
-        PREC.postfix,
+        PREC.postfix + 1,
         seq(
           $._index_range_element,
           ':',
@@ -430,39 +500,41 @@ module.exports = grammar({
     _index_expression: ($) =>
       choice(
         $.boolean,
+        alias($._index_boolean_operator, $.boolean_operator),
         $.field_expression,
         $.function_call,
         $.identifier,
         alias($._index_matrix, $.matrix),
-        $.not_operator,
+        alias($._index_not_operator, $.not_operator),
         $.number,
+        alias($._index_comparison_operator, $.comparison_operator),
         alias($._index_parenthesis, $.parenthesis),
         alias($._index_range, $.range),
         alias($._index_binary_operator, $.binary_operator),
-        $.postfix_operator,
+        alias($._index_postfix_operator, $.postfix_operator),
         $.string,
-        $.unary_operator,
+        alias($._index_unary_operator, $.unary_operator),
         $.end_keyword,
       ),
     _index_binary_expression: ($) =>
       prec(
-        1,
+        2,
         choice(
           alias($._index_binary_operator, $.binary_operator),
           $.boolean,
-          $.boolean_operator,
+          alias($._index_boolean_operator, $.boolean_operator),
           $.cell,
-          $.comparison_operator,
+          alias($._index_comparison_operator, $.comparison_operator),
           $.function_call,
           $.identifier,
           alias($._index_matrix, $.matrix),
-          $.not_operator,
+          alias($._index_not_operator, $.not_operator),
           $.number,
           alias($._index_parenthesis, $.parenthesis),
-          $.postfix_operator,
+          alias($._index_postfix_operator, $.postfix_operator),
           $.string,
           $.field_expression,
-          $.unary_operator,
+          alias($._index_unary_operator, $.unary_operator),
           $.end_keyword,
         ),
       ),
@@ -506,22 +578,39 @@ module.exports = grammar({
         seq('{', optional($.arguments), '}'),
       ),
     function_call: ($) =>
-      prec.right(
-        PREC.call,
-        seq(
-          field(
-            'name',
-            choice(
-              alias($.boolean, $.identifier),
-              $.identifier,
-              $.function_call,
-              $.indirect_access,
+      choice(
+        prec.right(
+          PREC.call,
+          seq(
+            field(
+              'name',
+              choice(
+                alias($.boolean, $.identifier),
+                $.identifier,
+                $.function_call,
+                $.indirect_access,
+              ),
             ),
+            optional(seq('@', alias($.property_name, $.superclass))),
+            $._args,
           ),
-          optional(seq('@', alias($.property_name, $.superclass))),
-          $._args,
         ),
-      ),
+        prec.right(
+          PREC.call,
+          seq(
+            field(
+              'name',
+              choice(
+                alias($.boolean, $.identifier),
+                $.identifier,
+                $.function_call,
+                $.indirect_access,
+              ),
+            ),
+            seq('@', alias($.property_name, $.superclass)),
+            optional($._args),
+          ),
+        ),),
 
     command: ($) => prec.right(seq($.command_name, repeat($.command_argument))),
 
@@ -699,7 +788,7 @@ module.exports = grammar({
     dimensions: ($) =>
       seq('(', commaSep1(choice($.number, $.spread_operator)), ')'),
     validation_functions: ($) =>
-      seq('{', choice($.function_call, $.property_name), repeat(seq(optional(","), choice($.function_call, $.property_name))), '}'),
+      seq('{', choice($.function_call, $.identifier, $.field_expression), repeat(seq(optional(","), choice($.function_call, $.identifier, $.field_expression))), '}'),
     default_value: ($) => seq('=', $._expression),
     property_name: ($) =>
       prec.right(
@@ -756,7 +845,7 @@ module.exports = grammar({
       seq(
         'methods',
         optional($.attributes),
-        $._end_of_line,
+        repeat1($._end_of_line),
         repeat(
           seq(
             choice(

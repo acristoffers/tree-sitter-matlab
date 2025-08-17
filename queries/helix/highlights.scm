@@ -27,7 +27,7 @@
 (function_signature name: (identifier) @function)
 (function_call name: (identifier) @function)
 (handle_operator (identifier) @function)
-(validation_functions (property_name (identifier) @function))
+(validation_functions (identifier) @function)
 (command (command_name) @function.macro)
 (command_argument) @string
 (return_statement) @keyword.control.return

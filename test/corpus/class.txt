@@ -87,8 +87,7 @@ end
           (spread_operator))
         (identifier)
         (validation_functions
-          (property_name
-            (identifier)))
+          (identifier))
         (default_value
           (matrix
             (row
@@ -101,10 +100,8 @@ end
       (property
         (identifier)
         (validation_functions
-          (property_name
-            (identifier))
-          (property_name
-            (identifier)))
+          (identifier)
+          (identifier))
         (default_value
           (number)))))
   (class_definition
@@ -249,8 +246,7 @@ end
               (number)
               (number))
             (validation_functions
-              (property_name
-                (identifier)))))
+              (identifier))))
         (block
           (number))))))
 

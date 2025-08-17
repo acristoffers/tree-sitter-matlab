@@ -220,3 +220,123 @@ A^2'
     (identifier)
     (postfix_operator
       (number))))
+
+================================================================================
+Expressions: Function Arguments
+================================================================================
+
+f(1:a-((1+(b>1))*c))
+f((1:10)')
+f((1:10).')
+f(+(1:10))
+f(-(1:10))
+f(~(1:10))
+f(a&&b)
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_call
+    (identifier)
+    (arguments
+      (range
+        (number)
+        (binary_operator
+          (identifier)
+          (parenthesis
+            (binary_operator
+              (parenthesis
+                (binary_operator
+                  (number)
+                  (parenthesis
+                    (comparison_operator
+                      (identifier)
+                      (number)))))
+              (identifier)))))))
+  (function_call
+    (identifier)
+    (arguments
+      (postfix_operator
+        (parenthesis
+          (range
+            (number)
+            (number))))))
+  (function_call
+    (identifier)
+    (arguments
+      (postfix_operator
+        (parenthesis
+          (range
+            (number)
+            (number))))))
+  (function_call
+    (identifier)
+    (arguments
+      (unary_operator
+        (parenthesis
+          (range
+            (number)
+            (number))))))
+  (function_call
+    (identifier)
+    (arguments
+      (unary_operator
+        (parenthesis
+          (range
+            (number)
+            (number))))))
+  (function_call
+    (identifier)
+    (arguments
+      (not_operator
+        (_expression
+          (parenthesis
+            (range
+              (number)
+              (number)))))))
+  (function_call
+    (identifier)
+    (arguments
+      (boolean_operator
+        (_expression
+          (identifier))
+        (_expression
+          (identifier))))))
+
+================================================================================
+Expressions: Indirect Field
+================================================================================
+
+tbl.(1)
+tbl.("name")
+tbl.(var)
+tbl.(2-1)
+tbl.(a')
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (field_expression
+    (identifier)
+    (indirect_access
+      (number)))
+  (field_expression
+    (identifier)
+    (indirect_access
+      (string
+        (string_content))))
+  (field_expression
+    (identifier)
+    (indirect_access
+      (identifier)))
+  (field_expression
+    (identifier)
+    (indirect_access
+      (binary_operator
+        (number)
+        (number))))
+  (field_expression
+    (identifier)
+    (indirect_access
+      (postfix_operator
+        (identifier)))))

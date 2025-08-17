@@ -486,3 +486,38 @@ end
             (identifier)
             (identifier)))))
     (line_continuation)))
+
+================================================================================
+Function Call: Super
+================================================================================
+
+func@class
+func@class.super
+func@class(arg)
+func@class.super(arg)
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_call
+    (identifier)
+    (superclass
+      (identifier)))
+  (function_call
+    (identifier)
+    (superclass
+      (identifier)
+      (identifier)))
+  (function_call
+    (identifier)
+    (superclass
+      (identifier))
+    (arguments
+      (identifier)))
+  (function_call
+    (identifier)
+    (superclass
+      (identifier)
+      (identifier))
+    (arguments
+      (identifier))))
