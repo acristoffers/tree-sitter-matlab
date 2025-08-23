@@ -66,23 +66,10 @@
             ]
           },
           {
-            "type": "SYMBOL",
-            "name": "_end_of_line"
-          },
-          {
-            "type": "REPEAT",
+            "type": "REPEAT1",
             "content": {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "STRING",
-                  "value": ";"
-                },
-                {
-                  "type": "STRING",
-                  "value": ","
-                }
-              ]
+              "type": "SYMBOL",
+              "name": "_end_of_line"
             }
           }
         ]
