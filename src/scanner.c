@@ -318,7 +318,7 @@ static bool scan_command(Scanner* scanner, TSLexer* lexer)
             }
         }
     }
-    goto skip_commanda_check;
+    goto skip_command_check;
 
 check_command_for_argument:
     // If this is a keyword-command, check if it has an argument.
@@ -333,7 +333,7 @@ check_command_for_argument:
     }
     return false;
 
-skip_commanda_check:
+skip_command_check:
 
     // First case: found an end-of-line already, so this is a command for sure.
     // example:
@@ -373,6 +373,7 @@ skip_commanda_check:
     // Check for end-of-line again, since it may be that the user just put a
     // space at the end, like `pwd ;`
     if (is_eol(lexer->lookahead)) {
+        scanner->is_inside_command = true;
         return true;
     }
 
