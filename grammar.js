@@ -575,6 +575,7 @@ module.exports = grammar({
             field(
               'name',
               choice(
+                alias($.end_keyword, $.identifier),
                 $.identifier,
                 $.function_call,
                 $.indirect_access,
@@ -746,7 +747,7 @@ module.exports = grammar({
         'function',
         optional($.function_output),
         optional(choice('get.', 'set.')),
-        field('name', $.identifier),
+        field('name', choice($.identifier, alias($.end_keyword, $.identifier))),
         optional($.function_arguments),
         $._end_of_line,
         repeat($.arguments_statement),
@@ -758,7 +759,7 @@ module.exports = grammar({
         'function',
         optional($.function_output),
         optional(choice('get.', 'set.')),
-        field('name', $.identifier),
+        field('name', choice($.identifier, alias($.end_keyword, $.identifier))),
         optional($.function_arguments),
         $._end_of_line,
         repeat($.arguments_statement),
