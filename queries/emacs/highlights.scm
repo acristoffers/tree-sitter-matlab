@@ -116,7 +116,6 @@
 (formatting_sequence) @escape
 (string) @string
 (number) @number
-(boolean) @constant.builtin
 
 ; Comments
 

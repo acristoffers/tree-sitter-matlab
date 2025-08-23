@@ -162,10 +162,6 @@
         },
         {
           "type": "SYMBOL",
-          "name": "boolean"
-        },
-        {
-          "type": "SYMBOL",
           "name": "boolean_operator"
         },
         {
@@ -264,10 +260,6 @@
           {
             "type": "SYMBOL",
             "name": "binary_operator"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "boolean"
           },
           {
             "type": "SYMBOL",
@@ -762,10 +754,6 @@
               "members": [
                 {
                   "type": "SYMBOL",
-                  "name": "boolean"
-                },
-                {
-                  "type": "SYMBOL",
                   "name": "cell"
                 },
                 {
@@ -1157,10 +1145,6 @@
                 {
                   "type": "SYMBOL",
                   "name": "binary_operator"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "boolean"
                 },
                 {
                   "type": "SYMBOL",
@@ -1885,10 +1869,6 @@
               "members": [
                 {
                   "type": "SYMBOL",
-                  "name": "boolean"
-                },
-                {
-                  "type": "SYMBOL",
                   "name": "cell"
                 },
                 {
@@ -1982,10 +1962,6 @@
                   },
                   "named": true,
                   "value": "binary_operator"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "boolean"
                 },
                 {
                   "type": "SYMBOL",
@@ -2231,10 +2207,6 @@
         "members": [
           {
             "type": "SYMBOL",
-            "name": "boolean"
-          },
-          {
-            "type": "SYMBOL",
             "name": "field_expression"
           },
           {
@@ -2385,10 +2357,6 @@
       "type": "CHOICE",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "boolean"
-        },
-        {
           "type": "ALIAS",
           "content": {
             "type": "SYMBOL",
@@ -2509,10 +2477,6 @@
             },
             "named": true,
             "value": "binary_operator"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "boolean"
           },
           {
             "type": "ALIAS",
@@ -3286,15 +3250,6 @@
                   "type": "CHOICE",
                   "members": [
                     {
-                      "type": "ALIAS",
-                      "content": {
-                        "type": "SYMBOL",
-                        "name": "boolean"
-                      },
-                      "named": true,
-                      "value": "identifier"
-                    },
-                    {
                       "type": "SYMBOL",
                       "name": "identifier"
                     },
@@ -3354,15 +3309,6 @@
                 "content": {
                   "type": "CHOICE",
                   "members": [
-                    {
-                      "type": "ALIAS",
-                      "content": {
-                        "type": "SYMBOL",
-                        "name": "boolean"
-                      },
-                      "named": true,
-                      "value": "identifier"
-                    },
                     {
                       "type": "SYMBOL",
                       "name": "identifier"
@@ -3436,10 +3382,6 @@
     "_range_element": {
       "type": "CHOICE",
       "members": [
-        {
-          "type": "SYMBOL",
-          "name": "boolean"
-        },
         {
           "type": "SYMBOL",
           "name": "field_expression"
@@ -5684,19 +5626,6 @@
         }
       ]
     },
-    "boolean": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "true"
-        },
-        {
-          "type": "STRING",
-          "value": "false"
-        }
-      ]
-    },
     "end_keyword": {
       "type": "STRING",
       "value": "end"
@@ -5774,10 +5703,6 @@
           },
           {
             "type": "STRING",
-            "value": "false"
-          },
-          {
-            "type": "STRING",
             "value": "for"
           },
           {
@@ -5815,10 +5740,6 @@
           {
             "type": "STRING",
             "value": "switch"
-          },
-          {
-            "type": "STRING",
-            "value": "true"
           },
           {
             "type": "STRING",

@@ -33,13 +33,12 @@ typedef struct
     char string_delimiter;
 } Scanner;
 
-static const size_t keywords_size = 26;
 static const char* const keywords[] = {
-    "arguments", "break",  "case",        "catch",     "classdef", "continue",   "else",
-    "elseif",    "end",    "enumeration", "events",    "false",    "for",        "function",
-    "global",    "if",     "methods",     "otherwise", "parfor",   "persistent", "return",
-    "spmd",      "switch", "true",        "try",       "while",
+    "arguments", "break",       "case",       "catch",  "classdef", "continue", "else", "elseif",
+    "end",       "enumeration", "events",     "for",    "function", "global",   "if",   "methods",
+    "otherwise", "parfor",      "persistent", "return", "spmd",     "switch",   "try",  "while",
 };
+static const size_t keywords_size = sizeof(keywords) / sizeof(keywords[0]);
 
 static inline void advance(TSLexer* lexer)
 {

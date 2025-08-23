@@ -107,7 +107,6 @@ module.exports = grammar({
     _expression: ($) =>
       choice(
         $.binary_operator,
-        $.boolean,
         $.boolean_operator,
         $.cell,
         $.comparison_operator,
@@ -134,7 +133,6 @@ module.exports = grammar({
         1,
         choice(
           $.binary_operator,
-          $.boolean,
           $.boolean_operator,
           $.cell,
           $.comparison_operator,
@@ -193,7 +191,6 @@ module.exports = grammar({
           field(
             'operand',
             choice(
-              $.boolean,
               $.cell,
               $.field_expression,
               $.function_call,
@@ -284,7 +281,6 @@ module.exports = grammar({
             'operand',
             choice(
               $.binary_operator,
-              $.boolean,
               $.cell,
               $.function_call,
               $.identifier,
@@ -413,7 +409,6 @@ module.exports = grammar({
           field(
             'operand',
             choice(
-              $.boolean,
               $.cell,
               $.field_expression,
               $.function_call,
@@ -437,7 +432,6 @@ module.exports = grammar({
             'operand',
             choice(
               alias($._index_binary_operator, $.binary_operator),
-              $.boolean,
               $.cell,
               $.function_call,
               $.identifier,
@@ -471,7 +465,6 @@ module.exports = grammar({
       ),
     _index_range_element: ($) =>
       prec(1, choice(
-        $.boolean,
         $.field_expression,
         $.function_call,
         $.identifier,
@@ -498,7 +491,6 @@ module.exports = grammar({
     _index_parenthesis: ($) => seq('(', $._index_expression, ')'),
     _index_expression: ($) =>
       choice(
-        $.boolean,
         alias($._index_boolean_operator, $.boolean_operator),
         $.field_expression,
         $.function_call,
@@ -520,7 +512,6 @@ module.exports = grammar({
         2,
         choice(
           alias($._index_binary_operator, $.binary_operator),
-          $.boolean,
           alias($._index_boolean_operator, $.boolean_operator),
           $.cell,
           alias($._index_comparison_operator, $.comparison_operator),
@@ -584,7 +575,6 @@ module.exports = grammar({
             field(
               'name',
               choice(
-                alias($.boolean, $.identifier),
                 $.identifier,
                 $.function_call,
                 $.indirect_access,
@@ -600,7 +590,6 @@ module.exports = grammar({
             field(
               'name',
               choice(
-                alias($.boolean, $.identifier),
                 $.identifier,
                 $.function_call,
                 $.indirect_access,
@@ -616,7 +605,6 @@ module.exports = grammar({
     // Unary operators cannot bind stronger in this case_clause, lest the world falls apart.
     _range_element: ($) =>
       choice(
-        $.boolean,
         $.field_expression,
         $.function_call,
         $.identifier,
@@ -915,16 +903,14 @@ module.exports = grammar({
       seq(/0b[01]+/, optional($.number_size))
     ),
 
-    boolean: (_) => choice('true', 'false'),
-
     end_keyword: ($) => 'end',
 
     _keywords: ($) => choice("get", "set", "properties", "arguments", "enumeration", "events", "methods"),
 
     _extended_keywords: ($) => prec(100, choice(
-      "break", "case", "catch", "classdef", "continue", "else", "elseif", "end", "false", "for",
-      "function", "global", "if", "otherwise", "parfor", "persistent", "return", "spmd", "switch",
-      "true", "try", "while",
+      "break", "case", "catch", "classdef", "continue", "else", "elseif", "end", "for", "function",
+      "global", "if", "otherwise", "parfor", "persistent", "return", "spmd", "switch", "try",
+      "while",
     )),
 
     _end_of_line: ($) => choice(';', '\n', '\r', ','),

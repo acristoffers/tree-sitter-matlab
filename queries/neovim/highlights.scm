@@ -143,7 +143,10 @@
 
 (number) @number
 
-(boolean) @boolean
+((identifier) @boolean
+  (#eq? @boolean "true"))
+((identifier) @boolean
+  (#eq? @boolean "false"))
 
 ; Comments
 

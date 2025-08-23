@@ -136,10 +136,10 @@ end
       (attributes
         (attribute
           (identifier)
-          (boolean))
+          (identifier))
         (attribute
           (identifier)
-          (boolean)))
+          (identifier)))
       (property
         (identifier)
         (dimensions
@@ -273,7 +273,7 @@ end
           (identifier))
         (attribute
           (identifier)
-          (boolean)))
+          (identifier)))
       (function_signature
         (function_output
           (identifier))
