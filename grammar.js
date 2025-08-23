@@ -659,7 +659,7 @@ module.exports = grammar({
       choice(
         seq(
           choice('for', 'parfor'),
-          $.iterator,
+          choice($.iterator, seq("(", $.iterator, ")")),
           repeat($._end_of_line),
           optional($.block),
           'end',
