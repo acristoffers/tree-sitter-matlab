@@ -400,9 +400,9 @@ module.exports = grammar({
       prec.left(
         PREC.compare + 1,
         seq(
-          $._expression,
+          $._index_expression,
           choice('<', '<=', '==', '~=', '>=', '>'),
-          $._expression,
+          $._index_expression,
         ),
       ),
     _index_not_operator: ($) => prec(PREC.not + 1, seq('~', alias($._index_expression, $._expression))),
