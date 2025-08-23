@@ -2378,6 +2378,10 @@
           "name": "identifier"
         },
         {
+          "type": "SYMBOL",
+          "name": "cell"
+        },
+        {
           "type": "ALIAS",
           "content": {
             "type": "SYMBOL",

@@ -16,6 +16,10 @@
           "named": true
         },
         {
+          "type": "cell",
+          "named": true
+        },
+        {
           "type": "comparison_operator",
           "named": true
         },

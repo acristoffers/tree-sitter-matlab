@@ -495,6 +495,7 @@ module.exports = grammar({
         $.field_expression,
         $.function_call,
         $.identifier,
+        $.cell,
         alias($._index_matrix, $.matrix),
         alias($._index_not_operator, $.not_operator),
         $.number,
