@@ -301,7 +301,12 @@ static bool scan_command(Scanner* scanner, TSLexer* lexer)
             // so it is ok to consume to identify a line continuation
             // NOLINTNEXTLINE(*misc-redundant-expression)
             if (consume_char('.', lexer) && consume_char('.', lexer) && consume_char('.', lexer)) {
-                return false;
+                // If it is a keyword, yield to the internal scanner
+                for (size_t i = 0; i < keywords_size; i++) {
+                    if (strcmp(keywords[i], buffer) == 0) {
+                        return false;
+                    }
+                }
             }
             lexer->result_symbol = IDENTIFIER;
             return true;
