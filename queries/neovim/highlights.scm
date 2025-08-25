@@ -84,7 +84,7 @@
 
 (handle_operator (identifier) @function)
 
-(validation_functions (property_name (identifier) @function))
+(validation_functions (identifier) @function)
 
 (command (command_name) @function.call)
 (command_argument) @parameter
@@ -143,7 +143,10 @@
 
 (number) @number
 
-(boolean) @boolean
+((identifier) @boolean
+  (#eq? @boolean "true"))
+((identifier) @boolean
+  (#eq? @boolean "false"))
 
 ; Comments
 

@@ -246,6 +246,8 @@ function myBar(x,y,propArgs)
         y (:,:) double
         propArgs.?matlab.graphics.chart.primitive.Bar
         some.propery
+        alpha (1, :) double {mustBeReal}
+        beta  (1, :) double {mustBeReal, myUtils.mustBeSameSize(beta, alpha, "beta", "alpha")}
     end
     propertyCell = namedargs2cell(propArgs);
     bar(x,y,propertyCell{:})
@@ -283,7 +285,34 @@ end
       (property
         (property_name
           (identifier)
-          (identifier))))
+          (identifier)))
+      (property
+        (identifier)
+        (dimensions
+          (number)
+          (spread_operator))
+        (identifier)
+        (validation_functions
+          (identifier)))
+      (property
+        (identifier)
+        (dimensions
+          (number)
+          (spread_operator))
+        (identifier)
+        (validation_functions
+          (identifier)
+          (field_expression
+            (identifier)
+            (function_call
+              (identifier)
+              (arguments
+                (identifier)
+                (identifier)
+                (string
+                  (string_content))
+                (string
+                  (string_content))))))))
     (block
       (assignment
         (identifier)
@@ -333,11 +362,9 @@ end
           (number))
         (identifier)
         (validation_functions
-          (property_name
-            (identifier))
-          (property_name
-            (identifier))
-          (property_name
+          (identifier)
+          (identifier)
+          (field_expression
             (identifier)
             (identifier)
             (identifier)
@@ -354,8 +381,6 @@ end
           (number))
         (identifier)
         (validation_functions
-          (property_name
-            (identifier))
+          (identifier)
           (line_continuation)
-          (property_name
-            (identifier)))))))
+          (identifier))))))

@@ -129,18 +129,17 @@ end
           (spread_operator))
         (identifier)
         (validation_functions
-          (property_name
-            (identifier)))
+          (identifier))
         (default_value
           (number))))
     (properties
       (attributes
         (attribute
           (identifier)
-          (boolean))
+          (identifier))
         (attribute
           (identifier)
-          (boolean)))
+          (identifier)))
       (property
         (identifier)
         (dimensions
@@ -274,7 +273,7 @@ end
           (identifier))
         (attribute
           (identifier)
-          (boolean)))
+          (identifier)))
       (function_signature
         (function_output
           (identifier))
