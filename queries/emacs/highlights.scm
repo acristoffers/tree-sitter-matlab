@@ -72,7 +72,7 @@
 (function_call name: (identifier) @function.call)
 
 (handle_operator (identifier) @function)
-(validation_functions (property_name (identifier) @function))
+(validation_functions (identifier) @function)
 
 (command (command_name) @function.macro)
 (command_argument) @string
@@ -116,7 +116,6 @@
 (formatting_sequence) @escape
 (string) @string
 (number) @number
-(boolean) @constant.builtin
 
 ; Comments
 

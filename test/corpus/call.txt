@@ -472,17 +472,53 @@ end
   (function_definition
     (function_output
       (identifier))
-    (identifier)
+    name: (identifier)
     (function_arguments
+      arguments: (identifier)
+      arguments: (identifier)))
+  (ERROR
+    (identifier)
+    (binary_operator
+      left: (number)
+      right: (function_call
+        name: (identifier)
+        (arguments
+          argument: (identifier)
+          argument: (identifier))))
+    (line_continuation)
+    (end_keyword)))
+
+================================================================================
+Function Call: Super
+================================================================================
+
+func@class
+func@class.super
+func@class(arg)
+func@class.super(arg)
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_call
+    (identifier)
+    (superclass
+      (identifier)))
+  (function_call
+    (identifier)
+    (superclass
+      (identifier)
+      (identifier)))
+  (function_call
+    (identifier)
+    (superclass
+      (identifier))
+    (arguments
+      (identifier)))
+  (function_call
+    (identifier)
+    (superclass
       (identifier)
       (identifier))
-    (ERROR
-      (identifier)
-      (binary_operator
-        (number)
-        (function_call
-          (identifier)
-          (arguments
-            (identifier)
-            (identifier)))))
-    (line_continuation)))
+    (arguments
+      (identifier))))

@@ -32,7 +32,7 @@ end
 For Statement: Nested
 ================================================================================
 
-for R = 1:N
+for (R = 1:N)
     for C = 1:N
         continue
     end
