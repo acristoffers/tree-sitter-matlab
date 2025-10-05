@@ -105,22 +105,35 @@ static inline void consume_identifier(TSLexer* lexer, char* buffer)
 
 static inline int skip_whitespaces(TSLexer* lexer)
 {
+    // 0b001 -> something skipped
+    // 0b010 -> newline skipped
+    // 0b100 -> newline was at the end of skipped sequence
     int skipped = 0;
     while (!lexer->eof(lexer) && iswspace(lexer->lookahead)) {
+        skipped &= 0b011;
         if (lexer->lookahead == '\n' || lexer->lookahead == '\r') {
-            skipped = skipped | 2;
+            skipped |= 0b111;
+        } else {
+            skipped |= 0b001;
         }
         skip(lexer);
-        skipped = skipped | 1;
     }
     return skipped;
 }
 
-static inline void consume_whitespaces(TSLexer* lexer)
+static inline int consume_whitespaces(TSLexer* lexer)
 {
+    int skipped = 0;
     while (iswspace(lexer->lookahead)) {
+        skipped &= 0b011;
+        if (lexer->lookahead == '\n' || lexer->lookahead == '\r') {
+            skipped |= 0b111;
+        } else {
+            skipped |= 0b001;
+        }
         advance(lexer);
     }
+    return skipped;
 }
 
 void* tree_sitter_matlab_external_scanner_create()
@@ -173,9 +186,9 @@ static bool scan_comment(TSLexer* lexer, bool entry_delimiter)
     lexer->mark_end(lexer);
 
     const bool percent = lexer->lookahead == '%';
-    const bool block = percent && consume_char('%', lexer) && consume_char('{', lexer);
     const bool line_continuation = lexer->lookahead == '.' && consume_char('.', lexer)
                                    && consume_char('.', lexer) && consume_char('.', lexer);
+    const bool block = percent && consume_char('%', lexer) && consume_char('{', lexer);
 
     // Since we cannot look multiple chars ahead in the main function, this
     // ended up being handled here. It allows the correct detection of numbers
@@ -358,7 +371,12 @@ skip_command_check:
     }
 
     // If followed by a line continuation, look after it
-    consume_whitespaces(lexer);
+    const int skipped = consume_whitespaces(lexer);
+    if (skipped & 4) { // Command followed by spaces then newline
+        scanner->is_inside_command = false;
+        lexer->result_symbol = COMMAND_NAME;
+        return true;
+    }
     if (lexer->lookahead == '.' && consume_char('.', lexer) && consume_char('.', lexer)
         && consume_char('.', lexer)) {
         lexer->result_symbol = IDENTIFIER;
@@ -499,7 +517,7 @@ skip_command_check:
     return false;
 }
 
-static bool scan_command_argument(Scanner* scanner, TSLexer* lexer)
+static bool scan_command_argument(Scanner* scanner, TSLexer* lexer, int skipped)
 {
     // If this is a shell escape command, we just break arguments in spaces
     // since we don't know what shell it is.
@@ -999,7 +1017,7 @@ bool tree_sitter_matlab_external_scanner_scan(void* payload, TSLexer* lexer, con
             }
         } else {
             if (valid_symbols[COMMAND_ARGUMENT]) {
-                return scan_command_argument(scanner, lexer);
+                return scan_command_argument(scanner, lexer, skipped);
             }
         }
     } else {
