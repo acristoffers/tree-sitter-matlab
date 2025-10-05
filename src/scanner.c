@@ -200,9 +200,9 @@ static bool scan_comment(TSLexer* lexer, bool entry_delimiter)
     lexer->mark_end(lexer);
 
     const bool percent = lexer->lookahead == '%';
-    const bool block = percent && consume_char('%', lexer) && consume_char('{', lexer);
     const bool line_continuation = lexer->lookahead == '.' && consume_char('.', lexer)
                                    && consume_char('.', lexer) && consume_char('.', lexer);
+    const bool block = percent && consume_char('%', lexer) && consume_char('{', lexer);
 
     // Since we cannot look multiple chars ahead in the main function, this
     // ended up being handled here. It allows the correct detection of numbers
