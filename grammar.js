@@ -838,6 +838,7 @@ module.exports = grammar({
         repeat(
           seq(
             choice(
+              alias(seq($.function_output, field('name', alias('end', $.identifier)), $.function_arguments), $.function_signature),
               $.function_signature,
               alias($._function_definition_with_end, $.function_definition)),
             repeat1($._end_of_line)),

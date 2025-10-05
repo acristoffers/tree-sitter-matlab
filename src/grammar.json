@@ -5161,6 +5161,37 @@
                 "type": "CHOICE",
                 "members": [
                   {
+                    "type": "ALIAS",
+                    "content": {
+                      "type": "SEQ",
+                      "members": [
+                        {
+                          "type": "SYMBOL",
+                          "name": "function_output"
+                        },
+                        {
+                          "type": "FIELD",
+                          "name": "name",
+                          "content": {
+                            "type": "ALIAS",
+                            "content": {
+                              "type": "STRING",
+                              "value": "end"
+                            },
+                            "named": true,
+                            "value": "identifier"
+                          }
+                        },
+                        {
+                          "type": "SYMBOL",
+                          "name": "function_arguments"
+                        }
+                      ]
+                    },
+                    "named": true,
+                    "value": "function_signature"
+                  },
+                  {
                     "type": "SYMBOL",
                     "name": "function_signature"
                   },
