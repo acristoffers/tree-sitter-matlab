@@ -1717,6 +1717,10 @@
           {
             "type": "identifier",
             "named": true
+          },
+          {
+            "type": "property_name",
+            "named": true
           }
         ]
       }
