@@ -4324,6 +4324,10 @@
                   "name": "identifier"
                 },
                 {
+                  "type": "SYMBOL",
+                  "name": "property_name"
+                },
+                {
                   "type": "ALIAS",
                   "content": {
                     "type": "SYMBOL",
@@ -4463,6 +4467,10 @@
                 {
                   "type": "SYMBOL",
                   "name": "identifier"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "property_name"
                 },
                 {
                   "type": "ALIAS",
@@ -5643,7 +5651,7 @@
       "members": [
         {
           "type": "PATTERN",
-          "value": "(\\d+|\\d+\\.\\d*|\\.\\d+)([eE][+-]?\\d+)?[ij]?"
+          "value": "(\\d+|\\d+\\.\\d*|\\.\\d+)([eEdD][+-]?\\d+)?[ij]?"
         },
         {
           "type": "SEQ",
