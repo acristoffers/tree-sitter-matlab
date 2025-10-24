@@ -12,7 +12,7 @@
     }
   ],
   "metadata": {
-    "version": "1.2.0",
+    "version": "1.2.1",
     "license": "MIT",
     "description": "MATLAB tree-sitter parser",
     "authors": [
