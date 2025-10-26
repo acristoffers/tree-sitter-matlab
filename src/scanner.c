@@ -221,6 +221,14 @@ static bool scan_comment(TSLexer* lexer, bool entry_delimiter)
         if (lexer->lookahead == ',') {
             lexer->result_symbol = LINE_CONTINUATION;
             lexer->mark_end(lexer);
+        } else if (lexer->lookahead == '.') {
+            lexer->mark_end(lexer);
+            advance(lexer);
+            if (isdigit(lexer->lookahead)) {
+                lexer->result_symbol = ENTRY_DELIMITER;
+            } else {
+                lexer->result_symbol = LINE_CONTINUATION;
+            }
         } else {
             lexer->result_symbol = ENTRY_DELIMITER;
         }
@@ -532,7 +540,7 @@ skip_command_check:
     return false;
 }
 
-static bool scan_command_argument(Scanner* scanner, TSLexer* lexer, int skipped)
+static bool scan_command_argument(Scanner* scanner, TSLexer* lexer)
 {
     // If this is a shell escape command, we just break arguments in spaces
     // since we don't know what shell it is.
@@ -1032,7 +1040,7 @@ bool tree_sitter_matlab_external_scanner_scan(void* payload, TSLexer* lexer, con
             }
         } else {
             if (valid_symbols[COMMAND_ARGUMENT]) {
-                return scan_command_argument(scanner, lexer, skipped);
+                return scan_command_argument(scanner, lexer);
             }
         }
     } else {
