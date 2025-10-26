@@ -59,6 +59,7 @@ module.exports = grammar({
     $._entry_delimiter,
     $._multioutput_variable_start,
     $._external_identifier,
+    $._catch_identifier,
     $.error_sentinel,
   ],
 
@@ -877,8 +878,8 @@ module.exports = grammar({
     catch_clause: ($) => prec.left(
       seq(
         'catch',
-        optional($.identifier),
-        repeat1($._end_of_line),
+        optional(seq(alias($._catch_identifier, $.identifier), $._end_of_line)),
+        repeat($._end_of_line),
         optional($.block),
       )),
     try_statement: ($) =>

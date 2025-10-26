@@ -5476,8 +5476,22 @@
             "type": "CHOICE",
             "members": [
               {
-                "type": "SYMBOL",
-                "name": "identifier"
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "ALIAS",
+                    "content": {
+                      "type": "SYMBOL",
+                      "name": "_catch_identifier"
+                    },
+                    "named": true,
+                    "value": "identifier"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "_end_of_line"
+                  }
+                ]
               },
               {
                 "type": "BLANK"
@@ -5485,7 +5499,7 @@
             ]
           },
           {
-            "type": "REPEAT1",
+            "type": "REPEAT",
             "content": {
               "type": "SYMBOL",
               "name": "_end_of_line"
@@ -5977,6 +5991,10 @@
     {
       "type": "SYMBOL",
       "name": "_external_identifier"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "_catch_identifier"
     },
     {
       "type": "SYMBOL",

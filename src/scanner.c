@@ -36,6 +36,7 @@ enum TokenType {
     ENTRY_DELIMITER,
     MULTIOUTPUT_VARIABLE_START,
     IDENTIFIER,
+    CATCH_IDENTIFIER,
     ERROR_SENTINEL,
 };
 
@@ -290,7 +291,7 @@ static bool scan_comment(TSLexer* lexer, bool entry_delimiter)
     return false;
 }
 
-static bool scan_command(Scanner* scanner, TSLexer* lexer)
+static bool scan_command(Scanner* scanner, TSLexer* lexer, const bool* valid_symbols)
 {
     // Special case: shell escape
     if (lexer->lookahead == '!') {
@@ -373,7 +374,7 @@ skip_command_check:
     // pwd;
     // pwd,
     if (is_eol(lexer->lookahead)) {
-        lexer->result_symbol = COMMAND_NAME;
+        lexer->result_symbol = valid_symbols[CATCH_IDENTIFIER] ? CATCH_IDENTIFIER : COMMAND_NAME;
         return true;
     }
 
@@ -1021,7 +1022,7 @@ bool tree_sitter_matlab_external_scanner_scan(void* payload, TSLexer* lexer, con
             if (valid_symbols[COMMAND_NAME]) {
                 scanner->is_inside_command = false;
                 scanner->is_shell_scape = false;
-                return scan_command(scanner, lexer);
+                return scan_command(scanner, lexer, valid_symbols);
             }
 
             if (valid_symbols[IDENTIFIER] && (skipped & 2) == 0) {
