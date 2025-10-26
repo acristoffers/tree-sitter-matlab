@@ -42,6 +42,7 @@ module.exports = grammar({
     [$._index_arguments],
     [$._index_matrix, $.matrix],
     [$._index_row, $.row],
+    [$.function_call, $._function_call_with_keywords],
   ],
 
   externals: ($) => [
@@ -238,7 +239,12 @@ module.exports = grammar({
               '.',
               field(
                 'field',
-                choice($.identifier, alias($._extended_keywords, $.identifier), $.function_call, $.indirect_access),
+                choice(
+                  $.identifier,
+                  alias($._extended_keywords, $.identifier),
+                  alias($._function_call_with_keywords, $.function_call),
+                  $.indirect_access
+                ),
               ),
             ),
           ),
@@ -578,6 +584,40 @@ module.exports = grammar({
               'name',
               choice(
                 alias($.end_keyword, $.identifier),
+                $.identifier,
+                $.function_call,
+                $.indirect_access,
+              ),
+            ),
+            optional(seq('@', alias($.property_name, $.superclass))),
+            $._args,
+          ),
+        ),
+        prec.right(
+          PREC.call,
+          seq(
+            field(
+              'name',
+              choice(
+                $.identifier,
+                $.function_call,
+                $.indirect_access,
+              ),
+            ),
+            seq('@', alias($.property_name, $.superclass)),
+            optional($._args),
+          ),
+        ),),
+    _function_call_with_keywords: ($) =>
+      choice(
+        prec.right(
+          PREC.call,
+          seq(
+            field(
+              'name',
+              choice(
+                alias($.end_keyword, $.identifier),
+                alias($._extended_keywords, $.identifier),
                 $.identifier,
                 $.function_call,
                 $.indirect_access,
