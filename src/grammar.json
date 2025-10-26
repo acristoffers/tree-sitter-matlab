@@ -5703,7 +5703,7 @@
           "members": [
             {
               "type": "PATTERN",
-              "value": "0x[\\dA-Fa-f]+"
+              "value": "0[xX][\\dA-Fa-f]+"
             },
             {
               "type": "CHOICE",
@@ -5724,7 +5724,7 @@
           "members": [
             {
               "type": "PATTERN",
-              "value": "0b[01]+"
+              "value": "0[bB][01]+"
             },
             {
               "type": "CHOICE",
