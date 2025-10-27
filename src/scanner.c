@@ -227,21 +227,18 @@ static bool scan_comment(TSLexer* lexer, bool entry_delimiter)
     // a = { 1 ...
     //       2 ...
     // }
+
     if (entry_delimiter && line_continuation) {
         consume_whitespaces(lexer);
-        if (lexer->lookahead == ',') {
-            lexer->result_symbol = LINE_CONTINUATION;
-            lexer->mark_end(lexer);
-        } else if (lexer->lookahead == '.') {
+        if (lexer->lookahead == '.') {
             lexer->mark_end(lexer);
             advance(lexer);
-            if (isdigit(lexer->lookahead)) {
-                lexer->result_symbol = ENTRY_DELIMITER;
-            } else {
-                lexer->result_symbol = LINE_CONTINUATION;
-            }
-        } else {
+            lexer->result_symbol = isdigit(lexer->lookahead) ? ENTRY_DELIMITER : LINE_CONTINUATION;
+        } else if (isdigit(lexer->lookahead) || lexer->lookahead == '\'' || lexer->lookahead == '"') {
             lexer->result_symbol = ENTRY_DELIMITER;
+        } else {
+            lexer->result_symbol = LINE_CONTINUATION;
+            lexer->mark_end(lexer);
         }
         return true;
     }
