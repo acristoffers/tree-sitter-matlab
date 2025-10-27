@@ -942,11 +942,10 @@ module.exports = grammar({
         'end',
       ),
 
-    number_size: (_) => token.immediate(choice("s8", "s16", "s32", "s64", "u8", "u16", "u32", "u64")),
     number: ($) => choice(
       /(\d+|\d+\.\d*|\.\d+)([eEdD][+-]?\d+)?[ij]?/,
-      seq(/0[xX][\dA-Fa-f]+/, optional($.number_size)),
-      seq(/0[bB][01]+/, optional($.number_size))
+      /0[xX][\dA-Fa-f]+([su](8|16|32|64))?/,
+      /0[bB][01]+([su](8|16|32|64))?/
     ),
 
     end_keyword: ($) => 'end',

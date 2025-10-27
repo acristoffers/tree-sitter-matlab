@@ -5813,46 +5813,6 @@
         }
       ]
     },
-    "number_size": {
-      "type": "IMMEDIATE_TOKEN",
-      "content": {
-        "type": "CHOICE",
-        "members": [
-          {
-            "type": "STRING",
-            "value": "s8"
-          },
-          {
-            "type": "STRING",
-            "value": "s16"
-          },
-          {
-            "type": "STRING",
-            "value": "s32"
-          },
-          {
-            "type": "STRING",
-            "value": "s64"
-          },
-          {
-            "type": "STRING",
-            "value": "u8"
-          },
-          {
-            "type": "STRING",
-            "value": "u16"
-          },
-          {
-            "type": "STRING",
-            "value": "u32"
-          },
-          {
-            "type": "STRING",
-            "value": "u64"
-          }
-        ]
-      }
-    },
     "number": {
       "type": "CHOICE",
       "members": [
@@ -5861,46 +5821,12 @@
           "value": "(\\d+|\\d+\\.\\d*|\\.\\d+)([eEdD][+-]?\\d+)?[ij]?"
         },
         {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "PATTERN",
-              "value": "0[xX][\\dA-Fa-f]+"
-            },
-            {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "number_size"
-                },
-                {
-                  "type": "BLANK"
-                }
-              ]
-            }
-          ]
+          "type": "PATTERN",
+          "value": "0[xX][\\dA-Fa-f]+([su](8|16|32|64))?"
         },
         {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "PATTERN",
-              "value": "0[bB][01]+"
-            },
-            {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "number_size"
-                },
-                {
-                  "type": "BLANK"
-                }
-              ]
-            }
-          ]
+          "type": "PATTERN",
+          "value": "0[bB][01]+([su](8|16|32|64))?"
         }
       ]
     },
