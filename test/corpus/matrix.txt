@@ -199,6 +199,7 @@ Matrix: Newlines
       (function_call
         (identifier)
         (arguments
-          (number)))
-      (line_continuation)
+          (number))))
+    (line_continuation)
+    (row
       (number))))

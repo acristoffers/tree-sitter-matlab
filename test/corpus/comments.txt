@@ -427,8 +427,8 @@ end
               (arguments
                 (string
                   (string_content))))))
-        (else_clause)
-        (line_continuation))
+        (else_clause
+          (line_continuation)))
       (assignment
         (identifier)
         (boolean_operator

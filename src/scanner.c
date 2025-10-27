@@ -151,6 +151,17 @@ static inline int consume_whitespaces(TSLexer* lexer)
     return skipped;
 }
 
+static inline void consume_whitespaces_once(TSLexer* lexer)
+{
+    while (iswspace(lexer->lookahead)) {
+        if (lexer->lookahead == '\n' || lexer->lookahead == '\r') {
+            advance(lexer);
+            break;
+        }
+        advance(lexer);
+    }
+}
+
 void* tree_sitter_matlab_external_scanner_create()
 {
     Scanner* scanner = calloc(1, sizeof(Scanner));
@@ -278,7 +289,7 @@ static bool scan_comment(TSLexer* lexer, bool entry_delimiter)
             advance(lexer);
         } else {
             lexer->result_symbol = LINE_CONTINUATION;
-            consume_whitespaces(lexer);
+            consume_whitespaces_once(lexer);
             lexer->mark_end(lexer);
             return true;
         }
