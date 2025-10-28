@@ -1,5 +1,6 @@
-/src/** linguist-vendored
-/examples/* linguist-vendored
+* linguist-vendored
+grammar.js linguist-vendored=false
+src/scanner.c linguist-vendored=false
 
 src/grammar.json -diff
 src/node-types.json -diff
