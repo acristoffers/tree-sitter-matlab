@@ -1,11 +1,25 @@
 #include "tree_sitter/parser.h"
 
-#include <ctype.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
 #include <wctype.h>
+
+// Custom punctuation check for WASM compatibility
+// ispunct() is not in tree-sitter's WASM allowed functions list
+// https://github.com/tree-sitter/tree-sitter/blob/master/lib/src/wasm/stdlib-symbols.txt
+static inline bool is_punct_char(const uint32_t chr)
+{
+    if (chr >= 0x80) {
+        return false;
+    }
+
+    return (chr >= 33 && chr <= 47) ||   // !"#$%&'()*+,-./
+           (chr >= 58 && chr <= 64) ||   // :;<=>?@
+           (chr >= 91 && chr <= 96) ||   // [\]^_`
+           (chr >= 123 && chr <= 126);   // {|}~
+}
 
 enum TokenType {
     COMMENT,
@@ -77,8 +91,8 @@ static inline bool is_identifier(const uint32_t chr, const bool start)
         return false;
     }
 
-    const bool alpha = isalpha(chr);
-    const bool numeric = !start && isdigit(chr);
+    const bool alpha = iswalpha(chr);
+    const bool numeric = !start && iswdigit(chr);
     const bool special = chr == '_';
 
     return alpha || numeric || special;
@@ -182,7 +196,7 @@ static bool scan_comment(TSLexer* lexer, bool entry_delimiter)
     // like .5 inside matrices/cells: [0 .5].
     if (entry_delimiter && !percent && !line_continuation) {
         lexer->result_symbol = ENTRY_DELIMITER;
-        return isdigit(lexer->lookahead);
+        return iswdigit(lexer->lookahead);
     }
     // We are inside a matrix/cell row and there is a line continuation, like this:
     // a = { 1 ...
@@ -408,7 +422,7 @@ skip_command_check:
     }
 
     // Let's now consider punctuation marks.
-    if (ispunct(lexer->lookahead)) {
+    if (is_punct_char(lexer->lookahead)) {
         // In this case, we advance and look at what comes next too.
         const uint32_t first = lexer->lookahead;
         advance(lexer);
@@ -886,7 +900,7 @@ static bool scan_entry_delimiter(TSLexer* lexer, int skipped)
     if (lexer->lookahead == '.') {
         advance(lexer);
         advance(lexer);
-        return isdigit(lexer->lookahead);
+        return iswdigit(lexer->lookahead);
     }
 
     if (lexer->lookahead == '{' || lexer->lookahead == '(' || lexer->lookahead == '\'') {
