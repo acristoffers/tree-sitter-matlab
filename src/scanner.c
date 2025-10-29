@@ -1,11 +1,25 @@
 #include "tree_sitter/parser.h"
 
-#include <ctype.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
 #include <wctype.h>
+
+// Custom punctuation check for WASM compatibility
+// ispunct() is not in tree-sitter's WASM allowed functions list
+// https://github.com/tree-sitter/tree-sitter/blob/master/lib/src/wasm/stdlib-symbols.txt
+static inline bool is_punct_char(const uint32_t chr)
+{
+    if (chr >= 0x80) {
+        return false;
+    }
+
+    return (chr >= 33 && chr <= 47) ||   // !"#$%&'()*+,-./
+           (chr >= 58 && chr <= 64) ||   // :;<=>?@
+           (chr >= 91 && chr <= 96) ||   // [\]^_`
+           (chr >= 123 && chr <= 126);   // {|}~
+}
 
 enum TokenType {
     COMMENT,
@@ -22,6 +36,7 @@ enum TokenType {
     ENTRY_DELIMITER,
     MULTIOUTPUT_VARIABLE_START,
     IDENTIFIER,
+    CATCH_IDENTIFIER,
     ERROR_SENTINEL,
 };
 
@@ -77,8 +92,8 @@ static inline bool is_identifier(const uint32_t chr, const bool start)
         return false;
     }
 
-    const bool alpha = isalpha(chr);
-    const bool numeric = !start && isdigit(chr);
+    const bool alpha = iswalpha(chr);
+    const bool numeric = !start && iswdigit(chr);
     const bool special = chr == '_';
 
     return alpha || numeric || special;
@@ -105,20 +120,44 @@ static inline void consume_identifier(TSLexer* lexer, char* buffer)
 
 static inline int skip_whitespaces(TSLexer* lexer)
 {
+    // 0b001 -> something skipped
+    // 0b010 -> newline skipped
+    // 0b100 -> newline was at the end of skipped sequence
     int skipped = 0;
     while (!lexer->eof(lexer) && iswspace(lexer->lookahead)) {
+        skipped &= 0b011;
         if (lexer->lookahead == '\n' || lexer->lookahead == '\r') {
-            skipped = skipped | 2;
+            skipped |= 0b111;
+        } else {
+            skipped |= 0b001;
         }
         skip(lexer);
-        skipped = skipped | 1;
     }
     return skipped;
 }
 
-static inline void consume_whitespaces(TSLexer* lexer)
+static inline int consume_whitespaces(TSLexer* lexer)
+{
+    int skipped = 0;
+    while (iswspace(lexer->lookahead)) {
+        skipped &= 0b011;
+        if (lexer->lookahead == '\n' || lexer->lookahead == '\r') {
+            skipped |= 0b111;
+        } else {
+            skipped |= 0b001;
+        }
+        advance(lexer);
+    }
+    return skipped;
+}
+
+static inline void consume_whitespaces_once(TSLexer* lexer)
 {
     while (iswspace(lexer->lookahead)) {
+        if (lexer->lookahead == '\n' || lexer->lookahead == '\r') {
+            advance(lexer);
+            break;
+        }
         advance(lexer);
     }
 }
@@ -173,28 +212,33 @@ static bool scan_comment(TSLexer* lexer, bool entry_delimiter)
     lexer->mark_end(lexer);
 
     const bool percent = lexer->lookahead == '%';
-    const bool block = percent && consume_char('%', lexer) && consume_char('{', lexer);
     const bool line_continuation = lexer->lookahead == '.' && consume_char('.', lexer)
                                    && consume_char('.', lexer) && consume_char('.', lexer);
+    const bool block = percent && consume_char('%', lexer) && consume_char('{', lexer);
 
     // Since we cannot look multiple chars ahead in the main function, this
     // ended up being handled here. It allows the correct detection of numbers
     // like .5 inside matrices/cells: [0 .5].
     if (entry_delimiter && !percent && !line_continuation) {
         lexer->result_symbol = ENTRY_DELIMITER;
-        return isdigit(lexer->lookahead);
+        return iswdigit(lexer->lookahead);
     }
     // We are inside a matrix/cell row and there is a line continuation, like this:
     // a = { 1 ...
     //       2 ...
     // }
+
     if (entry_delimiter && line_continuation) {
         consume_whitespaces(lexer);
-        if (lexer->lookahead == ',') {
+        if (lexer->lookahead == '.') {
+            lexer->mark_end(lexer);
+            advance(lexer);
+            lexer->result_symbol = isdigit(lexer->lookahead) ? ENTRY_DELIMITER : LINE_CONTINUATION;
+        } else if (isdigit(lexer->lookahead) || lexer->lookahead == '\'' || lexer->lookahead == '"') {
+            lexer->result_symbol = ENTRY_DELIMITER;
+        } else {
             lexer->result_symbol = LINE_CONTINUATION;
             lexer->mark_end(lexer);
-        } else {
-            lexer->result_symbol = ENTRY_DELIMITER;
         }
         return true;
     }
@@ -242,7 +286,7 @@ static bool scan_comment(TSLexer* lexer, bool entry_delimiter)
             advance(lexer);
         } else {
             lexer->result_symbol = LINE_CONTINUATION;
-            consume_whitespaces(lexer);
+            consume_whitespaces_once(lexer);
             lexer->mark_end(lexer);
             return true;
         }
@@ -263,7 +307,7 @@ static bool scan_comment(TSLexer* lexer, bool entry_delimiter)
     return false;
 }
 
-static bool scan_command(Scanner* scanner, TSLexer* lexer)
+static bool scan_command(Scanner* scanner, TSLexer* lexer, const bool* valid_symbols)
 {
     // Special case: shell escape
     if (lexer->lookahead == '!') {
@@ -346,7 +390,7 @@ skip_command_check:
     // pwd;
     // pwd,
     if (is_eol(lexer->lookahead)) {
-        lexer->result_symbol = COMMAND_NAME;
+        lexer->result_symbol = valid_symbols[CATCH_IDENTIFIER] ? CATCH_IDENTIFIER : COMMAND_NAME;
         return true;
     }
 
@@ -358,7 +402,12 @@ skip_command_check:
     }
 
     // If followed by a line continuation, look after it
-    consume_whitespaces(lexer);
+    const int skipped = consume_whitespaces(lexer);
+    if (skipped & 4) { // Command followed by spaces then newline
+        scanner->is_inside_command = false;
+        lexer->result_symbol = COMMAND_NAME;
+        return true;
+    }
     if (lexer->lookahead == '.' && consume_char('.', lexer) && consume_char('.', lexer)
         && consume_char('.', lexer)) {
         lexer->result_symbol = IDENTIFIER;
@@ -408,7 +457,7 @@ skip_command_check:
     }
 
     // Let's now consider punctuation marks.
-    if (ispunct(lexer->lookahead)) {
+    if (is_punct_char(lexer->lookahead)) {
         // In this case, we advance and look at what comes next too.
         const uint32_t first = lexer->lookahead;
         advance(lexer);
@@ -886,7 +935,7 @@ static bool scan_entry_delimiter(TSLexer* lexer, int skipped)
     if (lexer->lookahead == '.') {
         advance(lexer);
         advance(lexer);
-        return isdigit(lexer->lookahead);
+        return iswdigit(lexer->lookahead);
     }
 
     if (lexer->lookahead == '{' || lexer->lookahead == '(' || lexer->lookahead == '\'') {
@@ -989,7 +1038,7 @@ bool tree_sitter_matlab_external_scanner_scan(void* payload, TSLexer* lexer, con
             if (valid_symbols[COMMAND_NAME]) {
                 scanner->is_inside_command = false;
                 scanner->is_shell_scape = false;
-                return scan_command(scanner, lexer);
+                return scan_command(scanner, lexer, valid_symbols);
             }
 
             if (valid_symbols[IDENTIFIER] && (skipped & 2) == 0) {

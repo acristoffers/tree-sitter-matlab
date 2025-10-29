@@ -1717,6 +1717,10 @@
           {
             "type": "identifier",
             "named": true
+          },
+          {
+            "type": "property_name",
+            "named": true
           }
         ]
       }
@@ -1767,9 +1771,27 @@
     "type": "function_signature",
     "named": true,
     "fields": {
+      "arguments": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": ",",
+            "named": false
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "ignored_argument",
+            "named": true
+          }
+        ]
+      },
       "name": {
         "multiple": false,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "identifier",
@@ -1788,6 +1810,14 @@
         },
         {
           "type": "function_output",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "multioutput_variable",
           "named": true
         }
       ]
@@ -2196,7 +2226,18 @@
   {
     "type": "methods",
     "named": true,
-    "fields": {},
+    "fields": {
+      "name": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": false,
@@ -2333,17 +2374,7 @@
   {
     "type": "number",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": false,
-      "types": [
-        {
-          "type": "number_size",
-          "named": true
-        }
-      ]
-    }
+    "fields": {}
   },
   {
     "type": "otherwise_clause",
@@ -3608,10 +3639,6 @@
   {
     "type": "methods",
     "named": false
-  },
-  {
-    "type": "number_size",
-    "named": true
   },
   {
     "type": "otherwise",

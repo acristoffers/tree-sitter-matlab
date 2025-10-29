@@ -42,6 +42,7 @@ module.exports = grammar({
     [$._index_arguments],
     [$._index_matrix, $.matrix],
     [$._index_row, $.row],
+    [$.function_call, $._function_call_with_keywords],
   ],
 
   externals: ($) => [
@@ -59,6 +60,7 @@ module.exports = grammar({
     $._entry_delimiter,
     $._multioutput_variable_start,
     $._external_identifier,
+    $._catch_identifier,
     $.error_sentinel,
   ],
 
@@ -237,7 +239,12 @@ module.exports = grammar({
               '.',
               field(
                 'field',
-                choice($.identifier, alias($._extended_keywords, $.identifier), $.function_call, $.indirect_access),
+                choice(
+                  $.identifier,
+                  alias($._extended_keywords, $.identifier),
+                  alias($._function_call_with_keywords, $.function_call),
+                  $.indirect_access
+                ),
               ),
             ),
           ),
@@ -601,6 +608,40 @@ module.exports = grammar({
             optional($._args),
           ),
         ),),
+    _function_call_with_keywords: ($) =>
+      choice(
+        prec.right(
+          PREC.call,
+          seq(
+            field(
+              'name',
+              choice(
+                alias($.end_keyword, $.identifier),
+                alias($._extended_keywords, $.identifier),
+                $.identifier,
+                $.function_call,
+                $.indirect_access,
+              ),
+            ),
+            optional(seq('@', alias($.property_name, $.superclass))),
+            $._args,
+          ),
+        ),
+        prec.right(
+          PREC.call,
+          seq(
+            field(
+              'name',
+              choice(
+                $.identifier,
+                $.function_call,
+                $.indirect_access,
+              ),
+            ),
+            seq('@', alias($.property_name, $.superclass)),
+            optional($._args),
+          ),
+        ),),
 
     command: ($) => prec.right(seq($.command_name, repeat($.command_argument))),
 
@@ -748,10 +789,11 @@ module.exports = grammar({
         'function',
         optional($.function_output),
         optional(choice('get.', 'set.')),
-        field('name', choice($.identifier, alias($.end_keyword, $.identifier))),
+        field('name', choice($.identifier, $.property_name, alias($.end_keyword, $.identifier))),
         optional($.function_arguments),
         $._end_of_line,
         repeat($.arguments_statement),
+        repeat($._end_of_line),
         optional($.block),
         optional(seq(choice('end', 'endfunction'), optional(';'))),
       )),
@@ -760,10 +802,11 @@ module.exports = grammar({
         'function',
         optional($.function_output),
         optional(choice('get.', 'set.')),
-        field('name', choice($.identifier, alias($.end_keyword, $.identifier))),
+        field('name', choice($.identifier, $.property_name, alias($.end_keyword, $.identifier))),
         optional($.function_arguments),
         $._end_of_line,
         repeat($.arguments_statement),
+        repeat($._end_of_line),
         optional($.block),
         choice('end', 'endfunction'),
         optional(';'),
@@ -838,9 +881,10 @@ module.exports = grammar({
         repeat(
           seq(
             choice(
+              alias(seq($.function_output, field('name', alias('end', $.identifier)), $.function_arguments), $.function_signature),
               $.function_signature,
               alias($._function_definition_with_end, $.function_definition)),
-            repeat1($._end_of_line)),
+            repeat($._end_of_line)),
         ),
         'end',
       ),
@@ -876,8 +920,8 @@ module.exports = grammar({
     catch_clause: ($) => prec.left(
       seq(
         'catch',
-        optional($.identifier),
-        repeat1($._end_of_line),
+        optional(seq(alias($._catch_identifier, $.identifier), $._end_of_line)),
+        repeat($._end_of_line),
         optional($.block),
       )),
     try_statement: ($) =>
@@ -898,11 +942,10 @@ module.exports = grammar({
         'end',
       ),
 
-    number_size: (_) => token.immediate(choice("s8", "s16", "s32", "s64", "u8", "u16", "u32", "u64")),
     number: ($) => choice(
-      /(\d+|\d+\.\d*|\.\d+)([eE][+-]?\d+)?[ij]?/,
-      seq(/0x[\dA-Fa-f]+/, optional($.number_size)),
-      seq(/0b[01]+/, optional($.number_size))
+      /(\d+|\d+\.\d*|\.\d+)([eEdD][+-]?\d+)?[ij]?/,
+      /0[xX][\dA-Fa-f]+([su](8|16|32|64))?/,
+      /0[bB][01]+([su](8|16|32|64))?/
     ),
 
     end_keyword: ($) => 'end',

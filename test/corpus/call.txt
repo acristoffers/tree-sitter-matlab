@@ -475,18 +475,18 @@ end
     name: (identifier)
     (function_arguments
       arguments: (identifier)
-      arguments: (identifier)))
-  (ERROR
-    (identifier)
-    (binary_operator
-      left: (number)
-      right: (function_call
-        name: (identifier)
-        (arguments
-          argument: (identifier)
-          argument: (identifier))))
-    (line_continuation)
-    (end_keyword)))
+          arguments: (identifier))
+        (ERROR
+          (identifier)
+          (binary_operator
+            left: (number)
+            right: (function_call
+              name: (identifier)
+              (arguments
+                argument: (identifier)
+                argument: (identifier))))
+          (line_continuation)
+          (end_keyword))))
 
 ================================================================================
 Function Call: Super
