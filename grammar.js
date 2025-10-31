@@ -772,12 +772,13 @@ module.exports = grammar({
       ),
     class_property: ($) => seq($.identifier, '.?', $.identifier, repeat(seq('.', $.identifier))),
     arguments_statement: ($) =>
-      prec(1, seq(
+      prec.right(1, seq(
         'arguments',
         optional(alias($._argument_attributes, $.attributes)),
         repeat1($._end_of_line),
         repeat(choice($.property, seq($.class_property, repeat1($._end_of_line)))),
         'end',
+        optional($._end_of_line),
       )),
 
     function_output: ($) =>
