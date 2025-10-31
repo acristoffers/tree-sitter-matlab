@@ -4299,7 +4299,7 @@
       ]
     },
     "arguments_statement": {
-      "type": "PREC",
+      "type": "PREC_RIGHT",
       "value": 1,
       "content": {
         "type": "SEQ",
@@ -4363,6 +4363,18 @@
           {
             "type": "STRING",
             "value": "end"
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "_end_of_line"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
           }
         ]
       }
