@@ -233,8 +233,8 @@ static bool scan_comment(TSLexer* lexer, bool entry_delimiter)
         if (lexer->lookahead == '.') {
             lexer->mark_end(lexer);
             advance(lexer);
-            lexer->result_symbol = isdigit(lexer->lookahead) ? ENTRY_DELIMITER : LINE_CONTINUATION;
-        } else if (isdigit(lexer->lookahead) || lexer->lookahead == '\'' || lexer->lookahead == '"') {
+            lexer->result_symbol = iswdigit(lexer->lookahead) ? ENTRY_DELIMITER : LINE_CONTINUATION;
+        } else if (iswdigit(lexer->lookahead) || lexer->lookahead == '\'' || lexer->lookahead == '"') {
             lexer->result_symbol = ENTRY_DELIMITER;
         } else {
             lexer->result_symbol = LINE_CONTINUATION;
