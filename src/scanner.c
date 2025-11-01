@@ -15,10 +15,10 @@ static inline bool is_punct_char(const uint32_t chr)
         return false;
     }
 
-    return (chr >= 33 && chr <= 47) ||   // !"#$%&'()*+,-./
-           (chr >= 58 && chr <= 64) ||   // :;<=>?@
-           (chr >= 91 && chr <= 96) ||   // [\]^_`
-           (chr >= 123 && chr <= 126);   // {|}~
+    return (chr >= 33 && chr <= 47) || // !"#$%&'()*+,-./
+           (chr >= 58 && chr <= 64) || // :;<=>?@
+           (chr >= 91 && chr <= 96) || // [\]^_`
+           (chr >= 123 && chr <= 126); // {|}~
 }
 
 enum TokenType {
@@ -37,6 +37,8 @@ enum TokenType {
     MULTIOUTPUT_VARIABLE_START,
     IDENTIFIER,
     CATCH_IDENTIFIER,
+    TRANSPOSE,
+    CTRANSPOSE,
     ERROR_SENTINEL,
 };
 
@@ -207,7 +209,7 @@ static inline void consume_comment_line(TSLexer* lexer)
 }
 
 // NOLINTNEXTLINE(*misc-no-recursion)
-static bool scan_comment(TSLexer* lexer, bool entry_delimiter)
+static bool scan_comment(TSLexer* lexer, bool entry_delimiter, bool ctranspose)
 {
     lexer->mark_end(lexer);
 
@@ -298,9 +300,16 @@ static bool scan_comment(TSLexer* lexer, bool entry_delimiter)
         }
 
         if (lexer->lookahead == '%') {
-            return scan_comment(lexer, false);
+            return scan_comment(lexer, false, false);
         }
 
+        return true;
+    }
+
+    if (ctranspose && lexer->lookahead == '\'') {
+        advance(lexer);
+        lexer->mark_end(lexer);
+        lexer->result_symbol = CTRANSPOSE;
         return true;
     }
 
@@ -613,7 +622,7 @@ static bool scan_command_argument(Scanner* scanner, TSLexer* lexer)
                 lexer->mark_end(lexer);
                 return true;
             }
-            return scan_comment(lexer, false);
+            return scan_comment(lexer, false, false);
         }
 
         // Line continuation
@@ -1008,6 +1017,23 @@ static bool scan_identifier(TSLexer* lexer)
     return false;
 }
 
+static bool scan_transpose(TSLexer* lexer)
+{
+    if (lexer->lookahead == '\'') {
+        advance(lexer);
+        lexer->mark_end(lexer);
+        lexer->result_symbol = TRANSPOSE;
+        return true;
+    }
+    if (lexer->lookahead == '.' && consume_char('\'', lexer)) {
+        advance(lexer);
+        lexer->mark_end(lexer);
+        lexer->result_symbol = CTRANSPOSE;
+        return true;
+    }
+    return false;
+}
+
 bool tree_sitter_matlab_external_scanner_scan(void* payload, TSLexer* lexer, const bool* valid_symbols)
 {
     Scanner* scanner = (Scanner*) payload;
@@ -1016,10 +1042,16 @@ bool tree_sitter_matlab_external_scanner_scan(void* payload, TSLexer* lexer, con
 
         if ((scanner->line_continuation || !scanner->is_inside_command) && valid_symbols[COMMENT]
             && (lexer->lookahead == '%' || ((skipped & 2) == 0 && lexer->lookahead == '.'))) {
-            return scan_comment(lexer, valid_symbols[ENTRY_DELIMITER]);
+            return scan_comment(lexer, valid_symbols[ENTRY_DELIMITER], valid_symbols[CTRANSPOSE]);
         }
 
         if (!scanner->is_inside_command) {
+            if (skipped == 0 && valid_symbols[TRANSPOSE]) {
+                if (scan_transpose(lexer)) {
+                    return true;
+                }
+            }
+
             if ((valid_symbols[SINGLE_QUOTE_STRING_START] && lexer->lookahead == '\'')
                 || (valid_symbols[DOUBLE_QUOTE_STRING_START] && lexer->lookahead == '"')) {
                 return scan_string_open(scanner, lexer);

@@ -12,7 +12,7 @@
 // @ts-check
 
 const PREC = {
-  parentheses: -1,
+  parenthesis: -1,
   or: 10,
   and: 11,
   not: 12,
@@ -62,6 +62,8 @@ module.exports = grammar({
     $._multioutput_variable_start,
     $._external_identifier,
     $._catch_identifier,
+    $._transpose,
+    $._ctranspose,
     $.error_sentinel,
   ],
 
@@ -136,7 +138,7 @@ module.exports = grammar({
         $.field_expression,
       ),
 
-    parenthesis: ($) => prec(PREC.parentheses, seq('(', $._expression, ')')),
+    parenthesis: ($) => prec(PREC.parenthesis, seq('(', $._expression, ')')),
 
     _binary_expression: ($) =>
       prec(
@@ -308,7 +310,7 @@ module.exports = grammar({
               $.unary_operator,
             ),
           ),
-          choice(".'", "'"),
+          choice(alias($._transpose, "'"), alias($._ctranspose, ".'")),
         ),
       ),
 

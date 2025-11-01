@@ -1230,12 +1230,22 @@
             "type": "CHOICE",
             "members": [
               {
-                "type": "STRING",
-                "value": ".'"
+                "type": "ALIAS",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "_transpose"
+                },
+                "named": false,
+                "value": "'"
               },
               {
-                "type": "STRING",
-                "value": "'"
+                "type": "ALIAS",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "_ctranspose"
+                },
+                "named": false,
+                "value": ".'"
               }
             ]
           }
@@ -6140,6 +6150,14 @@
     {
       "type": "SYMBOL",
       "name": "_catch_identifier"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "_transpose"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "_ctranspose"
     },
     {
       "type": "SYMBOL",
