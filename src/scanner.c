@@ -356,12 +356,12 @@ static bool scan_command(Scanner* scanner, TSLexer* lexer, const bool* valid_sym
             return true;
         }
         // The following keywords are allowed as commands if they get 1 argument
-        for (int i = 0; i < sizeof(allowed_commands) / sizeof(allowed_commands[0]); i++) {
+        for (unsigned i = 0; i < sizeof(allowed_commands) / sizeof(allowed_commands[0]); i++) {
             if (strcmp(allowed_commands[i], buffer) == 0) {
                 goto check_command_for_argument;
             }
         }
-        for (int i = 0; i < keywords_size; i++) {
+        for (unsigned i = 0; i < keywords_size; i++) {
             if (strcmp(keywords[i], buffer) == 0) {
                 return false;
             }

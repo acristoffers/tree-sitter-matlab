@@ -75,6 +75,38 @@
         ]
       }
     },
+    "_functionless_block": {
+      "type": "PREC",
+      "value": 1,
+      "content": {
+        "type": "REPEAT1",
+        "content": {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "_statement"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "_expression"
+                }
+              ]
+            },
+            {
+              "type": "REPEAT1",
+              "content": {
+                "type": "SYMBOL",
+                "name": "_end_of_line"
+              }
+            }
+          ]
+        }
+      }
+    },
     "block": {
       "type": "SYMBOL",
       "name": "_block"
@@ -4533,8 +4565,13 @@
             "type": "CHOICE",
             "members": [
               {
-                "type": "SYMBOL",
-                "name": "block"
+                "type": "ALIAS",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "_functionless_block"
+                },
+                "named": true,
+                "value": "block"
               },
               {
                 "type": "BLANK"
@@ -6036,6 +6073,10 @@
     [
       "function_call",
       "_function_call_with_keywords"
+    ],
+    [
+      "block",
+      "_functionless_block"
     ]
   ],
   "precedences": [],

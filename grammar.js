@@ -43,6 +43,7 @@ module.exports = grammar({
     [$._index_matrix, $.matrix],
     [$._index_row, $.row],
     [$.function_call, $._function_call_with_keywords],
+    [$.block, $._functionless_block],
   ],
 
   externals: ($) => [
@@ -84,6 +85,13 @@ module.exports = grammar({
           repeat1($._end_of_line),
         ),
       ),
+    _functionless_block: ($) =>
+      prec(1, repeat1(
+        seq(
+          choice($._statement, $._expression),
+          repeat1($._end_of_line),
+        ),
+      )),
     block: ($) => $._block,
 
     identifier: ($) => choice($._external_identifier, $._keywords),
@@ -795,7 +803,7 @@ module.exports = grammar({
         $._end_of_line,
         repeat($.arguments_statement),
         repeat($._end_of_line),
-        optional($.block),
+        optional(alias($._functionless_block, $.block)),
         optional(seq(choice('end', 'endfunction'), optional(';'))),
       )),
     _function_definition_with_end: ($) =>
