@@ -1738,6 +1738,10 @@
           "named": true
         },
         {
+          "type": "comment",
+          "named": true
+        },
+        {
           "type": "function_arguments",
           "named": true
         },
