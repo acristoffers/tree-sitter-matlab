@@ -4560,8 +4560,20 @@
           {
             "type": "REPEAT",
             "content": {
-              "type": "SYMBOL",
-              "name": "arguments_statement"
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "REPEAT",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "_end_of_line"
+                  }
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "arguments_statement"
+                }
+              ]
             }
           },
           {
@@ -4724,8 +4736,20 @@
           {
             "type": "REPEAT",
             "content": {
-              "type": "SYMBOL",
-              "name": "arguments_statement"
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "REPEAT",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "_end_of_line"
+                  }
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "arguments_statement"
+                }
+              ]
             }
           },
           {
