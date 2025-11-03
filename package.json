@@ -1,20 +1,29 @@
 {
-  "name": "tree-sitter-matlab",
-  "version": "1.2.4",
+  "name": "@acristoffers/tree-sitter-matlab",
+  "version": "1.2.5",
   "description": "MATLAB tree-sitter parser",
-  "repository": "https://github.com/acristoffers/tree-sitter-matlab",
-  "license": "MIT",
-  "author": {
-    "name": "Álan Crístoffer e Sousa"
-  },
-  "main": "bindings/node",
-  "types": "bindings/node",
   "keywords": [
     "incremental",
     "parsing",
     "tree-sitter",
     "matlab"
   ],
+  "homepage": "https://github.com/acristoffers/tree-sitter-matlab#readme",
+  "bugs": {
+    "url": "https://github.com/acristoffers/tree-sitter-matlab/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/acristoffers/tree-sitter-matlab.git"
+  },
+  "license": "MIT",
+  "author": "Álan Crístoffer e Sousa",
+  "type": "commonjs",
+  "main": "bindings/node",
+  "types": "bindings/node",
+  "directories": {
+    "test": "test"
+  },
   "files": [
     "grammar.js",
     "tree-sitter.json",
@@ -25,6 +34,12 @@
     "src/**",
     "*.wasm"
   ],
+  "scripts": {
+    "install": "node-gyp-build",
+    "prestart": "tree-sitter build --wasm",
+    "start": "tree-sitter playground",
+    "test": "node --test bindings/node/*_test.js"
+  },
   "dependencies": {
     "node-addon-api": "^8.2.1",
     "node-gyp-build": "^4.8.2"
@@ -40,11 +55,5 @@
     "tree-sitter": {
       "optional": true
     }
-  },
-  "scripts": {
-    "install": "node-gyp-build",
-    "prestart": "tree-sitter build --wasm",
-    "start": "tree-sitter playground",
-    "test": "node --test bindings/node/*_test.js"
   }
 }

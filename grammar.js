@@ -12,7 +12,7 @@
 // @ts-check
 
 const PREC = {
-  parentheses: -1,
+  parenthesis: -1,
   or: 10,
   and: 11,
   not: 12,
@@ -43,6 +43,7 @@ module.exports = grammar({
     [$._index_matrix, $.matrix],
     [$._index_row, $.row],
     [$.function_call, $._function_call_with_keywords],
+    [$.block, $._functionless_block],
   ],
 
   externals: ($) => [
@@ -61,6 +62,8 @@ module.exports = grammar({
     $._multioutput_variable_start,
     $._external_identifier,
     $._catch_identifier,
+    $._transpose,
+    $._ctranspose,
     $.error_sentinel,
   ],
 
@@ -84,6 +87,13 @@ module.exports = grammar({
           repeat1($._end_of_line),
         ),
       ),
+    _functionless_block: ($) =>
+      prec(1, repeat1(
+        seq(
+          choice($._statement, $._expression),
+          repeat1($._end_of_line),
+        ),
+      )),
     block: ($) => $._block,
 
     identifier: ($) => choice($._external_identifier, $._keywords),
@@ -128,7 +138,7 @@ module.exports = grammar({
         $.field_expression,
       ),
 
-    parenthesis: ($) => prec(PREC.parentheses, seq('(', $._expression, ')')),
+    parenthesis: ($) => prec(PREC.parenthesis, seq('(', $._expression, ')')),
 
     _binary_expression: ($) =>
       prec(
@@ -300,7 +310,7 @@ module.exports = grammar({
               $.unary_operator,
             ),
           ),
-          choice(".'", "'"),
+          choice(alias($._transpose, "'"), alias($._ctranspose, ".'")),
         ),
       ),
 
@@ -793,9 +803,10 @@ module.exports = grammar({
         field('name', choice($.identifier, $.property_name, alias($.end_keyword, $.identifier))),
         optional($.function_arguments),
         $._end_of_line,
-        repeat($.arguments_statement),
+        repeat(seq(repeat($._end_of_line), $.arguments_statement)),
+        repeat($.comment),
         repeat($._end_of_line),
-        optional($.block),
+        optional(alias($._functionless_block, $.block)),
         optional(seq(choice('end', 'endfunction'), optional(';'))),
       )),
     _function_definition_with_end: ($) =>
@@ -806,7 +817,8 @@ module.exports = grammar({
         field('name', choice($.identifier, $.property_name, alias($.end_keyword, $.identifier))),
         optional($.function_arguments),
         $._end_of_line,
-        repeat($.arguments_statement),
+        repeat(seq(repeat($._end_of_line), $.arguments_statement)),
+        repeat($.comment),
         repeat($._end_of_line),
         optional($.block),
         choice('end', 'endfunction'),

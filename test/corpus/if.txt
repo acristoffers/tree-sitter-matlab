@@ -117,6 +117,10 @@ If Statement: Inline
 if 1==1, func; else, func; end
 if 1==1 func; else func; end
 if 1==1,, func; elseif 2==2,, func; else,, func; end
+if a' < 'a' a, end
+if a'b'
+     disp('here')
+end
 
 --------------------------------------------------------------------------------
 
@@ -160,4 +164,24 @@ if 1==1,, func; elseif 2==2,, func; else,, func; end
     (else_clause
       (block
         (command
-          (command_name))))))
+          (command_name)))))
+  (if_statement
+    (comparison_operator
+      (postfix_operator
+        (identifier))
+      (string
+        (string_content)))
+    (block
+      (command
+        (command_name))))
+  (if_statement
+    (postfix_operator
+      (identifier))
+    (block
+      (postfix_operator
+        (identifier))
+      (function_call
+        (identifier)
+        (arguments
+          (string
+            (string_content)))))))
