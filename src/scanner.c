@@ -232,11 +232,15 @@ static bool scan_comment(TSLexer* lexer, bool entry_delimiter, bool ctranspose)
 
     if (entry_delimiter && line_continuation) {
         consume_whitespaces(lexer);
+        const bool is_alpha = iswalpha(lexer->lookahead);
+        const bool is_digit = iswdigit(lexer->lookahead);
+        const bool is_quote = lexer->lookahead == '\'' || lexer->lookahead == '"';
+        const bool is_container = lexer->lookahead == '{' || lexer->lookahead == '[';
         if (lexer->lookahead == '.') {
             lexer->mark_end(lexer);
             advance(lexer);
-            lexer->result_symbol = iswdigit(lexer->lookahead) ? ENTRY_DELIMITER : LINE_CONTINUATION;
-        } else if (iswdigit(lexer->lookahead) || lexer->lookahead == '\'' || lexer->lookahead == '"') {
+            lexer->result_symbol = is_digit ? ENTRY_DELIMITER : LINE_CONTINUATION;
+        } else if (is_alpha || is_digit || is_quote || is_container) {
             lexer->result_symbol = ENTRY_DELIMITER;
         } else {
             lexer->result_symbol = LINE_CONTINUATION;

@@ -203,3 +203,207 @@ Matrix: Newlines
     (line_continuation)
     (row
       (number))))
+
+================================================================================
+Matrix: Line continuations
+================================================================================
+
+[1 + ...
+ 2]
+
+[1 ...
+ + 2]
+
+[1 ...
+ + ...
+ 2]
+
+[.1 ...
+ .2]
+
+[a + ...
+ b]
+
+[a ...
+ + b]
+
+[a ...
+ + ...
+ b]
+
+[a ...
+ b]
+
+[[1,2] + ...
+ [1,2]]
+
+[[1,2] ...
+ + [1,2]]
+
+[[1,2] ...
+ + ...
+ [1,2]]
+
+[[1,2] ...
+ [1,2]]
+
+[{1,2} + ...
+ {1,2}]
+
+[{1,2} ...
+ + {1,2}]
+
+[{1,2} ...
+ + ...
+ {1,2}]
+
+[{1,2} ...
+ {1,2}]
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (matrix
+    (row
+      (binary_operator
+        (number)
+        (line_continuation)
+        (number))))
+  (matrix
+    (row
+      (binary_operator
+        (number)
+        (line_continuation)
+        (number))))
+  (matrix
+    (row
+      (binary_operator
+        (number)
+        (line_continuation)
+        (line_continuation)
+        (number))))
+  (matrix
+    (row
+      (number)
+      (line_continuation)
+      (number)))
+  (matrix
+    (row
+      (binary_operator
+        (identifier)
+        (line_continuation)
+        (identifier))))
+  (matrix
+    (row
+      (binary_operator
+        (identifier)
+        (line_continuation)
+        (identifier))))
+  (matrix
+    (row
+      (binary_operator
+        (identifier)
+        (line_continuation)
+        (line_continuation)
+        (identifier))))
+  (matrix
+    (row
+      (identifier)
+      (line_continuation)
+      (identifier)))
+  (matrix
+    (row
+      (binary_operator
+        (matrix
+          (row
+            (number)
+            (number)))
+        (line_continuation)
+        (matrix
+          (row
+            (number)
+            (number))))))
+  (matrix
+    (row
+      (binary_operator
+        (matrix
+          (row
+            (number)
+            (number)))
+        (line_continuation)
+        (matrix
+          (row
+            (number)
+            (number))))))
+  (matrix
+    (row
+      (binary_operator
+        (matrix
+          (row
+            (number)
+            (number)))
+        (line_continuation)
+        (line_continuation)
+        (matrix
+          (row
+            (number)
+            (number))))))
+  (matrix
+    (row
+      (matrix
+        (row
+          (number)
+          (number)))
+      (line_continuation)
+      (matrix
+        (row
+          (number)
+          (number)))))
+  (matrix
+    (row
+      (binary_operator
+        (cell
+          (row
+            (number)
+            (number)))
+        (line_continuation)
+        (cell
+          (row
+            (number)
+            (number))))))
+  (matrix
+    (row
+      (binary_operator
+        (cell
+          (row
+            (number)
+            (number)))
+        (line_continuation)
+        (cell
+          (row
+            (number)
+            (number))))))
+  (matrix
+    (row
+      (binary_operator
+        (cell
+          (row
+            (number)
+            (number)))
+        (line_continuation)
+        (line_continuation)
+        (cell
+          (row
+            (number)
+            (number))))))
+  (matrix
+    (row
+      (cell
+        (row
+          (number)
+          (number)))
+      (line_continuation)
+      (cell
+        (row
+          (number)
+          (number))))))
