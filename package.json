@@ -1,6 +1,6 @@
 {
   "name": "@acristoffers/tree-sitter-matlab",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "description": "MATLAB tree-sitter parser",
   "keywords": [
     "incremental",

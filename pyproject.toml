@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "tree-sitter-matlab"
 description = "MATLAB tree-sitter parser"
-version = "1.2.5"
+version = "1.2.6"
 keywords = ["incremental", "parsing", "tree-sitter", "matlab"]
 classifiers = [
   "Intended Audience :: Developers",
