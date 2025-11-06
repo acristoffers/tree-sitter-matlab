@@ -212,7 +212,12 @@ static inline void consume_comment_line(TSLexer* lexer)
 }
 
 // NOLINTNEXTLINE(*misc-no-recursion)
-static bool scan_comment(Scanner* scanner, TSLexer* lexer, bool entry_delimiter, bool ctranspose)
+static bool scan_comment(
+    Scanner* scanner,
+    TSLexer* lexer,
+    bool entry_delimiter,
+    bool ctranspose,
+    int skipped)
 {
     lexer->mark_end(lexer);
 
@@ -225,8 +230,17 @@ static bool scan_comment(Scanner* scanner, TSLexer* lexer, bool entry_delimiter,
     // ended up being handled here. It allows the correct detection of numbers
     // like .5 inside matrices/cells: [0 .5].
     if (entry_delimiter && !percent && !line_continuation) {
-        lexer->result_symbol = ENTRY_DELIMITER;
-        return iswdigit(lexer->lookahead);
+        if (iswdigit(lexer->lookahead)) {
+            lexer->result_symbol = ENTRY_DELIMITER;
+            return true;
+        }
+        if (lexer->lookahead == '\'') {
+            advance(lexer);
+            lexer->result_symbol = CTRANSPOSE;
+            lexer->mark_end(lexer);
+            return skipped == 0;
+        }
+        return false;
     }
 
     // We are inside a matrix/cell row and there is a line continuation, like this:
@@ -316,7 +330,7 @@ static bool scan_comment(Scanner* scanner, TSLexer* lexer, bool entry_delimiter,
         }
 
         if (lexer->lookahead == '%') {
-            return scan_comment(scanner, lexer, false, false);
+            return scan_comment(scanner, lexer, false, false, 0);
         }
 
         return true;
@@ -638,7 +652,7 @@ static bool scan_command_argument(Scanner* scanner, TSLexer* lexer)
                 lexer->mark_end(lexer);
                 return true;
             }
-            return scan_comment(scanner, lexer, false, false);
+            return scan_comment(scanner, lexer, false, false, 0);
         }
 
         // Line continuation
@@ -1067,7 +1081,7 @@ bool tree_sitter_matlab_external_scanner_scan(void* payload, TSLexer* lexer, con
         if ((scanner->line_continuation || !scanner->is_inside_command) && valid_symbols[COMMENT]
             && (lexer->lookahead == '%' || ((skipped & 2) == 0 && lexer->lookahead == '.'))) {
             return scan_comment(
-                scanner, lexer, valid_symbols[ENTRY_DELIMITER], valid_symbols[CTRANSPOSE]);
+                scanner, lexer, valid_symbols[ENTRY_DELIMITER], valid_symbols[CTRANSPOSE], skipped);
         }
 
         if (!scanner->is_inside_command) {

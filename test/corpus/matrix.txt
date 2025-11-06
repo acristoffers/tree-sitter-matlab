@@ -421,3 +421,24 @@ Matrix: Line continuations
       (string
         (string_content)))
     (line_continuation)))
+
+================================================================================
+Matrix: Transpose in cell
+================================================================================
+
+[a.' b.'; c.' d.']
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (matrix
+    (row
+      (postfix_operator
+        (identifier))
+      (postfix_operator
+        (identifier)))
+    (row
+      (postfix_operator
+        (identifier))
+      (postfix_operator
+        (identifier)))))
