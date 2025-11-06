@@ -705,7 +705,7 @@ module.exports = grammar({
       ),
 
     iterator: ($) => seq($.identifier, '=', $._expression),
-    parfor_options: ($) => choice($.number, $.identifier, $.function_call, $.string),
+    parfor_options: ($) => choice($.number, $.identifier, $.field_expression, $.function_call, $.string),
     for_statement: ($) =>
       choice(
         seq(
