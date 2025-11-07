@@ -260,6 +260,11 @@ Matrix: Line continuations
 [{1,2} ...
  {1,2}]
 
+['foo'...
+      ...            % comment1
+      'bar'...       % comment2
+]
+
 --------------------------------------------------------------------------------
 
 (source_file
@@ -406,4 +411,34 @@ Matrix: Line continuations
       (cell
         (row
           (number)
-          (number))))))
+          (number)))))
+  (matrix
+    (row
+      (string
+        (string_content))
+      (line_continuation)
+      (line_continuation)
+      (string
+        (string_content)))
+    (line_continuation)))
+
+================================================================================
+Matrix: Transpose in cell
+================================================================================
+
+[a.' b.'; c.' d.']
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (matrix
+    (row
+      (postfix_operator
+        (identifier))
+      (postfix_operator
+        (identifier)))
+    (row
+      (postfix_operator
+        (identifier))
+      (postfix_operator
+        (identifier)))))

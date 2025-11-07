@@ -48,6 +48,7 @@ typedef struct
     bool line_continuation;
     bool is_shell_scape;
     char string_delimiter;
+    bool generate_entry_delimiter;
 } Scanner;
 
 static const char* const keywords[] = {
@@ -184,7 +185,8 @@ unsigned tree_sitter_matlab_external_scanner_serialize(void* payload, char* buff
     buffer[1] = (char) scanner->line_continuation;
     buffer[2] = (char) scanner->is_shell_scape;
     buffer[3] = scanner->string_delimiter;
-    return 4;
+    buffer[4] = (char) scanner->generate_entry_delimiter;
+    return 5;
 }
 
 void tree_sitter_matlab_external_scanner_deserialize(
@@ -193,11 +195,12 @@ void tree_sitter_matlab_external_scanner_deserialize(
     unsigned length)
 {
     Scanner* scanner = (Scanner*) payload;
-    if (length == 4) {
+    if (length == 5) {
         scanner->is_inside_command = buffer[0];
         scanner->line_continuation = buffer[1];
         scanner->is_shell_scape = buffer[2];
         scanner->string_delimiter = buffer[3];
+        scanner->generate_entry_delimiter = buffer[4];
     }
 }
 
@@ -209,7 +212,12 @@ static inline void consume_comment_line(TSLexer* lexer)
 }
 
 // NOLINTNEXTLINE(*misc-no-recursion)
-static bool scan_comment(TSLexer* lexer, bool entry_delimiter, bool ctranspose)
+static bool scan_comment(
+    Scanner* scanner,
+    TSLexer* lexer,
+    bool entry_delimiter,
+    bool ctranspose,
+    int skipped)
 {
     lexer->mark_end(lexer);
 
@@ -222,29 +230,47 @@ static bool scan_comment(TSLexer* lexer, bool entry_delimiter, bool ctranspose)
     // ended up being handled here. It allows the correct detection of numbers
     // like .5 inside matrices/cells: [0 .5].
     if (entry_delimiter && !percent && !line_continuation) {
-        lexer->result_symbol = ENTRY_DELIMITER;
-        return iswdigit(lexer->lookahead);
+        if (iswdigit(lexer->lookahead)) {
+            lexer->result_symbol = ENTRY_DELIMITER;
+            return true;
+        }
+        if (lexer->lookahead == '\'') {
+            advance(lexer);
+            lexer->result_symbol = CTRANSPOSE;
+            lexer->mark_end(lexer);
+            return skipped == 0;
+        }
+        return false;
     }
+
     // We are inside a matrix/cell row and there is a line continuation, like this:
     // a = { 1 ...
     //       2 ...
     // }
-
     if (entry_delimiter && line_continuation) {
+        consume_comment_line(lexer);
         consume_whitespaces(lexer);
+
+        lexer->mark_end(lexer);
+        lexer->result_symbol = LINE_CONTINUATION;
+
         const bool is_alpha = iswalpha(lexer->lookahead);
         const bool is_digit = iswdigit(lexer->lookahead);
         const bool is_quote = lexer->lookahead == '\'' || lexer->lookahead == '"';
-        const bool is_container = lexer->lookahead == '{' || lexer->lookahead == '[';
-        if (lexer->lookahead == '.') {
-            lexer->mark_end(lexer);
+        const bool is_container = lexer->lookahead == '{' || lexer->lookahead == '['
+                                  || lexer->lookahead == '(';
+
+        if (lexer->lookahead == '~') {
             advance(lexer);
-            lexer->result_symbol = is_digit ? ENTRY_DELIMITER : LINE_CONTINUATION;
+            scanner->generate_entry_delimiter = lexer->lookahead != '=';
+        } else if (lexer->lookahead == '+' || lexer->lookahead == '-') {
+            advance(lexer);
+            scanner->generate_entry_delimiter = lexer->lookahead != ' ';
+        } else if (lexer->lookahead == '.') {
+            advance(lexer);
+            scanner->generate_entry_delimiter = is_digit;
         } else if (is_alpha || is_digit || is_quote || is_container) {
-            lexer->result_symbol = ENTRY_DELIMITER;
-        } else {
-            lexer->result_symbol = LINE_CONTINUATION;
-            lexer->mark_end(lexer);
+            scanner->generate_entry_delimiter = true;
         }
         return true;
     }
@@ -304,7 +330,7 @@ static bool scan_comment(TSLexer* lexer, bool entry_delimiter, bool ctranspose)
         }
 
         if (lexer->lookahead == '%') {
-            return scan_comment(lexer, false, false);
+            return scan_comment(scanner, lexer, false, false, 0);
         }
 
         return true;
@@ -626,7 +652,7 @@ static bool scan_command_argument(Scanner* scanner, TSLexer* lexer)
                 lexer->mark_end(lexer);
                 return true;
             }
-            return scan_comment(lexer, false, false);
+            return scan_comment(scanner, lexer, false, false, 0);
         }
 
         // Line continuation
@@ -1041,12 +1067,21 @@ static bool scan_transpose(TSLexer* lexer)
 bool tree_sitter_matlab_external_scanner_scan(void* payload, TSLexer* lexer, const bool* valid_symbols)
 {
     Scanner* scanner = (Scanner*) payload;
+
+    if (scanner->generate_entry_delimiter) {
+        scanner->generate_entry_delimiter = false;
+        lexer->mark_end(lexer);
+        lexer->result_symbol = ENTRY_DELIMITER;
+        return true;
+    }
+
     if (scanner->string_delimiter == 0) {
         int skipped = skip_whitespaces(lexer);
 
         if ((scanner->line_continuation || !scanner->is_inside_command) && valid_symbols[COMMENT]
             && (lexer->lookahead == '%' || ((skipped & 2) == 0 && lexer->lookahead == '.'))) {
-            return scan_comment(lexer, valid_symbols[ENTRY_DELIMITER], valid_symbols[CTRANSPOSE]);
+            return scan_comment(
+                scanner, lexer, valid_symbols[ENTRY_DELIMITER], valid_symbols[CTRANSPOSE], skipped);
         }
 
         if (!scanner->is_inside_command) {
