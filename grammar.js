@@ -461,7 +461,7 @@ module.exports = grammar({
               alias($._index_unary_operator, $.unary_operator),
             ),
           ),
-          choice(".'", "'"),
+          choice(alias($._transpose, "'"), alias($._ctranspose, ".'")),
         ),
       ),
     _index_row: ($) =>
