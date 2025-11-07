@@ -2077,12 +2077,22 @@
             "type": "CHOICE",
             "members": [
               {
-                "type": "STRING",
-                "value": ".'"
+                "type": "ALIAS",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "_transpose"
+                },
+                "named": false,
+                "value": "'"
               },
               {
-                "type": "STRING",
-                "value": "'"
+                "type": "ALIAS",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "_ctranspose"
+                },
+                "named": false,
+                "value": ".'"
               }
             ]
           }
