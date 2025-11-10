@@ -256,6 +256,7 @@ static bool scan_comment(
 
         const bool is_alpha = iswalpha(lexer->lookahead);
         const bool is_digit = iswdigit(lexer->lookahead);
+        const bool is_metaclass = lexer->lookahead == '?';
         const bool is_quote = lexer->lookahead == '\'' || lexer->lookahead == '"';
         const bool is_container = lexer->lookahead == '{' || lexer->lookahead == '['
                                   || lexer->lookahead == '(';
@@ -269,7 +270,7 @@ static bool scan_comment(
         } else if (lexer->lookahead == '.') {
             advance(lexer);
             scanner->generate_entry_delimiter = is_digit;
-        } else if (is_alpha || is_digit || is_quote || is_container) {
+        } else if (is_alpha || is_digit || is_quote || is_container || is_metaclass) {
             scanner->generate_entry_delimiter = true;
         }
         return true;
