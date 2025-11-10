@@ -4487,7 +4487,7 @@
       ]
     },
     "function_definition": {
-      "type": "PREC_RIGHT",
+      "type": "PREC_DYNAMIC",
       "value": 0,
       "content": {
         "type": "SEQ",
@@ -4672,8 +4672,8 @@
       }
     },
     "_function_definition_with_end": {
-      "type": "PREC_RIGHT",
-      "value": 0,
+      "type": "PREC_DYNAMIC",
+      "value": 1,
       "content": {
         "type": "SEQ",
         "members": [
