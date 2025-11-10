@@ -422,7 +422,6 @@ check_command_for_argument:
     return false;
 
 skip_command_check:
-
     // First case: found an end-of-line already, so this is a command for sure.
     // example:
     // pwd
@@ -442,7 +441,13 @@ skip_command_check:
 
     // If followed by a line continuation, look after it
     const int skipped = consume_whitespaces(lexer);
-    if (skipped & 4) { // Command followed by spaces then newline
+    if (skipped & 2) {
+        // `catch e `
+        if (valid_symbols[CATCH_IDENTIFIER]) {
+            lexer->result_symbol = CATCH_IDENTIFIER;
+            return true;
+        }
+        // Command followed by spaces then newline
         scanner->is_inside_command = false;
         lexer->result_symbol = COMMAND_NAME;
         return true;
@@ -466,6 +471,10 @@ skip_command_check:
     // Check for end-of-line again, since it may be that the user just put a
     // space at the end, like `pwd ;`
     if (is_eol(lexer->lookahead)) {
+        if (valid_symbols[CATCH_IDENTIFIER] && (skipped & 4) == 0) {
+            lexer->result_symbol = CATCH_IDENTIFIER;
+            return true;
+        }
         scanner->is_inside_command = true;
         return true;
     }
