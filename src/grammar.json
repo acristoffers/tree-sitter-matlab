@@ -4579,8 +4579,17 @@
                 {
                   "type": "REPEAT",
                   "content": {
-                    "type": "SYMBOL",
-                    "name": "_end_of_line"
+                    "type": "CHOICE",
+                    "members": [
+                      {
+                        "type": "SYMBOL",
+                        "name": "comment"
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "_end_of_line"
+                      }
+                    ]
                   }
                 },
                 {
@@ -4755,8 +4764,17 @@
                 {
                   "type": "REPEAT",
                   "content": {
-                    "type": "SYMBOL",
-                    "name": "_end_of_line"
+                    "type": "CHOICE",
+                    "members": [
+                      {
+                        "type": "SYMBOL",
+                        "name": "comment"
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "_end_of_line"
+                      }
+                    ]
                   }
                 },
                 {
@@ -6139,6 +6157,13 @@
     [
       "block",
       "_functionless_block"
+    ],
+    [
+      "function_definition",
+      "_function_definition_with_end"
+    ],
+    [
+      "_function_definition_with_end"
     ]
   ],
   "precedences": [],

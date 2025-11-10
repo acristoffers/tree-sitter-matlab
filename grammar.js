@@ -44,6 +44,8 @@ module.exports = grammar({
     [$._index_row, $.row],
     [$.function_call, $._function_call_with_keywords],
     [$.block, $._functionless_block],
+    [$.function_definition, $._function_definition_with_end],
+    [$._function_definition_with_end],
   ],
 
   externals: ($) => [
@@ -803,7 +805,7 @@ module.exports = grammar({
         field('name', choice($.identifier, $.property_name, alias($.end_keyword, $.identifier))),
         optional($.function_arguments),
         $._end_of_line,
-        repeat(seq(repeat($._end_of_line), $.arguments_statement)),
+        repeat(seq(repeat(choice($.comment, $._end_of_line)), $.arguments_statement)),
         repeat($.comment),
         repeat($._end_of_line),
         optional(alias($._functionless_block, $.block)),
@@ -817,7 +819,7 @@ module.exports = grammar({
         field('name', choice($.identifier, $.property_name, alias($.end_keyword, $.identifier))),
         optional($.function_arguments),
         $._end_of_line,
-        repeat(seq(repeat($._end_of_line), $.arguments_statement)),
+        repeat(seq(repeat(choice($.comment, $._end_of_line)), $.arguments_statement)),
         repeat($.comment),
         repeat($._end_of_line),
         optional($.block),
