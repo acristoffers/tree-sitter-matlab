@@ -60,34 +60,12 @@ Given the existence of external method definition, maybe that is even the
 correct thing to do, since we don't know if the current file is inside a
 special class folder.
 
-# Known problems
-
-Newlines, just like whitespaces, are mostly ignored. In the case of spaces, it
-allows `abs( a )` and `abs(a)` to be described by the same, simple rule. In the
-case of newlines, it allows many multiline constructs (like, `if`, `while`,
-`function`) to be expressed the same way.
-
-This creates the undesired side-effect that some constructs, which are not
-accepted by MATLAB, are correctly parsed, like:
-
-```matlab
-function (
-  a
-)
-end
-```
-
-This, however, is hard to fix. The assumption that newlines are ignored by
-default is all over the grammar and changing it requires making changes to too
-many rules, which also make them all more complex and fragile. Therefore, this
-change won't be made.
-
 # Installation
 
 This parser is now the default for the following editors:
 
 - Emacs: Through the `tree-sitter-langs` package.
-- Helix: Builtin, now in master and will be available in the next release (whatever comes after 23.05).
+- Helix: Builtin.
 - Neovim: Through the `nvim-treesitter` plugin.
 
 # Screenshots
