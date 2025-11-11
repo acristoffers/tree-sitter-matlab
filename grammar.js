@@ -877,12 +877,15 @@ module.exports = grammar({
         )
       ),
     properties: ($) =>
-      seq(
-        'properties',
-        optional($.attributes),
-        repeat1($._end_of_line),
-        repeat($.property),
-        'end',
+      prec.right(
+        seq(
+          'properties',
+          optional($.attributes),
+          repeat1($._end_of_line),
+          repeat($.property),
+          'end',
+          repeat($._end_of_line),
+        ),
       ),
     function_signature: ($) =>
       seq(
@@ -892,37 +895,46 @@ module.exports = grammar({
         optional($.function_arguments),
       ),
     methods: ($) =>
-      seq(
-        'methods',
-        optional($.attributes),
-        repeat1($._end_of_line),
-        repeat(
-          seq(
-            choice(
-              alias(seq($.function_output, field('name', alias('end', $.identifier)), $.function_arguments), $.function_signature),
-              $.function_signature,
-              alias($._function_definition_with_end, $.function_definition)),
-            repeat($._end_of_line)),
+      prec.right(
+        seq(
+          'methods',
+          optional($.attributes),
+          repeat1($._end_of_line),
+          repeat(
+            seq(
+              choice(
+                alias(seq($.function_output, field('name', alias('end', $.identifier)), $.function_arguments), $.function_signature),
+                $.function_signature,
+                alias($._function_definition_with_end, $.function_definition)),
+              repeat($._end_of_line)),
+          ),
+          'end',
+          repeat($._end_of_line),
         ),
-        'end',
       ),
     events: ($) =>
-      seq(
-        'events',
-        optional($.attributes),
-        $._end_of_line,
-        repeat(choice(seq($.identifier, $._end_of_line), $._end_of_line)),
-        'end',
+      prec.right(
+        seq(
+          'events',
+          optional($.attributes),
+          $._end_of_line,
+          repeat(choice(seq($.identifier, $._end_of_line), $._end_of_line)),
+          'end',
+          repeat($._end_of_line),
+        ),
       ),
     enum: ($) =>
       seq($.identifier, optional(seq('(', commaSep1($._expression), ')'))),
     enumeration: ($) =>
-      seq(
-        'enumeration',
-        optional($.attributes),
-        $._end_of_line,
-        repeat(choice(seq($.enum, $._end_of_line), $._end_of_line)),
-        'end',
+      prec.right(
+        seq(
+          'enumeration',
+          optional($.attributes),
+          $._end_of_line,
+          repeat(choice(seq($.enum, $._end_of_line), $._end_of_line)),
+          'end',
+          repeat($._end_of_line),
+        ),
       ),
     class_definition: ($) =>
       seq(
