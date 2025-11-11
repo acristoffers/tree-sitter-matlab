@@ -301,6 +301,7 @@ static bool scan_comment(
             consume_whitespaces(lexer);
 
             if (consume_char('%', lexer) && consume_char('}', lexer)) {
+                consume_whitespaces(lexer);
                 lexer->result_symbol = COMMENT;
                 lexer->mark_end(lexer);
                 return true;
