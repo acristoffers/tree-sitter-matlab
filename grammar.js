@@ -817,10 +817,14 @@ module.exports = grammar({
         optional(choice('get.', 'set.')),
         field('name', choice($.identifier, $.property_name, alias($.end_keyword, $.identifier))),
         optional($.function_arguments),
-        $._end_of_line,
-        repeat(seq(repeat(choice($.comment, $._end_of_line)), $.arguments_statement)),
-        repeat(choice($.comment, $._end_of_line)),
-        optional($.block),
+        optional(
+          seq(
+            $._end_of_line,
+            repeat(seq(repeat(choice($.comment, $._end_of_line)), $.arguments_statement)),
+            repeat(choice($.comment, $._end_of_line)),
+            optional($.block),
+          )
+        ),
         choice('end', 'endfunction'),
         optional(';'),
       )),
