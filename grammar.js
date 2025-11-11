@@ -73,9 +73,12 @@ module.exports = grammar({
 
   rules: {
     source_file: ($) =>
-      choice(
-        optional(seq($._block, repeat($.function_definition))),
-        repeat1($.function_definition),
+      seq(
+        repeat($._end_of_line),
+        choice(
+          optional(seq($._block, repeat($.function_definition))),
+          repeat1($.function_definition),
+        ),
       ),
 
     _block: ($) =>
