@@ -44,6 +44,8 @@ module.exports = grammar({
     [$._index_row, $.row],
     [$.function_call, $._function_call_with_keywords],
     [$.block, $._functionless_block],
+    [$.function_definition, $._function_definition_with_end],
+    [$._function_definition_with_end],
   ],
 
   externals: ($) => [
@@ -796,30 +798,28 @@ module.exports = grammar({
     function_arguments: ($) =>
       seq('(', field('arguments', optional($._lambda_arguments)), ')'),
     function_definition: ($) =>
-      prec.right(seq(
+      prec.dynamic(0, seq(
         'function',
         optional($.function_output),
         optional(choice('get.', 'set.')),
         field('name', choice($.identifier, $.property_name, alias($.end_keyword, $.identifier))),
         optional($.function_arguments),
         $._end_of_line,
-        repeat(seq(repeat($._end_of_line), $.arguments_statement)),
-        repeat($.comment),
-        repeat($._end_of_line),
+        repeat(seq(repeat(choice($.comment, $._end_of_line)), $.arguments_statement)),
+        repeat(choice($.comment, $._end_of_line)),
         optional(alias($._functionless_block, $.block)),
         optional(seq(choice('end', 'endfunction'), optional(';'))),
       )),
     _function_definition_with_end: ($) =>
-      prec.right(seq(
+      prec.dynamic(1, seq(
         'function',
         optional($.function_output),
         optional(choice('get.', 'set.')),
         field('name', choice($.identifier, $.property_name, alias($.end_keyword, $.identifier))),
         optional($.function_arguments),
         $._end_of_line,
-        repeat(seq(repeat($._end_of_line), $.arguments_statement)),
-        repeat($.comment),
-        repeat($._end_of_line),
+        repeat(seq(repeat(choice($.comment, $._end_of_line)), $.arguments_statement)),
+        repeat(choice($.comment, $._end_of_line)),
         optional($.block),
         choice('end', 'endfunction'),
         optional(';'),
