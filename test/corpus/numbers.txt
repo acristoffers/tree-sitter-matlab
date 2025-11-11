@@ -186,8 +186,8 @@ Number: Hexadecimals and Binaries
 0xFFu8
 0xFFu16
 0xFFu32
-0xFFu64
-0b0101s8
+0xFFU64
+0b0101S8
 0b0101s16
 0b0101s32
 0b0101s64

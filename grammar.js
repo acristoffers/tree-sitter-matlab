@@ -962,8 +962,8 @@ module.exports = grammar({
 
     number: ($) => choice(
       /(\d+|\d+\.\d*|\.\d+)([eEdD][+-]?\d+)?[ij]?/,
-      /0[xX][\dA-Fa-f]+([su](8|16|32|64))?/,
-      /0[bB][01]+([su](8|16|32|64))?/
+      /0[xX][\dA-Fa-f]+([suSU](8|16|32|64))?/,
+      /0[bB][01]+([suSU](8|16|32|64))?/
     ),
 
     end_keyword: ($) => 'end',
