@@ -73,9 +73,12 @@ module.exports = grammar({
 
   rules: {
     source_file: ($) =>
-      choice(
-        optional(seq($._block, repeat($.function_definition))),
-        repeat1($.function_definition),
+      seq(
+        repeat($._end_of_line),
+        choice(
+          optional(seq($._block, repeat($.function_definition))),
+          repeat1($.function_definition),
+        ),
       ),
 
     _block: ($) =>
@@ -882,7 +885,7 @@ module.exports = grammar({
           'properties',
           optional($.attributes),
           repeat1($._end_of_line),
-          repeat($.property),
+          repeat(choice($.property, $.comment)),
           'end',
           repeat($._end_of_line),
         ),
@@ -903,6 +906,7 @@ module.exports = grammar({
           repeat(
             seq(
               choice(
+                $.comment,
                 alias(seq($.function_output, field('name', alias('end', $.identifier)), $.function_arguments), $.function_signature),
                 $.function_signature,
                 alias($._function_definition_with_end, $.function_definition)),
@@ -918,7 +922,7 @@ module.exports = grammar({
           'events',
           optional($.attributes),
           $._end_of_line,
-          repeat(choice(seq($.identifier, $._end_of_line), $._end_of_line)),
+          repeat(choice(seq($.identifier, $._end_of_line), $._end_of_line, $.comment)),
           'end',
           repeat($._end_of_line),
         ),
@@ -931,7 +935,7 @@ module.exports = grammar({
           'enumeration',
           optional($.attributes),
           $._end_of_line,
-          repeat(choice(seq($.enum, $._end_of_line), $._end_of_line)),
+          repeat(choice(seq($.enum, $._end_of_line), $._end_of_line, $.comment)),
           'end',
           repeat($._end_of_line),
         ),
@@ -943,7 +947,7 @@ module.exports = grammar({
         field('name', $.identifier),
         optional($.superclasses),
         $._end_of_line,
-        repeat(choice($.properties, $.methods, $.events, $.enumeration, ';')),
+        repeat(choice($.properties, $.methods, $.events, $.enumeration, ';', $.comment)),
         'end',
       ),
 

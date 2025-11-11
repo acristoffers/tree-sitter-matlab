@@ -3,38 +3,50 @@
   "name": "matlab",
   "rules": {
     "source_file": {
-      "type": "CHOICE",
+      "type": "SEQ",
       "members": [
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_end_of_line"
+          }
+        },
         {
           "type": "CHOICE",
           "members": [
             {
-              "type": "SEQ",
+              "type": "CHOICE",
               "members": [
                 {
-                  "type": "SYMBOL",
-                  "name": "_block"
+                  "type": "SEQ",
+                  "members": [
+                    {
+                      "type": "SYMBOL",
+                      "name": "_block"
+                    },
+                    {
+                      "type": "REPEAT",
+                      "content": {
+                        "type": "SYMBOL",
+                        "name": "function_definition"
+                      }
+                    }
+                  ]
                 },
                 {
-                  "type": "REPEAT",
-                  "content": {
-                    "type": "SYMBOL",
-                    "name": "function_definition"
-                  }
+                  "type": "BLANK"
                 }
               ]
             },
             {
-              "type": "BLANK"
+              "type": "REPEAT1",
+              "content": {
+                "type": "SYMBOL",
+                "name": "function_definition"
+              }
             }
           ]
-        },
-        {
-          "type": "REPEAT1",
-          "content": {
-            "type": "SYMBOL",
-            "name": "function_definition"
-          }
         }
       ]
     },
@@ -5374,8 +5386,17 @@
           {
             "type": "REPEAT",
             "content": {
-              "type": "SYMBOL",
-              "name": "property"
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "property"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "comment"
+                }
+              ]
             }
           },
           {
@@ -5510,6 +5531,10 @@
                   "type": "CHOICE",
                   "members": [
                     {
+                      "type": "SYMBOL",
+                      "name": "comment"
+                    },
+                    {
                       "type": "ALIAS",
                       "content": {
                         "type": "SEQ",
@@ -5626,6 +5651,10 @@
                 {
                   "type": "SYMBOL",
                   "name": "_end_of_line"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "comment"
                 }
               ]
             }
@@ -5746,6 +5775,10 @@
                 {
                   "type": "SYMBOL",
                   "name": "_end_of_line"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "comment"
                 }
               ]
             }
@@ -5831,6 +5864,10 @@
               {
                 "type": "STRING",
                 "value": ";"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "comment"
               }
             ]
           }
