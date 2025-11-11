@@ -825,7 +825,8 @@ module.exports = grammar({
         optional(';'),
       )),
 
-    attribute: ($) => seq($.identifier, optional(seq('=', $._expression))),
+    _negated_attribute: ($) => seq("~", $.identifier),
+    attribute: ($) => choice(alias($._negated_attribute, $.not_operator), seq($.identifier, optional(seq('=', $._expression)))),
     attributes: ($) =>
       seq('(', $.attribute, repeat(seq(',', $.attribute)), ')'),
     superclasses: ($) =>
