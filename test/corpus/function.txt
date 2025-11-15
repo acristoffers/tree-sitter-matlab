@@ -10,6 +10,8 @@ function a()
     1
 end
 
+function a() end
+
 --------------------------------------------------------------------------------
 
 (source_file
@@ -21,7 +23,10 @@ end
     (identifier)
     (function_arguments)
     (block
-      (number))))
+      (number)))
+  (function_definition
+    (identifier)
+    (function_arguments)))
 
 ================================================================================
 Function Declaration: Args, No Output

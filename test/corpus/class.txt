@@ -504,3 +504,47 @@ end
             (identifier)
             (identifier))
           (number))))))
+
+================================================================================
+Class: properties with comments and empty lines
+================================================================================
+
+classdef class_prop_comment
+    properties
+        Interlacing (1,1) logical = false;
+
+        % comment1
+
+        InterlaceIndex {mustBeVector, mustBeNumeric, mustBeInteger, mustBeNonnegative, mustBeLessThan(InterlaceIndex, 10)} = 0;
+    end
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (class_definition
+    (identifier)
+    (properties
+      (property
+        (identifier)
+        (dimensions
+          (number)
+          (number))
+        (identifier)
+        (default_value
+          (identifier)))
+      (comment)
+      (property
+        (identifier)
+        (validation_functions
+          (identifier)
+          (identifier)
+          (identifier)
+          (identifier)
+          (function_call
+            (identifier)
+            (arguments
+              (identifier)
+              (number))))
+        (default_value
+          (number))))))

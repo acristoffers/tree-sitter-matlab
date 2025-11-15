@@ -1098,6 +1098,10 @@
           "named": true
         },
         {
+          "type": "comment",
+          "named": true
+        },
+        {
           "type": "enumeration",
           "named": true
         },
@@ -1558,6 +1562,10 @@
           "named": true
         },
         {
+          "type": "comment",
+          "named": true
+        },
+        {
           "type": "enum",
           "named": true
         }
@@ -1574,6 +1582,10 @@
       "types": [
         {
           "type": "attributes",
+          "named": true
+        },
+        {
+          "type": "comment",
           "named": true
         },
         {
@@ -2251,6 +2263,10 @@
           "named": true
         },
         {
+          "type": "comment",
+          "named": true
+        },
+        {
           "type": "function_definition",
           "named": true
         },
@@ -2594,6 +2610,10 @@
       "types": [
         {
           "type": "attributes",
+          "named": true
+        },
+        {
+          "type": "comment",
           "named": true
         },
         {
