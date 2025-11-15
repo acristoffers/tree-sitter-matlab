@@ -855,36 +855,38 @@ module.exports = grammar({
         ),
       ),
     property: ($) =>
-      choice(
-        seq(
-          field(
-            'name',
-            choice($.identifier, $.property_name, $.ignored_argument),
+      prec.right(
+        choice(
+          seq(
+            field(
+              'name',
+              choice($.identifier, $.property_name, $.ignored_argument),
+            ),
+            optional($.dimensions),
+            optional(choice($.identifier, $.property_name)),
+            optional($.validation_functions),
+            optional($.default_value),
+            repeat1($._end_of_line),
           ),
-          optional($.dimensions),
-          optional(choice($.identifier, $.property_name)),
-          optional($.validation_functions),
-          optional($.default_value),
-          repeat1($._end_of_line),
+          seq(
+            field(
+              'name',
+              choice($.identifier, $.property_name, $.ignored_argument),
+            ),
+            '@',
+            $.identifier,
+            alias(optional(choice('vector', 'matrix', 'scalar')), $.identifier),
+            optional($.default_value),
+            repeat1($._end_of_line),
+          )
         ),
-        seq(
-          field(
-            'name',
-            choice($.identifier, $.property_name, $.ignored_argument),
-          ),
-          '@',
-          $.identifier,
-          alias(optional(choice('vector', 'matrix', 'scalar')), $.identifier),
-          optional($.default_value),
-          repeat1($._end_of_line),
-        )
       ),
     properties: ($) =>
       seq(
         'properties',
         optional($.attributes),
-        repeat1($._end_of_line),
-        repeat(choice($.property, $.comment)),
+        $._end_of_line,
+        repeat(choice($.property, $._end_of_line, $.comment)),
         'end',
       ),
     function_signature: ($) =>
