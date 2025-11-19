@@ -791,7 +791,7 @@ module.exports = grammar({
         'arguments',
         optional(alias($._argument_attributes, $.attributes)),
         repeat1($._end_of_line),
-        repeat(choice($.property, seq($.class_property, repeat1($._end_of_line)))),
+        repeat(seq(choice($.property, $.class_property), repeat1($._end_of_line))),
         'end',
         optional($._end_of_line),
       )),
@@ -845,13 +845,11 @@ module.exports = grammar({
     default_value: ($) => seq('=', $._expression),
     property_name: ($) =>
       prec.right(
-        prec.dynamic(
-          -1,
-          seq(
-            $.identifier,
-            repeat(seq('.', $.identifier)),
-            optional(seq('.', '*')),
-          ),
+        -1,
+        seq(
+          $.identifier,
+          repeat(seq('.', $.identifier)),
+          optional(seq('.', '*')),
         ),
       ),
     property: ($) =>
@@ -866,7 +864,6 @@ module.exports = grammar({
             optional(choice($.identifier, $.property_name)),
             optional($.validation_functions),
             optional($.default_value),
-            repeat1($._end_of_line),
           ),
           seq(
             field(
@@ -877,7 +874,6 @@ module.exports = grammar({
             $.identifier,
             alias(optional(choice('vector', 'matrix', 'scalar')), $.identifier),
             optional($.default_value),
-            repeat1($._end_of_line),
           )
         ),
       ),
@@ -886,7 +882,7 @@ module.exports = grammar({
         'properties',
         optional($.attributes),
         $._end_of_line,
-        repeat(choice($.property, $._end_of_line, $.comment)),
+        repeat(choice(seq($.property, $._end_of_line), $._end_of_line, $.comment)),
         'end',
       ),
     function_signature: ($) =>
