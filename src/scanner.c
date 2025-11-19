@@ -299,20 +299,22 @@ static bool scan_comment(
             if (consume_char('%', lexer)) {
                 if (consume_char('{', lexer) && (consume_whitespaces(lexer) & 2)) {
                     level++;
-                } else if (consume_char('}', lexer) && (consume_whitespaces(lexer) & 2)) {
-                    level--;
+                } else if (consume_char('}', lexer)) {
+                    lexer->mark_end(lexer);
+                    if (consume_whitespaces(lexer) & 2) {
+                        level--;
+                    }
                 }
                 if (level == 0) {
-                    consume_whitespaces_once(lexer);
                     break;
                 }
                 continue;
             }
             consume_comment_line(lexer);
+            lexer->mark_end(lexer);
         }
 
         lexer->result_symbol = COMMENT;
-        lexer->mark_end(lexer);
         return true;
     }
 

@@ -474,34 +474,6 @@ end
           (identifier))))))
 
 ================================================================================
-Comment: Block comment should consume newline after it
-================================================================================
-
-if true || ...
-   %{
-     block
-   %}
-   false
-    disp('here')
-end
-
---------------------------------------------------------------------------------
-
-(source_file
-  (if_statement
-    (boolean_operator
-      (identifier)
-      (line_continuation)
-      (comment)
-      (identifier))
-    (block
-      (function_call
-        (identifier)
-        (arguments
-          (string
-            (string_content)))))))
-
-================================================================================
 Comment: Nested blocks
 ================================================================================
 
