@@ -73,9 +73,12 @@ module.exports = grammar({
 
   rules: {
     source_file: ($) =>
-      choice(
-        optional(seq($._block, repeat($.function_definition))),
-        repeat1($.function_definition),
+      seq(
+        repeat($._end_of_line),
+        choice(
+          optional(seq($._block, repeat($.function_definition))),
+          repeat1($.function_definition),
+        ),
       ),
 
     _block: ($) =>
@@ -788,7 +791,7 @@ module.exports = grammar({
         'arguments',
         optional(alias($._argument_attributes, $.attributes)),
         repeat1($._end_of_line),
-        repeat(choice($.property, seq($.class_property, repeat1($._end_of_line)))),
+        repeat(seq(choice($.property, $.class_property), repeat1($._end_of_line))),
         'end',
         optional($._end_of_line),
       )),
@@ -817,15 +820,20 @@ module.exports = grammar({
         optional(choice('get.', 'set.')),
         field('name', choice($.identifier, $.property_name, alias($.end_keyword, $.identifier))),
         optional($.function_arguments),
-        $._end_of_line,
-        repeat(seq(repeat(choice($.comment, $._end_of_line)), $.arguments_statement)),
-        repeat(choice($.comment, $._end_of_line)),
-        optional($.block),
+        optional(
+          seq(
+            $._end_of_line,
+            repeat(seq(repeat(choice($.comment, $._end_of_line)), $.arguments_statement)),
+            repeat(choice($.comment, $._end_of_line)),
+            optional($.block),
+          )
+        ),
         choice('end', 'endfunction'),
         optional(';'),
       )),
 
-    attribute: ($) => seq($.identifier, optional(seq('=', $._expression))),
+    _negated_attribute: ($) => seq("~", $.identifier),
+    attribute: ($) => choice(alias($._negated_attribute, $.not_operator), seq($.identifier, optional(seq('=', $._expression)))),
     attributes: ($) =>
       seq('(', $.attribute, repeat(seq(',', $.attribute)), ')'),
     superclasses: ($) =>
@@ -837,46 +845,44 @@ module.exports = grammar({
     default_value: ($) => seq('=', $._expression),
     property_name: ($) =>
       prec.right(
-        prec.dynamic(
-          -1,
-          seq(
-            $.identifier,
-            repeat(seq('.', $.identifier)),
-            optional(seq('.', '*')),
-          ),
+        -1,
+        seq(
+          $.identifier,
+          repeat(seq('.', $.identifier)),
+          optional(seq('.', '*')),
         ),
       ),
     property: ($) =>
-      choice(
-        seq(
-          field(
-            'name',
-            choice($.identifier, $.property_name, $.ignored_argument),
+      prec.right(
+        choice(
+          seq(
+            field(
+              'name',
+              choice($.identifier, $.property_name, $.ignored_argument),
+            ),
+            optional($.dimensions),
+            optional(choice($.identifier, $.property_name)),
+            optional($.validation_functions),
+            optional($.default_value),
           ),
-          optional($.dimensions),
-          optional(choice($.identifier, $.property_name)),
-          optional($.validation_functions),
-          optional($.default_value),
-          repeat1($._end_of_line),
+          seq(
+            field(
+              'name',
+              choice($.identifier, $.property_name, $.ignored_argument),
+            ),
+            '@',
+            $.identifier,
+            alias(optional(choice('vector', 'matrix', 'scalar')), $.identifier),
+            optional($.default_value),
+          )
         ),
-        seq(
-          field(
-            'name',
-            choice($.identifier, $.property_name, $.ignored_argument),
-          ),
-          '@',
-          $.identifier,
-          alias(optional(choice('vector', 'matrix', 'scalar')), $.identifier),
-          optional($.default_value),
-          repeat1($._end_of_line),
-        )
       ),
     properties: ($) =>
       seq(
         'properties',
         optional($.attributes),
-        repeat1($._end_of_line),
-        repeat($.property),
+        $._end_of_line,
+        repeat(choice(seq($.property, $._end_of_line), $._end_of_line, $.comment)),
         'end',
       ),
     function_signature: ($) =>
@@ -894,6 +900,7 @@ module.exports = grammar({
         repeat(
           seq(
             choice(
+              $.comment,
               alias(seq($.function_output, field('name', alias('end', $.identifier)), $.function_arguments), $.function_signature),
               $.function_signature,
               alias($._function_definition_with_end, $.function_definition)),
@@ -906,7 +913,7 @@ module.exports = grammar({
         'events',
         optional($.attributes),
         $._end_of_line,
-        repeat(choice(seq($.identifier, $._end_of_line), $._end_of_line)),
+        repeat(choice(seq($.identifier, $._end_of_line), $._end_of_line, $.comment)),
         'end',
       ),
     enum: ($) =>
@@ -916,7 +923,7 @@ module.exports = grammar({
         'enumeration',
         optional($.attributes),
         $._end_of_line,
-        repeat(choice(seq($.enum, $._end_of_line), $._end_of_line)),
+        repeat(choice(seq($.enum, $._end_of_line), $._end_of_line, $.comment)),
         'end',
       ),
     class_definition: ($) =>
@@ -926,7 +933,7 @@ module.exports = grammar({
         field('name', $.identifier),
         optional($.superclasses),
         $._end_of_line,
-        repeat(choice($.properties, $.methods, $.events, $.enumeration, ';')),
+        repeat(choice($.properties, $.methods, $.events, $.enumeration, $._end_of_line, $.comment)),
         'end',
       ),
 
@@ -957,8 +964,8 @@ module.exports = grammar({
 
     number: ($) => choice(
       /(\d+|\d+\.\d*|\.\d+)([eEdD][+-]?\d+)?[ij]?/,
-      /0[xX][\dA-Fa-f]+([su](8|16|32|64))?/,
-      /0[bB][01]+([su](8|16|32|64))?/
+      /0[xX][\dA-Fa-f]+([suSU](8|16|32|64))?/,
+      /0[bB][01]+([suSU](8|16|32|64))?/
     ),
 
     end_keyword: ($) => 'end',

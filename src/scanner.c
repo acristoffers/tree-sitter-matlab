@@ -156,7 +156,7 @@ static inline int consume_whitespaces(TSLexer* lexer)
 
 static inline void consume_whitespaces_once(TSLexer* lexer)
 {
-    while (iswspace(lexer->lookahead)) {
+    while (!lexer->eof(lexer) && iswspace(lexer->lookahead)) {
         if (lexer->lookahead == '\n' || lexer->lookahead == '\r') {
             advance(lexer);
             break;
@@ -277,10 +277,14 @@ static bool scan_comment(
     }
 
     if (block) {
+        if (skipped & 2) {
+            return false;
+        }
+
+        // If it has things on the same line, it's not a block, just a comment
         while (!lexer->eof(lexer) && iswspace_matlab(lexer->lookahead)) {
             advance(lexer);
         }
-
         if (!consume_char('\n', lexer) && !consume_char('\r', lexer)) {
             consume_comment_line(lexer);
             lexer->result_symbol = COMMENT;
@@ -288,26 +292,30 @@ static bool scan_comment(
             return true;
         }
 
-        // Empty block comment
-        if (lexer->lookahead == '%' && consume_char('%', lexer) && consume_char('}', lexer)) {
-            lexer->result_symbol = COMMENT;
-            lexer->mark_end(lexer);
-            return true;
-        }
-
+        // Otherwise, find the matching closing block
+        int level = 1;
         while (!lexer->eof(lexer)) {
-            consume_comment_line(lexer);
-            advance(lexer);
             consume_whitespaces(lexer);
-
-            if (consume_char('%', lexer) && consume_char('}', lexer)) {
-                lexer->result_symbol = COMMENT;
-                lexer->mark_end(lexer);
-                return true;
+            if (consume_char('%', lexer)) {
+                if (consume_char('{', lexer) && (consume_whitespaces(lexer) & 2)) {
+                    level++;
+                } else if (consume_char('}', lexer)) {
+                    lexer->mark_end(lexer);
+                    if (consume_whitespaces(lexer) & 2) {
+                        level--;
+                    }
+                }
+                if (level == 0) {
+                    break;
+                }
+                continue;
             }
+            consume_comment_line(lexer);
+            lexer->mark_end(lexer);
         }
 
-        return false;
+        lexer->result_symbol = COMMENT;
+        return true;
     }
 
     if (percent || line_continuation) {

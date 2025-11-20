@@ -3,7 +3,7 @@ Keywords: Use of Keywords as Identifiers
 ================================================================================
 
 classdef (abstract) mclass < handle & matlab.mixin.SetGetExactNames
-    properties (Access='public')
+    properties (Access='public',~Negate)
         AP = [];
         AB = 'charvec with space';
         AC = "string with space and ( ";
@@ -99,7 +99,10 @@ end
         (attribute
           (identifier)
           (string
-            (string_content))))
+            (string_content)))
+        (attribute
+          (not_operator
+            (identifier))))
       (property
         (identifier)
         (default_value

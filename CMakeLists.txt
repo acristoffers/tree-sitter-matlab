@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.13)
 
 project(tree-sitter-matlab
-        VERSION "1.2.8"
+        VERSION "1.2.9"
         DESCRIPTION "MATLAB tree-sitter parser"
         HOMEPAGE_URL "https://github.com/acristoffers/tree-sitter-matlab"
         LANGUAGES C)
