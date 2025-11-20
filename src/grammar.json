@@ -1442,8 +1442,17 @@
         {
           "type": "REPEAT",
           "content": {
-            "type": "STRING",
-            "value": "\n"
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "PATTERN",
+                "value": "[,]*;[ ,;]*"
+              },
+              {
+                "type": "PATTERN",
+                "value": "[\\r\\n]"
+              }
+            ]
           }
         },
         {
@@ -1465,8 +1474,8 @@
                         "type": "CHOICE",
                         "members": [
                           {
-                            "type": "STRING",
-                            "value": ";"
+                            "type": "PATTERN",
+                            "value": "[,]*;[ ,;]*"
                           },
                           {
                             "type": "PATTERN",
@@ -1512,8 +1521,17 @@
         {
           "type": "REPEAT",
           "content": {
-            "type": "STRING",
-            "value": "\n"
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "PATTERN",
+                "value": "[,]*;[ ,;]*"
+              },
+              {
+                "type": "PATTERN",
+                "value": "[\\r\\n]"
+              }
+            ]
           }
         },
         {
@@ -1535,8 +1553,8 @@
                         "type": "CHOICE",
                         "members": [
                           {
-                            "type": "STRING",
-                            "value": ";"
+                            "type": "PATTERN",
+                            "value": "[,]*;[ ,;]*"
                           },
                           {
                             "type": "PATTERN",
