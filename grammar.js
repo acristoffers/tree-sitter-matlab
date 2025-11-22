@@ -349,15 +349,15 @@ module.exports = grammar({
     matrix: ($) =>
       seq(
         '[',
-        repeat("\n"),
-        optional(seq($.row, repeat(seq(choice(';', /[\r\n]/), optional($.row))))),
+        repeat(choice(/[,]*;[ ,;]*/, /[\r\n]/)),
+        optional(seq($.row, repeat(seq(choice(/[,]*;[ ,;]*/, /[\r\n]/), optional($.row))))),
         ']',
       ),
     cell: ($) =>
       seq(
         '{',
-        repeat("\n"),
-        optional(seq($.row, repeat(seq(choice(';', /[\r\n]/), optional($.row))))),
+        repeat(choice(/[,]*;[ ,;]*/, /[\r\n]/)),
+        optional(seq($.row, repeat(seq(choice(/[,]*;[ ,;]*/, /[\r\n]/), optional($.row))))),
         '}',
       ),
 

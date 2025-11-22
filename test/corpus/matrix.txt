@@ -442,3 +442,30 @@ Matrix: Transpose in cell
         (identifier))
       (postfix_operator
         (identifier)))))
+
+================================================================================
+Matrix: Spurious delimiters
+================================================================================
+
+[; , ; 1 , 2]
+{1,;,;;,2}
+[;cos(5)]
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (matrix
+    (row
+      (number)
+      (number)))
+  (cell
+    (row
+      (number))
+    (row
+      (number)))
+  (matrix
+    (row
+      (function_call
+        (identifier)
+        (arguments
+          (number))))))
