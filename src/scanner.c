@@ -479,7 +479,7 @@ skip_command_check:
 
     // Check for end-of-line again, since it may be that the user just put a
     // space at the end, like `pwd ;`
-    if (is_eol(lexer->lookahead)) {
+    if (is_eol(lexer->lookahead) || lexer->lookahead == '%') {
         if (valid_symbols[CATCH_IDENTIFIER] && (skipped & 4) == 0) {
             lexer->result_symbol = CATCH_IDENTIFIER;
             return true;
