@@ -396,6 +396,9 @@ static bool scan_command(Scanner* scanner, TSLexer* lexer, const bool* valid_sym
                 // If it is a keyword, yield to the internal scanner
                 for (size_t i = 0; i < keywords_size; i++) {
                     if (strcmp(keywords[i], buffer) == 0) {
+                        if (strcmp("enumeration", buffer) == 0) {
+                            goto check_enumeration;
+                        }
                         return false;
                     }
                 }
@@ -416,6 +419,18 @@ static bool scan_command(Scanner* scanner, TSLexer* lexer, const bool* valid_sym
         }
     }
     goto skip_command_check;
+
+check_enumeration: {
+    const int skipped = consume_whitespaces(lexer);
+    if (skipped & 2) {
+        // enumeration can be a function
+        if (lexer->lookahead == '(') {
+            lexer->result_symbol = IDENTIFIER;
+            return true;
+        }
+    }
+    return false;
+}
 
 check_command_for_argument:
     // If this is a keyword-command, check if it has an argument.
