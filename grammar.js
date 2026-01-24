@@ -896,7 +896,7 @@ module.exports = grammar({
       seq(
         'methods',
         optional($.attributes),
-        repeat1($._end_of_line),
+        repeat($._end_of_line),
         repeat(
           seq(
             choice(

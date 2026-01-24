@@ -5516,7 +5516,7 @@
           ]
         },
         {
-          "type": "REPEAT1",
+          "type": "REPEAT",
           "content": {
             "type": "SYMBOL",
             "name": "_end_of_line"
