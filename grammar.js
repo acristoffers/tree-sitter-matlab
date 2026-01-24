@@ -266,7 +266,22 @@ module.exports = grammar({
         ),
       ),
 
-    not_operator: ($) => prec(PREC.not, seq('~', $._expression)),
+    not_operator: ($) => prec(PREC.not, seq('~', choice(
+      $.cell,
+      $.function_call,
+      $.handle_operator,
+      $.identifier,
+      $.matrix,
+      $.metaclass_operator,
+      $.not_operator,
+      $.number,
+      $.parenthesis,
+      $.postfix_operator,
+      $.range,
+      $.string,
+      $.unary_operator,
+      $.field_expression,
+    ))),
 
     metaclass_operator: ($) => prec.left(seq('?', seq($.identifier, repeat(seq('.', $.identifier))))),
 
