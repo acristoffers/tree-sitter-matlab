@@ -62,9 +62,9 @@ special class folder.
 
 # Installation
 
-This parser is now the default for the following editors:
+This parser is available in the following editors:
 
-- Emacs: Through the `tree-sitter-langs` package.
+- [Emacs-MATLAB-Mode](https://github.com/mathworks/Emacs-MATLAB-Mode) where the parser is used for syntax highlighting, semantic movement, and  code indentation (code formatting)  where both the left most indent-level whitespace is adjusted and language elements within lines are formatted.
 - Helix: Builtin.
 - Neovim: Through the `nvim-treesitter` plugin.
 
