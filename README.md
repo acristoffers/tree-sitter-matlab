@@ -68,6 +68,14 @@ This parser is now the default for the following editors:
 - Helix: Builtin.
 - Neovim: Through the `nvim-treesitter` plugin.
 
+# Known issues
+
+- There is a conflict between numbers and element-wise operators that will
+  cause a wrong parse if there is no space between the number and the operator.
+  For example, `1./a` will be interpreted as `1. / a` instead of the correct
+  `1 ./ a`. This problem does not happen if there is a space between the number
+  and the operator.
+
 # Screenshots
 
 ![First Screenshot](https://raw.githubusercontent.com/acristoffers/tree-sitter-matlab/screenshots/s1.png)
