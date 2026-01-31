@@ -2010,6 +2010,10 @@
           "named": true
         },
         {
+          "type": "not_operator",
+          "named": true
+        },
+        {
           "type": "number",
           "named": true
         },

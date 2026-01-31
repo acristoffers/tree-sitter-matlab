@@ -240,6 +240,7 @@ module.exports = grammar({
             $.postfix_operator,
             $.string,
             $.unary_operator,
+            $.not_operator,
           ),
           ')',
         ),

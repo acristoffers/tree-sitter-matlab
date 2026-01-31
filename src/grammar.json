@@ -898,6 +898,10 @@
               {
                 "type": "SYMBOL",
                 "name": "unary_operator"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "not_operator"
               }
             ]
           },
