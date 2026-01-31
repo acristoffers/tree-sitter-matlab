@@ -60,6 +60,145 @@ Given the existence of external method definition, maybe that is even the
 correct thing to do, since we don't know if the current file is inside a
 special class folder.
 
+# Known Limitations
+
+While this parser aims to be as correct as possible, there are some inherent
+limitations in MATLAB's syntax that make certain constructs difficult or
+impossible to parse correctly. These are documented here based on discussions in
+closed issues:
+
+## Context-Sensitive Parsing Issues
+
+### String vs. Transpose Operator Ambiguity (Issue #51, #113)
+
+The single quote `'` can be either a string delimiter or the transpose operator.
+This creates ambiguity in certain contexts:
+
+```matlab
+% This can fail to parse correctly:
+m1 = [a.'; b.'];
+
+% In if-statement conditions:
+if a' < 'a'  % ambiguous: is a' an identifier+transpose or start of string?
+```
+
+**Workaround**: Use explicit `.'` transpose syntax or avoid these patterns.
+
+### Dynamic Field Reference with Expressions (Issue #151, #152)
+
+Dynamic field reference syntax `obj.(expr)` fails when the expression contains
+certain operators due to precedence issues:
+
+```matlab
+T.(~a + 1)  % fails
+T.(1 + ~a)  % works
+```
+
+## Edge Case Patterns
+
+### Nested Multiline Comments (Issue #136)
+
+MATLAB allows nested block comments, but the parser doesn't support this:
+
+```matlab
+%{
+  code
+  %{ nested comment %}
+  more code
+%}
+```
+
+### Matrix/Cell Delimiter Edge Cases (Issue #129)
+
+MATLAB accepts matrices and cells with unusual delimiter patterns that the
+parser doesn't handle:
+
+```matlab
+[;,; 1, 2]
+{1,;,;;,2}
+```
+
+**Impact**: Low—affects only edge cases with unnecessary delimiters.
+
+### Function on Same Line as Methods Keyword (Issue #150)
+
+Placing a function definition on the same line as `methods` causes parse errors:
+
+```matlab
+classdef myClass
+  methods function b = foo(a)  % fails
+```
+
+**Workaround**: Place the function on the next line.
+
+### Ellipsis Between Class Definition Blocks (Issue #134)
+
+Line continuation (`...`) between class blocks (properties/methods/events) is
+valid MATLAB but causes parser errors:
+
+```matlab
+properties
+end
+...  % causes error
+methods
+```
+
+## Structural Issues
+
+### Comments in Class Properties Block (Issue #137, #138, #139)
+
+Comments between class properties can cause parse errors or incorrect scope
+attribution. Trailing newlines after statements may be included in the parent
+node's scope, affecting tools that rely on accurate node ranges.
+
+### Catch Exception Identifier with Comment (Issue #148)
+
+`catch` clause identifier followed by a comment (with a space) causes the
+identifier to be parsed incorrectly:
+
+```matlab
+catch err % comment  % fails
+catch err% comment   % works (no space)
+```
+
+### Line Continuation with Missing Commas (Issue #118)
+
+Line continuations in matrices/cells without commas are not parsed correctly:
+
+```matlab
+[a() ...  % needs comma before continuation
+ b()]
+```
+
+**Workaround**: Add explicit commas: `[a(), ... b()]`
+
+### Function Handles in Cells with Line Continuations (Issue #124)
+
+Function handles (anonymous functions) in cells fail to parse correctly when
+combined with line continuations.
+
+### Uppercase Integer Size Specifiers (Issue #133)
+
+Uppercase size specifiers in binary/hex literals cause parse errors, despite
+MATLAB accepting them:
+
+```matlab
+0b100000s16  % works
+0B100000S16  % fails
+```
+
+### Enumeration Keyword Without Space (Issue #149)
+
+`enumeration...` (no space before `...`) is parsed as an identifier instead of
+keyword + line continuation.
+
+**Workaround**: Add a space: `enumeration ...`
+
+Most users can work around these limitations by adjusting code formatting
+slightly or avoiding these uncommon patterns. These edge cases are documented
+here for completeness and to help users understand why certain valid MATLAB code
+might not parse correctly.
+
 # Installation
 
 This parser is now the default for the following editors:
