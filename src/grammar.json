@@ -2523,11 +2523,19 @@
         },
         {
           "type": "SYMBOL",
+          "name": "handle_operator"
+        },
+        {
+          "type": "SYMBOL",
           "name": "identifier"
         },
         {
           "type": "SYMBOL",
           "name": "cell"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "lambda"
         },
         {
           "type": "ALIAS",
@@ -2537,6 +2545,10 @@
           },
           "named": true,
           "value": "matrix"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "metaclass_operator"
         },
         {
           "type": "ALIAS",
@@ -3143,25 +3155,8 @@
           "name": "spread_operator"
         },
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "PREC_DYNAMIC",
-              "value": 1,
-              "content": {
-                "type": "SYMBOL",
-                "name": "_index_expression"
-              }
-            },
-            {
-              "type": "PREC_DYNAMIC",
-              "value": -1,
-              "content": {
-                "type": "SYMBOL",
-                "name": "_expression"
-              }
-            }
-          ]
+          "type": "SYMBOL",
+          "name": "_index_expression"
         }
       ]
     },

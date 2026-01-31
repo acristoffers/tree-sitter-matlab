@@ -527,14 +527,20 @@ module.exports = grammar({
         ),
       ),
     _index_parenthesis: ($) => seq('(', $._index_expression, ')'),
+    // _index_expression is intentionally a superset of _expression to avoid
+    // conflicts like obj([1;end]) where the parser would otherwise reduce to
+    // a non-index matrix/row too early.
     _index_expression: ($) =>
       choice(
         alias($._index_boolean_operator, $.boolean_operator),
         $.field_expression,
         $.function_call,
+        $.handle_operator,
         $.identifier,
         $.cell,
+        $.lambda,
         alias($._index_matrix, $.matrix),
+        $.metaclass_operator,
         alias($._index_not_operator, $.not_operator),
         $.number,
         alias($._index_comparison_operator, $.comparison_operator),
@@ -590,7 +596,7 @@ module.exports = grammar({
         ),
       );
     },
-    _index_argument: ($) => choice($.spread_operator, choice(prec.dynamic(1, $._index_expression), prec.dynamic(-1, $._expression))),
+    _index_argument: ($) => choice($.spread_operator, $._index_expression),
     _index_arguments: ($) => commaSep1(field('argument', $._index_argument)),
 
     arguments: ($) =>

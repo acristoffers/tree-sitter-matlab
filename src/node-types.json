@@ -36,11 +36,23 @@
           "named": true
         },
         {
+          "type": "handle_operator",
+          "named": true
+        },
+        {
           "type": "identifier",
           "named": true
         },
         {
+          "type": "lambda",
+          "named": true
+        },
+        {
           "type": "matrix",
+          "named": true
+        },
+        {
+          "type": "metaclass_operator",
           "named": true
         },
         {
