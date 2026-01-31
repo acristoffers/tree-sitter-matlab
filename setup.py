@@ -38,7 +38,7 @@ class Build(build):
 class BdistWheel(bdist_wheel):
     def get_tag(self):
         python, abi, platform = super().get_tag()
-        if python.startswith("cp"):
+        if python.startswith("cp") and limited_api:
             python, abi = "cp310", "abi3"
         return python, abi, platform
 

@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "tree-sitter-matlab"
 description = "MATLAB tree-sitter parser"
-version = "1.2.10"
+version = "1.2.11"
 keywords = ["incremental", "parsing", "tree-sitter", "matlab"]
 classifiers = [
   "Intended Audience :: Developers",
@@ -25,5 +25,5 @@ Homepage = "https://github.com/acristoffers/tree-sitter-matlab"
 core = ["tree-sitter~=0.24"]
 
 [tool.cibuildwheel]
-build = "cp310-*"
+build = "cp310-* cp314t-*"
 build-frontend = "build"

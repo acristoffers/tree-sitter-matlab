@@ -898,6 +898,10 @@
               {
                 "type": "SYMBOL",
                 "name": "unary_operator"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "not_operator"
               }
             ]
           },
@@ -992,8 +996,65 @@
             "value": "~"
           },
           {
-            "type": "SYMBOL",
-            "name": "_expression"
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "cell"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "function_call"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "handle_operator"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "identifier"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "matrix"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "metaclass_operator"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "not_operator"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "number"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "parenthesis"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "postfix_operator"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "range"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "string"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "unary_operator"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "field_expression"
+              }
+            ]
           }
         ]
       }
@@ -5516,7 +5577,7 @@
           ]
         },
         {
-          "type": "REPEAT1",
+          "type": "REPEAT",
           "content": {
             "type": "SYMBOL",
             "name": "_end_of_line"

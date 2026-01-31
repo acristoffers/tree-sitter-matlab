@@ -2010,6 +2010,10 @@
           "named": true
         },
         {
+          "type": "not_operator",
+          "named": true
+        },
+        {
           "type": "number",
           "named": true
         },
@@ -2317,19 +2321,7 @@
           "named": true
         },
         {
-          "type": "binary_operator",
-          "named": true
-        },
-        {
-          "type": "boolean_operator",
-          "named": true
-        },
-        {
           "type": "cell",
-          "named": true
-        },
-        {
-          "type": "comparison_operator",
           "named": true
         },
         {
@@ -2346,10 +2338,6 @@
         },
         {
           "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "lambda",
           "named": true
         },
         {
