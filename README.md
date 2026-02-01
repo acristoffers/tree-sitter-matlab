@@ -73,7 +73,7 @@ This parser is available in the following editors:
 The columns have the following meaning:
 
 - *Highlights*: supports syntax highlight
-- Folds: supports code folding
+- *Folds*: supports code folding
 - *Indents*: supports code indenting, which adjusts the leftmost whitespace on each line.
 - *Code Format*: indent includes code formatting that standardizes the spacing of language elements
   within code lines, aligns matrix columns, adds missing commas within cells and matrices, etc.
