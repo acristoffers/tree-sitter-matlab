@@ -64,12 +64,28 @@ special class folder.
 
 This parser is available in the following editors:
 
-- [Emacs-MATLAB-Mode](https://github.com/mathworks/Emacs-MATLAB-Mode) where the parser is used for syntax highlighting, semantic movement, and  code indentation (code formatting)  where both the left most indent-level whitespace is adjusted and language elements within lines are formatted.
-- Helix: Builtin.
-- Neovim: Through the `nvim-treesitter` plugin.
+| Editor | Plugin              | Highlights | Folds | Indents | Code Format | Injections  | Locals |
+| :---   | :---                | :---       | :---  | :---    | :---        | :---        | :---   |
+| Emacs  | [Emacs-MATLAB-Mode] | ✔          | ✘     | ✔       | ✔           | ✔           | ✘      |
+| Helix  | Builtin             | ✔          | ✘     | ✔       | ✘           | ✘           | ✘      |
+| NeoVim | [nvim-treesitter]   | ✔          | ✔     | ✔       | ✘           | ✔           | ✔      |
+
+The columns have the following meaning:
+
+- *Highlights*: supports syntax highlight
+- Folds: supports code folding
+- *Indents*: supports code indenting, which adjusts the leftmost whitespace on each line.
+- *Code Format*: indent includes code formatting that standardizes the spacing of language elements
+  within code lines, aligns matrix columns, adds missing commas within cells and matrices, etc.
+- *Injections*: supports embedding the language into another language (i.e.: MATLAB code blocks inside
+  Markdown or [org-mode](https://orgmode.org/))
+- *Locals*: supports identifying variables/functions/etc scope
 
 # Screenshots
 
 ![First Screenshot](https://raw.githubusercontent.com/acristoffers/tree-sitter-matlab/screenshots/s1.png)
 ![Second Screenshot](https://raw.githubusercontent.com/acristoffers/tree-sitter-matlab/screenshots/s2.png)
 ![Third Screenshot](https://raw.githubusercontent.com/acristoffers/tree-sitter-matlab/screenshots/s3.png)
+
+[Emacs-MATLAB-Mode]: https://github.com/mathworks/Emacs-MATLAB-Mode
+[nvim-treesitter]: https://github.com/nvim-treesitter/nvim-treesitter
