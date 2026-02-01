@@ -14,7 +14,7 @@
         mkTreeSitterMatlab = { abiVersion, pnameSuffix }:
           pkgs.stdenv.mkDerivation {
             pname = "tree-sitter-matlab${pnameSuffix}";
-            version = "1.2.12";
+            version = "1.2.13";
             src = ./.;
 
             nativeBuildInputs = [
@@ -76,7 +76,7 @@
         mkQueriesPackage = { editor, srcDir, installDir }:
           pkgs.stdenvNoCC.mkDerivation {
             pname = "tree-sitter-matlab-queries-${editor}";
-            version = "1.2.12";
+            version = "1.2.13";
             src = ./.;
 
             dontBuild = true;
@@ -99,7 +99,7 @@
 
         mkTreeSitterMatlabWasm = pkgs.stdenv.mkDerivation {
           pname = "tree-sitter-matlab-wasm";
-          version = "1.2.12";
+          version = "1.2.13";
           src = ./.;
 
           nativeBuildInputs = [
