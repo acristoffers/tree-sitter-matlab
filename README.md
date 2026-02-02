@@ -62,14 +62,38 @@ special class folder.
 
 # Installation
 
-This parser is now the default for the following editors:
+This parser is available in the following editors:
 
-- Emacs: Through the `tree-sitter-langs` package.
-- Helix: Builtin.
-- Neovim: Through the `nvim-treesitter` plugin.
+| Editor | Plugin              | Highlights | Folds | Indents | Code Format | Injections  | Locals |
+| :---   | :---                | :---       | :---  | :---    | :---        | :---        | :---   |
+| Emacs  | [Emacs-MATLAB-Mode] | ✔          | ✘     | ✔       | ✔           | ✔           | ✘      |
+| Helix  | Builtin             | ✔          | ✘     | ✔       | ✘           | ✘           | ✘      |
+| NeoVim | [nvim-treesitter]   | ✔          | ✔     | ✔       | ✘           | ✔           | ✔      |
+
+The columns have the following meaning:
+
+- *Highlights*: supports syntax highlight
+- *Folds*: supports code folding
+- *Indents*: supports code indenting, which adjusts the leftmost whitespace on each line.
+- *Code Format*: indent includes code formatting that standardizes the spacing of language elements
+  within code lines, aligns matrix columns, adds missing commas within cells and matrices, etc.
+- *Injections*: supports embedding the language into another language (i.e.: MATLAB code blocks inside
+  Markdown or [org-mode](https://orgmode.org/))
+- *Locals*: supports identifying variables/functions/etc scope
+
+# Known issues
+
+- There is a conflict between numbers and element-wise operators that will
+  cause a wrong parse if there is no space between the number and the operator.
+  For example, `1./a` will be interpreted as `1. / a` instead of the correct
+  `1 ./ a`. This problem does not happen if there is a space between the number
+  and the operator.
 
 # Screenshots
 
 ![First Screenshot](https://raw.githubusercontent.com/acristoffers/tree-sitter-matlab/screenshots/s1.png)
 ![Second Screenshot](https://raw.githubusercontent.com/acristoffers/tree-sitter-matlab/screenshots/s2.png)
 ![Third Screenshot](https://raw.githubusercontent.com/acristoffers/tree-sitter-matlab/screenshots/s3.png)
+
+[Emacs-MATLAB-Mode]: https://github.com/mathworks/Emacs-MATLAB-Mode
+[nvim-treesitter]: https://github.com/nvim-treesitter/nvim-treesitter

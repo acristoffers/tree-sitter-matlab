@@ -4,7 +4,7 @@ endif
 
 LANGUAGE_NAME := tree-sitter-matlab
 HOMEPAGE_URL := https://github.com/acristoffers/tree-sitter-matlab
-VERSION := 1.2.11
+VERSION := 1.2.13
 
 # repository
 SRC_DIR := src
