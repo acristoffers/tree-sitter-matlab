@@ -27,7 +27,7 @@ const PREC = {
   postfix: 21,
   power: 22,
   call: 23,
-  member: 23,
+  member: 24,
 };
 
 module.exports = grammar({
@@ -35,13 +35,11 @@ module.exports = grammar({
 
   conflicts: ($) => [
     [$._expression, $._range_element],
-    [$._expression, $._index_expression],
+    [$.field_expression],
     [$.range],
     [$.block],
     [$._index_range],
     [$._index_arguments],
-    [$._index_matrix, $.matrix],
-    [$._index_row, $.row],
     [$.function_call, $._function_call_with_keywords],
     [$.block, $._functionless_block],
     [$.function_definition, $._function_definition_with_end],
@@ -246,7 +244,7 @@ module.exports = grammar({
         ),
       ),
     field_expression: ($) =>
-      prec.left(
+      prec.dynamic(
         PREC.member,
         seq(
           field('object', choice($.identifier, $.function_call)),
@@ -518,7 +516,7 @@ module.exports = grammar({
       )),
     _index_range: ($) =>
       prec.right(
-        PREC.postfix + 1,
+        PREC.postfix,
         seq(
           $._index_range_element,
           ':',
@@ -526,7 +524,7 @@ module.exports = grammar({
           optional(seq(':', $._index_range_element)),
         ),
       ),
-    _index_parenthesis: ($) => seq('(', $._index_expression, ')'),
+    _index_parenthesis: ($) => prec(PREC.parenthesis, seq('(', $._index_expression, ')')),
     // _index_expression is intentionally a superset of _expression to avoid
     // conflicts like obj([1;end]) where the parser would otherwise reduce to
     // a non-index matrix/row too early.
@@ -623,7 +621,7 @@ module.exports = grammar({
                 alias($.end_keyword, $.identifier),
                 $.identifier,
                 $.function_call,
-                $.indirect_access,
+                $.field_expression,
               ),
             ),
             optional(seq('@', alias($.property_name, $.superclass))),
@@ -638,7 +636,7 @@ module.exports = grammar({
               choice(
                 $.identifier,
                 $.function_call,
-                $.indirect_access,
+                $.field_expression,
               ),
             ),
             seq('@', alias($.property_name, $.superclass)),
@@ -657,7 +655,7 @@ module.exports = grammar({
                 alias($._extended_keywords, $.identifier),
                 $.identifier,
                 $.function_call,
-                $.indirect_access,
+                $.field_expression,
               ),
             ),
             optional(seq('@', alias($.property_name, $.superclass))),
@@ -672,7 +670,7 @@ module.exports = grammar({
               choice(
                 $.identifier,
                 $.function_call,
-                $.indirect_access,
+                $.field_expression,
               ),
             ),
             seq('@', alias($.property_name, $.superclass)),
@@ -1021,7 +1019,7 @@ function commaSep1(rule) {
  *
  * @param {Rule} rule
  *
- * @return {SeqRule}
+ * @return {ChoiceRule}
  *
  */
 function optionalCommaSep(rule) {
