@@ -98,7 +98,7 @@ jobs:
           pattern: artifacts-*
           path: dist
           merge-multiple: true
-      - uses: pypa/gh-action-pypi-publish@release/v1
+      - uses: pypa/gh-action-pypi-publish@release/v1.13
 
   release:
     name: Create GitHub Release
