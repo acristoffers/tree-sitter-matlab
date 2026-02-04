@@ -91,31 +91,31 @@ a.(b(2)){:}
 --------------------------------------------------------------------------------
 
 (source_file
-  (field_expression
-    (identifier)
-    (function_call
+  (function_call
+    (field_expression
+      (identifier)
       (indirect_access
         (string
-          (string_content)))
-      (arguments
-        (spread_operator))))
-  (field_expression
-    (identifier)
-    (function_call
+          (string_content))))
+    (arguments
+      (spread_operator)))
+  (function_call
+    (field_expression
+      (identifier)
       (indirect_access
-        (identifier))
-      (arguments
-        (spread_operator))))
-  (field_expression
-    (identifier)
-    (function_call
+        (identifier)))
+    (arguments
+      (spread_operator)))
+  (function_call
+    (field_expression
+      (identifier)
       (indirect_access
         (function_call
           (identifier)
           (arguments
-            (number))))
-      (arguments
-        (spread_operator)))))
+            (number)))))
+    (arguments
+      (spread_operator))))
 
 ================================================================================
 Command Call: No Arguments
@@ -475,18 +475,18 @@ end
     name: (identifier)
     (function_arguments
       arguments: (identifier)
-          arguments: (identifier))
-        (ERROR
-          (identifier)
-          (binary_operator
-            left: (number)
-            right: (function_call
-              name: (identifier)
-              (arguments
-                argument: (identifier)
-                argument: (identifier))))
-          (line_continuation)
-          (end_keyword))))
+      arguments: (identifier))
+    (ERROR
+      (identifier)
+      (binary_operator
+        left: (number)
+        right: (function_call
+          name: (identifier)
+          (arguments
+            argument: (identifier)
+            argument: (identifier))))
+      (line_continuation)
+      (end_keyword))))
 
 ================================================================================
 Function Call: Super

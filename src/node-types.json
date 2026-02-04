@@ -1701,15 +1701,15 @@
         "required": true,
         "types": [
           {
+            "type": "field_expression",
+            "named": true
+          },
+          {
             "type": "function_call",
             "named": true
           },
           {
             "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "indirect_access",
             "named": true
           }
         ]

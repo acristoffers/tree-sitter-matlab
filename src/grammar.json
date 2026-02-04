@@ -913,8 +913,8 @@
       }
     },
     "field_expression": {
-      "type": "PREC_LEFT",
-      "value": 23,
+      "type": "PREC_DYNAMIC",
+      "value": 24,
       "content": {
         "type": "SEQ",
         "members": [
@@ -2444,7 +2444,7 @@
     },
     "_index_range": {
       "type": "PREC_RIGHT",
-      "value": 22,
+      "value": 21,
       "content": {
         "type": "SEQ",
         "members": [
@@ -2485,21 +2485,25 @@
       }
     },
     "_index_parenthesis": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "("
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_index_expression"
-        },
-        {
-          "type": "STRING",
-          "value": ")"
-        }
-      ]
+      "type": "PREC",
+      "value": -1,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "STRING",
+            "value": "("
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_index_expression"
+          },
+          {
+            "type": "STRING",
+            "value": ")"
+          }
+        ]
+      }
     },
     "_index_expression": {
       "type": "CHOICE",
@@ -3415,7 +3419,7 @@
                     },
                     {
                       "type": "SYMBOL",
-                      "name": "indirect_access"
+                      "name": "field_expression"
                     }
                   ]
                 }
@@ -3475,7 +3479,7 @@
                     },
                     {
                       "type": "SYMBOL",
-                      "name": "indirect_access"
+                      "name": "field_expression"
                     }
                   ]
                 }
@@ -3558,7 +3562,7 @@
                     },
                     {
                       "type": "SYMBOL",
-                      "name": "indirect_access"
+                      "name": "field_expression"
                     }
                   ]
                 }
@@ -3618,7 +3622,7 @@
                     },
                     {
                       "type": "SYMBOL",
-                      "name": "indirect_access"
+                      "name": "field_expression"
                     }
                   ]
                 }
@@ -6278,8 +6282,7 @@
       "_range_element"
     ],
     [
-      "_expression",
-      "_index_expression"
+      "field_expression"
     ],
     [
       "range"
@@ -6292,14 +6295,6 @@
     ],
     [
       "_index_arguments"
-    ],
-    [
-      "_index_matrix",
-      "matrix"
-    ],
-    [
-      "_index_row",
-      "row"
     ],
     [
       "function_call",

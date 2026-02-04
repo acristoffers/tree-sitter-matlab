@@ -63,13 +63,14 @@ a.("b").c
           (number))))
     (identifier))
   (field_expression
-    (identifier)
     (function_call
-      (indirect_access
-        (function_call
-          (identifier)
-          (arguments
-            (number))))
+      (field_expression
+        (identifier)
+        (indirect_access
+          (function_call
+            (identifier)
+            (arguments
+              (number)))))
       (arguments
         (number)))
     (identifier))
