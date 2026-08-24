@@ -157,7 +157,14 @@ static inline int consume_whitespaces(TSLexer* lexer)
 static inline void consume_whitespaces_once(TSLexer* lexer)
 {
     while (!lexer->eof(lexer) && iswspace(lexer->lookahead)) {
-        if (lexer->lookahead == '\n' || lexer->lookahead == '\r') {
+        if (lexer->lookahead == '\r') {
+            advance(lexer);
+            if (lexer->lookahead == '\n') {
+                advance(lexer);
+            }
+            break;
+        }
+        if (lexer->lookahead == '\n') {
             advance(lexer);
             break;
         }

@@ -276,6 +276,38 @@ end
               (identifier))))))))
 
 ================================================================================
+Comment: Line Continuation With CRLF Line Endings
+================================================================================
+
+x = a & ...
+    b;
+
+fprintf("day %d is %.2f\n", ...
+    d, m);
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (assignment
+    (identifier)
+    (binary_operator
+      (identifier)
+      (line_continuation)
+      (identifier)))
+  (function_call
+    (identifier)
+    (arguments
+      (string
+        (string_content)
+        (formatting_sequence)
+        (string_content)
+        (formatting_sequence)
+        (escape_sequence))
+      (line_continuation)
+      (identifier)
+      (identifier))))
+
+================================================================================
 Comment: Line Continuation In Many Places More
 ================================================================================
 
