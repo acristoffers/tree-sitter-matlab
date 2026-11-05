@@ -342,6 +342,7 @@ Function Declaration: Argument validators functions
 function foo(a)
     arguments
         a (1,1) double {mustBeNumeric mustBePositive can.be.a.property}
+        b (1,:) char {}
     end
 end
 
@@ -373,7 +374,14 @@ end
             (identifier)
             (identifier)
             (identifier)
-            (identifier))))))
+            (identifier))))
+      (property
+        (identifier)
+        (dimensions
+          (number)
+          (spread_operator))
+        (identifier)
+        (validation_functions))))
   (function_definition
     (identifier)
     (function_arguments

@@ -59,6 +59,7 @@ classdef DifferentValidation
       MyPublicData (1,:) double {mustBePositive} = [1 1 1]
       RestrictedByClass uint32
       RestrictedByFunction {mustBeInteger,mustBePositive} = 0
+      EmptyValidator double {} = 1
    end;
 end
 
@@ -102,6 +103,12 @@ end
         (validation_functions
           (identifier)
           (identifier))
+        (default_value
+          (number)))
+      (property
+        (identifier)
+        (identifier)
+        (validation_functions)
         (default_value
           (number)))))
   (class_definition
@@ -256,7 +263,7 @@ Class Definition: Simple Enumerations
 
 classdef WeekDays
    enumeration
-      Monday, Tuesday, Wednesday, Thursday, Friday
+    Monday, Tuesday, Wednesday, Thursday, Friday
    end;
 end
 
@@ -270,6 +277,31 @@ end
         (identifier))
       (enum
         (identifier))
+      (enum
+        (identifier))
+      (enum
+        (identifier))
+      (enum
+        (identifier)))))
+
+================================================================================
+Class Definition: Enumerations With Empty Parentheses
+================================================================================
+
+classdef EnumEmptyArgs
+   enumeration
+      Positive ()
+      Negative()
+      Neutral
+   end
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (class_definition
+    (identifier)
+    (enumeration
       (enum
         (identifier))
       (enum

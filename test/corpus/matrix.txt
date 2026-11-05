@@ -111,6 +111,8 @@ Matrix: Expression With Transpose
 
 [2*A' + 5+B' D'-3'
  3 4]
+[a; k .']
+[a; k.']
 
 --------------------------------------------------------------------------------
 
@@ -133,7 +135,19 @@ Matrix: Expression With Transpose
           (number))))
     (row
       (number)
-      (number))))
+      (number)))
+  (matrix
+    (row
+      (identifier))
+    (row
+      (postfix_operator
+        (identifier))))
+  (matrix
+    (row
+      (identifier))
+    (row
+      (postfix_operator
+        (identifier)))))
 
 ================================================================================
 Matrix: Meaning of Spaces

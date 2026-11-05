@@ -39,6 +39,7 @@ enum TokenType {
     CATCH_IDENTIFIER,
     TRANSPOSE,
     CTRANSPOSE,
+    EOF_TOKEN,
     ERROR_SENTINEL,
 };
 
@@ -80,6 +81,12 @@ static inline bool consume_char(char chr, TSLexer* lexer)
 static inline bool is_eol(const uint32_t chr)
 {
     return chr == '\n' || chr == '\r' || chr == ',' || chr == ';';
+}
+
+static inline bool is_shell_arg_terminator(TSLexer* lexer)
+{
+    return lexer->lookahead == ' ' || lexer->lookahead == '\n' || lexer->lookahead == '\r'
+           || lexer->eof(lexer);
 }
 
 static inline bool iswspace_matlab(const uint32_t chr)
@@ -241,11 +248,11 @@ static bool scan_comment(
             lexer->result_symbol = ENTRY_DELIMITER;
             return true;
         }
-        if (lexer->lookahead == '\'') {
+        if (ctranspose && lexer->lookahead == '\'') {
             advance(lexer);
             lexer->result_symbol = CTRANSPOSE;
             lexer->mark_end(lexer);
-            return skipped == 0;
+            return true;
         }
         return false;
     }
@@ -331,7 +338,11 @@ static bool scan_comment(
 
         if (!line_continuation) {
             lexer->result_symbol = COMMENT;
-            advance(lexer);
+            if (consume_char('\r', lexer)) {
+                consume_char('\n', lexer);
+            } else {
+                advance(lexer);
+            }
         } else {
             lexer->result_symbol = LINE_CONTINUATION;
             consume_whitespaces_once(lexer);
@@ -370,7 +381,7 @@ static bool scan_command(Scanner* scanner, TSLexer* lexer, const bool* valid_sym
         while (iswspace_matlab(lexer->lookahead)) {
             advance(lexer);
         }
-        while (lexer->lookahead != ' ' && lexer->lookahead != '\n' && !lexer->eof(lexer)) {
+        while (!is_shell_arg_terminator(lexer)) {
             advance(lexer);
         }
         lexer->result_symbol = COMMAND_NAME;
@@ -378,7 +389,8 @@ static bool scan_command(Scanner* scanner, TSLexer* lexer, const bool* valid_sym
         while (iswspace_matlab(lexer->lookahead)) {
             advance(lexer);
         }
-        scanner->is_inside_command = lexer->lookahead != '\n';
+        scanner->is_inside_command = lexer->lookahead != '\n' && lexer->lookahead != '\r'
+                                     && !lexer->eof(lexer);
         scanner->is_shell_scape = scanner->is_inside_command;
         return true;
     }
@@ -458,7 +470,7 @@ skip_command_check:
     // pwd
     // pwd;
     // pwd,
-    if (is_eol(lexer->lookahead)) {
+    if (is_eol(lexer->lookahead) || lexer->eof(lexer)) {
         lexer->result_symbol = valid_symbols[CATCH_IDENTIFIER] ? CATCH_IDENTIFIER : COMMAND_NAME;
         return true;
     }
@@ -501,12 +513,12 @@ skip_command_check:
 
     // Check for end-of-line again, since it may be that the user just put a
     // space at the end, like `pwd ;`
-    if (is_eol(lexer->lookahead) || lexer->lookahead == '%') {
+    if (is_eol(lexer->lookahead) || lexer->eof(lexer) || lexer->lookahead == '%') {
         if (valid_symbols[CATCH_IDENTIFIER] && (skipped & 4) == 0) {
             lexer->result_symbol = CATCH_IDENTIFIER;
             return true;
         }
-        scanner->is_inside_command = true;
+        scanner->is_inside_command = !lexer->eof(lexer);
         return true;
     }
 
@@ -543,7 +555,8 @@ skip_command_check:
         const uint32_t second = lexer->lookahead;
 
         // If it's the end-of-line, then it's a command.
-        if (is_eol(second)) {
+        // `first` is past mark_end, so an argument is still pending even at EOF.
+        if (is_eol(second) || lexer->eof(lexer)) {
             scanner->is_inside_command = true;
             return true;
         }
@@ -579,7 +592,8 @@ skip_command_check:
                 while (iswspace_matlab(lexer->lookahead)) {
                     advance(lexer);
                 }
-                scanner->is_inside_command = is_eol(lexer->lookahead);
+                // `first` is past mark_end, so an argument is still pending even at EOF.
+                scanner->is_inside_command = is_eol(lexer->lookahead) || lexer->eof(lexer);
                 lexer->result_symbol = scanner->is_inside_command ? COMMAND_NAME : IDENTIFIER;
                 return true;
             }
@@ -636,7 +650,7 @@ static bool scan_command_argument(Scanner* scanner, TSLexer* lexer)
             return false;
         }
 
-        while (lexer->lookahead != ' ' && lexer->lookahead != '\n' && !lexer->eof(lexer)) {
+        while (!is_shell_arg_terminator(lexer)) {
             advance(lexer);
         }
         lexer->result_symbol = COMMAND_ARGUMENT;
@@ -644,7 +658,7 @@ static bool scan_command_argument(Scanner* scanner, TSLexer* lexer)
         while (iswspace_matlab(lexer->lookahead)) {
             advance(lexer);
         }
-        if (lexer->lookahead == '\n') {
+        if (lexer->lookahead == '\n' || lexer->lookahead == '\r' || lexer->eof(lexer)) {
             scanner->is_inside_command = false;
             scanner->is_shell_scape = false;
         }
@@ -676,7 +690,7 @@ static bool scan_command_argument(Scanner* scanner, TSLexer* lexer)
                 advance(lexer);
             }
 
-            if (is_eol(lexer->lookahead) || cond1) {
+            if (is_eol(lexer->lookahead) || lexer->eof(lexer) || cond1) {
                 scanner->line_continuation = false;
                 scanner->is_inside_command = false;
             }
@@ -740,6 +754,8 @@ static bool scan_command_argument(Scanner* scanner, TSLexer* lexer)
     // Mark as argument so the scanner doesnt get called again in an infinite
     // loop.
     if (lexer->eof(lexer)) {
+        scanner->line_continuation = false;
+        scanner->is_inside_command = false;
         lexer->result_symbol = COMMAND_ARGUMENT;
         lexer->mark_end(lexer);
         return true;
@@ -1125,6 +1141,13 @@ bool tree_sitter_matlab_external_scanner_scan(void* payload, TSLexer* lexer, con
         }
 
         if (!scanner->is_inside_command) {
+            if (valid_symbols[EOF_TOKEN] && !valid_symbols[ERROR_SENTINEL] && lexer->eof(lexer)
+                && (skipped & 2) == 0) {
+                lexer->mark_end(lexer);
+                lexer->result_symbol = EOF_TOKEN;
+                return true;
+            }
+
             if (skipped == 0 && valid_symbols[TRANSPOSE]) {
                 if (scan_transpose(lexer)) {
                     return true;
