@@ -83,6 +83,12 @@ static inline bool is_eol(const uint32_t chr)
     return chr == '\n' || chr == '\r' || chr == ',' || chr == ';';
 }
 
+static inline bool is_shell_arg_terminator(TSLexer* lexer)
+{
+    return lexer->lookahead == ' ' || lexer->lookahead == '\n' || lexer->lookahead == '\r'
+           || lexer->eof(lexer);
+}
+
 static inline bool iswspace_matlab(const uint32_t chr)
 {
     return iswspace(chr) && chr != '\n' && chr != '\r';
@@ -375,8 +381,7 @@ static bool scan_command(Scanner* scanner, TSLexer* lexer, const bool* valid_sym
         while (iswspace_matlab(lexer->lookahead)) {
             advance(lexer);
         }
-        while (lexer->lookahead != ' ' && lexer->lookahead != '\n' && lexer->lookahead != '\r'
-               && !lexer->eof(lexer)) {
+        while (!is_shell_arg_terminator(lexer)) {
             advance(lexer);
         }
         lexer->result_symbol = COMMAND_NAME;
@@ -550,6 +555,7 @@ skip_command_check:
         const uint32_t second = lexer->lookahead;
 
         // If it's the end-of-line, then it's a command.
+        // `first` is past mark_end, so an argument is still pending even at EOF.
         if (is_eol(second) || lexer->eof(lexer)) {
             scanner->is_inside_command = true;
             return true;
@@ -586,6 +592,7 @@ skip_command_check:
                 while (iswspace_matlab(lexer->lookahead)) {
                     advance(lexer);
                 }
+                // `first` is past mark_end, so an argument is still pending even at EOF.
                 scanner->is_inside_command = is_eol(lexer->lookahead) || lexer->eof(lexer);
                 lexer->result_symbol = scanner->is_inside_command ? COMMAND_NAME : IDENTIFIER;
                 return true;
@@ -643,8 +650,7 @@ static bool scan_command_argument(Scanner* scanner, TSLexer* lexer)
             return false;
         }
 
-        while (lexer->lookahead != ' ' && lexer->lookahead != '\n' && lexer->lookahead != '\r'
-               && !lexer->eof(lexer)) {
+        while (!is_shell_arg_terminator(lexer)) {
             advance(lexer);
         }
         lexer->result_symbol = COMMAND_ARGUMENT;
