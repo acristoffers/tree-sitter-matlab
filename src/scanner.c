@@ -80,7 +80,7 @@ static inline bool consume_char(char chr, TSLexer* lexer)
 
 static inline bool is_eol(const uint32_t chr)
 {
-    return chr == '\n' || chr == '\r' || chr == ',' || chr == ';' || chr == 0;
+    return chr == '\n' || chr == '\r' || chr == ',' || chr == ';';
 }
 
 static inline bool iswspace_matlab(const uint32_t chr)
@@ -465,7 +465,7 @@ skip_command_check:
     // pwd
     // pwd;
     // pwd,
-    if (is_eol(lexer->lookahead)) {
+    if (is_eol(lexer->lookahead) || lexer->eof(lexer)) {
         lexer->result_symbol = valid_symbols[CATCH_IDENTIFIER] ? CATCH_IDENTIFIER : COMMAND_NAME;
         return true;
     }
@@ -508,7 +508,7 @@ skip_command_check:
 
     // Check for end-of-line again, since it may be that the user just put a
     // space at the end, like `pwd ;`
-    if (is_eol(lexer->lookahead) || lexer->lookahead == '%') {
+    if (is_eol(lexer->lookahead) || lexer->eof(lexer) || lexer->lookahead == '%') {
         if (valid_symbols[CATCH_IDENTIFIER] && (skipped & 4) == 0) {
             lexer->result_symbol = CATCH_IDENTIFIER;
             return true;
@@ -550,7 +550,7 @@ skip_command_check:
         const uint32_t second = lexer->lookahead;
 
         // If it's the end-of-line, then it's a command.
-        if (is_eol(second)) {
+        if (is_eol(second) || lexer->eof(lexer)) {
             scanner->is_inside_command = true;
             return true;
         }
@@ -586,7 +586,7 @@ skip_command_check:
                 while (iswspace_matlab(lexer->lookahead)) {
                     advance(lexer);
                 }
-                scanner->is_inside_command = is_eol(lexer->lookahead);
+                scanner->is_inside_command = is_eol(lexer->lookahead) || lexer->eof(lexer);
                 lexer->result_symbol = scanner->is_inside_command ? COMMAND_NAME : IDENTIFIER;
                 return true;
             }
@@ -684,7 +684,7 @@ static bool scan_command_argument(Scanner* scanner, TSLexer* lexer)
                 advance(lexer);
             }
 
-            if (is_eol(lexer->lookahead) || cond1) {
+            if (is_eol(lexer->lookahead) || lexer->eof(lexer) || cond1) {
                 scanner->line_continuation = false;
                 scanner->is_inside_command = false;
             }

@@ -81,6 +81,17 @@ The columns have the following meaning:
   Markdown or [org-mode](https://orgmode.org/))
 - *Locals*: supports identifying variables/functions/etc scope
 
+# Development
+
+After grammar or scanner changes, regenerate the parser before testing or building bindings:
+
+```sh
+tree-sitter generate
+tree-sitter test
+```
+
+Keep generated files out of contribution commits, as described in [CONTRIBUTING.md](CONTRIBUTING.md).
+
 # Known issues
 
 - There is a conflict between numbers and element-wise operators that will
