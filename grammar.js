@@ -64,6 +64,7 @@ module.exports = grammar({
     $._catch_identifier,
     $._transpose,
     $._ctranspose,
+    $._eof,
     $.error_sentinel,
   ],
 
@@ -87,14 +88,14 @@ module.exports = grammar({
             $._expression,
             alias($._function_definition_with_end, $.function_definition),
           ),
-          repeat1($._end_of_line),
+          choice(repeat1($._end_of_line), $._eof),
         ),
       ),
     _functionless_block: ($) =>
       prec(1, repeat1(
         seq(
           choice($._statement, $._expression),
-          repeat1($._end_of_line),
+          choice(repeat1($._end_of_line), $._eof),
         ),
       )),
     block: ($) => $._block,
@@ -827,7 +828,7 @@ module.exports = grammar({
         optional(choice('get.', 'set.')),
         field('name', choice($.identifier, $.property_name, alias($.end_keyword, $.identifier))),
         optional($.function_arguments),
-        $._end_of_line,
+        choice($._end_of_line, $._eof),
         repeat(seq(repeat(choice($.comment, $._end_of_line)), $.arguments_statement)),
         repeat(choice($.comment, $._end_of_line)),
         optional(alias($._functionless_block, $.block)),
@@ -861,7 +862,21 @@ module.exports = grammar({
     dimensions: ($) =>
       seq('(', commaSep1(choice($.number, $.spread_operator)), ')'),
     validation_functions: ($) =>
-      seq('{', choice($.function_call, $.identifier, $.field_expression), repeat(seq(optional(","), choice($.function_call, $.identifier, $.field_expression))), '}'),
+      seq(
+        '{',
+        optional(
+          seq(
+            choice($.function_call, $.identifier, $.field_expression),
+            repeat(
+              seq(
+                optional(','),
+                choice($.function_call, $.identifier, $.field_expression),
+              ),
+            ),
+          ),
+        ),
+        '}',
+      ),
     default_value: ($) => seq('=', $._expression),
     property_name: ($) =>
       prec.right(
@@ -937,7 +952,7 @@ module.exports = grammar({
         'end',
       ),
     enum: ($) =>
-      seq($.identifier, optional(seq('(', commaSep1($._expression), ')'))),
+      seq($.identifier, optional(seq('(', optional(commaSep1($._expression)), ')'))),
     enumeration: ($) =>
       seq(
         'enumeration',
