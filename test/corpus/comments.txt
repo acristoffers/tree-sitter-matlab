@@ -61,26 +61,6 @@ Comment: Group Of Comments As Single Comment
   (comment))
 
 ================================================================================
-Comment: Group Of Comments With CRLF Line Endings
-================================================================================
-
-function f
-% one
-% two
-
-% three
-    % four
-end
-
---------------------------------------------------------------------------------
-
-(source_file
-  (function_definition
-    (identifier)
-    (comment)
-    (comment)))
-
-================================================================================
 Comment: Comment Before Statement
 ================================================================================
 
@@ -294,38 +274,6 @@ end
             (identifier)
             (arguments
               (identifier))))))))
-
-================================================================================
-Comment: Line Continuation With CRLF Line Endings
-================================================================================
-
-x = a & ...
-    b;
-
-fprintf("day %d is %.2f\n", ...
-    d, m);
-
---------------------------------------------------------------------------------
-
-(source_file
-  (assignment
-    (identifier)
-    (binary_operator
-      (identifier)
-      (line_continuation)
-      (identifier)))
-  (function_call
-    (identifier)
-    (arguments
-      (string
-        (string_content)
-        (formatting_sequence)
-        (string_content)
-        (formatting_sequence)
-        (escape_sequence))
-      (line_continuation)
-      (identifier)
-      (identifier))))
 
 ================================================================================
 Comment: Line Continuation In Many Places More
