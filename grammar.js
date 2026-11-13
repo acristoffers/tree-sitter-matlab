@@ -799,11 +799,21 @@ module.exports = grammar({
 
     persistent_operator: ($) => seq('persistent', repeat($.identifier)),
 
+    // Like `attribute`, but a bare name stays an identifier (keeps the trees of
+    // `arguments (Input)` unchanged); only valued or negated attributes get the
+    // `attribute` / `not_operator` nodes.
+    _valued_attribute: ($) => seq($.identifier, '=', $._expression),
+    _argument_attribute: ($) =>
+      choice(
+        field('argument', $.identifier),
+        alias($._negated_attribute, $.not_operator),
+        alias($._valued_attribute, $.attribute),
+      ),
     _argument_attributes: ($) =>
       seq(
         '(',
-        field('argument', $.identifier),
-        repeat(seq(',', field('argument', $.identifier))),
+        $._argument_attribute,
+        repeat(seq(',', $._argument_attribute)),
         ')',
       ),
     class_property: ($) => seq($.identifier, '.?', $.identifier, repeat(seq('.', $.identifier))),

@@ -397,3 +397,33 @@ end
           (identifier)
           (line_continuation)
           (identifier))))))
+
+================================================================================
+Arguments Block: Attributes With Values
+================================================================================
+
+function a(x)
+    arguments (Input = 1, Output = 'x')
+        x double
+    end
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (function_arguments
+      (identifier))
+    (arguments_statement
+      (attributes
+        (attribute
+          (identifier)
+          (number))
+        (attribute
+          (identifier)
+          (string
+            (string_content))))
+      (property
+        (identifier)
+        (identifier)))))
