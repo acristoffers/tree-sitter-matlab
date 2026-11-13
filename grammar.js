@@ -816,7 +816,16 @@ module.exports = grammar({
         repeat(seq(',', $._argument_attribute)),
         ')',
       ),
-    class_property: ($) => seq($.identifier, '.?', $.identifier, repeat(seq('.', $.identifier))),
+    class_property: ($) =>
+      seq(
+        $.identifier,
+        '.?',
+        $.identifier,
+        repeat(seq('.', $.identifier)),
+        optional($.dimensions),
+        optional($.validation_functions),
+        optional($.default_value),
+      ),
     arguments_statement: ($) =>
       prec.right(1, seq(
         'arguments',
