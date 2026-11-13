@@ -517,14 +517,11 @@ module.exports = grammar({
         $.end_keyword,
       )),
     _index_range: ($) =>
-      prec.right(
-        PREC.postfix,
-        seq(
-          $._index_range_element,
-          ':',
-          $._index_range_element,
-          optional(seq(':', $._index_range_element)),
-        ),
+      seq(
+        $._index_range_element,
+        ':',
+        $._index_range_element,
+        repeat(seq(':', $._index_range_element)),
       ),
     _index_parenthesis: ($) => prec(PREC.parenthesis, seq('(', $._index_expression, ')')),
     // _index_expression is intentionally a superset of _expression to avoid
@@ -698,14 +695,11 @@ module.exports = grammar({
         prec.dynamic(1, $.binary_operator),
       ),
     range: ($) =>
-      prec.right(
-        PREC.postfix,
-        seq(
-          $._range_element,
-          ':',
-          $._range_element,
-          optional(seq(':', $._range_element)),
-        ),
+      seq(
+        $._range_element,
+        ':',
+        $._range_element,
+        repeat(seq(':', $._range_element)),
       ),
 
     return_statement: (_) => 'return',
