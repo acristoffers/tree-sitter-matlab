@@ -142,7 +142,7 @@ module.exports = grammar({
         $.field_expression,
       ),
 
-    parenthesis: ($) => prec(PREC.parenthesis, seq('(', $._expression, ')')),
+    parenthesis: ($) => prec(PREC.parenthesis, seq('(', choice($._expression, $.end_keyword), ')')),
 
     _binary_expression: ($) =>
       prec(
@@ -189,7 +189,7 @@ module.exports = grammar({
           fn(
             precedence,
             seq(
-              field('left', $._binary_expression),
+              field('left', choice($._binary_expression, $.end_keyword)),
               // @ts-ignore
               operator,
               field('right', $._binary_expression),
@@ -292,7 +292,7 @@ module.exports = grammar({
       prec.left(
         PREC.compare,
         seq(
-          $._expression,
+          choice($._expression, $.end_keyword),
           choice('<', '<=', '==', '~=', '>=', '>'),
           $._expression,
         ),
@@ -328,6 +328,7 @@ module.exports = grammar({
               $.string,
               $.field_expression,
               $.unary_operator,
+              $.end_keyword,
             ),
           ),
           choice(alias($._transpose, "'"), alias($._ctranspose, ".'")),
@@ -396,7 +397,7 @@ module.exports = grammar({
           ),
         ),
         '=',
-        field('right', $._expression),
+        field('right', choice($._expression, $.end_keyword)),
       ),
 
     multioutput_variable: ($) =>

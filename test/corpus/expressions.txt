@@ -340,3 +340,34 @@ tbl.(a')
     (indirect_access
       (postfix_operator
         (identifier)))))
+
+================================================================================
+End Keyword: Outside Index
+================================================================================
+
+y = end + 1;
+z = (end) + 1;
+w = end';
+v = end;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (assignment
+    (identifier)
+    (binary_operator
+      (end_keyword)
+      (number)))
+  (assignment
+    (identifier)
+    (binary_operator
+      (parenthesis
+        (end_keyword))
+      (number)))
+  (assignment
+    (identifier)
+    (postfix_operator
+      (end_keyword)))
+  (assignment
+    (identifier)
+    (end_keyword)))
