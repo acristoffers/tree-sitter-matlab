@@ -251,3 +251,33 @@ a.b:c.d:e.f
     (field_expression
       (identifier)
       (identifier))))
+
+================================================================================
+Range: Three Colons
+================================================================================
+
+y = [1:2:3:4];
+z = x(1:2:3:4);
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (assignment
+    (identifier)
+    (matrix
+      (row
+        (range
+          (number)
+          (number)
+          (number)
+          (number)))))
+  (assignment
+    (identifier)
+    (function_call
+      (identifier)
+      (arguments
+        (range
+          (number)
+          (number)
+          (number)
+          (number))))))
