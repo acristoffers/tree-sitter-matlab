@@ -427,3 +427,40 @@ end
       (property
         (identifier)
         (identifier)))))
+
+================================================================================
+Arguments Block: Class Property With Default
+================================================================================
+
+function a(opts)
+    arguments
+        opts.?pkg.Class (1,1) {mustBeNumeric} = pkg.Class()
+        x double
+    end
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (function_arguments
+      (identifier))
+    (arguments_statement
+      (class_property
+        (identifier)
+        (identifier)
+        (identifier)
+        (dimensions
+          (number)
+          (number))
+        (validation_functions
+          (identifier))
+        (default_value
+          (field_expression
+            (identifier)
+            (function_call
+              (identifier)))))
+      (property
+        (identifier)
+        (identifier)))))
