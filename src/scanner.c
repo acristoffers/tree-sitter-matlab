@@ -373,6 +373,43 @@ static bool scan_comment(
     return false;
 }
 
+/// Whether `name.seg.seg word` is what follows, with the lexer right after the first `.`.
+/// MATLAB rejects such a statement (a dotted name cannot be a command), but it reports the
+/// error on that line only and goes on: reading it as a command keeps the error on its line
+/// instead of fusing it with the next one.
+static bool is_dotted_command(TSLexer* lexer)
+{
+    for (;;) {
+        char segment[256] = {0};
+        consume_identifier(lexer, segment);
+        if (segment[0] == 0) {
+            return false;
+        }
+        if (lexer->lookahead != '.') {
+            break;
+        }
+        advance(lexer);
+    }
+    if (!iswspace_matlab(lexer->lookahead)) {
+        return false;
+    }
+    while (iswspace_matlab(lexer->lookahead)) {
+        advance(lexer);
+    }
+    char word[256] = {0};
+    consume_identifier(lexer, word);
+    if (word[0] == 0) {
+        return false;
+    }
+    // A keyword closes or continues a one-line block: `if x, a.b end`.
+    for (size_t i = 0; i < keywords_size; i++) {
+        if (strcmp(keywords[i], word) == 0) {
+            return false;
+        }
+    }
+    return true;
+}
+
 static bool scan_command(Scanner* scanner, TSLexer* lexer, const bool* valid_symbols)
 {
     // Special case: shell escape
@@ -410,8 +447,9 @@ static bool scan_command(Scanner* scanner, TSLexer* lexer, const bool* valid_sym
                 return false;
             }
             // so it is ok to consume to identify a line continuation
-            // NOLINTNEXTLINE(*misc-redundant-expression)
-            if (consume_char('.', lexer) && consume_char('.', lexer) && consume_char('.', lexer)) {
+            const bool first_dot = consume_char('.', lexer);
+            const bool second_dot = first_dot && consume_char('.', lexer);
+            if (second_dot && consume_char('.', lexer)) {
                 // If it is a keyword, yield to the internal scanner
                 for (size_t i = 0; i < keywords_size; i++) {
                     if (strcmp(keywords[i], buffer) == 0) {
@@ -421,6 +459,13 @@ static bool scan_command(Scanner* scanner, TSLexer* lexer, const bool* valid_sym
                         return false;
                     }
                 }
+            }
+            if (first_dot && !second_dot && is_dotted_command(lexer)) {
+                // The token is the first name only: the arguments follow as command
+                // arguments, the first of them the rest of the dotted name.
+                lexer->result_symbol = COMMAND_NAME;
+                scanner->is_inside_command = true;
+                return true;
             }
             lexer->result_symbol = IDENTIFIER;
             return true;
