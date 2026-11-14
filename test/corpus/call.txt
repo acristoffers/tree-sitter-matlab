@@ -198,6 +198,70 @@ enumeration foo
     (command_argument)))
 
 ================================================================================
+Command Call: Dotted Name With Argument
+================================================================================
+
+comm.gpu.AWGNChannel arg1
+h = @comm.gpu.AWGNChannel;
+sigwin.hamming seed
+x.y
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (command
+    (command_name)
+    (command_argument)
+    (command_argument))
+  (assignment
+    (identifier)
+    (handle_operator
+      (identifier)
+      (identifier)
+      (identifier)))
+  (command
+    (command_name)
+    (command_argument)
+    (command_argument))
+  (field_expression
+    (identifier)
+    (identifier)))
+
+================================================================================
+Command Call: Dotted Name Stays An Expression
+================================================================================
+
+if c, a.b, end
+x.y.z;
+x.y - 1;
+x.y (1);
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (if_statement
+    (identifier)
+    (block
+      (field_expression
+        (identifier)
+        (identifier))))
+  (field_expression
+    (identifier)
+    (identifier)
+    (identifier))
+  (binary_operator
+    (field_expression
+      (identifier)
+      (identifier))
+    (number))
+  (field_expression
+    (identifier)
+    (function_call
+      (identifier)
+      (arguments
+        (number)))))
+
+================================================================================
 Command Call: CVX
 ================================================================================
 
