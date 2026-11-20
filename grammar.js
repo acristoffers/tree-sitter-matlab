@@ -64,6 +64,7 @@ module.exports = grammar({
     $._catch_identifier,
     $._transpose,
     $._ctranspose,
+    $._eof,
     $.error_sentinel,
   ],
 
@@ -87,14 +88,14 @@ module.exports = grammar({
             $._expression,
             alias($._function_definition_with_end, $.function_definition),
           ),
-          repeat1($._end_of_line),
+          choice(repeat1($._end_of_line), $._eof),
         ),
       ),
     _functionless_block: ($) =>
       prec(1, repeat1(
         seq(
           choice($._statement, $._expression),
-          repeat1($._end_of_line),
+          choice(repeat1($._end_of_line), $._eof),
         ),
       )),
     block: ($) => $._block,
@@ -141,7 +142,7 @@ module.exports = grammar({
         $.field_expression,
       ),
 
-    parenthesis: ($) => prec(PREC.parenthesis, seq('(', $._expression, ')')),
+    parenthesis: ($) => prec(PREC.parenthesis, seq('(', choice($._expression, $.end_keyword), ')')),
 
     _binary_expression: ($) =>
       prec(
@@ -188,7 +189,7 @@ module.exports = grammar({
           fn(
             precedence,
             seq(
-              field('left', $._binary_expression),
+              field('left', choice($._binary_expression, $.end_keyword)),
               // @ts-ignore
               operator,
               field('right', $._binary_expression),
@@ -291,7 +292,7 @@ module.exports = grammar({
       prec.left(
         PREC.compare,
         seq(
-          $._expression,
+          choice($._expression, $.end_keyword),
           choice('<', '<=', '==', '~=', '>=', '>'),
           $._expression,
         ),
@@ -327,6 +328,7 @@ module.exports = grammar({
               $.string,
               $.field_expression,
               $.unary_operator,
+              $.end_keyword,
             ),
           ),
           choice(alias($._transpose, "'"), alias($._ctranspose, ".'")),
@@ -395,7 +397,7 @@ module.exports = grammar({
           ),
         ),
         '=',
-        field('right', $._expression),
+        field('right', choice($._expression, $.end_keyword)),
       ),
 
     multioutput_variable: ($) =>
@@ -515,14 +517,11 @@ module.exports = grammar({
         $.end_keyword,
       )),
     _index_range: ($) =>
-      prec.right(
-        PREC.postfix,
-        seq(
-          $._index_range_element,
-          ':',
-          $._index_range_element,
-          optional(seq(':', $._index_range_element)),
-        ),
+      seq(
+        $._index_range_element,
+        ':',
+        $._index_range_element,
+        repeat(seq(':', $._index_range_element)),
       ),
     _index_parenthesis: ($) => prec(PREC.parenthesis, seq('(', $._index_expression, ')')),
     // _index_expression is intentionally a superset of _expression to avoid
@@ -696,14 +695,11 @@ module.exports = grammar({
         prec.dynamic(1, $.binary_operator),
       ),
     range: ($) =>
-      prec.right(
-        PREC.postfix,
-        seq(
-          $._range_element,
-          ':',
-          $._range_element,
-          optional(seq(':', $._range_element)),
-        ),
+      seq(
+        $._range_element,
+        ':',
+        $._range_element,
+        repeat(seq(':', $._range_element)),
       ),
 
     return_statement: (_) => 'return',
@@ -798,14 +794,33 @@ module.exports = grammar({
 
     persistent_operator: ($) => seq('persistent', repeat($.identifier)),
 
+    // Like `attribute`, but a bare name stays an identifier (keeps the trees of
+    // `arguments (Input)` unchanged); only valued or negated attributes get the
+    // `attribute` / `not_operator` nodes.
+    _valued_attribute: ($) => seq($.identifier, '=', $._expression),
+    _argument_attribute: ($) =>
+      choice(
+        field('argument', $.identifier),
+        alias($._negated_attribute, $.not_operator),
+        alias($._valued_attribute, $.attribute),
+      ),
     _argument_attributes: ($) =>
       seq(
         '(',
-        field('argument', $.identifier),
-        repeat(seq(',', field('argument', $.identifier))),
+        $._argument_attribute,
+        repeat(seq(',', $._argument_attribute)),
         ')',
       ),
-    class_property: ($) => seq($.identifier, '.?', $.identifier, repeat(seq('.', $.identifier))),
+    class_property: ($) =>
+      seq(
+        $.identifier,
+        '.?',
+        $.identifier,
+        repeat(seq('.', $.identifier)),
+        optional($.dimensions),
+        optional($.validation_functions),
+        optional($.default_value),
+      ),
     arguments_statement: ($) =>
       prec.right(1, seq(
         'arguments',
@@ -827,7 +842,7 @@ module.exports = grammar({
         optional(choice('get.', 'set.')),
         field('name', choice($.identifier, $.property_name, alias($.end_keyword, $.identifier))),
         optional($.function_arguments),
-        $._end_of_line,
+        choice($._end_of_line, $._eof),
         repeat(seq(repeat(choice($.comment, $._end_of_line)), $.arguments_statement)),
         repeat(choice($.comment, $._end_of_line)),
         optional(alias($._functionless_block, $.block)),
@@ -861,7 +876,21 @@ module.exports = grammar({
     dimensions: ($) =>
       seq('(', commaSep1(choice($.number, $.spread_operator)), ')'),
     validation_functions: ($) =>
-      seq('{', choice($.function_call, $.identifier, $.field_expression), repeat(seq(optional(","), choice($.function_call, $.identifier, $.field_expression))), '}'),
+      seq(
+        '{',
+        optional(
+          seq(
+            choice($.function_call, $.identifier, $.field_expression),
+            repeat(
+              seq(
+                optional(','),
+                choice($.function_call, $.identifier, $.field_expression),
+              ),
+            ),
+          ),
+        ),
+        '}',
+      ),
     default_value: ($) => seq('=', $._expression),
     property_name: ($) =>
       prec.right(
@@ -937,7 +966,7 @@ module.exports = grammar({
         'end',
       ),
     enum: ($) =>
-      seq($.identifier, optional(seq('(', commaSep1($._expression), ')'))),
+      seq($.identifier, optional(seq('(', optional(commaSep1($._expression)), ')'))),
     enumeration: ($) =>
       seq(
         'enumeration',

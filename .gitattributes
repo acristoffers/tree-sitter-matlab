@@ -5,3 +5,6 @@ src/scanner.c linguist-vendored=false
 src/grammar.json -diff
 src/node-types.json -diff
 src/parser.c -diff
+
+test/corpus/crlf.txt -text whitespace=cr-at-eol
+test/corpus/eof.txt whitespace=-blank-at-eol

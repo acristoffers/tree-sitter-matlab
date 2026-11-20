@@ -185,3 +185,41 @@ end
         (arguments
           (string
             (string_content)))))))
+
+================================================================================
+If Statement: Without Trailing Newline
+================================================================================
+
+x = 1
+close all
+if true
+end
+--------------------------------------------------------------------------------
+
+(source_file
+  (assignment
+    (identifier)
+    (number))
+  (command
+    (command_name)
+    (command_argument))
+  (if_statement
+    (identifier)))
+
+================================================================================
+If Statement: Trailing Comment Without Newline
+================================================================================
+
+function f
+if true
+end
+% comment
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (block
+      (if_statement
+        (identifier))
+      (comment))))

@@ -334,6 +334,10 @@
             "named": true
           },
           {
+            "type": "end_keyword",
+            "named": true
+          },
+          {
             "type": "field_expression",
             "named": true
           },
@@ -497,6 +501,10 @@
       "types": [
         {
           "type": "attribute",
+          "named": true
+        },
+        {
+          "type": "not_operator",
           "named": true
         }
       ]
@@ -1145,7 +1153,19 @@
       "required": true,
       "types": [
         {
+          "type": "default_value",
+          "named": true
+        },
+        {
+          "type": "dimensions",
+          "named": true
+        },
+        {
           "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "validation_functions",
           "named": true
         }
       ]
@@ -2561,6 +2581,10 @@
             "named": true
           },
           {
+            "type": "end_keyword",
+            "named": true
+          },
+          {
             "type": "field_expression",
             "named": true
           },
@@ -3311,7 +3335,7 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "field_expression",

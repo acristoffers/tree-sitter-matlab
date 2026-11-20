@@ -1,0 +1,91 @@
+================================================================================
+Comment: Group Of Comments With CRLF Line Endings
+================================================================================
+
+function f
+% one
+% two
+
+% three
+    % four
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (comment)
+    (comment)))
+
+================================================================================
+Comment: Leading Comments With CRLF Line Endings
+================================================================================
+
+% one
+    % two
+
+% three
+% four
+x = 1;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (comment)
+  (comment)
+  (assignment
+    (identifier)
+    (number)))
+
+================================================================================
+Comment: Line Continuation With CRLF Line Endings
+================================================================================
+
+x = a & ...
+    b;
+
+fprintf("day %d is %.2f\n", ...
+    d, m);
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (assignment
+    (identifier)
+    (binary_operator
+      (identifier)
+      (line_continuation)
+      (identifier)))
+  (function_call
+    (identifier)
+    (arguments
+      (string
+        (string_content)
+        (formatting_sequence)
+        (string_content)
+        (formatting_sequence)
+        (escape_sequence))
+      (line_continuation)
+      (identifier)
+      (identifier))))
+
+================================================================================
+Command Call: CRLF Line Endings
+================================================================================
+
+format long
+pwd
+!ls -la
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (command
+    (command_name)
+    (command_argument))
+  (command
+    (command_name))
+  (command
+    (command_name)
+    (command_argument)))

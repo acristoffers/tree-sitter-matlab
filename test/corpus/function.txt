@@ -342,6 +342,7 @@ Function Declaration: Argument validators functions
 function foo(a)
     arguments
         a (1,1) double {mustBeNumeric mustBePositive can.be.a.property}
+        b (1,:) char {}
     end
 end
 
@@ -373,7 +374,14 @@ end
             (identifier)
             (identifier)
             (identifier)
-            (identifier))))))
+            (identifier))))
+      (property
+        (identifier)
+        (dimensions
+          (number)
+          (spread_operator))
+        (identifier)
+        (validation_functions))))
   (function_definition
     (identifier)
     (function_arguments
@@ -389,3 +397,70 @@ end
           (identifier)
           (line_continuation)
           (identifier))))))
+
+================================================================================
+Arguments Block: Attributes With Values
+================================================================================
+
+function a(x)
+    arguments (Input = 1, Output = 'x')
+        x double
+    end
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (function_arguments
+      (identifier))
+    (arguments_statement
+      (attributes
+        (attribute
+          (identifier)
+          (number))
+        (attribute
+          (identifier)
+          (string
+            (string_content))))
+      (property
+        (identifier)
+        (identifier)))))
+
+================================================================================
+Arguments Block: Class Property With Default
+================================================================================
+
+function a(opts)
+    arguments
+        opts.?pkg.Class (1,1) {mustBeNumeric} = pkg.Class()
+        x double
+    end
+end
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (function_arguments
+      (identifier))
+    (arguments_statement
+      (class_property
+        (identifier)
+        (identifier)
+        (identifier)
+        (dimensions
+          (number)
+          (number))
+        (validation_functions
+          (identifier))
+        (default_value
+          (field_expression
+            (identifier)
+            (function_call
+              (identifier)))))
+      (property
+        (identifier)
+        (identifier)))))
